@@ -14,10 +14,6 @@ export const HERO = {
   ctaAriaLabel: "Join the EXPOZOR waitlist — Founders' pricing locked in for life",
   secondaryCta: "Watch 60-sec demo",
   secondaryCtaAriaLabel: "Watch the 60-second EXPOZOR demo",
-  // Pull from /api/waitlist-count in production; hard-coded safe default below
-  // TODO: replace with live fetch once /api/waitlist-count endpoint is deployed
-  waitlistCount: 3247,
-  socialProof: "Joined by 3,247+ on the waitlist · No credit card required",
   microcopy: "Founders' pricing locked in for life. No credit card required.",
   inputPlaceholder: "you@example.com",
 } as const;
@@ -36,14 +32,8 @@ export const NAVBAR = {
 } as const;
 
 export const PRESS = {
-  heading: "As featured in",
-  items: [
-    { name: "Product Hunt", url: "#" },
-    { name: "Indie Hackers", url: "#" },
-    { name: "Hacker News", url: "#" },
-    { name: "TechCrunch", url: "#" },
-    { name: "The Pragmatic Engineer", url: "#" },
-  ],
+  heading: "Built with",
+  items: [] as { name: string; url: string }[],
 } as const;
 
 export const DEMO = {
@@ -169,41 +159,8 @@ export const SECURITY = {
   ],
 } as const;
 
-export const TESTIMONIALS = {
-  metric: "$2.4M tracked · 12K receipts scanned · 4.9★ rating",
-  items: [
-    {
-      id: "amara",
-      quote:
-        "Finally an expense app that doesn't make me feel guilty about spending. The AI categories are eerily accurate.",
-      name: "Amara L.",
-      role: "Product Designer",
-      // Illustrative placeholder — not a real user photo
-      avatar: "https://i.pravatar.cc/80?img=47",
-      verified: true,
-    },
-    {
-      id: "marcus",
-      quote:
-        "The receipt scanner is the fastest I've used. Snap, confirm, done — in two seconds. Life-changing for business trips.",
-      name: "Marcus T.",
-      role: "Freelance Consultant",
-      // Illustrative placeholder — not a real user photo
-      avatar: "https://i.pravatar.cc/80?img=68",
-      verified: true,
-    },
-    {
-      id: "sasha",
-      quote:
-        "My partner and I use it for shared expenses. The settle-up feature is brilliant — no more mental math.",
-      name: "Sasha K.",
-      role: "Software Engineer",
-      // Illustrative placeholder — not a real user photo
-      avatar: "https://i.pravatar.cc/80?img=25",
-      verified: true,
-    },
-  ],
-} as const;
+/* TESTIMONIALS removed — no fabricated reviews.
+   Will be added when real user feedback is collected. */
 
 export const PRICING = {
   title: "Simple, honest pricing",
@@ -354,7 +311,7 @@ export const FAQ = {
 
 export const FINAL_CTA = {
   headline: "Stop guessing where your money went.",
-  subhead: "Join 3,247+ people who finally understand their money.",
+  subhead: "Join the waitlist and lock in Founders' pricing for life.",
   cta: "Join the waitlist",
   ctaAriaLabel: "Join the EXPOZOR waitlist",
   bullets: [

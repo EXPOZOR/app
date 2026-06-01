@@ -23,7 +23,6 @@ import {
   Loader2,
   Play,
   X,
-  Star,
 } from "lucide-react";
 import { joinWaitlist } from "@/app/actions/waitlist";
 import { HERO } from "@/content/landing";
@@ -1246,7 +1245,7 @@ export function HeroSection() {
                 </div>
               </motion.div>
 
-              {/* Micro social proof — ★★★★★  count + no CC */}
+              {/* Micro trust signals — honest, no fake numbers */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -1257,38 +1256,15 @@ export function HeroSection() {
                   gap: "8px",
                   flexWrap: "wrap",
                 }}
-                aria-label={HERO.socialProof}
               >
-                {/* Stars */}
-                <div
-                  style={{ display: "flex", gap: "2px" }}
-                  aria-hidden="true"
-                >
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star
-                      key={i}
-                      size={14}
-                      fill="#FBBF24"
-                      color="#FBBF24"
-                      aria-hidden="true"
-                    />
-                  ))}
-                </div>
                 <span
                   style={{
                     fontSize: "0.8125rem",
                     color: "var(--text-muted)",
-                    lineHeight: 1,
+                    lineHeight: 1.4,
                   }}
                 >
-                  {/* TODO: replace 3,247 with live fetch from /api/waitlist-count */}
-                  Joined by{" "}
-                  <strong
-                    style={{ color: "var(--text-secondary)", fontWeight: 600 }}
-                  >
-                    3,247+
-                  </strong>{" "}
-                  on the waitlist · No credit card required
+                  Free plan available · No credit card required · End-to-end encrypted
                 </span>
               </motion.div>
             </div>
