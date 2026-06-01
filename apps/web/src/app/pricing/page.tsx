@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Pricing",
   description:
     "Free, Plus ($6/mo), Pro ($14/mo), Households ($24/mo). Start free, upgrade when ready. Annual billing saves 20%.",
-  alternates: { canonical: "https://expozor.app/pricing" },
+  alternates: { canonical: "https://expozor.com/pricing" },
 };
 
 const breadcrumb = breadcrumbJsonLd([{ name: "Pricing", href: "/pricing" }]);

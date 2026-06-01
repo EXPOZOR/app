@@ -11,14 +11,25 @@ function createDb() {
   return drizzle(sql, { schema });
 }
 
-// Singleton pattern — re-use across hot reloads in dev
-declare global {
-  // eslint-disable-next-line no-var
-  var _db: ReturnType<typeof createDb> | undefined;
+type Db = ReturnType<typeof createDb>;
+
+// Lazy singleton — does NOT throw at module import time.
+// Only throws when actually accessed (i.e. when a server action runs).
+let _instance: Db | undefined;
+
+export function getDb(): Db {
+  if (!_instance) {
+    _instance = createDb();
+  }
+  return _instance;
 }
 
-export const db = global._db ?? createDb();
-
-if (process.env["NODE_ENV"] !== "production") {
-  global._db = db;
-}
+// Keep backward-compat default export for any other consumers,
+// but as a Proxy so it's lazy and won't crash at import time.
+export const db = new Proxy({} as Db, {
+  get(_target, prop, receiver) {
+    const realDb = getDb();
+    const value = Reflect.get(realDb, prop, receiver);
+    return typeof value === "function" ? value.bind(realDb) : value;
+  },
+});

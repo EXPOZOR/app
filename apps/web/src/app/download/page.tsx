@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Download",
   description:
     "Download EXPOZOR for iOS, Android, or use the web app. Join the beta via TestFlight or Play Internal Testing.",
-  alternates: { canonical: "https://expozor.app/download" },
+  alternates: { canonical: "https://expozor.com/download" },
 };
 
 const breadcrumb = breadcrumbJsonLd([{ name: "Download", href: "/download" }]);

@@ -6,7 +6,7 @@ import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "EXPOZOR privacy policy. How we collect, use, and protect your data. GDPR-compliant data handling.",
-  alternates: { canonical: "https://expozor.app/legal/privacy" },
+  alternates: { canonical: "https://expozor.com/legal/privacy" },
 };
 
 const breadcrumb = breadcrumbJsonLd([

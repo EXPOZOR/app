@@ -30,12 +30,12 @@ export function generateMetadata({
     return {
       title: post.frontmatter.title,
       description: post.frontmatter.excerpt,
-      alternates: { canonical: `https://expozor.app/blog/${slug}` },
+      alternates: { canonical: `https://expozor.com/blog/${slug}` },
       openGraph: {
         type: "article",
         title: post.frontmatter.title,
         description: post.frontmatter.excerpt,
-        url: `https://expozor.app/blog/${slug}`,
+        url: `https://expozor.com/blog/${slug}`,
         publishedTime: post.frontmatter.date,
         authors: [post.frontmatter.author],
         tags: [post.frontmatter.category],
@@ -83,9 +83,9 @@ export default async function BlogPostPage({
     publisher: {
       "@type": "Organization",
       name: "EXPOZOR",
-      url: "https://expozor.app",
+      url: "https://expozor.com",
     },
-    url: `https://expozor.app/blog/${slug}`,
+    url: `https://expozor.com/blog/${slug}`,
   };
 
   const components = useMDXComponents();

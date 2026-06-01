@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Features",
   description:
     "Receipt scanning, bank sync, AI categorization, budgets, shared expenses, and the EXPOZOR AI agent. Everything your money needs.",
-  alternates: { canonical: "https://expozor.app/features" },
+  alternates: { canonical: "https://expozor.com/features" },
 };
 
 const breadcrumb = breadcrumbJsonLd([{ name: "Features", href: "/features" }]);

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const BASE_URL = "https://expozor.app";
+const BASE_URL = "https://expozor.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date().toISOString();

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Security",
   description:
     "How EXPOZOR protects your financial data. AES-256-GCM encryption, per-user envelope keys, row-level security, TLS 1.3, GDPR compliance, and responsible disclosure.",
-  alternates: { canonical: "https://expozor.app/security" },
+  alternates: { canonical: "https://expozor.com/security" },
 };
 
 const breadcrumb = breadcrumbJsonLd([{ name: "Security", href: "/security" }]);

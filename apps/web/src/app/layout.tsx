@@ -5,7 +5,7 @@ import { FAQ } from "@/content/landing";
 import "@/app/globals.css";
 
 /* ── Base URL ──────────────────────────────────────────────── */
-const BASE_URL = "https://expozor.app";
+const BASE_URL = "https://expozor.com";
 
 /* ── Metadata ──────────────────────────────────────────────── */
 export const metadata: Metadata = {

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description:
     "Try EXPOZOR's expense tracking demo in full screen. Add expenses, see AI categorization, and watch budgets update — all client-side, no account needed.",
   robots: { index: false, follow: false },
-  alternates: { canonical: "https://expozor.app/demo" },
+  alternates: { canonical: "https://expozor.com/demo" },
 };
 
 const breadcrumb = breadcrumbJsonLd([{ name: "Live Demo", href: "/demo" }]);

@@ -1,4 +1,4 @@
-const BASE_URL = "https://expozor.app";
+const BASE_URL = "https://expozor.com";
 
 /* ── Breadcrumb ────────────────────────────────────────────── */
 

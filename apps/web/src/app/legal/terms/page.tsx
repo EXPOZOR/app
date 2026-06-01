@@ -6,7 +6,7 @@ import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description: "EXPOZOR terms of service. Account usage, billing, and legal terms.",
-  alternates: { canonical: "https://expozor.app/legal/terms" },
+  alternates: { canonical: "https://expozor.com/legal/terms" },
 };
 
 const breadcrumb = breadcrumbJsonLd([

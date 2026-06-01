@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Changelog",
   description:
     "What's new in EXPOZOR. Product updates, bug fixes, and improvements.",
-  alternates: { canonical: "https://expozor.app/changelog" },
+  alternates: { canonical: "https://expozor.com/changelog" },
 };
 
 const breadcrumb = breadcrumbJsonLd([

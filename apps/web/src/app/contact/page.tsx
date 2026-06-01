@@ -7,7 +7,7 @@ import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 export const metadata: Metadata = {
   title: "Contact",
   description: "Get in touch with the EXPOZOR team. General inquiries, support, privacy requests, and security disclosure.",
-  alternates: { canonical: "https://expozor.app/contact" },
+  alternates: { canonical: "https://expozor.com/contact" },
 };
 
 const breadcrumb = breadcrumbJsonLd([{ name: "Contact", href: "/contact" }]);

@@ -1,6 +1,6 @@
 import { getAllBlogPosts } from "@/lib/mdx";
 
-const BASE_URL = "https://expozor.app";
+const BASE_URL = "https://expozor.com";
 
 export function GET() {
   const posts = getAllBlogPosts();

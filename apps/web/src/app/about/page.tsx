@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "We're building the expense manager we always wanted — calm, intelligent, and respectful of your time. Meet the team behind EXPOZOR.",
-  alternates: { canonical: "https://expozor.app/about" },
+  alternates: { canonical: "https://expozor.com/about" },
 };
 
 const breadcrumb = breadcrumbJsonLd([{ name: "About", href: "/about" }]);

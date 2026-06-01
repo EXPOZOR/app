@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/_next/", "/sign-in", "/sign-up", "/app/"],
       },
     ],
-    sitemap: "https://expozor.app/sitemap.xml",
-    host: "https://expozor.app",
+    sitemap: "https://expozor.com/sitemap.xml",
+    host: "https://expozor.com",
   };
 }
