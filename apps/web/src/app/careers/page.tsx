@@ -1,15 +1,23 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
-  title: "Careers — EXPOZOR",
-  description: "Join the EXPOZOR team. We're building the expense manager we always wanted.",
+  title: "Careers",
+  description: "Join the EXPOZOR team. We're building the expense manager we always wanted — remote-first, craft-focused.",
+  alternates: { canonical: "https://expozor.app/careers" },
 };
+
+const breadcrumb = breadcrumbJsonLd([{ name: "Careers", href: "/careers" }]);
 
 export default function CareersPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdString(breadcrumb) }}
+      />
       <Header />
       <main id="main-content" className="pt-20">
         <div className="container-site section-py max-w-3xl">

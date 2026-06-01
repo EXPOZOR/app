@@ -1,0 +1,60 @@
+---
+title: "Our Security Philosophy: Privacy by Architecture"
+date: "2026-05-20"
+author: "The EXPOZOR Team"
+authorRole: "Engineering"
+category: "Security"
+excerpt: "Financial data is the most sensitive data people generate daily. Here's how EXPOZOR protects it at every layer — from device to database."
+featured: false
+---
+
+## Why "privacy by default" isn't enough
+
+Most apps promise privacy in their marketing. Fewer deliver it in their architecture. The difference matters because promises can change with new management, a funding round, or an acqui-hire. Architecture can't.
+
+EXPOZOR is designed so that even _we_ can't access your financial data — not because of a policy, but because of cryptography.
+
+## Encryption at every layer
+
+### On your device
+
+Receipt images are processed using on-device ML Kit OCR. The raw image and extracted text never leave your phone unless OCR confidence is below 70% — in which case, the image is sent to our server-side vision pipeline over TLS 1.3, processed in an ephemeral container, and immediately deleted.
+
+### In transit
+
+All API communication uses TLS 1.3 with certificate pinning on mobile. HSTS preload is enabled. Downgrade attacks aren't possible.
+
+### At rest
+
+Your data is encrypted with AES-256-GCM via managed KMS. But here's the important part: **sensitive fields use per-user envelope encryption.**
+
+That means:
+
+- Each user has a unique data encryption key (DEK)
+- The DEK is encrypted with a key encryption key (KEK) derived from your credentials
+- We store the encrypted DEK, not the plaintext
+- Even a full database breach yields encrypted blobs we can't decrypt
+
+### In the database
+
+Every user-scoped table enforces Postgres Row-Level Security (RLS). This is defense-in-depth: even if there's a bug in our application logic, the database itself prevents cross-user data access.
+
+## Zero trackers in the app
+
+Inside the authenticated EXPOZOR experience, there are **zero third-party trackers**. No Google Analytics. No Facebook Pixel. No Mixpanel.
+
+We use PostHog for product analytics, reverse-proxied through our own infrastructure, with anonymized user IDs. Your spending patterns are yours alone.
+
+## Your data, your choice
+
+- **Export** everything (JSON or CSV) from Settings → Privacy, anytime.
+- **Delete** your account and all data permanently. We fulfill deletion requests within 24 hours.
+- **Inactive accounts** receive a warning after 24 months, then auto-delete after 30 days of no response.
+
+## Responsible disclosure
+
+We take security reports seriously. If you find a vulnerability, email [security@expozor.app](mailto:security@expozor.app). We follow a 90-day coordinated disclosure policy and credit researchers with permission.
+
+## What's ahead
+
+We're working toward SOC 2 Type II certification and plan to publish a formal security whitepaper before general availability. In the meantime, our [Security page](/security) has the technical details.

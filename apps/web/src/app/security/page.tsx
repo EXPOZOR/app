@@ -2,12 +2,16 @@ import type { Metadata } from "next";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ShieldCheck, Lock, Eye, Server, FileCheck } from "lucide-react";
+import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
-  title: "Security — EXPOZOR",
+  title: "Security",
   description:
     "How EXPOZOR protects your financial data. AES-256-GCM encryption, per-user envelope keys, row-level security, TLS 1.3, GDPR compliance, and responsible disclosure.",
+  alternates: { canonical: "https://expozor.app/security" },
 };
+
+const breadcrumb = breadcrumbJsonLd([{ name: "Security", href: "/security" }]);
 
 const pillars = [
   {
@@ -50,6 +54,10 @@ const pillars = [
 export default function SecurityPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdString(breadcrumb) }}
+      />
       <Header />
       <main id="main-content" className="pt-20">
         {/* Hero */}

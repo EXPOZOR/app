@@ -1,15 +1,26 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — EXPOZOR",
-  description: "EXPOZOR privacy policy. How we collect, use, and protect your data.",
+  title: "Privacy Policy",
+  description: "EXPOZOR privacy policy. How we collect, use, and protect your data. GDPR-compliant data handling.",
+  alternates: { canonical: "https://expozor.app/legal/privacy" },
 };
+
+const breadcrumb = breadcrumbJsonLd([
+  { name: "Legal", href: "/legal/privacy" },
+  { name: "Privacy Policy", href: "/legal/privacy" },
+]);
 
 export default function PrivacyPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdString(breadcrumb) }}
+      />
       <Header />
       <main id="main-content" className="pt-20">
         <div className="container-site max-w-3xl section-py">

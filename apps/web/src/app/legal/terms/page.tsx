@@ -1,15 +1,26 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
-  title: "Terms of Service — EXPOZOR",
-  description: "EXPOZOR terms of service.",
+  title: "Terms of Service",
+  description: "EXPOZOR terms of service. Account usage, billing, and legal terms.",
+  alternates: { canonical: "https://expozor.app/legal/terms" },
 };
+
+const breadcrumb = breadcrumbJsonLd([
+  { name: "Legal", href: "/legal/terms" },
+  { name: "Terms of Service", href: "/legal/terms" },
+]);
 
 export default function TermsPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdString(breadcrumb) }}
+      />
       <Header />
       <main id="main-content" className="pt-20">
         <div className="container-site max-w-3xl section-py">

@@ -2,16 +2,24 @@ import type { Metadata } from "next";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Smartphone, Globe, QrCode } from "lucide-react";
+import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
-  title: "Download — EXPOZOR",
+  title: "Download",
   description:
     "Download EXPOZOR for iOS, Android, or use the web app. Join the beta via TestFlight or Play Internal Testing.",
+  alternates: { canonical: "https://expozor.app/download" },
 };
+
+const breadcrumb = breadcrumbJsonLd([{ name: "Download", href: "/download" }]);
 
 export default function DownloadPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdString(breadcrumb) }}
+      />
       <Header />
       <main id="main-content" className="pt-20">
         <div className="container-site section-py">

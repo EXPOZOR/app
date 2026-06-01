@@ -2,15 +2,23 @@ import type { Metadata } from "next";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Mail, MessageSquare } from "lucide-react";
+import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
-  title: "Contact — EXPOZOR",
-  description: "Get in touch with the EXPOZOR team.",
+  title: "Contact",
+  description: "Get in touch with the EXPOZOR team. General inquiries, support, privacy requests, and security disclosure.",
+  alternates: { canonical: "https://expozor.app/contact" },
 };
+
+const breadcrumb = breadcrumbJsonLd([{ name: "Contact", href: "/contact" }]);
 
 export default function ContactPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdString(breadcrumb) }}
+      />
       <Header />
       <main id="main-content" className="pt-20">
         <div className="container-site section-py max-w-xl">
