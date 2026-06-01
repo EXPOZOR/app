@@ -1,0 +1,84 @@
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
+import { HeroSection } from "@/components/sections/hero";
+import { StatsBand } from "@/components/sections/stats-band";
+import { PressBar } from "@/components/sections/press-bar";
+import { DemoSection } from "@/components/sections/demo-section";
+import { FeaturesSection } from "@/components/sections/features-section";
+import { HowItWorksSection } from "@/components/sections/how-it-works";
+import { SecuritySection } from "@/components/sections/security-section";
+import { TestimonialsSection } from "@/components/sections/testimonials-section";
+import { PricingSection } from "@/components/sections/pricing-section";
+import { FaqSection } from "@/components/sections/faq-section";
+import { FinalCtaSection } from "@/components/sections/final-cta";
+import { MobileAppCtaSection } from "@/components/sections/mobile-app-cta";
+import { StickyMobileCtaBar } from "@/components/layout/sticky-mobile-cta";
+
+/**
+ * EXPOZOR homepage — all sections, v3.
+ * Section order matches the brief:
+ *   Hero → Stats Band → Press Bar → Live Demo → Features →
+ *   How It Works → Security → Testimonials → Pricing → FAQ →
+ *   Final CTA → Mobile App CTA → Footer
+ * + Sticky Mobile CTA Bar (fixed bottom, mobile-only)
+ */
+export default function HomePage() {
+  return (
+    <>
+      <Header />
+
+      <main id="main-content">
+        {/* 1. Hero */}
+        <HeroSection />
+
+        {/* 2. Stats Band — new, between Hero and Live Demo */}
+        <StatsBand />
+
+        {/* 3. Press bar */}
+        <PressBar />
+
+        {/* 4. Demo */}
+        <div className="divider" />
+        <DemoSection />
+
+        {/* 5. Features bento */}
+        <div className="divider" />
+        <FeaturesSection />
+
+        {/* 6. How it works */}
+        <div className="divider" />
+        <HowItWorksSection />
+
+        {/* 7. Security */}
+        <div className="divider" />
+        <SecuritySection />
+
+        {/* 8. Testimonials */}
+        <div className="divider" />
+        <TestimonialsSection />
+
+        {/* 9. Pricing */}
+        <div className="divider" />
+        <PricingSection />
+
+        {/* 10. FAQ */}
+        <div className="divider" />
+        <FaqSection />
+
+        {/* 11. Final CTA */}
+        <div className="divider" />
+        <FinalCtaSection />
+
+        {/* 12. Mobile App CTA */}
+        <div className="divider" />
+        <MobileAppCtaSection />
+      </main>
+
+      {/* 12. Footer */}
+      <Footer />
+
+      {/* Sticky mobile CTA bar — fixed bottom, mobile-only */}
+      <StickyMobileCtaBar />
+    </>
+  );
+}

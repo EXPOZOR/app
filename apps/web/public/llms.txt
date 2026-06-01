@@ -1,0 +1,44 @@
+# EXPOZOR LLMs.txt
+# This file helps AI systems understand what EXPOZOR is and how to reference it.
+# See: https://llmstxt.org
+
+# EXPOZOR
+
+> EXPOZOR is an AI-native personal and shared expense manager for a global audience.
+
+EXPOZOR helps individuals and households track expenses, scan receipts, sync bank accounts, categorize transactions with AI, and manage budgets across multiple currencies.
+
+## Key features
+
+- Receipt scanning with on-device OCR (under 2 seconds)
+- Bank sync via Plaid (US/CA), TrueLayer/GoCardless (EU/UK)
+- AI categorization powered by Claude Haiku (rules-first, AI as fallback)
+- Shared household expenses with Splitwise-grade splitting
+- Conversational AI agent (Claude Sonnet, streaming)
+- Budget tracking with zero-based and envelope templates
+- Multi-currency support with FX rate preservation
+- GDPR-compliant with 24-hour data export/delete SLA
+- End-to-end encryption (AES-256-GCM, per-user envelope keys)
+
+## Pricing
+
+- Free: $0/month — 3 accounts, 90-day history
+- Plus: $6/month (or $57.60/year) — unlimited accounts, AI, budgets
+- Pro: $14/month (or $134.40/year) — everything + AI agent, API access, tax exports
+- Households: $24/month (or $230.40/year) — up to 6 members, shared finances, smart settle-up
+
+## Important pages
+
+- [Homepage](https://expozor.app/)
+- [Features](https://expozor.app/features)
+- [Pricing](https://expozor.app/pricing)
+- [Security](https://expozor.app/security)
+- [Documentation](https://expozor.app/docs)
+- [Blog](https://expozor.app/blog)
+- [Privacy Policy](https://expozor.app/legal/privacy)
+
+## Contact
+
+- General: hello@expozor.app
+- Support: support@expozor.app
+- Security: security@expozor.app

@@ -1,0 +1,628 @@
+@import "tailwindcss";
+
+/* ============================================================
+   EXPOZOR v3 — DESIGN TOKENS
+   Single source of truth for all CSS custom properties.
+
+   Naming convention:
+   - --color-*        → raw colour values (used in @theme)
+   - --bg-*           → surface colours (semantic aliases below)
+   - --accent-*       → primary accent (mint #3DDC97)
+   - --text-*         → text colours
+   - --border-*       → border colours
+   - --radius-*       → border radii
+   - --shadow-*       → shadows / glows
+   - --ease-*         → cubic-bezier easings
+   - --dur-*          → durations
+   - --space-*        → section spacing
+   - --z-*            → z-index layers
+
+   Accent discipline: mint is reserved for primary CTAs and the
+   "Most popular" pricing highlight. NOT for decorative gradients,
+   secondary text, hover states of non-CTAs, or feature card icons.
+   ============================================================ */
+
+@layer base {
+  :root {
+    /* ── Surfaces ──────────────────────────────────────────── */
+    --bg:           #0A0A0B;   /* base page background          */
+    --bg-elev-1:    #111114;   /* slightly raised (stats band)  */
+    --bg-elev-2:    #18181C;   /* cards, popovers               */
+    --bg-surface:   #141419;   /* legacy alias → bg-elev-1      */
+    --bg-elevated:  #1C1C22;   /* legacy alias → bg-elev-2      */
+    --bg-overlay:   #242430;   /* dropdowns, modals             */
+    --bg-muted:     #2C2C38;   /* muted backgrounds             */
+
+    /* ── Primary accent: mint (CTA only) ──────────────────── */
+    --accent:         #3DDC97;
+    --accent-hover:   #2EC988;
+    --accent-dim:     #2EC988;   /* legacy alias */
+    --accent-subtle:  color-mix(in oklch, #3DDC97 18%, transparent);
+    --accent-glow:    color-mix(in oklch, #3DDC97 25%, transparent);
+    --accent-border:  color-mix(in oklch, #3DDC97 35%, transparent);
+    --accent-soft:    color-mix(in oklch, #3DDC97 18%, transparent);
+
+    /* ── Secondary accent: lilac (gradient / decorative only) */
+    --accent-2:        #A78BFA;
+    --accent-2-dim:    #8B5CF6;
+    --accent-2-subtle: rgba(167, 139, 250, 0.10);
+
+    /* ── Semantic colours ──────────────────────────────────── */
+    --positive:        #34D399;
+    --positive-subtle: rgba(52, 211, 153, 0.10);
+    --success:         #4ADE80;
+    --success-subtle:  rgba(74, 222, 128, 0.10);
+    --warn:            #FBBF24;
+    --warn-subtle:     rgba(251, 191, 36, 0.10);
+    --danger:          #F87171;
+    --danger-subtle:   rgba(248, 113, 113, 0.10);
+    --info:            #60A5FA;
+    --info-subtle:     rgba(96, 165, 250, 0.10);
+
+    /* ── Text ──────────────────────────────────────────────── */
+    --text:           #F5F5F7;   /* brief canonical name         */
+    --text-primary:   #F5F5F7;   /* legacy alias                 */
+    --text-muted:     #9A9AA2;   /* brief canonical name         */
+    --text-secondary: #A1A1AA;   /* legacy alias                 */
+    --text-tertiary:  #71717A;
+    --text-inverse:   #0A0A0B;
+
+    /* ── Border ────────────────────────────────────────────── */
+    --border:         color-mix(in oklch, white 8%, transparent);
+    --border-strong:  rgba(255, 255, 255, 0.18);
+    --border-accent:  color-mix(in oklch, #3DDC97 35%, transparent);
+
+    /* ── Radius ────────────────────────────────────────────── */
+    --radius-xs:   6px;
+    --radius-sm:   10px;   /* brief value */
+    --radius-md:   14px;   /* brief value */
+    --radius:      12px;   /* legacy alias */
+    --radius-lg:   20px;   /* brief value */
+    --radius-xl:   20px;   /* legacy alias */
+    --radius-2xl:  28px;
+    --radius-full: 9999px;
+
+    /* ── Shadow / glow ─────────────────────────────────────── */
+    --shadow-glow: 0 0 40px color-mix(in oklch, #3DDC97 25%, transparent);
+    --shadow-card: 0 1px 0 rgba(255,255,255,0.04), 0 8px 24px rgba(0,0,0,0.4);
+    --shadow-xs:   0 1px 2px rgba(0, 0, 0, 0.5);
+    --shadow-sm:   0 2px 8px rgba(0, 0, 0, 0.5);
+    --shadow:      0 4px 20px rgba(0, 0, 0, 0.6);
+    --shadow-lg:   0 8px 40px rgba(0, 0, 0, 0.65);
+    --shadow-xl:   0 16px 60px rgba(0, 0, 0, 0.7);
+    --shadow-accent: 0 0 40px rgba(61, 220, 151, 0.12);
+
+    /* ── Motion ────────────────────────────────────────────── */
+    --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --dur-fast:    80ms;
+    --dur-base:    150ms;
+    --dur-slow:    250ms;
+    --dur-xslow:   420ms;
+
+    /* ── Motion enhancement tokens (Phase 1) ───────────────── */
+    /* Base stagger step between animated list children */
+    --stagger-base: 55ms;
+    /* 1 = motion allowed, 0 = prefers-reduced-motion active.
+       JS can read this with getComputedStyle instead of matchMedia. */
+    --motion-ok: 1;
+
+    /* ── Spacing scale ─────────────────────────────────────── */
+    --space-section: clamp(6rem, 10vw, 8rem);   /* 96px desktop / 64px mobile */
+    --space-hero:    clamp(8rem, 16vw, 13rem);
+
+    /* ── Z-index ───────────────────────────────────────────── */
+    --z-base:     0;
+    --z-raised:   10;
+    --z-dropdown: 100;
+    --z-sticky:   200;
+    --z-overlay:  300;
+    --z-modal:    400;
+    --z-toast:    500;
+  }
+}
+
+/* ============================================================
+   TAILWIND v4 @THEME MAP
+   Expose tokens as Tailwind utility classes.
+   No tailwind.config.js — this is the CSS-only config.
+   ============================================================ */
+
+@theme {
+  /* Surfaces */
+  --color-bg:           var(--bg);
+  --color-bg-elev-1:    var(--bg-elev-1);
+  --color-bg-elev-2:    var(--bg-elev-2);
+  --color-bg-surface:   var(--bg-surface);
+  --color-bg-elevated:  var(--bg-elevated);
+  --color-bg-overlay:   var(--bg-overlay);
+  --color-bg-muted:     var(--bg-muted);
+
+  /* Accent */
+  --color-accent:        var(--accent);
+  --color-accent-hover:  var(--accent-hover);
+  --color-accent-dim:    var(--accent-dim);
+  --color-accent-subtle: var(--accent-subtle);
+  --color-accent-glow:   var(--accent-glow);
+  --color-accent-soft:   var(--accent-soft);
+  --color-accent-2:      var(--accent-2);
+  --color-accent-2-dim:  var(--accent-2-dim);
+
+  /* Semantic */
+  --color-positive: var(--positive);
+  --color-success:  var(--success);
+  --color-warn:     var(--warn);
+  --color-danger:   var(--danger);
+  --color-info:     var(--info);
+
+  /* Text */
+  --color-text:           var(--text);
+  --color-text-primary:   var(--text-primary);
+  --color-text-muted:     var(--text-muted);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary:  var(--text-tertiary);
+  --color-text-inverse:   var(--text-inverse);
+
+  /* Border */
+  --color-border:        var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-border-accent: var(--border-accent);
+
+  /* Radius */
+  --radius-xs:      var(--radius-xs);
+  --radius-sm:      var(--radius-sm);
+  --radius-md:      var(--radius-md);
+  --radius-DEFAULT: var(--radius);
+  --radius-lg:      var(--radius-lg);
+  --radius-xl:      var(--radius-xl);
+  --radius-2xl:     var(--radius-2xl);
+  --radius-full:    var(--radius-full);
+
+  /* Font */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+/* ============================================================
+   GLOBAL RESET + BASE
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+  /* Enable interpolate-size for native <details> animation */
+  interpolate-size: allow-keywords;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100dvh;
+}
+
+/* ── Hero ambient glow — CSS-only animated radial mesh ──────── */
+/* Primary teal node */
+body::before {
+  content: "";
+  position: fixed;
+  top: -25%;
+  left: 50%;
+  translate: -50% 0;
+  width: min(900px, 120vw);
+  height: 700px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(61, 220, 151, 0.04) 0%,
+    rgba(167, 139, 250, 0.025) 45%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+  animation: mesh-pulse-1 20s ease-in-out infinite;
+}
+
+/* Secondary lilac node */
+body::after {
+  content: "";
+  position: fixed;
+  top: 30%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(167, 139, 250, 0.025) 0%,
+    transparent 65%
+  );
+  pointer-events: none;
+  z-index: 0;
+  animation: mesh-pulse-2 20s ease-in-out infinite;
+  animation-delay: -7s;
+}
+
+/* ── Skip to content ────────────────────────────────────────── */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  padding: 0.5rem 1rem;
+  background: var(--accent);
+  color: var(--text-inverse);
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: var(--radius);
+  z-index: var(--z-toast);
+  transition: top var(--dur-base) var(--ease-out);
+  text-decoration: none;
+}
+.skip-to-content:focus { top: 1rem; }
+
+/* ── Focus ring — 2px mint, 2px offset, never none ─────────── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Selection ──────────────────────────────────────────────── */
+::selection {
+  background: var(--accent-subtle);
+  color: var(--accent);
+}
+
+/* ── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar          { width: 5px; height: 5px; }
+::-webkit-scrollbar-track    { background: transparent; }
+::-webkit-scrollbar-thumb    { background: var(--bg-overlay); border-radius: var(--radius-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--border-strong); }
+
+/* ============================================================
+   TYPOGRAPHY SCALE — fluid, clamp()-based
+   H1:   clamp(2.75rem, 6vw, 4.5rem)   tracking -0.02em
+   H2:   clamp(1.75rem, 3.5vw, 2.75rem) tracking -0.02em
+   H3:   clamp(1.25rem, 2vw, 1.5rem)
+   Body: 1rem minimum (never below 14px), line-height 1.6
+   Weights: 400 (regular) + 600 (semibold) only
+   ============================================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: clamp(2.75rem, 6vw, 4.5rem);
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  letter-spacing: -0.01em;
+}
+
+p {
+  font-size: 1rem;         /* minimum 16px, never below 14px */
+  line-height: 1.6;
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+
+/* ── Layout container ───────────────────────────────────────── */
+.container-site {
+  width: 100%;
+  max-width: 1200px;       /* brief: 1200px max, 24px gutters */
+  margin-inline: auto;
+  padding-inline: clamp(1.5rem, 5vw, 1.5rem);
+}
+
+/* ── Section spacing: 96px desktop / 64px mobile ───────────── */
+.section-py  { padding-block: var(--space-section); }
+.hero-py     { padding-block: var(--space-hero); }
+
+/* ── Divider ────────────────────────────────────────────────── */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--border) 25%, var(--border) 75%, transparent 100%);
+}
+
+/* ── Glass morphism ─────────────────────────────────────────── */
+.glass {
+  background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.015) 100%);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+}
+
+/* ── Gradient text: mint → lilac ────────────────────────────── */
+/* NOTE: used sparingly — not mint-as-decoration in general */
+.text-gradient {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Ambient glow ───────────────────────────────────────────── */
+.glow-accent { box-shadow: var(--shadow-accent); }
+
+/* ── Section heading pattern (eyebrow + H2 + subtitle) ─────── */
+/*
+  Usage:
+    <p class="eyebrow">LIVE DEMO</p>
+    <h2 class="section-heading">Your complete financial picture</h2>
+    <p class="section-subtitle">Every account…</p>
+*/
+.eyebrow {
+  font-size: 0.6875rem;       /* 11px */
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  line-height: 1;
+  margin-bottom: 0.75rem;
+}
+
+.section-heading {
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.section-subtitle {
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 56ch;
+}
+
+/* ── Buttons ────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.9375rem;      /* 15px */
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    background var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+  text-decoration: none;
+  white-space: nowrap;
+  border: none;
+  padding: 0.625rem 1.25rem;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  min-height: 44px;          /* WCAG 2.5.5 touch target */
+  min-width: 44px;
+}
+
+/* Primary: solid mint — CTA only */
+.btn-primary {
+  background: var(--accent);
+  color: var(--text-inverse);
+  border: 1px solid transparent;
+}
+.btn-primary:hover {
+  background: var(--accent-hover);
+  box-shadow: var(--shadow-glow);
+}
+.btn-primary:active  { transform: scale(0.98); }
+
+/* Large variant */
+.btn-primary-lg {
+  padding: 0.875rem 2rem;
+  font-size: 1rem;
+  border-radius: var(--radius-lg);
+}
+
+/* Ghost / outline */
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-strong);
+}
+.btn-ghost:hover {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+  background: var(--bg-elev-2);
+}
+.btn-ghost:active { transform: scale(0.98); }
+
+/* ── Badge ──────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid var(--border-accent);
+  background: var(--accent-subtle);
+  color: var(--accent);
+}
+
+.badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+
+/* ── .reveal — IntersectionObserver-driven scroll reveal ────── */
+/*
+  JS sets .is-visible when element enters viewport.
+  Pair with: data-reveal-delay="100" for stagger (read in JS).
+*/
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 500ms var(--ease-out),
+    transform 500ms var(--ease-out);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── content-visibility for below-fold long sections ────────── */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
+}
+
+/* ============================================================
+   KEYFRAME ANIMATIONS
+   ============================================================ */
+
+/* Background mesh pulse */
+@keyframes mesh-pulse-1 {
+  0%, 100% { transform: translate(-50%, 0) scale(1);    opacity: 1; }
+  50%       { transform: translate(-50%, 0) scale(1.08); opacity: 0.7; }
+}
+
+@keyframes mesh-pulse-2 {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%       { transform: scale(1.12); opacity: 0.65; }
+}
+
+/* Hero badge shimmer sweep */
+@keyframes shimmer {
+  from { background-position: -200% center; }
+  to   { background-position:  200% center; }
+}
+
+/* Pulsing dot (badge / live indicators) */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.45; transform: scale(0.65); }
+}
+
+/* Gentle vertical float (floating UI cards) */
+@keyframes float-y {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+@keyframes float-y-slow {
+  0%, 100% { transform: translateY(0px) rotate(var(--rotate, 0deg)); }
+  50%       { transform: translateY(-14px) rotate(var(--rotate, 0deg)); }
+}
+
+/* Fade + slide up (base animation for reveal) */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Dashed step connector dot travel */
+@keyframes dot-travel {
+  0%   { top: 0%;   opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Horizontal marquee scroll */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Count-up flash */
+@keyframes count-pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+/* ── MOTION ENHANCEMENT KEYFRAMES (Phase 1) ─────────────────── */
+
+/* Stagger-fade-up: drives staggerChildren lists */
+@keyframes stagger-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Horizontal shimmer sweep: skeleton loaders, CTA shimmer */
+@keyframes sweep-x {
+  from { background-position: -200% center; }
+  to   { background-position:  200% center; }
+}
+
+/* Orbit ring spin: decorative accent rings */
+@keyframes orbit-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Ink underline grow: nav link hover underline */
+@keyframes underline-in {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* Tick-in: number count-up flash */
+@keyframes count-tick {
+  0%   { opacity: 0; transform: translateY(6px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0)   scale(1); }
+}
+
+/* ============================================================
+   REDUCED MOTION — disable non-essential animations
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Signal to JS that motion is suppressed */
+  :root { --motion-ok: 0; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Still allow reveal to show (just without animation) */
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "nav": {
+    "features": "Features",
+    "pricing": "Pricing",
+    "security": "Security",
+    "blog": "Blog",
+    "docs": "Docs",
+    "signIn": "Sign in",
+    "getStarted": "Get started"
+  },
+  "hero": {
+    "badge": "Now in private beta",
+    "headline": "Your finances,\nfinally intelligent.",
+    "subheadline": "EXPOZOR understands your money the way you do — automatically. Scan receipts, sync banks, split with your household, and let AI handle the rest.",
+    "cta": "Join the waitlist",
+    "ctaSecondary": "See it in action",
+    "waitlistPlaceholder": "your@email.com",
+    "waitlistSuccess": "You're on the list! Check your inbox.",
+    "waitlistError": "Something went wrong. Please try again.",
+    "trustedBy": "Trusted by {count} people in beta"
+  },
+  "demo": {
+    "title": "Live demo",
+    "reset": "Reset",
+    "step1": {
+      "label": "Add an expense",
+      "placeholder": "Coffee at Blue Bottle",
+      "amount": "Amount",
+      "category": "Category",
+      "add": "Add expense"
+    },
+    "step2": {
+      "label": "AI categorizes it",
+      "message": "Categorized as Food & Drink with 97% confidence."
+    },
+    "step3": {
+      "label": "Budget updates instantly",
+      "remaining": "remaining this month"
+    }
+  },
+  "features": {
+    "title": "Everything your money needs",
+    "subtitle": "Built for the way you actually spend — not the way a spreadsheet thinks you do.",
+    "items": {
+      "scan": {
+        "title": "Snap & done",
+        "description": "Point your camera at any receipt. On-device OCR extracts every line item in under two seconds."
+      },
+      "sync": {
+        "title": "Bank sync",
+        "description": "Connect your accounts. Transactions flow in automatically, categorized before you even open the app."
+      },
+      "ai": {
+        "title": "AI that learns you",
+        "description": "The more you use EXPOZOR, the smarter it gets. Rules you set, patterns it finds, insights that surprise."
+      },
+      "budgets": {
+        "title": "Budgets that flex",
+        "description": "Zero-based, envelope, or simple limits. Multi-currency rollups. Forecasts that adapt to your income."
+      },
+      "share": {
+        "title": "Shared finances",
+        "description": "Households, trips, group dinners. Smart settle-up minimizes who owes what to whom."
+      },
+      "security": {
+        "title": "Bank-grade security",
+        "description": "Per-user encryption, row-level security, and zero third-party trackers in the authenticated app."
+      }
+    }
+  },
+  "pricing": {
+    "title": "Simple, honest pricing",
+    "subtitle": "Start free. Upgrade when you're ready.",
+    "annual": "Annual",
+    "monthly": "Monthly",
+    "annualDiscount": "Save 20%",
+    "plans": {
+      "free": {
+        "name": "Free",
+        "price": "0",
+        "description": "For individuals getting started.",
+        "cta": "Get started"
+      },
+      "plus": {
+        "name": "Plus",
+        "price": "6",
+        "description": "For people serious about their finances.",
+        "cta": "Start free trial"
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "14",
+        "description": "For power users and freelancers.",
+        "cta": "Start free trial"
+      },
+      "households": {
+        "name": "Households",
+        "price": "24",
+        "description": "For families and couples.",
+        "cta": "Start free trial"
+      }
+    }
+  },
+  "faq": {
+    "title": "Questions, answered.",
+    "items": [
+      {
+        "q": "Is my financial data safe?",
+        "a": "Yes. EXPOZOR uses AES-256-GCM encryption at rest with per-user envelope keys, row-level security, and TLS 1.3 in transit. We never sell your data. You can export or delete everything in 24 hours."
+      },
+      {
+        "q": "Which banks do you support?",
+        "a": "Plaid for US and Canada, TrueLayer and GoCardless for Europe and the UK. Other regions can import via CSV, or use the EXPOZOR Agent to parse receipts and SMS."
+      },
+      {
+        "q": "How does the AI categorization work?",
+        "a": "Your own rules run first. If a rule matches, no AI is used. For unknowns, Claude Haiku classifies in batch. Results with confidence below 60% are flagged for your review — we never auto-apply uncertain categories."
+      },
+      {
+        "q": "Can I share expenses with family?",
+        "a": "Yes. Household plans support shared accounts with per-user privacy on personal accounts. Group splits handle multi-currency with a smart settle-up algorithm."
+      },
+      {
+        "q": "What happens if I want to cancel?",
+        "a": "Cancel anytime, no friction. You keep your data in Free tier. A full export is always one click away."
+      }
+    ]
+  },
+  "footer": {
+    "tagline": "Calm, intelligent money.",
+    "product": "Product",
+    "company": "Company",
+    "legal": "Legal",
+    "links": {
+      "features": "Features",
+      "pricing": "Pricing",
+      "security": "Security",
+      "changelog": "Changelog",
+      "docs": "Docs",
+      "download": "Download",
+      "blog": "Blog",
+      "about": "About",
+      "careers": "Careers",
+      "contact": "Contact",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service"
+    },
+    "copyright": "© {year} EXPOZOR. All rights reserved."
+  }
+}
