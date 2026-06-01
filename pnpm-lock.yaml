@@ -90,9 +90,6 @@ importers:
       drizzle-kit:
         specifier: ^0.30.4
         version: 0.30.6
-      lightningcss-win32-x64-msvc:
-        specifier: ^1.32.0
-        version: 1.32.0
       postcss:
         specifier: ^8.5.4
         version: 8.5.15
@@ -2091,7 +2088,8 @@ snapshots:
   lightningcss-win32-arm64-msvc@1.32.0:
     optional: true
 
-  lightningcss-win32-x64-msvc@1.32.0: {}
+  lightningcss-win32-x64-msvc@1.32.0:
+    optional: true
 
   lightningcss@1.32.0:
     dependencies:
