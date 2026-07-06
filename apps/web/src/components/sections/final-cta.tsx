@@ -1,11 +1,11 @@
 "use client";
 
-import { useRef, useState, useTransition, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, CheckCircle2, AlertCircle, Loader2, Check } from "lucide-react";
 import { joinWaitlist } from "@/app/actions/waitlist";
 import { FINAL_CTA } from "@/content/landing";
 import { EASE_OUT } from "@/lib/motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { AlertCircle, ArrowRight, Check, CheckCircle2, Loader2 } from "lucide-react";
+import { useCallback, useRef, useState, useTransition } from "react";
 
 /* ──────────────────────────────────────────────────────────────
    CONFETTI ENGINE
@@ -14,11 +14,15 @@ import { EASE_OUT } from "@/lib/motion";
    Canvas is aria-hidden and pointer-events: none.
 ────────────────────────────────────────────────────────────── */
 type Particle = {
-  x: number; y: number;
-  vx: number; vy: number;
-  rot: number; rotSpeed: number;
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  rot: number;
+  rotSpeed: number;
   color: string;
-  w: number; h: number;
+  w: number;
+  h: number;
   opacity: number;
   shape: "rect" | "circle" | "ribbon";
 };
@@ -35,7 +39,7 @@ const CONFETTI_COLORS = [
 
 function useConfetti() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const aliveRef  = useRef(false);
+  const aliveRef = useRef(false);
 
   const fire = useCallback(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -44,7 +48,7 @@ function useConfetti() {
     if (!canvas) return;
 
     // Size canvas to viewport
-    canvas.width  = window.innerWidth;
+    canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     canvas.style.display = "block";
 
@@ -54,7 +58,7 @@ function useConfetti() {
     // Spawn 140 particles in a burst from the top-centre area
     const CX = canvas.width / 2;
     const particles: Particle[] = Array.from({ length: 140 }, () => {
-      const angle = (Math.random() * Math.PI * 1.4) - Math.PI * 0.7; // fan upward
+      const angle = Math.random() * Math.PI * 1.4 - Math.PI * 0.7; // fan upward
       const speed = Math.random() * 14 + 4;
       return {
         x: CX + (Math.random() - 0.5) * 200,
@@ -63,11 +67,11 @@ function useConfetti() {
         vy: Math.sin(angle) * speed - 6,
         rot: Math.random() * 360,
         rotSpeed: (Math.random() - 0.5) * 12,
-        color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)]!,
+        color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)] ?? "#3DDC97",
         w: Math.random() * 10 + 4,
         h: Math.random() * 5 + 3,
         opacity: 1,
-        shape: (["rect", "circle", "ribbon"] as const)[Math.floor(Math.random() * 3)]!,
+        shape: (["rect", "circle", "ribbon"] as const)[Math.floor(Math.random() * 3)] ?? "rect",
       };
     });
 
@@ -88,10 +92,10 @@ function useConfetti() {
         living++;
 
         // Physics
-        p.vx  *= 0.99;
-        p.vy  += 0.32;   // gravity
-        p.x   += p.vx;
-        p.y   += p.vy;
+        p.vx *= 0.99;
+        p.vy += 0.32; // gravity
+        p.x += p.vx;
+        p.y += p.vy;
         p.rot += p.rotSpeed;
 
         // Fade when below 65% viewport
@@ -99,7 +103,7 @@ function useConfetti() {
 
         _ctx.save();
         _ctx.globalAlpha = Math.max(0, p.opacity);
-        _ctx.fillStyle   = p.color;
+        _ctx.fillStyle = p.color;
         _ctx.translate(p.x, p.y);
         _ctx.rotate((p.rot * Math.PI) / 180);
 
@@ -140,9 +144,9 @@ function useConfetti() {
    FINAL CTA SECTION
 ────────────────────────────────────────────────────────────── */
 export function FinalCtaSection() {
-  const [status,       setStatus]       = useState<"idle" | "success" | "error">("idle");
-  const [message,      setMessage]      = useState("");
-  const [isPending,    startTransition] = useTransition();
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [message, setMessage] = useState("");
+  const [isPending, startTransition] = useTransition();
   const inputRef = useRef<HTMLInputElement>(null);
   const { canvasRef, fire } = useConfetti();
 
@@ -174,7 +178,6 @@ export function FinalCtaSection() {
       {/* Global confetti canvas — fixed, full-screen, aria-hidden */}
       <canvas
         ref={canvasRef}
-        aria-hidden="true"
         style={{
           display: "none",
           position: "fixed",
@@ -231,7 +234,7 @@ export function FinalCtaSection() {
             transition: {
               delay: 1,
               duration: 5,
-              repeat: Infinity,
+              repeat: Number.POSITIVE_INFINITY,
               ease: "easeInOut",
             },
           }}
@@ -375,12 +378,15 @@ export function FinalCtaSection() {
                     border: "1px solid var(--border-accent)",
                   }}
                 >
-                  <CheckCircle2
-                    size={28}
-                    style={{ color: "var(--accent)" }}
-                    aria-hidden="true"
-                  />
-                  <p style={{ fontSize: "0.9375rem", fontWeight: 600, color: "var(--text-primary)", margin: 0 }}>
+                  <CheckCircle2 size={28} style={{ color: "var(--accent)" }} aria-hidden="true" />
+                  <p
+                    style={{
+                      fontSize: "0.9375rem",
+                      fontWeight: 600,
+                      color: "var(--text-primary)",
+                      margin: 0,
+                    }}
+                  >
                     {message}
                   </p>
                   <p style={{ fontSize: "0.8125rem", color: "var(--text-secondary)", margin: 0 }}>
@@ -396,7 +402,12 @@ export function FinalCtaSection() {
                   onSubmit={handleSubmit}
                   noValidate
                   aria-label="Final waitlist signup"
-                  style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem" }}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "0.75rem",
+                  }}
                 >
                   {/* Email row */}
                   <div
@@ -437,8 +448,14 @@ export function FinalCtaSection() {
                           transition: "border-color var(--dur-base) var(--ease-out)",
                           boxSizing: "border-box",
                         }}
-                        onFocus={(e) => { (e.target as HTMLInputElement).style.borderColor = status === "error" ? "var(--warn)" : "var(--border-accent)"; }}
-                        onBlur={(e) => { (e.target as HTMLInputElement).style.borderColor = status === "error" ? "var(--warn)" : "var(--border)"; }}
+                        onFocus={(e) => {
+                          (e.target as HTMLInputElement).style.borderColor =
+                            status === "error" ? "var(--warn)" : "var(--border-accent)";
+                        }}
+                        onBlur={(e) => {
+                          (e.target as HTMLInputElement).style.borderColor =
+                            status === "error" ? "var(--warn)" : "var(--border)";
+                        }}
                       />
                     </div>
 
@@ -475,7 +492,11 @@ export function FinalCtaSection() {
                       }}
                     >
                       {isPending ? (
-                        <Loader2 size={16} style={{ animation: "spin 1s linear infinite" }} aria-hidden="true" />
+                        <Loader2
+                          size={16}
+                          style={{ animation: "spin 1s linear infinite" }}
+                          aria-hidden="true"
+                        />
                       ) : (
                         <>
                           {FINAL_CTA.cta}

@@ -25,7 +25,7 @@ const testimonials = [
   {
     id: "t3",
     quote:
-      "My partner and I use it for shared expenses. The settle-up feature is brilliant — no more mental math.",
+      "My partner and I use it for tracking our shared household expenses. Splitting entries by category is really useful.",
     name: "Sasha K.",
     role: "Engineer",
     avatar: "S",
@@ -33,42 +33,13 @@ const testimonials = [
   },
 ];
 
-const logos = [
-  { name: "Stripe", width: 64 },
-  { name: "Vercel", width: 80 },
-  { name: "Linear", width: 68 },
-  { name: "Notion", width: 72 },
-  { name: "Figma", width: 56 },
-  { name: "GitHub", width: 72 },
-];
+// Logo wall removed — displayed company names implying endorsement without verification
 
 export function TrustSection() {
   return (
     <section aria-label="Testimonials and trust signals" className="section-py">
       <div className="container-site">
-        {/* Logo wall */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="mb-20"
-        >
-          <p className="text-center text-xs uppercase tracking-widest text-[var(--text-tertiary)] font-medium mb-8">
-            Loved by people who work at
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
-            {logos.map((logo) => (
-              <div
-                key={logo.name}
-                className="text-[var(--text-tertiary)] font-semibold text-base md:text-lg opacity-40 hover:opacity-70 transition-opacity duration-200 select-none"
-                aria-label={logo.name}
-              >
-                {logo.name}
-              </div>
-            ))}
-          </div>
-        </motion.div>
+        {/* Logo wall removed — displayed unverified company names */}
 
         {/* Testimonials */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -83,9 +54,9 @@ export function TrustSection() {
             >
               {/* Stars */}
               <div className="flex gap-0.5" aria-label="5 stars">
-                {Array.from({ length: 5 }).map((_, si) => (
+                {(["s1", "s2", "s3", "s4", "s5"] as const).map((id) => (
                   <Star
-                    key={si}
+                    key={id}
                     size={14}
                     fill="var(--accent-2)"
                     className="text-[var(--accent-2)]"
@@ -103,7 +74,7 @@ export function TrustSection() {
               <footer className="flex items-center gap-3">
                 <div
                   className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0"
-                  style={{ background: t.avatarColor + "22", color: t.avatarColor }}
+                  style={{ background: `${t.avatarColor}22`, color: t.avatarColor }}
                   aria-hidden="true"
                 >
                   {t.avatar}

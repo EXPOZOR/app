@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ArrowRight } from "lucide-react";
 import { NAVBAR } from "@/content/landing";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowRight, Menu, X } from "lucide-react";
+import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
 
 /* ──────────────────────────────────────────────────────────────
    Scroll thresholds (px)
@@ -12,8 +12,8 @@ import { NAVBAR } from "@/content/landing";
    200 → "Private Beta" pill appears next to logo
    The height compresses from 72px → 56px at 60px.
 ────────────────────────────────────────────────────────────── */
-const SCROLL_GLASS  = 60;
-const SCROLL_PILL   = 200;
+const SCROLL_GLASS = 60;
+const SCROLL_PILL = 200;
 
 /* ── Private Beta pill ──────────────────────────────────────── */
 function PrivateBetaPill() {
@@ -30,7 +30,7 @@ function PrivateBetaPill() {
         gap: "5px",
         padding: "3px 9px",
         borderRadius: "var(--radius-full)",
-        fontSize: "0.6875rem",     /* 11px */
+        fontSize: "0.6875rem" /* 11px */,
         fontWeight: 600,
         letterSpacing: "0.06em",
         textTransform: "uppercase",
@@ -111,7 +111,6 @@ function MobileSheet({
       {open && (
         <motion.div
           id="mobile-menu"
-          role="dialog"
           aria-modal="true"
           aria-label="Navigation menu"
           initial={{ opacity: 0, y: -12 }}
@@ -175,7 +174,8 @@ function MobileSheet({
                 border: "none",
                 cursor: "pointer",
                 color: "var(--text-secondary)",
-                transition: "color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out)",
+                transition:
+                  "color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out)",
               }}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLButtonElement).style.color = "var(--text-primary)";
@@ -220,7 +220,8 @@ function MobileSheet({
                     fontWeight: 600,
                     color: "var(--text-secondary)",
                     textDecoration: "none",
-                    transition: "color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out)",
+                    transition:
+                      "color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out)",
                     letterSpacing: "-0.01em",
                   }}
                   onMouseEnter={(e) => {
@@ -251,7 +252,11 @@ function MobileSheet({
             <motion.div
               initial={{ opacity: 0, x: -12 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.05 + NAVBAR.links.length * 0.04 + 0.04, duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              transition={{
+                delay: 0.05 + NAVBAR.links.length * 0.04 + 0.04,
+                duration: 0.22,
+                ease: [0.22, 1, 0.36, 1],
+              }}
             >
               <Link
                 href={NAVBAR.signIn.href}
@@ -264,7 +269,8 @@ function MobileSheet({
                   fontWeight: 600,
                   color: "var(--text-secondary)",
                   textDecoration: "none",
-                  transition: "color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out)",
+                  transition:
+                    "color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out)",
                   letterSpacing: "-0.01em",
                 }}
                 onMouseEnter={(e) => {
@@ -311,7 +317,8 @@ function MobileSheet({
                 letterSpacing: "-0.01em",
                 border: "none",
                 cursor: "pointer",
-                transition: "background var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)",
+                transition:
+                  "background var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)",
                 minHeight: "52px",
               }}
               onMouseEnter={(e) => {
@@ -346,7 +353,7 @@ function MobileSheet({
 
 /* ── Header ─────────────────────────────────────────────────── */
 export function Header() {
-  const [scrollY,    setScrollY]    = useState(0);
+  const [scrollY, setScrollY] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleScroll = useCallback(() => {
@@ -369,10 +376,10 @@ export function Header() {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  const isGlass    = scrollY >= SCROLL_GLASS;
-  const showPill   = scrollY >= SCROLL_PILL;
+  const isGlass = scrollY >= SCROLL_GLASS;
+  const showPill = scrollY >= SCROLL_PILL;
   // Height: 72px → 56px on scroll
-  const navHeight  = isGlass ? "56px" : "72px";
+  const navHeight = isGlass ? "56px" : "72px";
 
   const closeMenu = useCallback(() => setMobileOpen(false), []);
 
@@ -391,14 +398,10 @@ export function Header() {
           right: 0,
           zIndex: "var(--z-sticky)",
           /* Glass effect fades in at SCROLL_GLASS */
-          background: isGlass
-            ? "rgba(10,10,11,0.75)"
-            : "transparent",
+          background: isGlass ? "rgba(10,10,11,0.75)" : "transparent",
           backdropFilter: isGlass ? "blur(16px) saturate(160%)" : "none",
           WebkitBackdropFilter: isGlass ? "blur(16px) saturate(160%)" : "none",
-          borderBottom: isGlass
-            ? "1px solid var(--border)"
-            : "1px solid transparent",
+          borderBottom: isGlass ? "1px solid var(--border)" : "1px solid transparent",
           /* Height compression via transition */
           height: navHeight,
           transition: [
@@ -435,17 +438,19 @@ export function Header() {
                 transition: "opacity var(--dur-base) var(--ease-out)",
               }}
               aria-label="EXPOZOR home"
-              onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = "0.8"; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = "1"; }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLAnchorElement).style.opacity = "0.8";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLAnchorElement).style.opacity = "1";
+              }}
             >
               <LogoMark />
               {NAVBAR.logo}
             </Link>
 
             {/* Private Beta pill — appears after 200px scroll */}
-            <AnimatePresence>
-              {showPill && <PrivateBetaPill key="beta-pill" />}
-            </AnimatePresence>
+            <AnimatePresence>{showPill && <PrivateBetaPill key="beta-pill" />}</AnimatePresence>
           </div>
 
           {/* ── Desktop navigation ──────────────────────────── */}
@@ -595,7 +600,8 @@ export function Header() {
               cursor: "pointer",
               color: "var(--text-secondary)",
               flexShrink: 0,
-              transition: "color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out)",
+              transition:
+                "color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out)",
             }}
             onMouseEnter={(e) => {
               (e.currentTarget as HTMLButtonElement).style.color = "var(--text-primary)";

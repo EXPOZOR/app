@@ -16,17 +16,9 @@ export function useMDXComponents(): NonNullable<MDXComponents> {
       />
     ),
     h3: (props) => (
-      <h3
-        className="text-xl font-semibold text-[var(--text-primary)] mt-8 mb-3"
-        {...props}
-      />
+      <h3 className="text-xl font-semibold text-[var(--text-primary)] mt-8 mb-3" {...props} />
     ),
-    p: (props) => (
-      <p
-        className="text-[var(--text-secondary)] leading-relaxed mb-5"
-        {...props}
-      />
-    ),
+    p: (props) => <p className="text-[var(--text-secondary)] leading-relaxed mb-5" {...props} />,
     ul: (props) => (
       <ul
         className="list-disc list-inside space-y-2 text-[var(--text-secondary)] mb-5 pl-2"
@@ -40,9 +32,7 @@ export function useMDXComponents(): NonNullable<MDXComponents> {
       />
     ),
     li: (props) => <li className="leading-relaxed" {...props} />,
-    strong: (props) => (
-      <strong className="font-semibold text-[var(--text-primary)]" {...props} />
-    ),
+    strong: (props) => <strong className="font-semibold text-[var(--text-primary)]" {...props} />,
     em: (props) => <em className="italic" {...props} />,
     a: ({ href, ...props }) => {
       const isExternal = href?.startsWith("http");
@@ -85,20 +75,12 @@ export function useMDXComponents(): NonNullable<MDXComponents> {
     ),
     table: (props) => (
       <div className="overflow-x-auto mb-5">
-        <table
-          className="w-full border-collapse text-sm"
-          {...props}
-        />
+        <table className="w-full border-collapse text-sm" {...props} />
       </div>
     ),
-    thead: (props) => (
-      <thead className="border-b border-[var(--border)]" {...props} />
-    ),
+    thead: (props) => <thead className="border-b border-[var(--border)]" {...props} />,
     th: (props) => (
-      <th
-        className="text-left py-2 px-3 font-semibold text-[var(--text-primary)]"
-        {...props}
-      />
+      <th className="text-left py-2 px-3 font-semibold text-[var(--text-primary)]" {...props} />
     ),
     td: (props) => (
       <td

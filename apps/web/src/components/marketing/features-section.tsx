@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Camera, RefreshCw, Brain, Target, Users, ShieldCheck } from "lucide-react";
+import { Brain, Camera, RefreshCw, ShieldCheck, Target, Users } from "lucide-react";
 
 const features = [
   {
@@ -15,11 +15,11 @@ const features = [
     visual: <ReceiptVisual />,
   },
   {
-    id: "sync",
+    id: "import",
     icon: RefreshCw,
-    title: "Bank sync",
+    title: "CSV import",
     description:
-      "Connect your accounts. Transactions flow in automatically, categorized before you even open the app.",
+      "Import transactions from any bank's CSV export. Map columns once, then import again in seconds.",
     accent: "#60a5fa",
     size: "small",
     visual: null,
@@ -49,7 +49,7 @@ const features = [
     icon: Users,
     title: "Shared finances",
     description:
-      "Households, trips, group dinners. Smart settle-up minimizes who owes what to whom.",
+      "Track shared household expenses manually. Assign expenses to members and see how costs are split.",
     accent: "#f87171",
     size: "small",
     visual: null,
@@ -57,9 +57,9 @@ const features = [
   {
     id: "security",
     icon: ShieldCheck,
-    title: "Bank-grade security",
+    title: "Built with security in mind",
     description:
-      "Per-user encryption, row-level security, and zero third-party trackers in the authenticated app.",
+      "HTTPS in transit. No bank credentials collected. No money movement. See our Security page for details.",
     accent: "#4ade80",
     size: "small",
     visual: null,
@@ -80,10 +80,7 @@ export function FeaturesSection() {
           <p className="text-xs uppercase tracking-widest font-semibold text-[var(--accent)] mb-3">
             Features
           </p>
-          <h2
-            id="features-heading"
-            className="text-4xl md:text-5xl font-bold tracking-tight mb-4"
-          >
+          <h2 id="features-heading" className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
             Everything your money needs
           </h2>
           <p className="text-[var(--text-secondary)] text-lg max-w-xl mx-auto">
@@ -149,7 +146,7 @@ function BentoTile({
       <div
         className="w-10 h-10 rounded-[var(--radius)] flex items-center justify-center shrink-0"
         style={{
-          background: feature.accent + "1A",
+          background: `${feature.accent}1A`,
           border: `1px solid ${feature.accent}33`,
         }}
         aria-hidden="true"
@@ -160,7 +157,9 @@ function BentoTile({
       {/* Content */}
       <div>
         <h3 className="font-semibold text-[var(--text-primary)] text-lg mb-1.5">{feature.title}</h3>
-        <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{feature.description}</p>
+        <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+          {feature.description}
+        </p>
       </div>
 
       {/* Visual (for large/medium tiles) */}
@@ -184,21 +183,56 @@ function ReceiptVisual() {
       className="w-full max-w-[240px] opacity-60"
       aria-hidden="true"
     >
-      <rect x="60" y="10" width="120" height="140" rx="8" fill="#1f1f24" stroke="#7CF5C2" strokeOpacity="0.3" strokeWidth="1" />
+      <rect
+        x="60"
+        y="10"
+        width="120"
+        height="140"
+        rx="8"
+        fill="#1f1f24"
+        stroke="#7CF5C2"
+        strokeOpacity="0.3"
+        strokeWidth="1"
+      />
       <rect x="72" y="28" width="96" height="8" rx="4" fill="#7CF5C2" fillOpacity="0.3" />
       <rect x="72" y="44" width="60" height="6" rx="3" fill="#71717a" fillOpacity="0.5" />
       <rect x="72" y="60" width="96" height="1" rx="0.5" fill="#3f3f46" />
       {[68, 80, 92, 104].map((y, i) => (
         <g key={y}>
-          <rect x="72" y={y + 4} width={50 + i * 5} height="5" rx="2.5" fill="#a1a1aa" fillOpacity="0.3" />
-          <rect x={155 + i} y={y + 4} width="28" height="5" rx="2.5" fill="#FFB36B" fillOpacity="0.4" />
+          <rect
+            x="72"
+            y={y + 4}
+            width={50 + i * 5}
+            height="5"
+            rx="2.5"
+            fill="#a1a1aa"
+            fillOpacity="0.3"
+          />
+          <rect
+            x={155 + i}
+            y={y + 4}
+            width="28"
+            height="5"
+            rx="2.5"
+            fill="#FFB36B"
+            fillOpacity="0.4"
+          />
         </g>
       ))}
       <rect x="72" y="128" width="96" height="1" rx="0.5" fill="#3f3f46" />
       <rect x="72" y="136" width="40" height="7" rx="3.5" fill="#7CF5C2" fillOpacity="0.5" />
       <rect x="148" y="136" width="20" height="7" rx="3.5" fill="#7CF5C2" fillOpacity="0.8" />
       {/* Scan line */}
-      <line x1="56" y1="80" x2="184" y2="80" stroke="#7CF5C2" strokeWidth="1.5" strokeOpacity="0.7" strokeDasharray="4 2" />
+      <line
+        x1="56"
+        y1="80"
+        x2="184"
+        y2="80"
+        stroke="#7CF5C2"
+        strokeWidth="1.5"
+        strokeOpacity="0.7"
+        strokeDasharray="4 2"
+      />
       <circle cx="56" cy="80" r="3" fill="#7CF5C2" fillOpacity="0.8" />
       <circle cx="184" cy="80" r="3" fill="#7CF5C2" fillOpacity="0.8" />
     </svg>

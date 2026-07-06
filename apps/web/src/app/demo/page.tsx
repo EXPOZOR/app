@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
-import { InteractiveDemo } from "@/components/marketing/interactive-demo";
 import { Header } from "@/components/layout/header";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { InteractiveDemo } from "@/components/marketing/interactive-demo";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
+import { ArrowLeft } from "lucide-react";
+import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Live Demo",
   description:
-    "Try EXPOZOR's expense tracking demo in full screen. Add expenses, see AI categorization, and watch budgets update — all client-side, no account needed.",
+    "Sample expense tracking demo. Try adding expenses with generic sample data — no account required.",
   robots: { index: false, follow: false },
   alternates: { canonical: "https://expozor.com/demo" },
 };
@@ -23,7 +23,10 @@ export default function DemoPage() {
         dangerouslySetInnerHTML={{ __html: jsonLdString(breadcrumb) }}
       />
       <Header />
-      <main id="main-content" className="min-h-screen flex flex-col items-center justify-center px-4 py-24">
+      <main
+        id="main-content"
+        className="min-h-screen flex flex-col items-center justify-center px-4 py-24"
+      >
         <div className="w-full max-w-3xl">
           <div className="flex items-center justify-between mb-8">
             <Link
@@ -37,7 +40,7 @@ export default function DemoPage() {
             <div>
               <h1 className="text-2xl font-bold text-[var(--text-primary)]">Interactive sandbox</h1>
               <p className="text-sm text-[var(--text-secondary)] mt-1">
-                Full-screen demo — no account, no data leaves your browser.
+                Sample data only. Do not enter real financial information.
               </p>
             </div>
           </div>

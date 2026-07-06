@@ -24,7 +24,7 @@
     "reset": "Reset",
     "step1": {
       "label": "Add an expense",
-      "placeholder": "Coffee at Blue Bottle",
+      "placeholder": "e.g. Coffee Shop, $4.50",
       "amount": "Amount",
       "category": "Category",
       "add": "Add expense"
@@ -46,9 +46,9 @@
         "title": "Snap & done",
         "description": "Point your camera at any receipt. On-device OCR extracts every line item in under two seconds."
       },
-      "sync": {
-        "title": "Bank sync",
-        "description": "Connect your accounts. Transactions flow in automatically, categorized before you even open the app."
+      "import": {
+        "title": "CSV import",
+        "description": "Import transactions from any bank's CSV export. Map columns once, then import again in seconds."
       },
       "ai": {
         "title": "AI that learns you",
@@ -60,11 +60,11 @@
       },
       "share": {
         "title": "Shared finances",
-        "description": "Households, trips, group dinners. Smart settle-up minimizes who owes what to whom."
+        "description": "Track shared household expenses manually. Assign expenses to members and see how costs are split."
       },
       "security": {
-        "title": "Bank-grade security",
-        "description": "Per-user encryption, row-level security, and zero third-party trackers in the authenticated app."
+        "title": "Built with security in mind",
+        "description": "HTTPS in transit. No bank credentials collected. No money movement. See our Security page for details."
       }
     }
   },
@@ -106,19 +106,19 @@
     "items": [
       {
         "q": "Is my financial data safe?",
-        "a": "Yes. EXPOZOR uses AES-256-GCM encryption at rest with per-user envelope keys, row-level security, and TLS 1.3 in transit. We never sell your data. You can export or delete everything in 24 hours."
+        "a": "EXPOZOR uses HTTPS for all data in transit. We do not sell your data, and you can request deletion of your account and data at any time. Additional security details are on our Security page."
       },
       {
-        "q": "Which banks do you support?",
-        "a": "Plaid for US and Canada, TrueLayer and GoCardless for Europe and the UK. Other regions can import via CSV, or use the EXPOZOR Agent to parse receipts and SMS."
+        "q": "Do I need to connect my bank?",
+        "a": "No. EXPOZOR does not require a bank connection. You add expenses manually, by uploading a receipt or screenshot, or by importing a CSV file."
       },
       {
         "q": "How does the AI categorization work?",
         "a": "Your own rules run first. If a rule matches, no AI is used. For unknowns, Claude Haiku classifies in batch. Results with confidence below 60% are flagged for your review — we never auto-apply uncertain categories."
       },
       {
-        "q": "Can I share expenses with family?",
-        "a": "Yes. Household plans support shared accounts with per-user privacy on personal accounts. Group splits handle multi-currency with a smart settle-up algorithm."
+        "q": "Can I share expenses with my household?",
+        "a": "Shared expense tracking is a planned feature. You can split expenses across household members manually. Automatic money transfer or settlement between users is not supported."
       },
       {
         "q": "What happens if I want to cancel?",

@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { ArrowLeft, Clock, Calendar } from "lucide-react";
 import type { BlogPost } from "@/lib/mdx";
+import { ArrowLeft, Calendar, Clock } from "lucide-react";
+import Link from "next/link";
 
 const CATEGORY_COLORS: Record<string, string> = {
   Company: "#7CF5C2",
@@ -51,9 +51,7 @@ export function PostHeader({ post }: { post: BlogPost }) {
       {/* Meta row */}
       <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--text-tertiary)] pb-8 border-b border-[var(--border)]">
         <div>
-          <span className="font-medium text-[var(--text-primary)]">
-            {post.frontmatter.author}
-          </span>
+          <span className="font-medium text-[var(--text-primary)]">{post.frontmatter.author}</span>
           {post.frontmatter.authorRole && (
             <span className="ml-1 text-[var(--text-tertiary)]">
               · {post.frontmatter.authorRole}

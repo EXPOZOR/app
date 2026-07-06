@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
 import { PostCard } from "@/components/blog/post-card";
+import { Footer } from "@/components/layout/footer";
+import { Header } from "@/components/layout/header";
 import { getAllBlogPosts, getBlogCategories } from "@/lib/mdx";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 import { Rss } from "lucide-react";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -34,12 +34,10 @@ export default function BlogPage() {
           <p className="text-xs uppercase tracking-widest font-semibold text-[var(--accent)] mb-3">
             Blog
           </p>
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-4">
-            Insights & updates
-          </h1>
+          <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-4">Insights & updates</h1>
           <p className="text-xl text-[var(--text-secondary)] leading-relaxed">
-            From the team building EXPOZOR — product updates, engineering
-            deep-dives, and thoughts on personal finance.
+            From the team building EXPOZOR — product updates, engineering deep-dives, and thoughts
+            on personal finance.
           </p>
           <div className="mt-6">
             <a
@@ -94,9 +92,7 @@ export default function BlogPage() {
 
           {posts.length === 0 && (
             <div className="text-center py-20">
-              <p className="text-[var(--text-tertiary)] text-lg">
-                No posts yet. Check back soon!
-              </p>
+              <p className="text-[var(--text-tertiary)] text-lg">No posts yet. Check back soon!</p>
             </div>
           )}
         </section>

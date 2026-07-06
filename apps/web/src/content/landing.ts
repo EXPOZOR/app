@@ -5,16 +5,16 @@
  */
 
 export const HERO = {
-  badge: "✦ AI-Powered Finance",
-  headline: "Your finances, finally intelligent.",
-  displayWord: "intelligent", // gradient applied to this word in the headline
+  badge: "✦ Expense Tracking, Simplified",
+  headline: "Know where your money is really going.",
+  displayWord: "really", // gradient applied to this word in the headline
   subhead:
-    "AI that categorizes, budgets, and splits your money — automatically.",
-  cta: "Join the waitlist",
-  ctaAriaLabel: "Join the EXPOZOR waitlist — Founders' pricing locked in for life",
-  secondaryCta: "Watch 60-sec demo",
-  secondaryCtaAriaLabel: "Watch the 60-second EXPOZOR demo",
-  microcopy: "Founders' pricing locked in for life. No credit card required.",
+    "Track expenses, spot hidden fees, and understand your spending — no bank connection required.",
+  cta: "Join early access",
+  ctaAriaLabel: "Join EXPOZOR early access",
+  secondaryCta: "See how it works",
+  secondaryCtaAriaLabel: "See how EXPOZOR works",
+  microcopy: "No bank login required. No credit card needed to get started.",
   inputPlaceholder: "you@example.com",
 } as const;
 
@@ -24,7 +24,7 @@ export const NAVBAR = {
     { label: "Features", href: "#features" },
     { label: "How it works", href: "#how-it-works" },
     { label: "Pricing", href: "#pricing" },
-    { label: "Security", href: "#security" },
+    { label: "Security", href: "/security" },
     { label: "Changelog", href: "/changelog" },
   ],
   cta: { label: "Get early access", href: "#waitlist" },
@@ -37,125 +37,129 @@ export const PRESS = {
 } as const;
 
 export const DEMO = {
-  badge: "Live demo",
+  badge: "Interactive demo",
   title: "See it in action",
   description:
-    "Add an expense, watch AI categorize it instantly, and see your budget update in real time. No account needed.",
-  disclaimer: "Runs entirely in your browser. No data leaves your device.",
+    "Add an expense, watch EXPOZOR organize it, and see your spending summary update. No account needed.",
+  // Safer: do not promise "nothing is saved or transmitted" because analytics,
+  // logging, or server actions may run. Be honest instead.
+  disclaimer: "Sample data only. Do not enter real financial information in the demo.",
 } as const;
 
 export const FEATURES = {
-  title: "Everything your money needs",
-  subtitle:
-    "Built for the way you actually spend — not the way a spreadsheet thinks you do.",
+  title: "Everything you need to track spending",
+  subtitle: "Built for the way you actually spend — manual entry, receipts, screenshots, or CSV.",
   cards: [
     {
-      id: "scan",
-      title: "Snap & done",
-      subtitle: "2-second OCR receipt scanning",
+      id: "manual",
+      title: "Add expenses instantly",
+      subtitle: "Manual entry, your way",
       description:
-        "On-device ML Kit reads your receipt before you've put your phone away. Amount, date, merchant, line items — extracted in 2 seconds.",
-      accent: "#5EEAD4",
+        "Enter any expense in seconds — date, merchant, amount, category, payment method, notes, and tags. No bank required.",
+      accent: "#3DDC97",
       size: "large" as const,
-      icon: "Camera",
-      stat: "2s average scan",
+      icon: "PlusCircle",
+      stat: "Fast manual entry",
     },
     {
-      id: "sync",
-      title: "Bank sync",
-      subtitle: "12,000+ banks supported",
+      id: "upload",
+      title: "Upload receipts & screenshots",
+      subtitle: "Drop in any image or PDF",
       description:
-        "Plaid for US/CA, TrueLayer for EU/UK. Read-only access — we never touch your money.",
+        "Upload a receipt, transaction screenshot, or PDF. EXPOZOR extracts details with AI/OCR — you review and confirm before anything is saved.",
       accent: "#A78BFA",
       size: "large" as const,
-      icon: "Building2",
-      stat: "12,000+ institutions",
+      icon: "Upload",
+      stat: "Receipt, screenshot, PDF",
     },
     {
       id: "ai",
-      title: "AI categorization",
-      subtitle: "Rules-first, AI as fallback",
+      title: "AI-assisted categorization",
+      subtitle: "Assistive, not automatic",
       description:
-        "Your rules run first. AI only steps in for unknowns, and always shows its confidence score.",
+        "AI suggests categories and flags recurring charges or possible fees. You review every suggestion before it is applied.",
       accent: "#60A5FA",
       size: "small" as const,
       icon: "Sparkles",
-      stat: "98% accuracy",
+      stat: "User-reviewed always",
     },
     {
-      id: "budgets",
-      title: "Zero-based budgets",
-      subtitle: "Every dollar has a job",
+      id: "csv",
+      title: "CSV import",
+      subtitle: "Bring your own data",
       description:
-        "Envelope-style budgets that roll over intelligently. See exactly where you stand, always.",
+        "Import from any CSV export — map columns, preview rows, confirm. Full control over what gets imported.",
       accent: "#34D399",
       size: "small" as const,
-      icon: "PieChart",
-      stat: "14 budget templates",
+      icon: "FileSpreadsheet",
+      stat: "Any CSV format",
     },
     {
-      id: "split",
-      title: "Split with anyone",
-      subtitle: "Splitwise-grade splitting",
+      id: "recurring",
+      title: "Recurring expense detection",
+      subtitle: "Spot what repeats",
       description:
-        "Multi-currency group expenses with a smart settle-up algorithm that minimizes transactions.",
+        "EXPOZOR highlights charges that appear monthly — subscriptions, memberships, and services you may have forgotten.",
       accent: "#FB923C",
       size: "small" as const,
-      icon: "Users",
-      stat: "Supports 150+ currencies",
+      icon: "RefreshCw",
+      stat: "Subscription awareness",
     },
     {
-      id: "agent",
-      title: "AI agent",
-      subtitle: "Ask in plain English",
+      id: "reports",
+      title: "Monthly spending summaries",
+      subtitle: "One clear picture",
       description:
-        "\"What did I spend on coffee last month?\" — get an answer in seconds, not pivot tables.",
+        "See total spent, top categories, top merchants, and possible hidden fees. Export support is planned before public launch.",
       accent: "#F472B6",
       size: "small" as const,
-      icon: "Bot",
-      stat: "Powered by Claude",
+      icon: "BarChart2",
+      // TODO: upgrade stat to "Export anytime" once CSV export is confirmed working
+      stat: "Export support",
     },
   ],
 } as const;
 
 export const HOW_IT_WORKS = {
-  title: "Up and running in minutes",
+  title: "Simple to start, useful every day",
   steps: [
     {
       number: "01",
-      title: "Connect your accounts",
+      title: "Add your expenses",
       description:
-        "Link your bank, credit cards, and wallets in 60 seconds. Read-only access. We never touch your money.",
-      icon: "Link2",
+        "Enter expenses manually, upload receipts or transaction screenshots, or import a CSV file. No bank login needed.",
+      icon: "PlusCircle",
     },
     {
       number: "02",
-      title: "Snap or sync transactions",
+      title: "Review and organize",
       description:
-        "Receipts auto-categorize in 2 seconds. Bank transactions sync automatically overnight.",
-      icon: "ScanLine",
+        "EXPOZOR suggests categories and flags recurring charges and possible fees. You review and edit everything before it is saved.",
+      icon: "CheckSquare",
     },
     {
       number: "03",
-      title: "Get clarity, not chaos",
+      title: "Understand your spending",
       description:
-        "Budgets, spending trends, and insights surface automatically. Ask the AI agent anything.",
+        "See spending by category, merchant, and month. Spot small charges that add up. Export a clean summary any time.",
       icon: "TrendingUp",
     },
   ],
 } as const;
 
 export const SECURITY = {
-  title: "Your money data is sacred.",
+  title: "No bank connection required.",
   subtitle:
-    "We designed EXPOZOR with security as a first-class requirement — not an afterthought.",
+    "EXPOZOR does not ask for your bank login, does not move money, and does not collect bank credentials. You decide what you enter, upload, import, edit, export, or delete.",
   badges: [
-    { label: "AES-256-GCM", icon: "Lock" },
-    { label: "Read-only bank access", icon: "Eye" },
-    { label: "GDPR compliant", icon: "ShieldCheck" },
-    { label: "SOC 2 in progress", icon: "FileCheck" },
-    { label: "No data sold. Ever.", icon: "Ban" },
-    { label: "EU + US hosting", icon: "Globe" },
+    { label: "No bank login required", icon: "ShieldOff" },
+    { label: "No money movement", icon: "Ban" },
+    { label: "Encrypted in transit (HTTPS)", icon: "Lock" },
+    { label: "User-reviewed data", icon: "Eye" },
+    // TODO: upgrade to "Data export available" once export is confirmed working
+    { label: "Export support", icon: "Download" },
+    // TODO: confirm support email/process before launch
+    { label: "Deletion requests supported", icon: "Trash2" },
   ],
 } as const;
 
@@ -164,7 +168,7 @@ export const SECURITY = {
 
 export const PRICING = {
   title: "Simple, honest pricing",
-  subtitle: "Start free. Upgrade when you're ready. Cancel anytime.",
+  subtitle: "Join early access. Upgrade when billing goes live.",
   annualDiscount: 20,
   tiers: [
     {
@@ -173,15 +177,15 @@ export const PRICING = {
       tagline: "Get started for nothing",
       priceMonthly: 0,
       priceAnnual: 0,
-      cta: "Join waitlist",
+      cta: "Join early access",
       ctaVariant: "ghost" as const,
       highlight: false,
       features: [
-        "3 connected accounts",
-        "90-day transaction history",
-        "Manual receipt entry",
-        "Basic budgets (3 envelopes)",
-        "CSV export",
+        "Manual expense entry",
+        "Receipt upload",
+        "90-day expense history",
+        "Basic categories",
+        "Monthly summary",
       ],
     },
     {
@@ -189,18 +193,17 @@ export const PRICING = {
       name: "Plus",
       tagline: "For the serious tracker",
       priceMonthly: 6,
-      priceAnnual: 4.80,
-      cta: "Join waitlist",
+      priceAnnual: 4.8,
+      cta: "Join early access",
       ctaVariant: "ghost" as const,
       highlight: false,
       features: [
-        "Unlimited accounts",
-        "Full transaction history",
-        "Receipt scanning (OCR)",
-        "Bank sync (Plaid / TrueLayer)",
-        "AI categorization",
-        "Unlimited budgets",
-        "Multi-currency",
+        "Unlimited expense history",
+        "Receipt scanning (AI/OCR)",
+        "CSV import",
+        "AI-assisted categorization",
+        "Recurring expense detection",
+        "Monthly spending summaries",
       ],
     },
     {
@@ -208,15 +211,16 @@ export const PRICING = {
       name: "Pro",
       tagline: "For power users & freelancers",
       priceMonthly: 14,
-      priceAnnual: 11.20,
-      cta: "Join waitlist",
+      priceAnnual: 11.2,
+      cta: "Join early access",
       ctaVariant: "primary" as const,
       highlight: true,
       badge: "Most popular",
       features: [
         "Everything in Plus",
-        "AI agent (conversational)",
-        "Tax export (CSV + PDF)",
+        "AI spending insights",
+        // TODO: confirm tax export is implemented before launch
+        "Export support",
         "API access",
         "Priority support",
         "Early access to new features",
@@ -227,30 +231,29 @@ export const PRICING = {
       name: "Family",
       tagline: "Shared finances, made easy",
       priceMonthly: 24,
-      priceAnnual: 19.20,
-      cta: "Join waitlist",
+      priceAnnual: 19.2,
+      cta: "Join early access",
       ctaVariant: "ghost" as const,
       highlight: false,
       features: [
         "Everything in Pro",
         "Up to 6 members",
-        "Shared + private accounts",
-        "Smart settle-up",
-        "Family budget dashboard",
+        "Shared + private expense views",
+        "Family spending dashboard",
         "Per-member privacy controls",
       ],
     },
   ],
   comparisonFeatures: [
-    { label: "Connected accounts", free: "3", plus: "Unlimited", pro: "Unlimited", family: "6 members" },
-    { label: "Transaction history", free: "90 days", plus: "Unlimited", pro: "Unlimited", family: "Unlimited" },
-    { label: "Receipt scanning", free: "—", plus: "✓", pro: "✓", family: "✓" },
-    { label: "Bank sync", free: "—", plus: "✓", pro: "✓", family: "✓" },
+    { label: "Manual expense entry", free: "✓", plus: "✓", pro: "✓", family: "✓" },
+    { label: "Receipt upload", free: "✓", plus: "✓", pro: "✓", family: "✓" },
+    { label: "CSV import", free: "—", plus: "✓", pro: "✓", family: "✓" },
     { label: "AI categorization", free: "—", plus: "✓", pro: "✓", family: "✓" },
-    { label: "AI agent (chat)", free: "—", plus: "—", pro: "✓", family: "✓" },
-    { label: "Tax export", free: "—", plus: "—", pro: "✓", family: "✓" },
+    { label: "Monthly summaries", free: "✓", plus: "✓", pro: "✓", family: "✓" },
+    { label: "AI spending insights", free: "—", plus: "—", pro: "✓", family: "✓" },
+    { label: "Export support", free: "—", plus: "—", pro: "✓", family: "✓" },
     { label: "API access", free: "—", plus: "—", pro: "✓", family: "✓" },
-    { label: "Shared expenses", free: "—", plus: "—", pro: "—", family: "✓" },
+    { label: "Shared expense views", free: "—", plus: "—", pro: "—", family: "✓" },
     { label: "Family dashboard", free: "—", plus: "—", pro: "—", family: "✓" },
   ],
 } as const;
@@ -259,71 +262,75 @@ export const FAQ = {
   title: "Questions, answered.",
   items: [
     {
-      id: "faq-safe",
-      question: "Is my financial data safe?",
+      id: "faq-no-bank",
+      question: "Do I need to connect my bank?",
       answer:
-        "Yes. All data is encrypted at rest with AES-256-GCM using per-user envelope keys. We use row-level security at the database layer, TLS 1.3 in transit, and strict CSP headers. We never sell your data.",
+        "No. EXPOZOR is designed to work without bank connections. You can add expenses manually, upload receipts or screenshots, or import CSV files.",
     },
     {
-      id: "faq-readonly",
-      question: "Can EXPOZOR move my money?",
-      answer:
-        "Never. We connect via read-only APIs (Plaid in the US/CA, TrueLayer in the EU/UK). EXPOZOR can see your transactions — nothing more.",
+      id: "faq-credentials",
+      question: "Does EXPOZOR collect my bank login?",
+      answer: "No. EXPOZOR does not require or collect bank login credentials of any kind.",
     },
     {
-      id: "faq-banks",
-      question: "Which banks do you support?",
+      id: "faq-money",
+      question: "Does EXPOZOR move, hold, or transfer money?",
       answer:
-        "Over 12,000 institutions via Plaid (US and Canada) and TrueLayer/GoCardless (Europe and UK). Other regions can import via CSV or use the EXPOZOR Agent to parse receipts and SMS.",
+        "No. EXPOZOR is only for tracking and understanding expenses. It does not move, hold, transmit, or manage funds.",
+    },
+    {
+      id: "faq-advice",
+      question: "Is EXPOZOR financial advice?",
+      answer:
+        "No. EXPOZOR provides organization, categorization, and spending insights for informational purposes only. It does not provide financial, investment, tax, legal, accounting, credit, or professional advice of any kind.",
     },
     {
       id: "faq-ai",
-      question: "How does the AI categorization work?",
+      question: "Can AI or OCR make mistakes?",
       answer:
-        "Your own rules run first. If a rule matches, no AI is called. For unknowns, Claude Haiku classifies in batch. Results below 60% confidence are flagged for your review — we never auto-apply uncertain categories.",
+        "Yes. AI/OCR features are assistive and may be inaccurate. Users should always review and edit extracted or categorized data before relying on it.",
+    },
+    {
+      id: "faq-export",
+      question: "Can I export or delete my data?",
+      // TODO: update this answer once export implementation is confirmed and support email is live
+      // If export IS implemented: "Yes. You can export your expense data from your account settings."
+      // If export is NOT yet implemented, use the safer version below:
+      answer:
+        "Export support is planned before public launch. To request a copy of your data, contact us at the email listed on the Contact page.",
+    },
+    {
+      id: "faq-upload",
+      question: "What can I upload?",
+      answer:
+        "Receipts, transaction screenshots, and CSV files. You can also enter expenses manually at any time.",
     },
     {
       id: "faq-cancel",
       question: "What happens if I cancel?",
+      // TODO: update when billing is live to confirm free-tier retention and export availability
       answer:
-        "Cancel anytime — no friction, no dark patterns. You keep access to the Free tier. A full data export is always one click away.",
-    },
-    {
-      id: "faq-family",
-      question: "How does Family sharing work?",
-      answer:
-        "Add up to 6 members. Each person has private accounts (only they can see) and shared accounts (visible to all members). The smart settle-up minimizes the number of payments needed.",
-    },
-    {
-      id: "faq-refund",
-      question: "Do you offer refunds?",
-      answer:
-        "Paid plans billed monthly are non-refundable for the current period. Annual plans can be refunded pro-rata within 14 days of purchase. Email support@expozor.app.",
-    },
-    {
-      id: "faq-gdpr",
-      question: "Is EXPOZOR GDPR compliant?",
-      answer:
-        "Yes. You can export or delete all your personal data in under 24 hours from Settings → Privacy. Inactive accounts are warned after 24 months then auto-deleted. We offer EU hosting (Frankfurt region).",
+        "Billing is not live yet. Paid-plan cancellation terms will be finalized before launch. If you join early access, you can contact support to request account or data changes.",
     },
   ],
 } as const;
 
 export const FINAL_CTA = {
   headline: "Stop guessing where your money went.",
-  subhead: "Join the waitlist and lock in Founders' pricing for life.",
-  cta: "Join the waitlist",
-  ctaAriaLabel: "Join the EXPOZOR waitlist",
+  subhead: "Join early access and start tracking your spending today.",
+  cta: "Join early access",
+  ctaAriaLabel: "Join EXPOZOR early access",
   bullets: [
-    "AI-categorized first 30 days",
-    "Net-worth snapshot",
-    "1-tap budget setup",
+    "No bank connection required",
+    "Upload receipts or import CSV",
+    "Understand your spending clearly",
   ],
-  microcopy: "Free plan available · Cancel anytime · Setup in 2 minutes",
+  // TODO: update microcopy when billing goes live
+  microcopy: "No bank login required · No credit card needed for early access",
 } as const;
 
 export const FOOTER = {
-  tagline: "Finance, finally intelligent.",
+  tagline: "Know where your money is really going.",
   columns: [
     {
       heading: "Product",
@@ -347,10 +354,13 @@ export const FOOTER = {
     {
       heading: "Legal",
       links: [
-        { label: "Privacy", href: "/legal/privacy" },
-        { label: "Terms", href: "/legal/terms" },
+        { label: "Terms of Service", href: "/legal/terms" },
+        { label: "Privacy Policy", href: "/legal/privacy" },
+        { label: "Refund & Cancellation", href: "/legal/refund" },
         { label: "Security", href: "/security" },
-        { label: "DPA", href: "/legal/dpa" },
+        { label: "Subprocessors", href: "/legal/subprocessors" },
+        { label: "Cookie Policy", href: "/legal/cookies" },
+        { label: "Disclaimer", href: "/legal/disclaimer" },
       ],
     },
   ],
@@ -358,6 +368,8 @@ export const FOOTER = {
     { label: "Twitter / X", href: "https://twitter.com/expozor", icon: "Twitter" },
     { label: "GitHub", href: "https://github.com/expozor", icon: "Github" },
   ],
-  legal: "© 2026 EXPOZOR · Made with ☕ in Kenitra",
+  // Do NOT write "EXPOZOR, Inc." or "EXPOZOR LLC" — legal entity not yet formed
+  // TODO: update legal entity name after LLC formation and EIN issuance.
+  legal: "© 2026 EXPOZOR. All rights reserved.",
   madeWith: "",
 } as const;

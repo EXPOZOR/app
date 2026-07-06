@@ -1,21 +1,21 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { EASE_OUT } from "@/lib/motion";
-import { ShieldCheck, Zap, Eye, Lock, Smartphone, Globe } from "lucide-react";
+import { motion } from "framer-motion";
+import { Ban, FileSpreadsheet, PenLine, ShieldOff, Sparkles, Upload } from "lucide-react";
 
 /* ──────────────────────────────────────────────────────────────
-   TRUST BAR — replaces fake "As featured in" press bar.
-   Shows real product capabilities, not fabricated press coverage.
+   TRUST BAR — product positioning badges.
+   Shows real capabilities, not unverifiable compliance claims.
 ────────────────────────────────────────────────────────────── */
 
 const TRUST_BADGES = [
-  { icon: ShieldCheck, label: "AES-256 Encryption" },
-  { icon: Eye, label: "Read-only bank access" },
-  { icon: Lock, label: "GDPR Compliant" },
-  { icon: Zap, label: "2s receipt scanning" },
-  { icon: Smartphone, label: "iOS + Android" },
-  { icon: Globe, label: "150+ currencies" },
+  { icon: ShieldOff, label: "No bank login" },
+  { icon: Ban, label: "No money movement" },
+  { icon: Upload, label: "Receipt upload" },
+  { icon: FileSpreadsheet, label: "CSV import" },
+  { icon: Sparkles, label: "AI-assisted" },
+  { icon: PenLine, label: "Manual entry" },
 ];
 
 export function PressBar() {
@@ -50,9 +50,7 @@ export function PressBar() {
                 className="flex items-center gap-2 text-[var(--text-secondary)] opacity-70"
               >
                 <Icon size={14} strokeWidth={1.5} aria-hidden="true" />
-                <span className="text-[0.8rem] font-medium tracking-tight">
-                  {badge.label}
-                </span>
+                <span className="text-[0.8rem] font-medium tracking-tight">{badge.label}</span>
               </motion.div>
             );
           })}

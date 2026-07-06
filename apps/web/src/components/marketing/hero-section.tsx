@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { WaitlistForm } from "@/components/marketing/waitlist-form";
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
-import { WaitlistForm } from "@/components/marketing/waitlist-form";
+import { useEffect, useRef } from "react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -44,7 +44,7 @@ export function HeroSection() {
       if (!canvas) return;
       canvas.width = canvas.offsetWidth * window.devicePixelRatio;
       canvas.height = canvas.offsetHeight * window.devicePixelRatio;
-      ctx!.scale(window.devicePixelRatio, window.devicePixelRatio);
+      ctx?.scale(window.devicePixelRatio, window.devicePixelRatio);
     }
 
     function spawnParticle() {
@@ -83,7 +83,11 @@ export function HeroSection() {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = p.color + Math.round(p.alpha * 255).toString(16).padStart(2, "0");
+        ctx.fillStyle =
+          p.color +
+          Math.round(p.alpha * 255)
+            .toString(16)
+            .padStart(2, "0");
         ctx.fill();
       }
 
@@ -104,11 +108,7 @@ export function HeroSection() {
       aria-label="Hero"
     >
       {/* Background canvas particles */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none"
-        aria-hidden="true"
-      />
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
 
       {/* Radial gradient backdrop */}
       <div
@@ -124,14 +124,12 @@ export function HeroSection() {
 
       <div className="container-site relative z-10 flex flex-col items-center text-center gap-8">
         {/* Badge */}
-        <motion.div
-          variants={fadeUp}
-          custom={0}
-          initial="hidden"
-          animate="visible"
-        >
+        <motion.div variants={fadeUp} custom={0} initial="hidden" animate="visible">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold bg-[var(--accent-subtle)] border border-[var(--border-accent)] text-[var(--accent)] tracking-wide uppercase">
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" aria-hidden="true" />
+            <span
+              className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse"
+              aria-hidden="true"
+            />
             Now in private beta
           </span>
         </motion.div>
@@ -144,8 +142,7 @@ export function HeroSection() {
           animate="visible"
           className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05] max-w-4xl"
         >
-          Your finances,{" "}
-          <span className="text-gradient">finally intelligent.</span>
+          Your finances, <span className="text-gradient">finally intelligent.</span>
         </motion.h1>
 
         {/* Sub-headline */}
@@ -156,8 +153,8 @@ export function HeroSection() {
           animate="visible"
           className="text-lg md:text-xl text-[var(--text-secondary)] max-w-2xl leading-relaxed"
         >
-          EXPOZOR understands your money the way you do — automatically. Scan receipts, sync
-          banks, split with your household, and let AI handle the rest.
+          EXPOZOR understands your money the way you do — automatically. Scan receipts, sync banks,
+          split with your household, and let AI handle the rest.
         </motion.p>
 
         {/* Waitlist form */}
@@ -188,7 +185,7 @@ export function HeroSection() {
               <div
                 key={color}
                 className="w-8 h-8 rounded-full border-2 border-[var(--bg)] flex items-center justify-center text-xs font-bold"
-                style={{ background: color + "33", color, zIndex: 5 - i }}
+                style={{ background: `${color}33`, color, zIndex: 5 - i }}
                 aria-hidden="true"
               >
                 {["A", "M", "S", "J", "R"][i]}
@@ -196,7 +193,8 @@ export function HeroSection() {
             ))}
           </div>
           <p className="text-sm text-[var(--text-tertiary)]">
-            <span className="text-[var(--text-primary)] font-medium">240+</span> people already on the waitlist
+            <span className="text-[var(--text-primary)] font-medium">240+</span> people already on
+            the waitlist
           </p>
         </motion.div>
 
@@ -215,7 +213,7 @@ export function HeroSection() {
             <span className="text-xs tracking-widest uppercase">See it live</span>
             <motion.div
               animate={{ y: [0, 4, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+              transition={{ repeat: Number.POSITIVE_INFINITY, duration: 1.5, ease: "easeInOut" }}
             >
               <ArrowDown size={16} aria-hidden="true" />
             </motion.div>

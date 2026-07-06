@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "EXPOZOR — Your finances, finally intelligent.";
+export const alt = "EXPOZOR — Know Where Your Money Is Really Going";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -66,7 +66,7 @@ function OgImageContent() {
           marginBottom: 6,
         }}
       >
-        Your finances,
+        Know where your money is
       </div>
 
       {/* Headline line 2 — gradient word */}
@@ -83,7 +83,7 @@ function OgImageContent() {
           color: "transparent",
         }}
       >
-        finally intelligent.
+        really going.
       </div>
 
       {/* Subhead */}
@@ -98,7 +98,7 @@ function OgImageContent() {
           marginBottom: 40,
         }}
       >
-        Snap receipts · Sync banks · AI categorization · Shared budgets
+        Manual entry · Receipt upload · CSV import · AI-assisted categorization
       </div>
 
       {/* Beta chip */}

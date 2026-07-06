@@ -1,26 +1,24 @@
 "use server";
 
-import { z } from "zod";
 import { db } from "@/db/client";
 import { waitlist } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
+import { z } from "zod";
 
 /* ── Validation ─────────────────────────────────────────────── */
 const WaitlistSchema = z.object({
-  email:  z.string().email("Please enter a valid email address."),
+  email: z.string().email("Please enter a valid email address."),
   source: z.string().default("landing"),
 });
 
 /* ── Return type ────────────────────────────────────────────── */
-export type WaitlistResult =
-  | { success: true;  message: string }
-  | { success: false; error: string };
+export type WaitlistResult = { success: true; message: string } | { success: false; error: string };
 
 /* ── Action ─────────────────────────────────────────────────── */
 export async function joinWaitlist(formData: FormData): Promise<WaitlistResult> {
   const parsed = WaitlistSchema.safeParse({
-    email:  formData.get("email"),
+    email: formData.get("email"),
     source: formData.get("source") ?? "landing",
   });
 
@@ -35,7 +33,7 @@ export async function joinWaitlist(formData: FormData): Promise<WaitlistResult> 
 
   try {
     const headersList = await headers();
-    const referrer    = headersList.get("referer") ?? null;
+    const referrer = headersList.get("referer") ?? null;
 
     // Check for duplicate — return success (idempotent UX)
     const existing = await db
@@ -54,9 +52,7 @@ export async function joinWaitlist(formData: FormData): Promise<WaitlistResult> 
     await db.insert(waitlist).values({ email, source, referrer });
 
     // Confirmation email via Resend (non-blocking — safe to skip if key absent)
-    void sendConfirmation(email).catch((err) =>
-      console.error("[waitlist] email error:", err)
-    );
+    void sendConfirmation(email).catch((err) => console.error("[waitlist] email error:", err));
 
     return {
       success: true,
@@ -73,15 +69,16 @@ export async function joinWaitlist(formData: FormData): Promise<WaitlistResult> 
 
 /* ── Email helper (optional — skipped if RESEND_API_KEY not set) ── */
 async function sendConfirmation(email: string): Promise<void> {
-  const apiKey = process.env["RESEND_API_KEY"];
+  const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return;
 
   const { Resend } = await import("resend");
   const resend = new Resend(apiKey);
 
   await resend.emails.send({
-    from: "EXPOZOR <hello@expozor.app>",
-    to:   email,
+    // TODO: confirm expozor.com sending domain is verified in Resend dashboard before launch
+    from: "EXPOZOR <support@expozor.com>",
+    to: email,
     subject: "You're on the EXPOZOR waitlist 🎉",
     html: `
       <div style="font-family:system-ui,sans-serif;max-width:480px;margin:0 auto;color:#F4F4F5;background:#09090B;padding:48px 32px;border-radius:20px;border:1px solid rgba(255,255,255,0.08);">

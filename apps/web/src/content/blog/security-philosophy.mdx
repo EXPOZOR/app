@@ -4,57 +4,42 @@ date: "2026-05-20"
 author: "The EXPOZOR Team"
 authorRole: "Engineering"
 category: "Security"
-excerpt: "Financial data is the most sensitive data people generate daily. Here's how EXPOZOR protects it at every layer — from device to database."
+excerpt: "Financial data is the most sensitive data people generate daily. Here's how EXPOZOR thinks about protecting it."
 featured: false
 ---
 
 ## Why "privacy by default" isn't enough
 
-Most apps promise privacy in their marketing. Fewer deliver it in their architecture. The difference matters because promises can change with new management, a funding round, or an acqui-hire. Architecture can't.
+Most apps promise privacy in their marketing. Fewer deliver it in their architecture. The difference matters because promises can change with new management, a funding round, or an acqui-hire. Architecture is harder to change.
 
-EXPOZOR is designed so that even _we_ can't access your financial data — not because of a policy, but because of cryptography.
+Our goal is to design EXPOZOR so that the data you store is protected at every layer — not just by policy, but by system design.
 
-## Encryption at every layer
+## Encryption in transit
 
-### On your device
+All communication with EXPOZOR uses HTTPS. HSTS is enabled so your connection is always secured. We do not serve any authenticated content over plain HTTP.
 
-Receipt images are processed using on-device ML Kit OCR. The raw image and extracted text never leave your phone unless OCR confidence is below 70% — in which case, the image is sent to our server-side vision pipeline over TLS 1.3, processed in an ephemeral container, and immediately deleted.
+## No bank credentials
 
-### In transit
+EXPOZOR does not ask for, collect, or store your bank login credentials, passwords, or PINs. You add data manually, by uploading files, or by importing CSV exports you download directly from your own bank.
 
-All API communication uses TLS 1.3 with certificate pinning on mobile. HSTS preload is enabled. Downgrade attacks aren't possible.
+## No money movement
 
-### At rest
+EXPOZOR cannot and does not initiate any financial transfers, payments, or transactions on your behalf. It is a read-only organizational tool.
 
-Your data is encrypted with AES-256-GCM via managed KMS. But here's the important part: **sensitive fields use per-user envelope encryption.**
+## Analytics and tracking
 
-That means:
-
-- Each user has a unique data encryption key (DEK)
-- The DEK is encrypted with a key encryption key (KEK) derived from your credentials
-- We store the encrypted DEK, not the plaintext
-- Even a full database breach yields encrypted blobs we can't decrypt
-
-### In the database
-
-Every user-scoped table enforces Postgres Row-Level Security (RLS). This is defense-in-depth: even if there's a bug in our application logic, the database itself prevents cross-user data access.
-
-## Zero trackers in the app
-
-Inside the authenticated EXPOZOR experience, there are **zero third-party trackers**. No Google Analytics. No Facebook Pixel. No Mixpanel.
-
-We use PostHog for product analytics, reverse-proxied through our own infrastructure, with anonymized user IDs. Your spending patterns are yours alone.
+We do not include third-party advertising trackers. If we use any analytics tools, they will be disclosed on our [Subprocessors](/legal/subprocessors) and [Cookie Policy](/legal/cookies) pages.
 
 ## Your data, your choice
 
-- **Export** everything (JSON or CSV) from Settings → Privacy, anytime.
-- **Delete** your account and all data permanently. We fulfill deletion requests within 24 hours.
-- **Inactive accounts** receive a warning after 24 months, then auto-delete after 30 days of no response.
+- **Export** your data from Settings → Privacy at any time.
+- **Delete** your account and all associated data by contacting support.
+- Detailed data retention practices are described in our [Privacy Policy](/legal/privacy).
 
 ## Responsible disclosure
 
-We take security reports seriously. If you find a vulnerability, email [security@expozor.app](mailto:security@expozor.app). We follow a 90-day coordinated disclosure policy and credit researchers with permission.
+If you find a security vulnerability, email [security@expozor.com](mailto:security@expozor.com). We take all reports seriously and will respond promptly.
 
-## What's ahead
+## What we're working toward
 
-We're working toward SOC 2 Type II certification and plan to publish a formal security whitepaper before general availability. In the meantime, our [Security page](/security) has the technical details.
+We are building toward a published security whitepaper and formal infrastructure audit. Details will be added to our [Security page](/security) as they are confirmed.

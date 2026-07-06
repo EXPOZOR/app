@@ -1,16 +1,10 @@
 "use client";
 
-import {
-  useState,
-  useRef,
-  useCallback,
-  type KeyboardEvent,
-  type ChangeEvent,
-} from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Search, X, ChevronDown } from "lucide-react";
 import { FAQ } from "@/content/landing";
 import { EASE_OUT } from "@/lib/motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronDown, Search, X } from "lucide-react";
+import { type ChangeEvent, type KeyboardEvent, useCallback, useRef, useState } from "react";
 
 /* ──────────────────────────────────────────────────────────────
    ACCORDION ITEM
@@ -38,9 +32,18 @@ function AccordionItem({
   btnRef: React.RefObject<HTMLButtonElement | null>;
 }) {
   function handleKeyDown(e: KeyboardEvent<HTMLButtonElement>) {
-    if (e.key === "ArrowDown") { e.preventDefault(); onArrow("down"); }
-    if (e.key === "ArrowUp")   { e.preventDefault(); onArrow("up");   }
-    if (e.key === "Escape" && isOpen) { e.preventDefault(); onToggle(); }
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      onArrow("down");
+    }
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      onArrow("up");
+    }
+    if (e.key === "Escape" && isOpen) {
+      e.preventDefault();
+      onToggle();
+    }
   }
 
   return (
@@ -145,7 +148,6 @@ function AccordionItem({
         {isOpen && (
           <motion.div
             id={`${item.id}-panel`}
-            role="region"
             aria-labelledby={`${item.id}-btn`}
             key={`${item.id}-panel`}
             initial={{ height: 0, opacity: 0 }}
@@ -215,7 +217,6 @@ function SearchBar({
       {/* Input */}
       <input
         type="search"
-        role="searchbox"
         aria-label="Search frequently asked questions"
         aria-autocomplete="list"
         aria-controls="faq-list"
@@ -234,8 +235,12 @@ function SearchBar({
           transition: "border-color var(--dur-base) var(--ease-out)",
           boxSizing: "border-box",
         }}
-        onFocus={(e) => { (e.target as HTMLInputElement).style.borderColor = "var(--border-strong)"; }}
-        onBlur={(e) => { (e.target as HTMLInputElement).style.borderColor = "var(--border)"; }}
+        onFocus={(e) => {
+          (e.target as HTMLInputElement).style.borderColor = "var(--border-strong)";
+        }}
+        onBlur={(e) => {
+          (e.target as HTMLInputElement).style.borderColor = "var(--border)";
+        }}
       />
 
       {/* Clear × button */}
@@ -272,22 +277,21 @@ function SearchBar({
    FAQ SECTION — main export
 ────────────────────────────────────────────────────────────── */
 export function FaqSection() {
-  const [openId, setOpenId]     = useState<string | null>(null);
-  const [query,  setQuery]      = useState("");
+  const [openId, setOpenId] = useState<string | null>(null);
+  const [query, setQuery] = useState("");
 
   // One ref per item button for keyboard arrow-nav
   const btnRefs = useRef<Array<React.RefObject<HTMLButtonElement | null>>>(
     FAQ.items.map(() => ({ current: null })),
   );
+  // Stable fallback ref used when globalIdx is -1 (should never happen in practice)
+  const fallbackRef = useRef<HTMLButtonElement | null>(null);
 
   // Filter by query (case-insensitive, searches Q + A)
   const filtered = FAQ.items.filter((item) => {
     if (!query.trim()) return true;
     const q = query.toLowerCase();
-    return (
-      item.question.toLowerCase().includes(q) ||
-      item.answer.toLowerCase().includes(q)
-    );
+    return item.question.toLowerCase().includes(q) || item.answer.toLowerCase().includes(q);
   });
 
   function toggle(id: string) {
@@ -385,17 +389,26 @@ export function FaqSection() {
               setQuery(v);
               setOpenId(null); // collapse all when searching
             }}
-            onClear={() => { setQuery(""); setOpenId(null); }}
+            onClear={() => {
+              setQuery("");
+              setOpenId(null);
+            }}
           />
 
           {/* ── Accordion list ─────────────────────────── */}
-          <div
+          <ul
             id="faq-list"
-            role="list"
             aria-label="Frequently asked questions"
             aria-live="polite"
             aria-atomic="false"
-            style={{ display: "flex", flexDirection: "column", gap: "8px" }}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "8px",
+              listStyle: "none",
+              margin: 0,
+              padding: 0,
+            }}
           >
             <AnimatePresence mode="popLayout">
               {filtered.length > 0 ? (
@@ -403,16 +416,16 @@ export function FaqSection() {
                   // globalIdx for ref lookup
                   const globalIdx = FAQ.items.findIndex((i) => i.id === item.id);
                   return (
-                    <div key={item.id} role="listitem">
+                    <li key={item.id} style={{ listStyle: "none" }}>
                       <AccordionItem
                         item={item}
                         isOpen={openId === item.id}
                         onToggle={() => toggle(item.id)}
                         onArrow={(dir) => handleArrow(filteredIdx, dir)}
                         index={filteredIdx}
-                        btnRef={btnRefs.current[globalIdx]!}
+                        btnRef={btnRefs.current[globalIdx] ?? fallbackRef}
                       />
-                    </div>
+                    </li>
                   );
                 })
               ) : (
@@ -430,7 +443,9 @@ export function FaqSection() {
                     background: "var(--bg-elev-1)",
                   }}
                 >
-                  <p style={{ fontSize: "0.9rem", color: "var(--text-muted)", margin: "0 0 0.5rem" }}>
+                  <p
+                    style={{ fontSize: "0.9rem", color: "var(--text-muted)", margin: "0 0 0.5rem" }}
+                  >
                     No questions match &ldquo;{query}&rdquo;
                   </p>
                   <a
@@ -442,16 +457,12 @@ export function FaqSection() {
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
+          </ul>
 
           {/* ── Result count (screen reader) ───────────── */}
-          <p
-            role="status"
-            aria-live="polite"
-            className="sr-only"
-          >
+          <output aria-live="polite" className="sr-only">
             {filtered.length} question{filtered.length !== 1 ? "s" : ""} found
-          </p>
+          </output>
         </div>
       </div>
     </section>

@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
-import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { ShieldCheck, Lock, Eye, Server, FileCheck } from "lucide-react";
+import { Header } from "@/components/layout/header";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
+import { Ban, Eye, Lock, Server, ShieldOff } from "lucide-react";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Security",
   description:
-    "How EXPOZOR protects your financial data. AES-256-GCM encryption, per-user envelope keys, row-level security, TLS 1.3, GDPR compliance, and responsible disclosure.",
+    "How EXPOZOR protects your data. No bank credentials collected. HTTPS in transit. No data selling. Responsible disclosure.",
   alternates: { canonical: "https://expozor.com/security" },
 };
 
@@ -15,39 +15,41 @@ const breadcrumb = breadcrumbJsonLd([{ name: "Security", href: "/security" }]);
 
 const pillars = [
   {
-    icon: Lock,
-    title: "Encryption at rest",
+    icon: ShieldOff,
+    title: "No bank credentials collected",
     description:
-      "All data encrypted with AES-256-GCM via managed KMS. Sensitive fields (notes, raw bank descriptions, OCR output) use per-user envelope encryption — your key, your data.",
+      "EXPOZOR does not ask for or store your bank login credentials. You add expenses manually, by uploading a receipt or screenshot, or by importing a CSV file.",
     accent: "#7CF5C2",
   },
   {
-    icon: ShieldCheck,
-    title: "Row-Level Security",
+    icon: Ban,
+    title: "No money movement",
     description:
-      "Every user-scoped table in Postgres enforces RLS. Even if a bug exists in application logic, the database enforces that users can only see their own data.",
+      "EXPOZOR cannot initiate transfers, move funds, or access your bank accounts in any way. It is an expense tracking and organization tool only.",
+    accent: "#F87171",
+  },
+  {
+    icon: Lock,
+    title: "HTTPS in transit",
+    description:
+      // TLS/HSTS/CSP confirmed in next.config.ts — safe to state
+      "All data in transit is encrypted via HTTPS with HSTS and a strict Content Security Policy enforced at the server level.",
     accent: "#60a5fa",
   },
   {
     icon: Eye,
-    title: "Zero trackers in the app",
+    title: "No data selling",
     description:
-      "No third-party trackers inside the authenticated experience. Analytics are first-party (PostHog, reverse-proxied). Your spending habits stay private.",
+      "We do not sell, rent, or share your personal or financial data with third parties for advertising or marketing purposes. Period.",
     accent: "#a78bfa",
   },
   {
     icon: Server,
-    title: "Infrastructure",
+    title: "Infrastructure (in progress)",
     description:
-      "TLS 1.3 everywhere. HSTS preload. Strict CSP. SRI for any third-party script. Environment separation: real data never appears in local or preview environments.",
+      // TODO: document storage encryption, RLS status, and infra hardening before public launch
+      "Additional infrastructure security details — including database row-level security and storage encryption — will be documented and published before public launch.",
     accent: "#FFB36B",
-  },
-  {
-    icon: FileCheck,
-    title: "GDPR & data rights",
-    description:
-      "Export or delete your data in under 24 hours. Inactive accounts are warned after 24 months then auto-deleted. Audit logs retained 13 months.",
-    accent: "#4ade80",
   },
 ];
 
@@ -66,11 +68,11 @@ export default function SecurityPage() {
             Security
           </p>
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-4">
-            Your money data is sacred.
+            Built with your privacy in mind.
           </h1>
           <p className="text-xl text-[var(--text-secondary)] leading-relaxed">
-            We designed EXPOZOR from the ground up with privacy and security as first-class
-            requirements — not afterthoughts.
+            EXPOZOR tracks expenses — it does not connect to banks, move money, or collect bank
+            credentials. Here is what we do to protect your data.
           </p>
         </div>
 
@@ -91,7 +93,7 @@ export default function SecurityPage() {
                     <div
                       className="w-10 h-10 rounded-[var(--radius)] flex items-center justify-center"
                       style={{
-                        background: pillar.accent + "1A",
+                        background: `${pillar.accent}1A`,
                         border: `1px solid ${pillar.accent}33`,
                       }}
                       aria-hidden="true"
@@ -114,7 +116,10 @@ export default function SecurityPage() {
         </section>
 
         {/* Responsible disclosure */}
-        <section className="section-py border-t border-[var(--border)]" aria-labelledby="disclosure-heading">
+        <section
+          className="section-py border-t border-[var(--border)]"
+          aria-labelledby="disclosure-heading"
+        >
           <div className="container-site max-w-2xl text-center">
             <h2 id="disclosure-heading" className="text-3xl font-bold mb-4">
               Responsible disclosure
@@ -123,10 +128,11 @@ export default function SecurityPage() {
               Found a security vulnerability? We take all reports seriously and aim to respond
               within 48 hours. Please email{" "}
               <a
-                href="mailto:security@expozor.app"
+                href="mailto:security@expozor.com"
                 className="text-[var(--accent)] hover:underline"
               >
-                security@expozor.app
+                {/* TODO: confirm security@expozor.com is a live and monitored mailbox before launch */}
+                security@expozor.com
               </a>{" "}
               with a description of the issue and steps to reproduce.
             </p>

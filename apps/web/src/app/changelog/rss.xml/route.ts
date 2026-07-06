@@ -14,7 +14,7 @@ export function GET() {
       <link>${BASE_URL}/changelog</link>
       <guid isPermaLink="false">expozor-changelog-v${entry.frontmatter.version}</guid>
       <pubDate>${new Date(entry.frontmatter.date).toUTCString()}</pubDate>
-    </item>`
+    </item>`,
     )
     .join("\n");
 

@@ -37,6 +37,12 @@
       },
       "suspicious": {
         "noExplicitAny": "warn"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
+      },
+      "complexity": {
+        "useLiteralKeys": "off"
       }
     }
   },

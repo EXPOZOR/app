@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
-import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { Header } from "@/components/layout/header";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Careers",
-  description: "Join the EXPOZOR team. We're building the expense manager we always wanted — remote-first, craft-focused.",
+  description:
+    "Join the EXPOZOR team. We're building the expense manager we always wanted — remote-first, craft-focused.",
   alternates: { canonical: "https://expozor.com/careers" },
 };
 
@@ -21,8 +22,12 @@ export default function CareersPage() {
       <Header />
       <main id="main-content" className="pt-20">
         <div className="container-site section-py max-w-3xl">
-          <p className="text-xs uppercase tracking-widest font-semibold text-[var(--accent)] mb-3">Careers</p>
-          <h1 className="text-4xl font-bold tracking-tight mb-4">Work on something you'd use every day.</h1>
+          <p className="text-xs uppercase tracking-widest font-semibold text-[var(--accent)] mb-3">
+            Careers
+          </p>
+          <h1 className="text-4xl font-bold tracking-tight mb-4">
+            Work on something you'd use every day.
+          </h1>
           <p className="text-[var(--text-secondary)] text-lg mb-12 leading-relaxed">
             We're a small, remote-first team building a product we genuinely love. We care about
             craft, clarity, and shipping things that work.
@@ -34,11 +39,9 @@ export default function CareersPage() {
               We hire slowly and carefully. If you love what we're building, reach out anyway —
               great people don't always appear when the role does.
             </p>
-            <a
-              href="mailto:careers@expozor.app"
-              className="btn-primary"
-            >
-              Say hello
+            {/* TODO: add confirmed careers contact email before hiring opens */}
+            <a href="/contact" className="btn-primary">
+              Reach out via the contact page
             </a>
           </div>
         </div>

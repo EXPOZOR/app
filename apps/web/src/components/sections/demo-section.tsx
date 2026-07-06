@@ -1,25 +1,10 @@
 "use client";
 
-import {
-  useState,
-  useRef,
-  useCallback,
-  useEffect,
-  type KeyboardEvent,
-} from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { EASE_OUT } from "@/lib/motion";
-import {
-  Zap,
-  Target,
-  Users,
-  BarChart2,
-  RefreshCw,
-  Sparkles,
-  PieChart,
-  TrendingUp,
-} from "lucide-react";
 import { DEMO } from "@/content/landing";
+import { EASE_OUT } from "@/lib/motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { PieChart, RefreshCw, Sparkles, TrendingUp } from "lucide-react";
+import { type KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
 
 /* ──────────────────────────────────────────────────────────────
    BROWSER FRAME
@@ -32,8 +17,7 @@ function BrowserFrame({ children }: { children: React.ReactNode }) {
         borderRadius: "var(--radius-lg)",
         overflow: "hidden",
         border: "1px solid var(--border-strong)",
-        boxShadow:
-          "0 0 0 1px rgba(255,255,255,0.04), 0 32px 80px rgba(0,0,0,0.7)",
+        boxShadow: "0 0 0 1px rgba(255,255,255,0.04), 0 32px 80px rgba(0,0,0,0.7)",
         background: "var(--bg-elev-1)",
       }}
       role="img"
@@ -126,27 +110,109 @@ function BrowserFrame({ children }: { children: React.ReactNode }) {
    DATA
 ────────────────────────────────────────────────────────────── */
 const TRANSACTIONS = [
-  { id: "t1", merchant: "Salary — Acme Corp",    amount: "+$4,200", category: "Income",        icon: "💼", color: "#34D399", positive: true,  date: "Today"     },
-  { id: "t2", merchant: "Whole Foods Market",     amount: "-$94.20", category: "Groceries",     icon: "🛒", color: "#3DDC97", positive: false, date: "Yesterday" },
-  { id: "t3", merchant: "Blue Bottle Coffee",     amount: "-$6.50",  category: "Coffee",        icon: "☕", color: "#3DDC97", positive: false, date: "Yesterday" },
-  { id: "t4", merchant: "Uber",                   amount: "-$18.40", category: "Transport",     icon: "🚗", color: "#60A5FA", positive: false, date: "Mon"       },
-  { id: "t5", merchant: "Netflix",                amount: "-$15.99", category: "Entertainment", icon: "🎬", color: "#A78BFA", positive: false, date: "Mon"       },
-  { id: "t6", merchant: "Amazon",                 amount: "-$64.30", category: "Shopping",      icon: "🛍️", color: "#FB923C", positive: false, date: "Sun"       },
+  {
+    id: "t1",
+    merchant: "Freelance Payment",
+    amount: "+$4,200",
+    category: "Income",
+    icon: "💼",
+    color: "#34D399",
+    positive: true,
+    date: "Today",
+  },
+  {
+    id: "t2",
+    merchant: "Grocery Store",
+    amount: "-$94.20",
+    category: "Groceries",
+    icon: "🛒",
+    color: "#3DDC97",
+    positive: false,
+    date: "Yesterday",
+  },
+  {
+    id: "t3",
+    merchant: "Coffee Shop",
+    amount: "-$6.50",
+    category: "Coffee",
+    icon: "☕",
+    color: "#3DDC97",
+    positive: false,
+    date: "Yesterday",
+  },
+  {
+    id: "t4",
+    merchant: "Taxi Ride",
+    amount: "-$18.40",
+    category: "Transport",
+    icon: "🚗",
+    color: "#60A5FA",
+    positive: false,
+    date: "Mon",
+  },
+  {
+    id: "t5",
+    merchant: "Streaming Service",
+    amount: "-$15.99",
+    category: "Entertainment",
+    icon: "🎬",
+    color: "#A78BFA",
+    positive: false,
+    date: "Mon",
+  },
+  {
+    id: "t6",
+    merchant: "Online Shopping",
+    amount: "-$64.30",
+    category: "Shopping",
+    icon: "🛒",
+    color: "#FB923C",
+    positive: false,
+    date: "Sun",
+  },
 ] as const;
 
 const BUDGETS = [
-  { label: "Food & Drink",   spent: 340, total: 500, color: "#3DDC97" },
-  { label: "Shopping",       spent: 180, total: 300, color: "#A78BFA" },
-  { label: "Transport",      spent: 95,  total: 150, color: "#60A5FA" },
-  { label: "Entertainment",  spent: 45,  total: 60,  color: "#FB923C" },
-  { label: "Personal Care",  spent: 28,  total: 80,  color: "#F472B6" },
+  { label: "Food & Drink", spent: 340, total: 500, color: "#3DDC97" },
+  { label: "Shopping", spent: 180, total: 300, color: "#A78BFA" },
+  { label: "Transport", spent: 95, total: 150, color: "#60A5FA" },
+  { label: "Entertainment", spent: 45, total: 60, color: "#FB923C" },
+  { label: "Personal Care", spent: 28, total: 80, color: "#F472B6" },
 ] as const;
 
 const SPLIT_ITEMS = [
-  { id: "s1", desc: "Dinner — Nobu",          total: "$120.00", you: "$60.00", other: "Jordan owes you $60", color: "#3DDC97" },
-  { id: "s2", desc: "Airbnb — Porto trip",     total: "$480.00", you: "$240.00", other: "Alex owes you $240", color: "#A78BFA" },
-  { id: "s3", desc: "Uber — Airport",          total: "$36.80",  you: "$18.40", other: "Jordan owes you $18.40", color: "#60A5FA" },
-  { id: "s4", desc: "Groceries — April",       total: "$188.40", you: "$94.20", other: "You owe Sam $94.20", color: "#FB923C" },
+  {
+    id: "s1",
+    desc: "Dinner — Restaurant",
+    total: "$120.00",
+    you: "$60.00",
+    other: "Jordan owes you $60",
+    color: "#3DDC97",
+  },
+  {
+    id: "s2",
+    desc: "Airbnb — Porto trip",
+    total: "$480.00",
+    you: "$240.00",
+    other: "Alex owes you $240",
+    color: "#A78BFA",
+  },
+  {
+    id: "s3",
+    desc: "Taxi — Airport",
+    total: "$36.80",
+    you: "$18.40",
+    other: "Jordan owes you $18.40",
+    color: "#60A5FA",
+  },
+  {
+    id: "s4",
+    desc: "Groceries — April",
+    total: "$188.40",
+    you: "$94.20",
+    other: "You owe Sam $94.20",
+    color: "#FB923C",
+  },
 ] as const;
 
 // SVG line chart data — monthly spending (Mar–Aug)
@@ -172,19 +238,31 @@ function CategorizePanel() {
           background: "var(--bg-elev-2)",
         }}
       >
-        <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--text-primary)", letterSpacing: "-0.01em" }}>
+        <span
+          style={{
+            fontSize: "0.75rem",
+            fontWeight: 600,
+            color: "var(--text-primary)",
+            letterSpacing: "-0.01em",
+          }}
+        >
           Transactions · May 2026
         </span>
         <span
           style={{
-            display: "inline-flex", alignItems: "center", gap: "4px",
-            fontSize: "0.625rem", fontWeight: 600, padding: "2px 7px",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "4px",
+            fontSize: "0.625rem",
+            fontWeight: 600,
+            padding: "2px 7px",
             borderRadius: "var(--radius-full)",
-            background: "var(--accent-subtle)", color: "var(--accent)",
+            background: "var(--accent-subtle)",
+            color: "var(--accent)",
             border: "1px solid var(--border-accent)",
           }}
         >
-          <Sparkles size={8} aria-hidden="true" /> AI on · 98% accuracy
+          <Sparkles size={8} aria-hidden="true" /> AI-assisted categorization
         </span>
       </div>
 
@@ -196,39 +274,69 @@ function CategorizePanel() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: i * 0.05, duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           style={{
-            display: "flex", alignItems: "center", gap: "10px",
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
             padding: "8px 16px",
             borderBottom: "1px solid rgba(255,255,255,0.04)",
           }}
         >
-          <div style={{
-            width: "30px", height: "30px", borderRadius: "var(--radius-sm)",
-            background: `${tx.color}18`, display: "flex", alignItems: "center",
-            justifyContent: "center", fontSize: "0.875rem", flexShrink: 0,
-            border: `1px solid ${tx.color}25`,
-          }}>
+          <div
+            style={{
+              width: "30px",
+              height: "30px",
+              borderRadius: "var(--radius-sm)",
+              background: `${tx.color}18`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "0.875rem",
+              flexShrink: 0,
+              border: `1px solid ${tx.color}25`,
+            }}
+          >
             {tx.icon}
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <p style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--text-primary)", margin: 0, letterSpacing: "-0.01em", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+            <p
+              style={{
+                fontSize: "0.75rem",
+                fontWeight: 600,
+                color: "var(--text-primary)",
+                margin: 0,
+                letterSpacing: "-0.01em",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
               {tx.merchant}
             </p>
             <div style={{ display: "flex", alignItems: "center", gap: "6px", marginTop: "2px" }}>
-              <span style={{
-                fontSize: "0.5625rem", fontWeight: 600, padding: "1px 5px",
-                borderRadius: "var(--radius-full)",
-                background: `${tx.color}18`, color: tx.color,
-              }}>
+              <span
+                style={{
+                  fontSize: "0.5625rem",
+                  fontWeight: 600,
+                  padding: "1px 5px",
+                  borderRadius: "var(--radius-full)",
+                  background: `${tx.color}18`,
+                  color: tx.color,
+                }}
+              >
                 {tx.category}
               </span>
               <span style={{ fontSize: "0.5625rem", color: "var(--text-muted)" }}>{tx.date}</span>
             </div>
           </div>
-          <span style={{
-            fontSize: "0.75rem", fontWeight: 700, flexShrink: 0,
-            fontVariantNumeric: "tabular-nums",
-            color: tx.positive ? "var(--positive)" : "var(--text-primary)",
-          }}>
+          <span
+            style={{
+              fontSize: "0.75rem",
+              fontWeight: 700,
+              flexShrink: 0,
+              fontVariantNumeric: "tabular-nums",
+              color: tx.positive ? "var(--positive)" : "var(--text-primary)",
+            }}
+          >
             {tx.amount}
           </span>
         </motion.div>
@@ -242,7 +350,16 @@ function BudgetPanel() {
   return (
     <div style={{ padding: "14px 16px", display: "flex", flexDirection: "column", gap: "14px" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--text-primary)", letterSpacing: "-0.01em" }}>Envelopes · May 2026</span>
+        <span
+          style={{
+            fontSize: "0.75rem",
+            fontWeight: 600,
+            color: "var(--text-primary)",
+            letterSpacing: "-0.01em",
+          }}
+        >
+          Envelopes · May 2026
+        </span>
         <span style={{ fontSize: "0.625rem", color: "var(--text-muted)" }}>14 days left</span>
       </div>
 
@@ -258,20 +375,38 @@ function BudgetPanel() {
             style={{ display: "flex", flexDirection: "column", gap: "5px" }}
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontSize: "0.6875rem", color: "var(--text-secondary)", fontWeight: 500 }}>{b.label}</span>
-              <span style={{ fontSize: "0.6875rem", fontWeight: 600, color: over ? "var(--warn)" : "var(--text-secondary)" }}>
-                ${b.spent} <span style={{ color: "var(--text-muted)", fontWeight: 400 }}>/ ${b.total}</span>
+              <span
+                style={{ fontSize: "0.6875rem", color: "var(--text-secondary)", fontWeight: 500 }}
+              >
+                {b.label}
+              </span>
+              <span
+                style={{
+                  fontSize: "0.6875rem",
+                  fontWeight: 600,
+                  color: over ? "var(--warn)" : "var(--text-secondary)",
+                }}
+              >
+                ${b.spent}{" "}
+                <span style={{ color: "var(--text-muted)", fontWeight: 400 }}>/ ${b.total}</span>
               </span>
             </div>
             {/* ── Enhancement 4: scaleX instead of width (paint-only, no layout thrash) */}
-            <div style={{ height: "6px", borderRadius: "var(--radius-full)", background: "var(--bg-muted)", overflow: "hidden" }}>
+            <div
+              style={{
+                height: "6px",
+                borderRadius: "var(--radius-full)",
+                background: "var(--bg-muted)",
+                overflow: "hidden",
+              }}
+            >
               <motion.div
                 style={{
                   height: "100%",
                   borderRadius: "var(--radius-full)",
                   background: over ? "var(--warn)" : b.color,
-                  originX: 0,               /* scale from left edge */
-                  scaleX: 0,               /* start flat */
+                  originX: 0 /* scale from left edge */,
+                  scaleX: 0 /* start flat */,
                 }}
                 animate={{ scaleX: pct / 100 }}
                 transition={{ delay: 0.1 + i * 0.06, duration: 0.75, ease: EASE_OUT }}
@@ -281,13 +416,31 @@ function BudgetPanel() {
         );
       })}
 
-      <div style={{
-        marginTop: "4px", padding: "8px 12px", borderRadius: "var(--radius-sm)",
-        background: "var(--accent-subtle)", border: "1px solid var(--border-accent)",
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-      }}>
-        <span style={{ fontSize: "0.6875rem", color: "var(--accent)", fontWeight: 600 }}>Remaining this month</span>
-        <span style={{ fontSize: "0.875rem", fontWeight: 700, color: "var(--accent)", letterSpacing: "-0.02em" }}>$387.10</span>
+      <div
+        style={{
+          marginTop: "4px",
+          padding: "8px 12px",
+          borderRadius: "var(--radius-sm)",
+          background: "var(--accent-subtle)",
+          border: "1px solid var(--border-accent)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <span style={{ fontSize: "0.6875rem", color: "var(--accent)", fontWeight: 600 }}>
+          Remaining this month
+        </span>
+        <span
+          style={{
+            fontSize: "0.875rem",
+            fontWeight: 700,
+            color: "var(--accent)",
+            letterSpacing: "-0.02em",
+          }}
+        >
+          $387.10
+        </span>
       </div>
     </div>
   );
@@ -298,12 +451,27 @@ function SplitPanel() {
   return (
     <div style={{ padding: "14px 16px", display: "flex", flexDirection: "column", gap: "10px" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--text-primary)", letterSpacing: "-0.01em" }}>Group expenses</span>
-        <span style={{
-          fontSize: "0.5625rem", fontWeight: 600, padding: "2px 7px",
-          borderRadius: "var(--radius-full)", background: "rgba(167,139,250,0.12)",
-          color: "#A78BFA", border: "1px solid rgba(167,139,250,0.3)",
-        }}>
+        <span
+          style={{
+            fontSize: "0.75rem",
+            fontWeight: 600,
+            color: "var(--text-primary)",
+            letterSpacing: "-0.01em",
+          }}
+        >
+          Group expenses
+        </span>
+        <span
+          style={{
+            fontSize: "0.5625rem",
+            fontWeight: 600,
+            padding: "2px 7px",
+            borderRadius: "var(--radius-full)",
+            background: "rgba(167,139,250,0.12)",
+            color: "#A78BFA",
+            border: "1px solid rgba(167,139,250,0.3)",
+          }}
+        >
           3 people
         </span>
       </div>
@@ -315,21 +483,48 @@ function SplitPanel() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: i * 0.06, duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           style={{
-            padding: "10px 12px", borderRadius: "var(--radius-sm)",
-            background: "var(--bg-elev-2)", border: "1px solid var(--border)",
-            display: "flex", flexDirection: "column", gap: "4px",
+            padding: "10px 12px",
+            borderRadius: "var(--radius-sm)",
+            background: "var(--bg-elev-2)",
+            border: "1px solid var(--border)",
+            display: "flex",
+            flexDirection: "column",
+            gap: "4px",
           }}
         >
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span style={{ fontSize: "0.6875rem", fontWeight: 600, color: "var(--text-primary)", letterSpacing: "-0.01em" }}>{s.desc}</span>
-            <span style={{ fontSize: "0.6875rem", fontWeight: 700, color: "var(--text-primary)", fontVariantNumeric: "tabular-nums" }}>{s.total}</span>
+            <span
+              style={{
+                fontSize: "0.6875rem",
+                fontWeight: 600,
+                color: "var(--text-primary)",
+                letterSpacing: "-0.01em",
+              }}
+            >
+              {s.desc}
+            </span>
+            <span
+              style={{
+                fontSize: "0.6875rem",
+                fontWeight: 700,
+                color: "var(--text-primary)",
+                fontVariantNumeric: "tabular-nums",
+              }}
+            >
+              {s.total}
+            </span>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span style={{ fontSize: "0.5625rem", color: "var(--text-muted)" }}>Your share: {s.you}</span>
-            <span style={{
-              fontSize: "0.5625rem", fontWeight: 600,
-              color: s.other.startsWith("You owe") ? "var(--warn)" : "var(--positive)",
-            }}>
+            <span style={{ fontSize: "0.5625rem", color: "var(--text-muted)" }}>
+              Your share: {s.you}
+            </span>
+            <span
+              style={{
+                fontSize: "0.5625rem",
+                fontWeight: 600,
+                color: s.other.startsWith("You owe") ? "var(--warn)" : "var(--positive)",
+              }}
+            >
               {s.other}
             </span>
           </div>
@@ -337,21 +532,46 @@ function SplitPanel() {
       ))}
 
       {/* Settle up row */}
-      <div style={{
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        padding: "8px 12px", borderRadius: "var(--radius-sm)",
-        background: "var(--bg-elev-2)", border: "1px solid var(--border)",
-        marginTop: "2px",
-      }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "8px 12px",
+          borderRadius: "var(--radius-sm)",
+          background: "var(--bg-elev-2)",
+          border: "1px solid var(--border)",
+          marginTop: "2px",
+        }}
+      >
         <div>
-          <p style={{ fontSize: "0.625rem", color: "var(--text-muted)", margin: 0 }}>Net — you are owed</p>
-          <p style={{ fontSize: "1rem", fontWeight: 700, color: "var(--positive)", margin: 0, letterSpacing: "-0.02em" }}>$318.40</p>
+          <p style={{ fontSize: "0.625rem", color: "var(--text-muted)", margin: 0 }}>
+            Net — you are owed
+          </p>
+          <p
+            style={{
+              fontSize: "1rem",
+              fontWeight: 700,
+              color: "var(--positive)",
+              margin: 0,
+              letterSpacing: "-0.02em",
+            }}
+          >
+            $318.40
+          </p>
         </div>
-        <div style={{
-          fontSize: "0.6875rem", fontWeight: 600, padding: "5px 10px",
-          borderRadius: "var(--radius-sm)", background: "var(--accent-subtle)",
-          color: "var(--accent)", border: "1px solid var(--border-accent)", cursor: "pointer",
-        }}>
+        <div
+          style={{
+            fontSize: "0.6875rem",
+            fontWeight: 600,
+            padding: "5px 10px",
+            borderRadius: "var(--radius-sm)",
+            background: "var(--accent-subtle)",
+            color: "var(--accent)",
+            border: "1px solid var(--border-accent)",
+            cursor: "pointer",
+          }}
+        >
           Settle up →
         </div>
       </div>
@@ -361,7 +581,9 @@ function SplitPanel() {
 
 /** Panel 4 — Insights (SVG line chart + breakdown) */
 function InsightsPanel() {
-  const W = 340; const H = 90; const PAD = 10;
+  const W = 340;
+  const H = 90;
+  const PAD = 10;
   const min = Math.min(...CHART_POINTS);
   const max = Math.max(...CHART_POINTS);
   const range = max - min || 1;
@@ -370,21 +592,46 @@ function InsightsPanel() {
     y: PAD + ((max - v) / range) * (H - PAD * 2),
     v,
   }));
-  const pathD = pts.map((p, i) => `${i === 0 ? "M" : "L"}${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ");
+  const pathD = pts
+    .map((p, i) => `${i === 0 ? "M" : "L"}${p.x.toFixed(1)},${p.y.toFixed(1)}`)
+    .join(" ");
   // Fill path: go right→ down→ left
-  const fillD = `${pathD} L${pts.at(-1)!.x.toFixed(1)},${H} L${pts[0]!.x.toFixed(1)},${H} Z`;
+  const fillD = `${pathD} L${pts.at(-1)?.x.toFixed(1)},${H} L${pts[0]?.x.toFixed(1)},${H} Z`;
 
   return (
     <div style={{ padding: "14px 16px", display: "flex", flexDirection: "column", gap: "12px" }}>
       {/* Chart header */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--text-primary)", letterSpacing: "-0.01em" }}>Spending trend</span>
-        <span style={{ fontSize: "0.5625rem", color: "var(--positive)", fontWeight: 600 }}>↓ 19% vs last month</span>
+        <span
+          style={{
+            fontSize: "0.75rem",
+            fontWeight: 600,
+            color: "var(--text-primary)",
+            letterSpacing: "-0.01em",
+          }}
+        >
+          Spending trend
+        </span>
+        <span style={{ fontSize: "0.5625rem", color: "var(--positive)", fontWeight: 600 }}>
+          ↓ 19% vs last month
+        </span>
       </div>
 
       {/* SVG line chart */}
-      <div style={{ background: "var(--bg-elev-2)", borderRadius: "var(--radius-sm)", border: "1px solid var(--border)", padding: "10px 10px 4px", overflow: "hidden" }}>
-        <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", height: "auto", overflow: "visible" }} aria-hidden="true">
+      <div
+        style={{
+          background: "var(--bg-elev-2)",
+          borderRadius: "var(--radius-sm)",
+          border: "1px solid var(--border)",
+          padding: "10px 10px 4px",
+          overflow: "hidden",
+        }}
+      >
+        <svg
+          viewBox={`0 0 ${W} ${H}`}
+          style={{ width: "100%", height: "auto", overflow: "visible" }}
+          aria-hidden="true"
+        >
           <defs>
             <linearGradient id="chart-fill" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#3DDC97" stopOpacity="0.18" />
@@ -393,28 +640,53 @@ function InsightsPanel() {
           </defs>
           {/* Grid lines */}
           {[0.25, 0.5, 0.75].map((f) => (
-            <line key={f} x1={PAD} y1={PAD + f * (H - PAD * 2)} x2={W - PAD} y2={PAD + f * (H - PAD * 2)}
-              stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
+            <line
+              key={f}
+              x1={PAD}
+              y1={PAD + f * (H - PAD * 2)}
+              x2={W - PAD}
+              y2={PAD + f * (H - PAD * 2)}
+              stroke="rgba(255,255,255,0.05)"
+              strokeWidth="1"
+            />
           ))}
           {/* Fill */}
           <path d={fillD} fill="url(#chart-fill)" />
           {/* Line */}
           <motion.path
-            d={pathD} fill="none" stroke="#3DDC97" strokeWidth="1.5"
-            strokeLinecap="round" strokeLinejoin="round"
-            initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
+            d={pathD}
+            fill="none"
+            stroke="#3DDC97"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             style={{ filter: "drop-shadow(0 0 4px rgba(61,220,151,0.4))" }}
           />
           {/* Dots */}
-          {pts.map((p, i) => (
-            <circle key={i} cx={p.x} cy={p.y} r="3" fill="#3DDC97"
-              style={{ filter: "drop-shadow(0 0 4px rgba(61,220,151,0.5))" }} />
+          {pts.map((p) => (
+            <circle
+              key={`dot-${p.x}-${p.y}`}
+              cx={p.x}
+              cy={p.y}
+              r="3"
+              fill="#3DDC97"
+              style={{ filter: "drop-shadow(0 0 4px rgba(61,220,151,0.5))" }}
+            />
           ))}
           {/* Labels */}
           {pts.map((p, i) => (
-            <text key={i} x={p.x} y={H + 2} textAnchor="middle"
-              fill="rgba(154,154,162,0.8)" fontSize="7" fontFamily="system-ui">
+            <text
+              key={`label-${CHART_LABELS[i] ?? i}`}
+              x={p.x}
+              y={H + 2}
+              textAnchor="middle"
+              fill="rgba(154,154,162,0.8)"
+              fontSize="7"
+              fontFamily="system-ui"
+            >
               {CHART_LABELS[i]}
             </text>
           ))}
@@ -425,19 +697,46 @@ function InsightsPanel() {
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px" }}>
         {[
           { label: "Food & Drink", pct: 38, color: "#3DDC97" },
-          { label: "Shopping",     pct: 24, color: "#A78BFA" },
-          { label: "Transport",    pct: 18, color: "#60A5FA" },
-          { label: "Other",        pct: 20, color: "#FB923C" },
+          { label: "Shopping", pct: 24, color: "#A78BFA" },
+          { label: "Transport", pct: 18, color: "#60A5FA" },
+          { label: "Other", pct: 20, color: "#FB923C" },
         ].map((c) => (
-          <div key={c.label} style={{
-            padding: "7px 10px", borderRadius: "var(--radius-sm)",
-            background: "var(--bg-elev-2)", border: "1px solid var(--border)",
-            display: "flex", alignItems: "center", gap: "7px",
-          }}>
-            <div style={{ width: "8px", height: "8px", borderRadius: "2px", background: c.color, flexShrink: 0 }} />
+          <div
+            key={c.label}
+            style={{
+              padding: "7px 10px",
+              borderRadius: "var(--radius-sm)",
+              background: "var(--bg-elev-2)",
+              border: "1px solid var(--border)",
+              display: "flex",
+              alignItems: "center",
+              gap: "7px",
+            }}
+          >
+            <div
+              style={{
+                width: "8px",
+                height: "8px",
+                borderRadius: "2px",
+                background: c.color,
+                flexShrink: 0,
+              }}
+            />
             <div style={{ minWidth: 0 }}>
-              <p style={{ fontSize: "0.5625rem", color: "var(--text-muted)", margin: 0 }}>{c.label}</p>
-              <p style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--text-primary)", margin: 0, letterSpacing: "-0.01em" }}>{c.pct}%</p>
+              <p style={{ fontSize: "0.5625rem", color: "var(--text-muted)", margin: 0 }}>
+                {c.label}
+              </p>
+              <p
+                style={{
+                  fontSize: "0.75rem",
+                  fontWeight: 700,
+                  color: "var(--text-primary)",
+                  margin: 0,
+                  letterSpacing: "-0.01em",
+                }}
+              >
+                {c.pct}%
+              </p>
             </div>
           </div>
         ))}
@@ -453,9 +752,9 @@ type Tab = { id: string; label: string; panel: React.ReactNode };
 
 const TABS: Tab[] = [
   { id: "categorize", label: "Categorize", panel: <CategorizePanel /> },
-  { id: "budget",     label: "Budget",     panel: <BudgetPanel />     },
-  { id: "split",      label: "Split",      panel: <SplitPanel />      },
-  { id: "insights",   label: "Insights",   panel: <InsightsPanel />   },
+  { id: "budget", label: "Budget", panel: <BudgetPanel /> },
+  { id: "split", label: "Split", panel: <SplitPanel /> },
+  { id: "insights", label: "Insights", panel: <InsightsPanel /> },
 ];
 
 /* ──────────────────────────────────────────────────────────────
@@ -477,28 +776,25 @@ const HOTSPOTS: Hotspot[] = [
     n: 1,
     label: "AI categorization",
     tip: "Rules run first. AI only steps in for unknowns — always with a confidence score.",
-    top: "12px", right: "12px",
+    top: "12px",
+    right: "12px",
     tabId: "categorize",
   },
   {
     n: 2,
     label: "Budget envelope",
     tip: "Every dollar has a job. Envelopes roll over intelligently so you stay on track.",
-    top: "12px", right: "12px",
+    top: "12px",
+    right: "12px",
     tabId: "budget",
   },
+  // Smart settle-up hotspot removed — implies money movement
   {
     n: 3,
-    label: "Smart settle-up",
-    tip: "Minimises the number of transactions needed — one payment clears the whole trip.",
-    top: "12px", right: "12px",
-    tabId: "split",
-  },
-  {
-    n: 4,
     label: "Spending trends",
     tip: "Your AI agent surfaces anomalies and savings opportunities before you even ask.",
-    top: "12px", right: "12px",
+    top: "12px",
+    right: "12px",
     tabId: "insights",
   },
 ];
@@ -582,10 +878,24 @@ function HotspotPin({ hs }: { hs: Hotspot }) {
               zIndex: 20,
             }}
           >
-            <p style={{ fontSize: "0.6875rem", fontWeight: 600, color: "var(--text-primary)", margin: "0 0 3px" }}>
+            <p
+              style={{
+                fontSize: "0.6875rem",
+                fontWeight: 600,
+                color: "var(--text-primary)",
+                margin: "0 0 3px",
+              }}
+            >
               {hs.label}
             </p>
-            <p style={{ fontSize: "0.625rem", color: "var(--text-muted)", margin: 0, lineHeight: 1.5 }}>
+            <p
+              style={{
+                fontSize: "0.625rem",
+                color: "var(--text-muted)",
+                margin: 0,
+                lineHeight: 1.5,
+              }}
+            >
               {hs.tip}
             </p>
           </motion.div>
@@ -599,10 +909,10 @@ function HotspotPin({ hs }: { hs: Hotspot }) {
    FEATURE PILLS ROW
 ────────────────────────────────────────────────────────────── */
 const PILLS = [
-  { label: "Real-time sync",    Icon: RefreshCw },
-  { label: "AI categorization", Icon: Sparkles  },
-  { label: "Custom budgets",    Icon: PieChart  },
-  { label: "Goal tracking",     Icon: TrendingUp },
+  { label: "Real-time sync", Icon: RefreshCw },
+  { label: "AI categorization", Icon: Sparkles },
+  { label: "Custom budgets", Icon: PieChart },
+  { label: "Goal tracking", Icon: TrendingUp },
 ] as const;
 
 /* ──────────────────────────────────────────────────────────────
@@ -613,24 +923,21 @@ export function DemoSection() {
   const tabListRef = useRef<HTMLDivElement>(null);
 
   // Arrow key navigation across tabs
-  const handleTabKeyDown = useCallback(
-    (e: KeyboardEvent<HTMLDivElement>) => {
-      if (e.key === "ArrowRight") {
-        e.preventDefault();
-        setActiveTab((t) => (t + 1) % TABS.length);
-      } else if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        setActiveTab((t) => (t - 1 + TABS.length) % TABS.length);
-      } else if (e.key === "Home") {
-        e.preventDefault();
-        setActiveTab(0);
-      } else if (e.key === "End") {
-        e.preventDefault();
-        setActiveTab(TABS.length - 1);
-      }
-    },
-    [],
-  );
+  const handleTabKeyDown = useCallback((e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "ArrowRight") {
+      e.preventDefault();
+      setActiveTab((t) => (t + 1) % TABS.length);
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      setActiveTab((t) => (t - 1 + TABS.length) % TABS.length);
+    } else if (e.key === "Home") {
+      e.preventDefault();
+      setActiveTab(0);
+    } else if (e.key === "End") {
+      e.preventDefault();
+      setActiveTab(TABS.length - 1);
+    }
+  }, []);
 
   // Focus the selected tab when activeTab changes via keyboard
   useEffect(() => {
@@ -638,7 +945,9 @@ export function DemoSection() {
     el?.[activeTab]?.focus();
   }, [activeTab]);
 
-  const currentTab = TABS[activeTab]!;
+  // TABS is a non-empty const array; activeTab is bounded by [0, TABS.length-1] via clamp
+  // biome-ignore lint/style/noNonNullAssertion: TABS[0] is guaranteed non-null (non-empty const array)
+  const currentTab: Tab = TABS[activeTab] ?? TABS[0]!;
   const currentHotspot = HOTSPOTS.find((h) => h.tabId === currentTab.id);
 
   return (

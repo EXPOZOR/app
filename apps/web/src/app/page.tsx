@@ -1,19 +1,19 @@
-import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { HeroSection } from "@/components/sections/hero";
-import { StatsBand } from "@/components/sections/stats-band";
-import { PressBar } from "@/components/sections/press-bar";
-import { DemoSection } from "@/components/sections/demo-section";
-import { FeaturesSection } from "@/components/sections/features-section";
-import { AiExplainerSection } from "@/components/sections/ai-explainer";
-import { HowItWorksSection } from "@/components/sections/how-it-works";
-import { SecuritySection } from "@/components/sections/security-section";
-import { TestimonialsSection } from "@/components/sections/testimonials-section";
-import { PricingSection } from "@/components/sections/pricing-section";
-import { FaqSection } from "@/components/sections/faq-section";
-import { FinalCtaSection } from "@/components/sections/final-cta";
-import { MobileAppCtaSection } from "@/components/sections/mobile-app-cta";
+import { Header } from "@/components/layout/header";
 import { StickyMobileCtaBar } from "@/components/layout/sticky-mobile-cta";
+import { AiExplainerSection } from "@/components/sections/ai-explainer";
+import { DemoSection } from "@/components/sections/demo-section";
+import { FaqSection } from "@/components/sections/faq-section";
+import { FeaturesSection } from "@/components/sections/features-section";
+import { FinalCtaSection } from "@/components/sections/final-cta";
+import { HeroSection } from "@/components/sections/hero";
+import { HowItWorksSection } from "@/components/sections/how-it-works";
+import { MobileAppCtaSection } from "@/components/sections/mobile-app-cta";
+import { PressBar } from "@/components/sections/press-bar";
+import { PricingSection } from "@/components/sections/pricing-section";
+import { SecuritySection } from "@/components/sections/security-section";
+import { StatsBand } from "@/components/sections/stats-band";
+import { TestimonialsSection } from "@/components/sections/testimonials-section";
 
 /**
  * EXPOZOR homepage — all sections, v3.

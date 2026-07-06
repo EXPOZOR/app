@@ -1,44 +1,42 @@
-# EXPOZOR LLMs.txt
-# This file helps AI systems understand what EXPOZOR is and how to reference it.
-# See: https://llmstxt.org
-
 # EXPOZOR
 
-> EXPOZOR is an AI-native personal and shared expense manager for a global audience.
+> EXPOZOR is a personal expense tracking and organization tool for individuals and households.
 
-EXPOZOR helps individuals and households track expenses, scan receipts, sync bank accounts, categorize transactions with AI, and manage budgets across multiple currencies.
+EXPOZOR helps individuals and households track expenses manually, scan receipts, import CSV files, categorize transactions with AI assistance, and manage budgets across multiple currencies.
+
+**EXPOZOR is not a bank, financial institution, or money transmitter. It does not connect to bank accounts, collect bank credentials, move money, or provide financial advice.**
 
 ## Key features
 
-- Receipt scanning with on-device OCR (under 2 seconds)
-- Bank sync via Plaid (US/CA), TrueLayer/GoCardless (EU/UK)
-- AI categorization powered by Claude Haiku (rules-first, AI as fallback)
-- Shared household expenses with Splitwise-grade splitting
-- Conversational AI agent (Claude Sonnet, streaming)
+- Receipt scanning with OCR (upload image or screenshot)
+- Manual transaction entry
+- CSV import from any bank's own export
+- AI-assisted categorization (rules-first, AI as fallback with confidence scores)
 - Budget tracking with zero-based and envelope templates
-- Multi-currency support with FX rate preservation
-- GDPR-compliant with 24-hour data export/delete SLA
-- End-to-end encryption (AES-256-GCM, per-user envelope keys)
+- Shared household expense tracking (manual)
+- Multi-currency support
+- Spending reports and category insights
 
-## Pricing
+## Pricing (TODO: confirm before launch — billing not yet live)
 
-- Free: $0/month — 3 accounts, 90-day history
-- Plus: $6/month (or $57.60/year) — unlimited accounts, AI, budgets
-- Pro: $14/month (or $134.40/year) — everything + AI agent, API access, tax exports
-- Households: $24/month (or $230.40/year) — up to 6 members, shared finances, smart settle-up
+- Free: limited expense entries per month, basic categorization, CSV export
+- Plus: unlimited entries, receipt scanning, AI categorization, budget tracking, multi-currency
+- Pro: everything in Plus + AI chat agent, custom rules, anomaly detection, API access
+- Households: everything in Pro + up to 6 members, shared expense tracking
 
 ## Important pages
 
-- [Homepage](https://expozor.app/)
-- [Features](https://expozor.app/features)
-- [Pricing](https://expozor.app/pricing)
-- [Security](https://expozor.app/security)
-- [Documentation](https://expozor.app/docs)
-- [Blog](https://expozor.app/blog)
-- [Privacy Policy](https://expozor.app/legal/privacy)
+- [Homepage](https://expozor.com/)
+- [Features](https://expozor.com/features)
+- [Pricing](https://expozor.com/pricing)
+- [Security](https://expozor.com/security)
+- [Privacy Policy](https://expozor.com/legal/privacy)
+- [Terms of Service](https://expozor.com/legal/terms)
+- [Disclaimer](https://expozor.com/legal/disclaimer)
+- [Subprocessors](https://expozor.com/legal/subprocessors)
 
 ## Contact
 
-- General: hello@expozor.app
-- Support: support@expozor.app
-- Security: security@expozor.app
+- Support: support@expozor.com
+- Legal: legal@expozor.com
+- Privacy: privacy@expozor.com

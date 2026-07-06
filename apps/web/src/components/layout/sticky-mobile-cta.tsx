@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, X } from "lucide-react";
+import { useEffect, useState } from "react";
 
 /* ──────────────────────────────────────────────────────────────
    STICKY MOBILE CTA BAR
@@ -15,7 +15,7 @@ import { ArrowRight, X } from "lucide-react";
 const DISMISS_KEY = "EXPOZOR-mobile-cta-dismissed";
 
 export function StickyMobileCtaBar() {
-  const [visible,   setVisible]   = useState(false);
+  const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
@@ -72,29 +72,34 @@ export function StickyMobileCtaBar() {
           >
             {/* Copy */}
             <div style={{ flex: 1, minWidth: 0 }}>
-              <p style={{
-                fontSize: "0.875rem",
-                fontWeight: 600,
-                color: "var(--text-primary)",
-                margin: "0 0 1px",
-                lineHeight: 1.3,
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              }}>
+              <p
+                style={{
+                  fontSize: "0.875rem",
+                  fontWeight: 600,
+                  color: "var(--text-primary)",
+                  margin: "0 0 1px",
+                  lineHeight: 1.3,
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 Founders' pricing — locked for life
               </p>
-              <p style={{
-                fontSize: "0.75rem",
-                color: "var(--text-muted)",
-                margin: 0,
-                lineHeight: 1,
-              }}>
+              <p
+                style={{
+                  fontSize: "0.75rem",
+                  color: "var(--text-muted)",
+                  margin: 0,
+                  lineHeight: 1,
+                }}
+              >
                 Free plan · No credit card
               </p>
             </div>
 
-            {/* CTA button */}
+            {/* CTA button — in-page scroll anchor to #waitlist */}
+            {/* biome-ignore lint/a11y/useValidAnchor: href="#waitlist" is valid in-page navigation; onClick only dismisses the CTA banner as a progressive enhancement */}
             <a
               href="#waitlist"
               onClick={dismiss}

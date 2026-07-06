@@ -1,16 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { EASE_OUT } from "@/lib/motion";
-import {
-  Lock,
-  ShieldCheck,
-  Ban,
-  Eye,
-  FileCheck,
-  Globe,
-  ExternalLink,
-} from "lucide-react";
+import { motion } from "framer-motion";
+import { Ban, Download, ExternalLink, Eye, Lock, ShieldOff, Trash2 } from "lucide-react";
 
 /* ──────────────────────────────────────────────────────────────
    PLEDGE CARDS DATA
@@ -19,46 +11,48 @@ import {
 ────────────────────────────────────────────────────────────── */
 const PLEDGES = [
   {
-    id: "aes",
-    Icon: Lock,
-    title: "AES-256 encryption",
+    id: "no-bank",
+    Icon: ShieldOff,
+    title: "No bank login required",
     description:
-      "All data encrypted at rest and in transit with per-user envelope keys. Never stored in plain text.",
+      "EXPOZOR does not ask for or collect your bank login credentials. You add expenses manually, by upload, or by CSV import.",
   },
   {
-    id: "plaid",
-    Icon: ShieldCheck,
-    title: "Bank-grade OAuth via Plaid",
+    id: "no-money",
+    Icon: Ban,
+    title: "No money movement",
     description:
-      "We never see your bank credentials. Connection is direct, read-only, and revocable at any time.",
+      "EXPOZOR cannot initiate transfers, move funds, or access your accounts. It is an expense tracking tool only.",
+  },
+  {
+    id: "https",
+    Icon: Lock,
+    title: "Encrypted in transit",
+    description:
+      "We use HTTPS for all data in transit. Additional infrastructure and storage security details will be documented before public launch.",
   },
   {
     id: "no-data",
-    Icon: Ban,
-    title: "Zero data selling",
-    description:
-      "No ads. No third-party data brokers. Your financial life is not a product we sell.",
-  },
-  {
-    id: "read-only",
     Icon: Eye,
-    title: "Read-only access",
+    title: "No data selling",
     description:
-      "EXPOZOR cannot initiate transfers or move your money — ever. We only read, never write.",
+      "No ads. No third-party data brokers. Your financial information is not a product we sell or share.",
   },
   {
-    id: "soc2",
-    Icon: FileCheck,
-    title: "SOC 2 Type II in progress",
+    id: "export",
+    Icon: Download,
+    title: "Export support planned",
+    // TODO: update to confirmed export capability before public launch
     description:
-      "Audit underway with a Big-4 firm. Full compliance expected Q3 2026. Security reports on request.",
+      "Data export support is planned before public launch. Contact support to request your data at any time.",
   },
   {
-    id: "gdpr",
-    Icon: Globe,
-    title: "GDPR & CCPA compliant",
+    id: "deletion",
+    Icon: Trash2,
+    title: "Deletion requests supported",
     description:
-      "Right to deletion, data portability, and full audit logs available in your account settings.",
+      // TODO: confirm deletion implementation and turnaround time before public launch
+      "You can request deletion of your account and associated data. Contact support for data removal requests.",
   },
 ] as const;
 
@@ -93,7 +87,7 @@ function ShieldIllustration() {
               opacity: 0.25 / r,
             }}
             animate={{ scale: [1, 1.06, 1], opacity: [0.25 / r, 0.12 / r, 0.25 / r] }}
-            transition={{ duration: 3 + r, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ duration: 3 + r, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
           />
         ))}
 
@@ -208,8 +202,7 @@ export function SecuritySection() {
                   margin: "0 0 1rem",
                 }}
               >
-                Your money,{" "}
-                <span className="text-gradient">data is sacred.</span>
+                Your money, <span className="text-gradient">data is sacred.</span>
               </motion.h2>
 
               {/* Emotional sub-line */}
@@ -247,13 +240,13 @@ export function SecuritySection() {
                 }}
               >
                 {[
-                  "End-to-end AES-256-GCM encryption, per-user envelope keys.",
-                  "Read-only bank access via Plaid — we can never move your money.",
-                  "No data sold. No ads. No third-party tracking. Ever.",
-                  "GDPR & CCPA — right to deletion available in Settings.",
+                  "No bank login required. EXPOZOR does not collect bank credentials.",
+                  "No money movement. EXPOZOR tracks expenses only.",
+                  "We use HTTPS for all data in transit.",
+                  "Your data is not sold, shared, or used for advertising.",
                 ].map((item, i) => (
                   <motion.li
-                    key={i}
+                    key={item}
                     initial={{ opacity: 0, x: -8 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
@@ -309,7 +302,8 @@ export function SecuritySection() {
                   fontWeight: 600,
                   color: "var(--accent)",
                   textDecoration: "none",
-                  transition: "color var(--dur-base) var(--ease-out), gap var(--dur-base) var(--ease-out)",
+                  transition:
+                    "color var(--dur-base) var(--ease-out), gap var(--dur-base) var(--ease-out)",
                 }}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLAnchorElement).style.gap = "9px";
@@ -324,15 +318,14 @@ export function SecuritySection() {
             </div>
 
             {/* ── RIGHT: 2×3 pledge card grid ─────────────── */}
-            <div
-              role="list"
+            <ul
               aria-label="Security pledge details"
               className="pledge-grid"
+              style={{ listStyle: "none", margin: 0, padding: 0 }}
             >
               {PLEDGES.map((pledge, i) => (
                 <motion.div
                   key={pledge.id}
-                  role="listitem"
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-20px" }}
@@ -375,7 +368,7 @@ export function SecuritySection() {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      color: "var(--text-primary)",   /* neutral white */
+                      color: "var(--text-primary)" /* neutral white */,
                       flexShrink: 0,
                       transition: "background 200ms ease-out, border-color 200ms ease-out",
                     }}
@@ -410,7 +403,7 @@ export function SecuritySection() {
                   </p>
                 </motion.div>
               ))}
-            </div>
+            </ul>
           </div>
         </motion.div>
       </div>

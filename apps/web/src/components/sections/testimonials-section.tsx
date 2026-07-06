@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { EASE_OUT } from "@/lib/motion";
-import { ShieldCheck, Zap, Lock } from "lucide-react";
+import { motion } from "framer-motion";
+import { Lock, ShieldCheck, Zap } from "lucide-react";
 
 /* ──────────────────────────────────────────────────────────────
    EARLY ACCESS SECTION
@@ -22,7 +22,7 @@ const PLEDGES = [
     icon: ShieldCheck,
     title: "Privacy by architecture",
     description:
-      "Per-user envelope encryption, row-level security, zero third-party trackers. We can't read your data even if we wanted to.",
+      "Your data is encrypted in transit. No bank credentials are collected. No third-party trackers in the authenticated app. Infrastructure security details will be published before launch.",
     accent: "#60a5fa",
   },
   {
@@ -46,7 +46,9 @@ export function TestimonialsSection() {
       <div
         aria-hidden="true"
         style={{
-          position: "absolute", inset: 0, pointerEvents: "none",
+          position: "absolute",
+          inset: 0,
+          pointerEvents: "none",
           background:
             "radial-gradient(ellipse at 50% 0%, rgba(167,139,250,0.05) 0%, transparent 55%)",
         }}

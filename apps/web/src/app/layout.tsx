@@ -1,7 +1,7 @@
-import type { Metadata, Viewport } from "next";
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
 import { FAQ } from "@/content/landing";
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
+import type { Metadata, Viewport } from "next";
 import "@/app/globals.css";
 
 /* ── Base URL ──────────────────────────────────────────────── */
@@ -12,31 +12,31 @@ export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
 
   title: {
-    default: "EXPOZOR — Your finances, finally intelligent.",
+    default: "EXPOZOR — Know Where Your Money Is Really Going",
     template: "%s | EXPOZOR",
   },
 
   description:
-    "AI that categorizes, budgets, and splits your money — automatically. Join the waitlist and lock in Founders' pricing for life.",
+    "Track expenses, organize receipts, import CSV files, and understand your spending. No bank connection required. Join the early access waitlist.",
 
   keywords: [
     "expense tracker",
     "personal finance app",
-    "AI expense manager",
     "receipt scanner",
     "budget app",
-    "bank sync",
-    "shared expenses",
-    "money management",
+    "CSV import",
+    "manual expense entry",
+    "spending tracker",
     "AI categorization",
-    "household budget",
-    "waitlist",
-    "private beta",
+    "money management",
+    "no bank connection",
+    "receipt upload",
+    "monthly spending summary",
   ],
 
   authors: [{ name: "EXPOZOR", url: BASE_URL }],
   creator: "EXPOZOR",
-  publisher: "EXPOZOR, Inc.",
+  publisher: "EXPOZOR",
 
   alternates: {
     canonical: BASE_URL,
@@ -47,15 +47,15 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: BASE_URL,
     siteName: "EXPOZOR",
-    title: "EXPOZOR — Your finances, finally intelligent.",
+    title: "EXPOZOR — Know Where Your Money Is Really Going",
     description:
-      "AI that categorizes, budgets, and splits your money — automatically. Join the waitlist.",
+      "Track expenses, organize receipts, import CSV, and understand your spending. No bank connection required.",
     images: [
       {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "EXPOZOR — Your finances, finally intelligent.",
+        alt: "EXPOZOR — Know Where Your Money Is Really Going",
         type: "image/png",
       },
     ],
@@ -63,9 +63,9 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "EXPOZOR — Your finances, finally intelligent.",
+    title: "EXPOZOR — Know Where Your Money Is Really Going",
     description:
-      "AI that categorizes, budgets, and splits your money — automatically.",
+      "Track expenses, organize receipts, import CSV, and understand your spending. No bank connection required.",
     images: ["/twitter-image"],
     creator: "@EXPOZOR",
     site: "@EXPOZOR",
@@ -97,7 +97,7 @@ export const metadata: Metadata = {
 /* ── Viewport ──────────────────────────────────────────────── */
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)",  color: "#0A0A0B" },
+    { media: "(prefers-color-scheme: dark)", color: "#0A0A0B" },
     { media: "(prefers-color-scheme: light)", color: "#FAFAF9" },
   ],
   colorScheme: "dark light",
@@ -118,13 +118,11 @@ function buildJsonLd() {
       width: 120,
       height: 32,
     },
-    sameAs: [
-      "https://twitter.com/expozor",
-      "https://github.com/expozor",
-    ],
+    sameAs: ["https://twitter.com/expozor", "https://github.com/expozor"],
     contactPoint: {
       "@type": "ContactPoint",
-      email: "hello@expozor.app",
+      // TODO: confirm support@expozor.com is live and monitored before public launch
+      email: "support@expozor.com",
       contactType: "customer support",
     },
   };
@@ -136,15 +134,16 @@ function buildJsonLd() {
     applicationCategory: "FinanceApplication",
     operatingSystem: "Web, iOS, Android",
     description:
-      "AI-native personal and shared expense manager. Bank sync, AI categorization, budgets, and household splits.",
+      "Manual expense tracking, receipt upload, CSV import, and AI-assisted categorization. No bank connection required.",
     url: BASE_URL,
     screenshot: `${BASE_URL}/opengraph-image`,
-    offers: [
-      { "@type": "Offer", price: "0",  priceCurrency: "USD", name: "Free"   },
-      { "@type": "Offer", price: "6",  priceCurrency: "USD", name: "Plus"   },
-      { "@type": "Offer", price: "14", priceCurrency: "USD", name: "Pro"    },
-      { "@type": "Offer", price: "24", priceCurrency: "USD", name: "Family" },
-    ],
+    // TODO: add confirmed offers once billing provider is confirmed and pricing is live
+    // offers: [
+    //   { "@type": "Offer", price: "0",  priceCurrency: "USD", name: "Free"   },
+    //   { "@type": "Offer", price: "6",  priceCurrency: "USD", name: "Plus"   },
+    //   { "@type": "Offer", price: "14", priceCurrency: "USD", name: "Pro"    },
+    //   { "@type": "Offer", price: "24", priceCurrency: "USD", name: "Family" },
+    // ],
     publisher: { "@id": `${BASE_URL}/#organization` },
   };
 
@@ -188,11 +187,7 @@ export default function RootLayout({
           font variable. The explicit preload below is belt-and-suspenders
           for the woff2 subset that ships with the package.
         */}
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
         {/* View Transitions API — enables smooth page-to-page animations */}
         <meta name="view-transition" content="same-origin" />
@@ -200,7 +195,6 @@ export default function RootLayout({
         {/* Structured data */}
         <script
           type="application/ld+json"
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: controlled JSON-LD
           dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd()) }}
         />
       </head>

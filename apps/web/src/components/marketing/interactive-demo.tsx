@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Sparkles, TrendingDown, RefreshCw, Check } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Check, Plus, RefreshCw, Sparkles, TrendingDown } from "lucide-react";
+import { useCallback, useState } from "react";
 
 // ── Types ──────────────────────────────────────────────────────
 interface Transaction {
@@ -29,13 +29,12 @@ const CATEGORIES = [
 
 type CategoryItem = { label: string; icon: string };
 
-
 const SUGGESTIONS = [
-  "Coffee at Blue Bottle",
-  "Uber to airport",
-  "Netflix subscription",
-  "Whole Foods Market",
-  "Gym membership",
+  "Coffee Shop",
+  "Taxi to Airport",
+  "Streaming Service",
+  "Grocery Store",
+  "Gym Membership",
 ];
 
 const INITIAL_BUDGET = 800;
@@ -47,9 +46,33 @@ export function InteractiveDemo() {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [transactions, setTransactions] = useState<Transaction[]>([
-    { id: "1", name: "Spotify Premium", amount: 9.99, category: "Entertainment", categoryIcon: "🎬", confidence: 99, timestamp: new Date(Date.now() - 86400000 * 2) },
-    { id: "2", name: "Trader Joe's", amount: 67.40, category: "Food & Drink", categoryIcon: "🍽️", confidence: 97, timestamp: new Date(Date.now() - 86400000) },
-    { id: "3", name: "Shell Gas Station", amount: 54.20, category: "Transport", categoryIcon: "🚗", confidence: 96, timestamp: new Date(Date.now() - 3600000 * 5) },
+    {
+      id: "1",
+      name: "Streaming Service",
+      amount: 9.99,
+      category: "Entertainment",
+      categoryIcon: "🎬",
+      confidence: 99,
+      timestamp: new Date(Date.now() - 86400000 * 2),
+    },
+    {
+      id: "2",
+      name: "Grocery Store",
+      amount: 67.4,
+      category: "Food & Drink",
+      categoryIcon: "🍽️",
+      confidence: 97,
+      timestamp: new Date(Date.now() - 86400000),
+    },
+    {
+      id: "3",
+      name: "Gas Station",
+      amount: 54.2,
+      category: "Transport",
+      categoryIcon: "🚗",
+      confidence: 96,
+      timestamp: new Date(Date.now() - 3600000 * 5),
+    },
   ]);
   const [currentTx, setCurrentTx] = useState<Transaction | null>(null);
   const [spent, setSpent] = useState(INITIAL_SPENT);
@@ -60,15 +83,45 @@ export function InteractiveDemo() {
     // Naive category inference (deterministic first — no LLM in demo)
     const lower = name.toLowerCase();
     let category: CategoryItem = CATEGORIES[0] ?? { label: "Food & Drink", icon: "🍽️" };
-    if (lower.includes("uber") || lower.includes("lyft") || lower.includes("gas") || lower.includes("transport")) {
+    if (
+      lower.includes("taxi") ||
+      lower.includes("ride") ||
+      lower.includes("gas") ||
+      lower.includes("transport") ||
+      lower.includes("fuel") ||
+      lower.includes("bus") ||
+      lower.includes("train")
+    ) {
       category = CATEGORIES[1] ?? category;
-    } else if (lower.includes("amazon") || lower.includes("shop") || lower.includes("store") || lower.includes("market")) {
+    } else if (
+      lower.includes("shop") ||
+      lower.includes("store") ||
+      lower.includes("market") ||
+      lower.includes("amazon") ||
+      lower.includes("online")
+    ) {
       category = CATEGORIES[2] ?? category;
-    } else if (lower.includes("netflix") || lower.includes("spotify") || lower.includes("movie") || lower.includes("cinema")) {
+    } else if (
+      lower.includes("streaming") ||
+      lower.includes("cinema") ||
+      lower.includes("movie") ||
+      lower.includes("game") ||
+      lower.includes("entertainment")
+    ) {
       category = CATEGORIES[3] ?? category;
-    } else if (lower.includes("gym") || lower.includes("health") || lower.includes("doctor") || lower.includes("pharma")) {
+    } else if (
+      lower.includes("gym") ||
+      lower.includes("health") ||
+      lower.includes("doctor") ||
+      lower.includes("pharma")
+    ) {
       category = CATEGORIES[4] ?? category;
-    } else if (lower.includes("electric") || lower.includes("water") || lower.includes("internet") || lower.includes("utility")) {
+    } else if (
+      lower.includes("electric") ||
+      lower.includes("water") ||
+      lower.includes("internet") ||
+      lower.includes("utility")
+    ) {
       category = CATEGORIES[5] ?? category;
     }
 
@@ -103,9 +156,33 @@ export function InteractiveDemo() {
     setAmount("");
     setCurrentTx(null);
     setTransactions([
-      { id: "1", name: "Spotify Premium", amount: 9.99, category: "Entertainment", categoryIcon: "🎬", confidence: 99, timestamp: new Date(Date.now() - 86400000 * 2) },
-      { id: "2", name: "Trader Joe's", amount: 67.40, category: "Food & Drink", categoryIcon: "🍽️", confidence: 97, timestamp: new Date(Date.now() - 86400000) },
-      { id: "3", name: "Shell Gas Station", amount: 54.20, category: "Transport", categoryIcon: "🚗", confidence: 96, timestamp: new Date(Date.now() - 3600000 * 5) },
+      {
+        id: "1",
+        name: "Streaming Service",
+        amount: 9.99,
+        category: "Entertainment",
+        categoryIcon: "🎬",
+        confidence: 99,
+        timestamp: new Date(Date.now() - 86400000 * 2),
+      },
+      {
+        id: "2",
+        name: "Grocery Store",
+        amount: 67.4,
+        category: "Food & Drink",
+        categoryIcon: "🍽️",
+        confidence: 97,
+        timestamp: new Date(Date.now() - 86400000),
+      },
+      {
+        id: "3",
+        name: "Gas Station",
+        amount: 54.2,
+        category: "Transport",
+        categoryIcon: "🚗",
+        confidence: 96,
+        timestamp: new Date(Date.now() - 3600000 * 5),
+      },
     ]);
     setSpent(INITIAL_SPENT);
   }, []);
@@ -114,10 +191,9 @@ export function InteractiveDemo() {
   const remaining = Math.max(INITIAL_BUDGET - spent, 0);
 
   return (
-    <div
+    <section
       className="relative w-full max-w-2xl mx-auto rounded-[var(--radius-xl)] overflow-hidden border border-[var(--border)] glass"
       style={{ boxShadow: "0 24px 80px rgba(0,0,0,0.6)" }}
-      role="region"
       aria-label="Interactive demo"
     >
       {/* Title bar */}
@@ -134,6 +210,7 @@ export function InteractiveDemo() {
         <div className="flex items-center gap-2">
           <span className="badge-live text-[10px]">Live demo</span>
           <button
+            type="button"
             onClick={handleReset}
             className="p-1.5 rounded-[var(--radius-sm)] text-[var(--text-tertiary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-overlay)] transition-colors"
             aria-label="Reset demo"
@@ -159,7 +236,7 @@ export function InteractiveDemo() {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Coffee at Blue Bottle"
+              placeholder="e.g. Coffee Shop, $4.50"
               disabled={step !== "entry"}
               maxLength={60}
               className="w-full px-3 py-2.5 text-sm rounded-[var(--radius)] bg-[var(--bg-elevated)] border border-[var(--border)] text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:outline-none focus:border-[var(--accent)] transition-colors disabled:opacity-50"
@@ -231,6 +308,7 @@ export function InteractiveDemo() {
             <div
               className="h-1.5 rounded-full bg-[var(--bg-overlay)] overflow-hidden"
               role="progressbar"
+              tabIndex={0}
               aria-label={`${Math.round(budgetPct)}% of budget spent`}
               aria-valuenow={Math.round(budgetPct)}
               aria-valuemin={0}
@@ -252,7 +330,8 @@ export function InteractiveDemo() {
               />
             </div>
             <p className="text-[10px] text-[var(--text-tertiary)] mt-1.5">
-              <span className="text-[var(--accent-2)] font-medium">${remaining.toFixed(2)}</span> remaining
+              <span className="text-[var(--accent-2)] font-medium">${remaining.toFixed(2)}</span>{" "}
+              remaining
             </p>
           </div>
         </div>
@@ -268,7 +347,6 @@ export function InteractiveDemo() {
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                 className="absolute inset-x-5 top-5 z-10 rounded-[var(--radius-lg)] glass border border-[var(--border-accent)] p-4"
-                role="status"
                 aria-live="polite"
                 aria-label="AI categorization in progress"
               >
@@ -280,7 +358,11 @@ export function InteractiveDemo() {
                     {step === "categorizing" ? (
                       <motion.span
                         animate={{ rotate: 360 }}
-                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        transition={{
+                          duration: 1,
+                          repeat: Number.POSITIVE_INFINITY,
+                          ease: "linear",
+                        }}
                         className="block"
                       >
                         ✨
@@ -338,15 +420,16 @@ export function InteractiveDemo() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                 className="absolute inset-x-5 top-5 z-10 rounded-[var(--radius-lg)] p-4 border border-[var(--border-accent)] bg-[var(--accent-subtle)]"
-                role="status"
                 aria-live="polite"
               >
                 <div className="flex items-center gap-3">
-                  <TrendingDown size={18} className="text-[var(--accent-2)] shrink-0" aria-hidden="true" />
+                  <TrendingDown
+                    size={18}
+                    className="text-[var(--accent-2)] shrink-0"
+                    aria-hidden="true"
+                  />
                   <div>
-                    <p className="text-sm font-medium text-[var(--text-primary)]">
-                      Budget updated
-                    </p>
+                    <p className="text-sm font-medium text-[var(--text-primary)]">Budget updated</p>
                     <p className="text-xs text-[var(--text-secondary)] mt-0.5">
                       <span className="text-[var(--accent-2)] font-semibold">
                         ${remaining.toFixed(2)}
@@ -399,6 +482,6 @@ export function InteractiveDemo() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

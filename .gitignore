@@ -2,6 +2,7 @@ node_modules/
 .next/
 dist/
 .turbo/
+*.tsbuildinfo
 *.local
 .env
 .env.*
@@ -11,3 +12,4 @@ Thumbs.db
 *.log
 prompt_text.txt
 prompt.pdf
+expozor_refactor_prompt.md

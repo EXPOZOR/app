@@ -1,20 +1,17 @@
-import type { Metadata } from "next";
-import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { Header } from "@/components/layout/header";
 import { getAllChangelogEntries } from "@/lib/mdx";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
+import type { Metadata } from "next";
 import { MDXRemote } from "next-mdx-remote/rsc";
 
 export const metadata: Metadata = {
   title: "Changelog",
-  description:
-    "What's new in EXPOZOR. Product updates, bug fixes, and improvements.",
+  description: "What's new in EXPOZOR. Product updates, bug fixes, and improvements.",
   alternates: { canonical: "https://expozor.com/changelog" },
 };
 
-const breadcrumb = breadcrumbJsonLd([
-  { name: "Changelog", href: "/changelog" },
-]);
+const breadcrumb = breadcrumbJsonLd([{ name: "Changelog", href: "/changelog" }]);
 
 export default function ChangelogPage() {
   const entries = getAllChangelogEntries();
@@ -31,9 +28,7 @@ export default function ChangelogPage() {
           <p className="text-xs uppercase tracking-widest font-semibold text-[var(--accent)] mb-3">
             Changelog
           </p>
-          <h1 className="text-4xl font-bold tracking-tight mb-10">
-            What&apos;s new
-          </h1>
+          <h1 className="text-4xl font-bold tracking-tight mb-10">What&apos;s new</h1>
 
           <div className="space-y-12">
             {entries.map((entry) => {
@@ -59,10 +54,10 @@ export default function ChangelogPage() {
                       {entry.frontmatter.tag}
                     </span>
                     <time className="text-sm text-[var(--text-tertiary)]">
-                      {new Date(entry.frontmatter.date).toLocaleDateString(
-                        "en-US",
-                        { year: "numeric", month: "long" }
-                      )}
+                      {new Date(entry.frontmatter.date).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                      })}
                     </time>
                     <span className="text-sm font-mono text-[var(--text-tertiary)]">
                       v{entry.frontmatter.version}
@@ -72,9 +67,7 @@ export default function ChangelogPage() {
                     <MDXRemote
                       source={entry.content}
                       components={{
-                        ul: (props) => (
-                          <ul className="space-y-2 list-none" {...props} />
-                        ),
+                        ul: (props) => <ul className="space-y-2 list-none" {...props} />,
                         li: (props) => (
                           <li
                             className="flex items-start gap-2 text-sm text-[var(--text-secondary)]"
@@ -100,10 +93,7 @@ export default function ChangelogPage() {
           <div className="mt-12 pt-8 border-t border-[var(--border)]">
             <p className="text-sm text-[var(--text-tertiary)]">
               Subscribe to the{" "}
-              <a
-                href="/changelog/rss.xml"
-                className="text-[var(--accent)] hover:underline"
-              >
+              <a href="/changelog/rss.xml" className="text-[var(--accent)] hover:underline">
                 RSS feed
               </a>{" "}
               to get updates in your reader.

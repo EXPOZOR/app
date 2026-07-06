@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useState, useEffect, useCallback } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import { EASE_OUT } from "@/lib/motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 /* ──────────────────────────────────────────────────────────────
    STEP DATA
@@ -21,28 +21,22 @@ type Step = {
 
 const STEPS: Step[] = [
   {
-    id: "connect",
+    id: "add",
     number: "01",
-    title: "Connect your accounts",
-    body: "Link any bank, card, or wallet in under 30 seconds via bank-grade OAuth. EXPOZOR never sees your credentials — only the transaction data you authorise.",
+    title: "Add your expenses",
+    body: "Enter expenses manually, upload a receipt or transaction screenshot, or import a CSV file. No bank login needed.",
   },
   {
     id: "ai-reads",
     number: "02",
-    title: "AI reads every transaction",
-    body: "Our model reads merchant names, amounts, dates, and location context — then assigns the right category with a confidence score. Rules first, AI on unknowns.",
+    title: "Review and organize",
+    body: "EXPOZOR suggests categories based on merchant name and amount. You review every suggestion and edit before it is saved.",
   },
   {
-    id: "budget",
+    id: "understand",
     number: "03",
-    title: "Your budget updates live",
-    body: "Every categorised transaction hits its envelope immediately. Envelopes roll over unused budget and flag when you're approaching the edge — before you overspend.",
-  },
-  {
-    id: "ask",
-    number: "04",
-    title: "Ask anything, anytime",
-    body: "\"What did I spend on travel in April?\" — your AI agent already knows. Ask in plain English, get a plain-English answer with a chart.",
+    title: "Understand your spending",
+    body: "See spending by category, merchant, and month. Spot recurring charges and possible fees. Export a clean summary.",
   },
 ];
 
@@ -54,32 +48,49 @@ const STEPS: Step[] = [
 /** Step 1 — bank icons linked to EXPOZOR "E" mark */
 function VisualConnect() {
   const shouldReduce = useReducedMotion();
-  const banks = [
-    { label: "Chase",       initial: "CH", color: "#117ACA" },
-    { label: "Wells Fargo", initial: "WF", color: "#CD192D" },
-    { label: "Amex",        initial: "AX", color: "#016FD0" },
-    { label: "Barclays",    initial: "BC", color: "#00AEEF" },
+  const sources = [
+    { label: "Receipt", initial: "RX", color: "#3DDC97" },
+    { label: "CSV File", initial: "CSV", color: "#60A5FA" },
+    { label: "Screenshot", initial: "IMG", color: "#A78BFA" },
+    { label: "Manual Entry", initial: "ME", color: "#FB923C" },
   ] as const;
 
   /* x-coords matching the 4 lines in the SVG */
   const LINE_X = [30, 90, 170, 230] as const;
 
   return (
-    <div aria-hidden="true" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.25rem", padding: "1.5rem 0" }}>
-      {/* Bank icons row */}
+    <div
+      aria-hidden="true"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "1.25rem",
+        padding: "1.5rem 0",
+      }}
+    >
+      {/* Source icons row */}
       <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-        {banks.map((b, i) => (
+        {sources.map((b, i) => (
           <motion.div
             key={b.label}
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1, duration: 0.4, ease: EASE_OUT }}
             style={{
-              width: "48px", height: "48px", borderRadius: "12px",
-              background: "var(--bg-elev-2)", border: "1px solid var(--border)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: "0.625rem", fontWeight: 700, color: "var(--text-muted)",
-              letterSpacing: "0.02em", flexShrink: 0,
+              width: "48px",
+              height: "48px",
+              borderRadius: "12px",
+              background: "var(--bg-elev-2)",
+              border: "1px solid var(--border)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "0.625rem",
+              fontWeight: 700,
+              color: "var(--text-muted)",
+              letterSpacing: "0.02em",
+              flexShrink: 0,
             }}
           >
             {b.initial}
@@ -98,9 +109,13 @@ function VisualConnect() {
         {/* Lines from each bank to centre */}
         {LINE_X.map((x, i) => (
           <motion.line
-            key={i}
-            x1={x} y1={2} x2={130} y2={46}
-            stroke="url(#line-grad)" strokeWidth="1"
+            key={x}
+            x1={x}
+            y1={2}
+            x2={130}
+            y2={46}
+            stroke="url(#line-grad)"
+            strokeWidth="1"
             strokeDasharray="4 3"
             initial={{ pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 1 }}
@@ -110,28 +125,46 @@ function VisualConnect() {
         {/* ── Enhancement 5: travelling glow-dots — one per line ── */}
         {/* Each dot rides from the bank position (y=2) down to the E-node (y=46).
             Disabled for prefers-reduced-motion via shouldReduce guard. */}
-        {!shouldReduce && LINE_X.map((x, i) => (
-          <motion.circle
-            key={`dot-${i}`}
-            /* Interpolate x from bank-x toward 130 as cy goes 2→46 */
-            cx={x + ((130 - x) * 0.5)}
-            cy={2}
-            r="2.5"
-            fill="var(--accent)"
-            style={{ filter: "drop-shadow(0 0 3px #3DDC97)" }}
-            animate={!shouldReduce ? { cy: [2, 46, 46] } : {}}
-            transition={{
-              delay: 0.8 + i * 0.22,
-              duration: 1.8,
-              repeat: Infinity,
-              repeatDelay: 1.2,
-              ease: "easeIn",
-            }}
-          />
-        ))}
+        {!shouldReduce &&
+          LINE_X.map((x, i) => (
+            <motion.circle
+              key={`dot-${x}`}
+              /* Interpolate x from bank-x toward 130 as cy goes 2→46 */
+              cx={x + (130 - x) * 0.5}
+              cy={2}
+              r="2.5"
+              fill="var(--accent)"
+              style={{ filter: "drop-shadow(0 0 3px #3DDC97)" }}
+              animate={!shouldReduce ? { cy: [2, 46, 46] } : {}}
+              transition={{
+                delay: 0.8 + i * 0.22,
+                duration: 1.8,
+                repeat: Number.POSITIVE_INFINITY,
+                repeatDelay: 1.2,
+                ease: "easeIn",
+              }}
+            />
+          ))}
         {/* EXPOZOR node at bottom */}
-        <circle cx="130" cy="46" r="14" fill="var(--bg-elev-2)" stroke="var(--border-accent)" strokeWidth="1.5" />
-        <text x="130" y="50" textAnchor="middle" fill="var(--accent)" fontSize="11" fontWeight="800" fontFamily="system-ui">E</text>
+        <circle
+          cx="130"
+          cy="46"
+          r="14"
+          fill="var(--bg-elev-2)"
+          stroke="var(--border-accent)"
+          strokeWidth="1.5"
+        />
+        <text
+          x="130"
+          y="50"
+          textAnchor="middle"
+          fill="var(--accent)"
+          fontSize="11"
+          fontWeight="800"
+          fontFamily="system-ui"
+        >
+          E
+        </text>
       </svg>
 
       {/* "Connected" badge */}
@@ -140,12 +173,24 @@ function VisualConnect() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.8, duration: 0.35, ease: EASE_OUT }}
         style={{
-          display: "inline-flex", alignItems: "center", gap: "6px",
-          padding: "6px 14px", borderRadius: "var(--radius-full)",
-          background: "var(--accent-subtle)", border: "1px solid var(--border-accent)",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "6px",
+          padding: "6px 14px",
+          borderRadius: "var(--radius-full)",
+          background: "var(--accent-subtle)",
+          border: "1px solid var(--border-accent)",
         }}
       >
-        <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--accent)", animation: "pulse-dot 2s ease-in-out infinite" }} />
+        <div
+          style={{
+            width: "6px",
+            height: "6px",
+            borderRadius: "50%",
+            background: "var(--accent)",
+            animation: "pulse-dot 2s ease-in-out infinite",
+          }}
+        />
         <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--accent)" }}>
           4 accounts connected · Live sync on
         </span>
@@ -162,34 +207,89 @@ function VisualAIReads() {
       <motion.div
         initial={{ opacity: 0.5 }}
         animate={{ opacity: [0.5, 0.5, 0] }}
-        transition={{ duration: 2.4, repeat: Infinity, times: [0, 0.6, 1], ease: "easeInOut" }}
+        transition={{
+          duration: 2.4,
+          repeat: Number.POSITIVE_INFINITY,
+          times: [0, 0.6, 1],
+          ease: "easeInOut",
+        }}
         style={{
-          padding: "12px 14px", borderRadius: "var(--radius-md)",
-          background: "var(--bg-elev-2)", border: "1px solid var(--border)",
-          display: "flex", alignItems: "center", gap: "10px",
+          padding: "12px 14px",
+          borderRadius: "var(--radius-md)",
+          background: "var(--bg-elev-2)",
+          border: "1px solid var(--border)",
+          display: "flex",
+          alignItems: "center",
+          gap: "10px",
         }}
       >
-        <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "var(--bg-muted)", flexShrink: 0 }} />
+        <div
+          style={{
+            width: "32px",
+            height: "32px",
+            borderRadius: "8px",
+            background: "var(--bg-muted)",
+            flexShrink: 0,
+          }}
+        />
         <div style={{ flex: 1 }}>
-          <div style={{ height: "8px", width: "60%", borderRadius: "4px", background: "var(--bg-muted)", marginBottom: "6px" }} />
-          <div style={{ height: "6px", width: "40%", borderRadius: "4px", background: "var(--border)" }} />
+          <div
+            style={{
+              height: "8px",
+              width: "60%",
+              borderRadius: "4px",
+              background: "var(--bg-muted)",
+              marginBottom: "6px",
+            }}
+          />
+          <div
+            style={{
+              height: "6px",
+              width: "40%",
+              borderRadius: "4px",
+              background: "var(--border)",
+            }}
+          />
         </div>
-        <div style={{ height: "10px", width: "50px", borderRadius: "4px", background: "var(--bg-muted)" }} />
+        <div
+          style={{
+            height: "10px",
+            width: "50px",
+            borderRadius: "4px",
+            background: "var(--bg-muted)",
+          }}
+        />
       </motion.div>
 
       {/* AI scanning indicator */}
       <div style={{ display: "flex", alignItems: "center", gap: "8px", padding: "0 4px" }}>
         <div style={{ flex: 1, height: "1px", background: "var(--border)" }} />
-        <span style={{ fontSize: "0.625rem", fontWeight: 600, color: "var(--text-muted)", whiteSpace: "nowrap" }}>
+        <span
+          style={{
+            fontSize: "0.625rem",
+            fontWeight: 600,
+            color: "var(--text-muted)",
+            whiteSpace: "nowrap",
+          }}
+        >
           AI categorizing
         </span>
         <motion.div
           style={{ display: "flex", gap: "3px" }}
           animate={{ opacity: [1, 0.3, 1] }}
-          transition={{ duration: 1.2, repeat: Infinity }}
+          transition={{ duration: 1.2, repeat: Number.POSITIVE_INFINITY }}
         >
           {[0, 1, 2].map((i) => (
-            <div key={i} style={{ width: "4px", height: "4px", borderRadius: "50%", background: "var(--accent)", animationDelay: `${i * 0.2}s` }} />
+            <div
+              key={i}
+              style={{
+                width: "4px",
+                height: "4px",
+                borderRadius: "50%",
+                background: "var(--accent)",
+                animationDelay: `${i * 0.2}s`,
+              }}
+            />
           ))}
         </motion.div>
         <div style={{ flex: 1, height: "1px", background: "var(--border)" }} />
@@ -199,36 +299,76 @@ function VisualAIReads() {
       <motion.div
         initial={{ opacity: 0, y: 6 }}
         animate={{ opacity: [0, 0, 1], y: [6, 6, 0] }}
-        transition={{ duration: 2.4, repeat: Infinity, times: [0, 0.6, 1], ease: "easeInOut" }}
+        transition={{
+          duration: 2.4,
+          repeat: Number.POSITIVE_INFINITY,
+          times: [0, 0.6, 1],
+          ease: "easeInOut",
+        }}
         style={{
-          padding: "12px 14px", borderRadius: "var(--radius-md)",
+          padding: "12px 14px",
+          borderRadius: "var(--radius-md)",
           background: "var(--bg-elev-2)",
           border: "1px solid var(--border-accent)",
-          display: "flex", alignItems: "center", gap: "10px",
+          display: "flex",
+          alignItems: "center",
+          gap: "10px",
           boxShadow: "0 0 0 1px var(--border-accent)",
         }}
       >
-        <div style={{
-          width: "32px", height: "32px", borderRadius: "8px",
-          background: "rgba(61,220,151,0.12)", display: "flex",
-          alignItems: "center", justifyContent: "center", fontSize: "1rem", flexShrink: 0,
-        }}>
+        <div
+          style={{
+            width: "32px",
+            height: "32px",
+            borderRadius: "8px",
+            background: "rgba(61,220,151,0.15)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "1rem",
+            flexShrink: 0,
+          }}
+        >
           🛒
         </div>
         <div style={{ flex: 1 }}>
-          <p style={{ fontSize: "0.8125rem", fontWeight: 600, color: "var(--text-primary)", margin: 0 }}>Whole Foods Market</p>
+          <p
+            style={{
+              fontSize: "0.8125rem",
+              fontWeight: 600,
+              color: "var(--text-primary)",
+              margin: 0,
+            }}
+          >
+            Grocery Store
+          </p>
           <div style={{ display: "flex", alignItems: "center", gap: "6px", marginTop: "3px" }}>
-            <span style={{
-              fontSize: "0.5625rem", fontWeight: 600, padding: "1px 6px",
-              borderRadius: "var(--radius-full)", background: "var(--accent-subtle)",
-              color: "var(--accent)", border: "1px solid var(--border-accent)",
-            }}>
+            <span
+              style={{
+                fontSize: "0.5625rem",
+                fontWeight: 600,
+                padding: "1px 6px",
+                borderRadius: "var(--radius-full)",
+                background: "var(--accent-subtle)",
+                color: "var(--accent)",
+                border: "1px solid var(--border-accent)",
+              }}
+            >
               Groceries
             </span>
-            <span style={{ fontSize: "0.5625rem", color: "var(--text-muted)" }}>98% confident</span>
+            <span style={{ fontSize: "0.5625rem", color: "var(--text-muted)" }}>
+              high confidence
+            </span>
           </div>
         </div>
-        <span style={{ fontSize: "0.875rem", fontWeight: 700, color: "var(--text-primary)", fontVariantNumeric: "tabular-nums" }}>
+        <span
+          style={{
+            fontSize: "0.875rem",
+            fontWeight: 700,
+            color: "var(--text-primary)",
+            fontVariantNumeric: "tabular-nums",
+          }}
+        >
           -$94.20
         </span>
       </motion.div>
@@ -238,10 +378,10 @@ function VisualAIReads() {
 
 /** Step 3 — envelope budget bar filling */
 const ENVELOPES_DATA = [
-  { label: "Food & Drink",  spent: 340, total: 500, color: "#3DDC97", delay: 0    },
-  { label: "Shopping",      spent: 180, total: 300, color: "#A78BFA", delay: 0.1  },
-  { label: "Transport",     spent: 95,  total: 150, color: "#60A5FA", delay: 0.18 },
-  { label: "Entertainment", spent: 45,  total: 60,  color: "#FB923C", delay: 0.26 },
+  { label: "Food & Drink", spent: 340, total: 500, color: "#3DDC97", delay: 0 },
+  { label: "Shopping", spent: 180, total: 300, color: "#A78BFA", delay: 0.1 },
+  { label: "Transport", spent: 95, total: 150, color: "#60A5FA", delay: 0.18 },
+  { label: "Entertainment", spent: 45, total: 60, color: "#FB923C", delay: 0.26 },
 ] as const;
 
 function VisualBudget() {
@@ -249,7 +389,9 @@ function VisualBudget() {
     <div aria-hidden="true" style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
       {/* Month header */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--text-primary)" }}>Envelopes · May 2026</span>
+        <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--text-primary)" }}>
+          Envelopes · May 2026
+        </span>
         <span style={{ fontSize: "0.625rem", color: "var(--text-muted)" }}>14 days left</span>
       </div>
 
@@ -258,14 +400,29 @@ function VisualBudget() {
         return (
           <div key={e.label} style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontSize: "0.75rem", color: "var(--text-secondary)", fontWeight: 500 }}>{e.label}</span>
-              <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--text-secondary)" }}>
+              <span
+                style={{ fontSize: "0.75rem", color: "var(--text-secondary)", fontWeight: 500 }}
+              >
+                {e.label}
+              </span>
+              <span
+                style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--text-secondary)" }}
+              >
                 ${e.spent}
-                <span style={{ fontWeight: 400, color: "var(--text-muted)" }}>&nbsp;/ ${e.total}</span>
+                <span style={{ fontWeight: 400, color: "var(--text-muted)" }}>
+                  &nbsp;/ ${e.total}
+                </span>
               </span>
             </div>
             {/* Track */}
-            <div style={{ height: "7px", borderRadius: "var(--radius-full)", background: "var(--bg-muted)", overflow: "hidden" }}>
+            <div
+              style={{
+                height: "7px",
+                borderRadius: "var(--radius-full)",
+                background: "var(--bg-muted)",
+                overflow: "hidden",
+              }}
+            >
               <motion.div
                 style={{ height: "100%", borderRadius: "var(--radius-full)", background: e.color }}
                 initial={{ width: 0 }}
@@ -283,13 +440,28 @@ function VisualBudget() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.6, duration: 0.4 }}
         style={{
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-          padding: "10px 14px", borderRadius: "var(--radius-sm)",
-          background: "var(--accent-subtle)", border: "1px solid var(--border-accent)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "10px 14px",
+          borderRadius: "var(--radius-sm)",
+          background: "var(--accent-subtle)",
+          border: "1px solid var(--border-accent)",
         }}
       >
-        <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--accent)" }}>Remaining this month</span>
-        <span style={{ fontSize: "1.0625rem", fontWeight: 700, color: "var(--accent)", letterSpacing: "-0.02em" }}>$387.10</span>
+        <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--accent)" }}>
+          Remaining this month
+        </span>
+        <span
+          style={{
+            fontSize: "1.0625rem",
+            fontWeight: 700,
+            color: "var(--accent)",
+            letterSpacing: "-0.02em",
+          }}
+        >
+          $387.10
+        </span>
       </motion.div>
     </div>
   );
@@ -306,11 +478,18 @@ function VisualAsk() {
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         style={{ display: "flex", justifyContent: "flex-end" }}
       >
-        <div style={{
-          maxWidth: "75%", padding: "10px 14px", borderRadius: "var(--radius-md)",
-          background: "var(--bg-elev-2)", border: "1px solid var(--border)",
-          fontSize: "0.8125rem", color: "var(--text-primary)", lineHeight: 1.5,
-        }}>
+        <div
+          style={{
+            maxWidth: "75%",
+            padding: "10px 14px",
+            borderRadius: "var(--radius-md)",
+            background: "var(--bg-elev-2)",
+            border: "1px solid var(--border)",
+            fontSize: "0.8125rem",
+            color: "var(--text-primary)",
+            lineHeight: 1.5,
+          }}
+        >
           What did I spend on travel in April?
         </div>
       </motion.div>
@@ -322,17 +501,33 @@ function VisualAsk() {
         transition={{ delay: 0.5, duration: 1.4, times: [0, 0.2, 0.8, 1] }}
         style={{ display: "flex", justifyContent: "flex-start" }}
       >
-        <div style={{
-          padding: "10px 14px", borderRadius: "var(--radius-md)",
-          background: "var(--accent-subtle)", border: "1px solid var(--border-accent)",
-          display: "flex", gap: "4px", alignItems: "center",
-        }}>
+        <div
+          style={{
+            padding: "10px 14px",
+            borderRadius: "var(--radius-md)",
+            background: "var(--accent-subtle)",
+            border: "1px solid var(--border-accent)",
+            display: "flex",
+            gap: "4px",
+            alignItems: "center",
+          }}
+        >
           {[0, 1, 2].map((i) => (
             <motion.div
               key={i}
-              style={{ width: "5px", height: "5px", borderRadius: "50%", background: "var(--accent)" }}
+              style={{
+                width: "5px",
+                height: "5px",
+                borderRadius: "50%",
+                background: "var(--accent)",
+              }}
               animate={{ y: [0, -4, 0] }}
-              transition={{ duration: 0.6, delay: i * 0.15, repeat: Infinity, ease: "easeInOut" }}
+              transition={{
+                duration: 0.6,
+                delay: i * 0.15,
+                repeat: Number.POSITIVE_INFINITY,
+                ease: "easeInOut",
+              }}
             />
           ))}
         </div>
@@ -345,31 +540,64 @@ function VisualAsk() {
         transition={{ delay: 1.4, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         style={{ display: "flex", justifyContent: "flex-start" }}
       >
-        <div style={{
-          maxWidth: "85%", padding: "12px 14px", borderRadius: "var(--radius-md)",
-          background: "var(--accent-subtle)", border: "1px solid var(--border-accent)",
-          lineHeight: 1.6,
-        }}>
-          <p style={{ fontSize: "0.8125rem", color: "var(--text-primary)", margin: "0 0 8px", fontWeight: 600 }}>
+        <div
+          style={{
+            maxWidth: "85%",
+            padding: "12px 14px",
+            borderRadius: "var(--radius-md)",
+            background: "var(--accent-subtle)",
+            border: "1px solid var(--border-accent)",
+            lineHeight: 1.6,
+          }}
+        >
+          <p
+            style={{
+              fontSize: "0.8125rem",
+              color: "var(--text-primary)",
+              margin: "0 0 8px",
+              fontWeight: 600,
+            }}
+          >
             ✈️ $340 on travel in April
           </p>
           {/* Mini breakdown */}
           {[
-            { label: "Flights",   amount: "$220" },
-            { label: "Hotels",    amount: "$85"  },
-            { label: "Transfers", amount: "$35"  },
-          ].map((r) => (
-            <div key={r.label} style={{ display: "flex", justifyContent: "space-between", marginBottom: "3px" }}>
-              <span style={{ fontSize: "0.6875rem", color: "var(--text-muted)" }}>{r.label}</span>
-              <span style={{ fontSize: "0.6875rem", fontWeight: 600, color: "var(--text-secondary)", fontVariantNumeric: "tabular-nums" }}>{r.amount}</span>
+            { label: "Flights", amount: "$220" },
+            { label: "Hotels", amount: "$85" },
+            { label: "Transfers", amount: "$35" },
+          ].map((item) => (
+            <div
+              key={item.label}
+              style={{ display: "flex", justifyContent: "space-between", marginBottom: "3px" }}
+            >
+              <span style={{ fontSize: "0.6875rem", color: "var(--text-muted)" }}>
+                {item.label}
+              </span>
+              <span
+                style={{
+                  fontSize: "0.6875rem",
+                  fontWeight: 600,
+                  color: "var(--text-secondary)",
+                  fontVariantNumeric: "tabular-nums",
+                }}
+              >
+                {item.amount}
+              </span>
             </div>
           ))}
-          <div style={{
-            marginTop: "8px", paddingTop: "8px", borderTop: "1px solid var(--border)",
-            display: "flex", justifyContent: "space-between",
-          }}>
+          <div
+            style={{
+              marginTop: "8px",
+              paddingTop: "8px",
+              borderTop: "1px solid var(--border)",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
             <span style={{ fontSize: "0.6875rem", color: "var(--text-muted)" }}>vs March</span>
-            <span style={{ fontSize: "0.6875rem", fontWeight: 700, color: "var(--positive)" }}>↓ $60 less</span>
+            <span style={{ fontSize: "0.6875rem", fontWeight: 700, color: "var(--positive)" }}>
+              ↓ $60 less
+            </span>
           </div>
         </div>
       </motion.div>
@@ -378,10 +606,10 @@ function VisualAsk() {
 }
 
 const VISUALS: Record<string, React.ReactNode> = {
-  connect:  <VisualConnect  />,
+  connect: <VisualConnect />,
   "ai-reads": <VisualAIReads />,
-  budget:   <VisualBudget   />,
-  ask:      <VisualAsk      />,
+  budget: <VisualBudget />,
+  ask: <VisualAsk />,
 };
 
 /* ──────────────────────────────────────────────────────────────
@@ -390,12 +618,10 @@ const VISUALS: Record<string, React.ReactNode> = {
 ────────────────────────────────────────────────────────────── */
 function StepItem({
   step,
-  index,
   isActive,
   sentinelRef,
 }: {
   step: Step;
-  index: number;
   isActive: boolean;
   sentinelRef: React.RefObject<HTMLDivElement | null>;
 }) {
@@ -405,7 +631,13 @@ function StepItem({
       <div
         ref={sentinelRef}
         aria-hidden="true"
-        style={{ position: "absolute", top: "40%", height: "1px", width: "1px", pointerEvents: "none" }}
+        style={{
+          position: "absolute",
+          top: "40%",
+          height: "1px",
+          width: "1px",
+          pointerEvents: "none",
+        }}
       />
 
       <motion.div
@@ -537,6 +769,8 @@ export function HowItWorksSection() {
   const sentinelRefs = useRef<Array<React.RefObject<HTMLDivElement | null>>>(
     STEPS.map(() => ({ current: null })),
   );
+  // Stable fallback sentinel ref (used if index is out of bounds — should never happen)
+  const fallbackSentinelRef = useRef<HTMLDivElement | null>(null);
 
   // IntersectionObserver — fires when each step's sentinel crosses viewport mid-point
   useEffect(() => {
@@ -561,7 +795,9 @@ export function HowItWorksSection() {
       observers.push(observer);
     });
 
-    return () => observers.forEach((o) => o.disconnect());
+    return () => {
+      for (const o of observers) o.disconnect();
+    };
   }, []);
 
   return (
@@ -575,8 +811,11 @@ export function HowItWorksSection() {
       <div
         aria-hidden="true"
         style={{
-          position: "absolute", inset: 0, pointerEvents: "none",
-          background: "radial-gradient(ellipse at 50% 100%, rgba(167,139,250,0.04) 0%, transparent 60%)",
+          position: "absolute",
+          inset: 0,
+          pointerEvents: "none",
+          background:
+            "radial-gradient(ellipse at 50% 100%, rgba(167,139,250,0.04) 0%, transparent 60%)",
         }}
       />
 
@@ -619,22 +858,27 @@ export function HowItWorksSection() {
         {/* ── Two-column sticky layout ─────────────────────── */}
         <div className="hiw-layout">
           {/* LEFT — step list */}
-          <div
-            role="list"
+          <ul
             aria-label="How EXPOZOR works — 4 steps"
-            style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.5rem",
+              listStyle: "none",
+              margin: 0,
+              padding: 0,
+            }}
           >
             {STEPS.map((step, i) => (
-              <div key={step.id} role="listitem">
+              <li key={step.id} style={{ listStyle: "none" }}>
                 <StepItem
                   step={step}
-                  index={i}
                   isActive={activeId === step.id}
-                  sentinelRef={sentinelRefs.current[i]!}
+                  sentinelRef={sentinelRefs.current[i] ?? fallbackSentinelRef}
                 />
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
 
           {/* RIGHT — sticky visual panel (hidden on mobile, shown on lg+) */}
           <div className="hiw-visual-col">

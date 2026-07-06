@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { Check, Zap } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 const plans = [
   {
@@ -12,8 +12,8 @@ const plans = [
     monthlyPrice: 0,
     description: "For individuals getting started.",
     features: [
-      "Up to 3 connected accounts",
-      "90 days transaction history",
+      "Up to 50 expense entries per month",
+      "90 days expense history",
       "Manual expense entry",
       "Basic categorization",
       "CSV export",
@@ -28,8 +28,8 @@ const plans = [
     monthlyPrice: 6,
     description: "For people serious about their finances.",
     features: [
-      "Unlimited connected accounts",
-      "Full transaction history",
+      "Unlimited expense entries",
+      "Full expense history",
       "Receipt scanning (OCR)",
       "AI categorization",
       "Budget tracking",
@@ -65,9 +65,8 @@ const plans = [
     features: [
       "Everything in Pro",
       "Up to 6 household members",
-      "Shared accounts & budgets",
-      "Split expenses (Splitwise-grade)",
-      "Smart settle-up",
+      "Shared expense tracking",
+      "Split expenses across members",
       "Per-user privacy controls",
     ],
     cta: "Start free trial",
@@ -92,10 +91,7 @@ export function PricingSection() {
           <p className="text-xs uppercase tracking-widest font-semibold text-[var(--accent)] mb-3">
             Pricing
           </p>
-          <h2
-            id="pricing-heading"
-            className="text-4xl md:text-5xl font-bold tracking-tight mb-4"
-          >
+          <h2 id="pricing-heading" className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
             Simple, honest pricing
           </h2>
           <p className="text-[var(--text-secondary)] text-lg mb-8">
@@ -105,10 +101,10 @@ export function PricingSection() {
           {/* Annual / Monthly toggle */}
           <div
             className="inline-flex items-center gap-3 p-1 rounded-full bg-[var(--bg-elevated)] border border-[var(--border)]"
-            role="group"
             aria-label="Billing period"
           >
             <button
+              type="button"
               onClick={() => setAnnual(false)}
               className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
                 !annual
@@ -120,6 +116,7 @@ export function PricingSection() {
               Monthly
             </button>
             <button
+              type="button"
               onClick={() => setAnnual(true)}
               className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 flex items-center gap-2 ${
                 annual
@@ -192,7 +189,7 @@ export function PricingSection() {
                   )}
                 </div>
 
-                <ul className="space-y-3 list-none mb-8 flex-1" role="list">
+                <ul className="space-y-3 list-none mb-8 flex-1">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-2.5">
                       <Check

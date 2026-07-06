@@ -1,33 +1,33 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
+import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Minus } from "lucide-react";
 
 const faqs = [
   {
     q: "Is my financial data safe?",
-    a: "Yes. EXPOZOR uses AES-256-GCM encryption at rest with per-user envelope keys, row-level security at the database level, and TLS 1.3 in transit. We never sell your data, and you can export or permanently delete everything within 24 hours.",
+    a: "EXPOZOR uses HTTPS for all data in transit. We do not sell your data, and you can request deletion of your account and data at any time. Additional security details are on our Security page.",
   },
   {
-    q: "Which banks do you support?",
-    a: "Plaid for US and Canada, TrueLayer and GoCardless for Europe and the UK. Other regions can import via CSV, or use the EXPOZOR Agent to parse receipts and SMS messages as a graceful fallback.",
+    q: "Do I need to connect my bank?",
+    a: "No. EXPOZOR does not require a bank connection. You add expenses manually, by uploading a receipt or screenshot, or by importing a CSV file.",
   },
   {
     q: "How does the AI categorization work?",
-    a: "Your own rules run first. If a rule matches, no AI is called. For unknowns, Claude Haiku classifies in batch. Results with confidence below 60% are flagged for your review — we never auto-apply uncertain categories to your data.",
+    a: "Your own rules run first. For transactions with no matching rule, AI categorization suggests a category with a confidence score. Results below a confidence threshold are flagged for your review.",
   },
   {
-    q: "Can I share expenses with my family?",
-    a: "Yes. Household plans support shared accounts with per-user privacy on personal accounts. Group splits handle multi-currency with a smart settle-up algorithm that minimizes the number of transactions.",
+    q: "Can I share expenses with my household?",
+    a: "Shared expense tracking is a planned feature. You can split expenses across household members manually. Automatic money transfer or settlement between users is not supported.",
   },
   {
     q: "What happens if I want to cancel?",
-    a: "Cancel anytime — no friction, no dark patterns. You keep access to the Free tier features. A full data export is always one click away.",
+    a: "Billing is not yet active. When it is, you will be able to cancel anytime. You can always request a data export or account deletion by contacting support.",
   },
   {
     q: "Is there a mobile app?",
-    a: "Yes. Native iOS and Android apps are coming with on-device receipt scanning via ML Kit. They'll be available via TestFlight and Play Internal Testing first. Join the waitlist to get early access.",
+    a: "iOS and Android apps are in development. The web app is available now. Join the waitlist to get early access when mobile apps launch.",
   },
 ];
 
@@ -47,10 +47,7 @@ export function FaqSection() {
           <p className="text-xs uppercase tracking-widest font-semibold text-[var(--accent)] mb-3">
             FAQ
           </p>
-          <h2
-            id="faq-heading"
-            className="text-4xl md:text-5xl font-bold tracking-tight"
-          >
+          <h2 id="faq-heading" className="text-4xl md:text-5xl font-bold tracking-tight">
             Questions, answered.
           </h2>
         </motion.div>
@@ -73,6 +70,7 @@ export function FaqSection() {
               >
                 <dt>
                   <button
+                    type="button"
                     onClick={() => setOpenIndex(isOpen ? null : i)}
                     className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left"
                     aria-expanded={isOpen}

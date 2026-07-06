@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Check, Minus, Sparkles, Lock } from "lucide-react";
 import { PRICING } from "@/content/landing";
 import { EASE_OUT } from "@/lib/motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { Check, Lock, Minus, Sparkles } from "lucide-react";
+import { useState } from "react";
 
 /* ──────────────────────────────────────────────────────────────
    HELPERS
@@ -48,14 +48,13 @@ function BillingToggle({
       {(
         [
           { label: "Monthly", value: false },
-          { label: "Annual",  value: true  },
+          { label: "Annual", value: true },
         ] as const
       ).map((opt) => {
         const active = annual === opt.value;
         return (
           <button
             key={opt.label}
-            role="radio"
             aria-checked={active}
             type="button"
             onClick={() => onChange(opt.value)}
@@ -135,8 +134,8 @@ function PricingCard({
   annual: boolean;
   index: number;
 }) {
-  const price  = annual ? tier.priceAnnual : tier.priceMonthly;
-  const isPro  = tier.highlight;
+  const price = annual ? tier.priceAnnual : tier.priceMonthly;
+  const isPro = tier.highlight;
 
   return (
     <motion.article
@@ -147,19 +146,23 @@ function PricingCard({
       /* ── Enhancement 8: ambient glow pulse on Pro card ──
          Looping boxShadow breathes between dim and vivid mint.
          Non-Pro cards: no animate loop — plain static boxShadow. */
-      animate={isPro ? {
-        boxShadow: [
-          "0 0 0 1px rgba(61,220,151,0.08), 0 8px 40px rgba(0,0,0,0.5)",
-          "0 0 0 1px rgba(61,220,151,0.22), 0 8px 40px rgba(0,0,0,0.5), 0 0 28px rgba(61,220,151,0.12)",
-          "0 0 0 1px rgba(61,220,151,0.08), 0 8px 40px rgba(0,0,0,0.5)",
-        ],
-        transition: {
-          delay: 0.6,
-          duration: 3.5,
-          repeat: Infinity,
-          ease: "easeInOut",
-        },
-      } : {}}
+      animate={
+        isPro
+          ? {
+              boxShadow: [
+                "0 0 0 1px rgba(61,220,151,0.08), 0 8px 40px rgba(0,0,0,0.5)",
+                "0 0 0 1px rgba(61,220,151,0.22), 0 8px 40px rgba(0,0,0,0.5), 0 0 28px rgba(61,220,151,0.12)",
+                "0 0 0 1px rgba(61,220,151,0.08), 0 8px 40px rgba(0,0,0,0.5)",
+              ],
+              transition: {
+                delay: 0.6,
+                duration: 3.5,
+                repeat: Number.POSITIVE_INFINITY,
+                ease: "easeInOut",
+              },
+            }
+          : {}
+      }
       aria-label={`${tier.name} plan`}
       style={{
         position: "relative",
@@ -170,11 +173,9 @@ function PricingCard({
         overflow: "hidden",
         background: "var(--bg-elev-1)",
         border: isPro
-          ? "1.5px solid rgba(61,220,151,0.45)"   /* mint border on Pro */
+          ? "1.5px solid rgba(61,220,151,0.45)" /* mint border on Pro */
           : "1px solid var(--border)",
-        boxShadow: isPro
-          ? "0 0 0 1px rgba(61,220,151,0.08), 0 8px 40px rgba(0,0,0,0.5)"
-          : "none",
+        boxShadow: isPro ? "0 0 0 1px rgba(61,220,151,0.08), 0 8px 40px rgba(0,0,0,0.5)" : "none",
       }}
     >
       {/* Pro: mint radial glow behind card */}
@@ -218,7 +219,12 @@ function PricingCard({
       )}
 
       {/* Tier name + tagline */}
-      <div style={{ marginBottom: "1.25rem", paddingRight: "badge" in tier && tier.badge ? "70px" : "0" }}>
+      <div
+        style={{
+          marginBottom: "1.25rem",
+          paddingRight: "badge" in tier && tier.badge ? "70px" : "0",
+        }}
+      >
         <h3
           style={{
             fontSize: "1rem",
@@ -230,7 +236,9 @@ function PricingCard({
         >
           {tier.name}
         </h3>
-        <p style={{ fontSize: "0.8125rem", color: "var(--text-muted)", margin: 0, lineHeight: 1.4 }}>
+        <p
+          style={{ fontSize: "0.8125rem", color: "var(--text-muted)", margin: 0, lineHeight: 1.4 }}
+        >
           {tier.tagline}
         </p>
       </div>
@@ -361,7 +369,6 @@ function PricingCard({
    Full a11y: <caption>, scope="col"/"row", aria-label on ✓/—
 ────────────────────────────────────────────────────────────── */
 const TABLE_TIER_IDS = ["free", "plus", "pro", "family"] as const;
-type TableTierId = (typeof TABLE_TIER_IDS)[number];
 
 function ComparisonTable({ annual }: { annual: boolean }) {
   const tiers = PRICING.tiers;
@@ -432,10 +439,14 @@ function ComparisonTable({ annual }: { annual: boolean }) {
                 }}
               >
                 {tier.name}
-                <div style={{
-                  fontSize: "0.6875rem", fontWeight: 400,
-                  color: "var(--text-muted)", marginTop: "2px",
-                }}>
+                <div
+                  style={{
+                    fontSize: "0.6875rem",
+                    fontWeight: 400,
+                    color: "var(--text-muted)",
+                    marginTop: "2px",
+                  }}
+                >
                   {formatPrice(annual ? tier.priceAnnual : tier.priceMonthly)}
                   {tier.priceMonthly > 0 && "/mo"}
                 </div>
@@ -472,14 +483,11 @@ function ComparisonTable({ annual }: { annual: boolean }) {
               {TABLE_TIER_IDS.map((tierId) => {
                 const val = row[tierId as keyof typeof row] as string;
                 const isCheck = val === "✓";
-                const isDash  = val === "—";
-                const isPro   = tierId === "pro";
+                const isDash = val === "—";
+                const isPro = tierId === "pro";
 
                 return (
-                  <td
-                    key={tierId}
-                    style={{ padding: "0.75rem 0.75rem", textAlign: "center" }}
-                  >
+                  <td key={tierId} style={{ padding: "0.75rem 0.75rem", textAlign: "center" }}>
                     {isCheck ? (
                       <Check
                         size={15}
@@ -496,11 +504,13 @@ function ComparisonTable({ annual }: { annual: boolean }) {
                         aria-label="Not included"
                       />
                     ) : (
-                      <span style={{
-                        fontSize: "0.75rem",
-                        fontWeight: 500,
-                        color: isPro ? "var(--accent)" : "var(--text-secondary)",
-                      }}>
+                      <span
+                        style={{
+                          fontSize: "0.75rem",
+                          fontWeight: 500,
+                          color: isPro ? "var(--accent)" : "var(--text-secondary)",
+                        }}
+                      >
                         {val}
                       </span>
                     )}
@@ -625,8 +635,8 @@ export function PricingSection() {
             color: "var(--text-muted)",
           }}
         >
-          All prices in USD. Cancel anytime — no dark patterns.{" "}
-          Free plan available with no time limit.
+          All prices in USD. Cancel anytime — no dark patterns. Free plan available with no time
+          limit.
         </motion.p>
       </div>
 

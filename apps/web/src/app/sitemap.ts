@@ -19,6 +19,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "/download", priority: 0.7, changeFrequency: "monthly" as const },
     { url: "/legal/privacy", priority: 0.3, changeFrequency: "yearly" as const },
     { url: "/legal/terms", priority: 0.3, changeFrequency: "yearly" as const },
+    { url: "/legal/subprocessors", priority: 0.3, changeFrequency: "monthly" as const },
+    { url: "/legal/cookies", priority: 0.2, changeFrequency: "yearly" as const },
+    { url: "/legal/refund", priority: 0.2, changeFrequency: "yearly" as const },
+    { url: "/legal/disclaimer", priority: 0.2, changeFrequency: "yearly" as const },
   ];
 
   return staticPages.map((page) => ({

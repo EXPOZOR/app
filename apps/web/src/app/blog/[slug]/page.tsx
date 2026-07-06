@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
-import { PostHeader } from "@/components/blog/post-header";
-import { PostCard } from "@/components/blog/post-card";
-import { getAllBlogPosts, getBlogPost } from "@/lib/mdx";
 import { useMDXComponents } from "@/components/blog/mdx-components";
+import { PostCard } from "@/components/blog/post-card";
+import { PostHeader } from "@/components/blog/post-header";
+import { Footer } from "@/components/layout/footer";
+import { Header } from "@/components/layout/header";
+import { getAllBlogPosts, getBlogPost } from "@/lib/mdx";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
+import type { Metadata } from "next";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import { notFound } from "next/navigation";
 
 /* ── Static params ─────────────────────────────────────────── */
 
@@ -61,9 +61,7 @@ export default async function BlogPostPage({
   if (!post) notFound();
 
   const allPosts = getAllBlogPosts();
-  const relatedPosts = allPosts
-    .filter((p) => p.slug !== slug)
-    .slice(0, 2);
+  const relatedPosts = allPosts.filter((p) => p.slug !== slug).slice(0, 2);
 
   const breadcrumb = breadcrumbJsonLd([
     { name: "Blog", href: "/blog" },
@@ -94,7 +92,6 @@ export default async function BlogPostPage({
     <>
       <script
         type="application/ld+json"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: controlled JSON-LD
         dangerouslySetInnerHTML={{
           __html: jsonLdString(breadcrumb, articleJsonLd),
         }}
@@ -112,14 +109,9 @@ export default async function BlogPostPage({
 
         {/* Related posts */}
         {relatedPosts.length > 0 && (
-          <section
-            className="container-site max-w-3xl pb-20"
-            aria-label="Related posts"
-          >
+          <section className="container-site max-w-3xl pb-20" aria-label="Related posts">
             <div className="pt-10 border-t border-[var(--border)]">
-              <h2 className="text-xl font-bold text-[var(--text-primary)] mb-6">
-                Keep reading
-              </h2>
+              <h2 className="text-xl font-bold text-[var(--text-primary)] mb-6">Keep reading</h2>
               <div className="grid md:grid-cols-2 gap-5">
                 {relatedPosts.map((p) => (
                   <PostCard key={p.slug} post={p} />

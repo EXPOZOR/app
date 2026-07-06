@@ -16,7 +16,7 @@ export function GET() {
       <pubDate>${new Date(post.frontmatter.date).toUTCString()}</pubDate>
       <category>${post.frontmatter.category}</category>
       <author>${post.frontmatter.author}</author>
-    </item>`
+    </item>`,
     )
     .join("\n");
 

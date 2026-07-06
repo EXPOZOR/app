@@ -1,13 +1,12 @@
-import type { Metadata } from "next";
-import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { Smartphone, Globe, QrCode } from "lucide-react";
+import { Header } from "@/components/layout/header";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
+import { Globe, QrCode, Smartphone } from "lucide-react";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Download",
-  description:
-    "Download EXPOZOR for iOS, Android, or use the web app. Join the beta via TestFlight or Play Internal Testing.",
+  description: "EXPOZOR is available as a web app now. iOS and Android apps are in development.",
   alternates: { canonical: "https://expozor.com/download" },
 };
 
@@ -27,9 +26,7 @@ export default function DownloadPage() {
             <p className="text-xs uppercase tracking-widest font-semibold text-[var(--accent)] mb-3">
               Download
             </p>
-            <h1 className="text-5xl font-bold tracking-tight mb-4">
-              EXPOZOR, everywhere.
-            </h1>
+            <h1 className="text-5xl font-bold tracking-tight mb-4">EXPOZOR, everywhere.</h1>
             <p className="text-xl text-[var(--text-secondary)]">
               Web, iOS, Android — your expenses follow you.
             </p>
@@ -50,7 +47,7 @@ export default function DownloadPage() {
                 icon: Smartphone,
                 title: "iOS",
                 description: "Native iPhone app with on-device receipt scanning.",
-                cta: "Join TestFlight beta",
+                cta: "Notify me when available",
                 href: "#waitlist",
                 accent: "#60a5fa",
                 badge: "Coming soon",
@@ -74,7 +71,10 @@ export default function DownloadPage() {
                   <div className="flex items-start justify-between">
                     <div
                       className="w-10 h-10 rounded-[var(--radius)] flex items-center justify-center"
-                      style={{ background: platform.accent + "1A", border: `1px solid ${platform.accent}33` }}
+                      style={{
+                        background: `${platform.accent}1A`,
+                        border: `1px solid ${platform.accent}33`,
+                      }}
                       aria-hidden="true"
                     >
                       <Icon size={18} style={{ color: platform.accent }} />
@@ -82,8 +82,8 @@ export default function DownloadPage() {
                     <span
                       className="text-[10px] font-semibold px-2 py-0.5 rounded-full border"
                       style={{
-                        background: platform.accent + "1A",
-                        borderColor: platform.accent + "33",
+                        background: `${platform.accent}1A`,
+                        borderColor: `${platform.accent}33`,
                         color: platform.accent,
                       }}
                     >
@@ -91,7 +91,9 @@ export default function DownloadPage() {
                     </span>
                   </div>
                   <div>
-                    <h2 className="font-bold text-xl text-[var(--text-primary)] mb-1">{platform.title}</h2>
+                    <h2 className="font-bold text-xl text-[var(--text-primary)] mb-1">
+                      {platform.title}
+                    </h2>
                     <p className="text-sm text-[var(--text-secondary)]">{platform.description}</p>
                   </div>
                   <a
@@ -107,7 +109,11 @@ export default function DownloadPage() {
 
           {/* QR SVG placeholder */}
           <div className="flex flex-col items-center gap-4 mt-16" aria-label="QR code placeholder">
-            <QrCode size={80} className="text-[var(--text-tertiary)] opacity-40" aria-hidden="true" />
+            <QrCode
+              size={80}
+              className="text-[var(--text-tertiary)] opacity-40"
+              aria-hidden="true"
+            />
             <p className="text-sm text-[var(--text-tertiary)]">
               QR codes will appear here when the mobile apps launch.
             </p>

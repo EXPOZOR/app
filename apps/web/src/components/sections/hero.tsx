@@ -1,31 +1,18 @@
 "use client";
 
-import {
-  useRef,
-  useState,
-  useTransition,
-  useEffect,
-  useCallback,
-} from "react";
-import {
-  motion,
-  AnimatePresence,
-  useMotionValue,
-  useSpring,
-  useReducedMotion,
-  useTransform,
-} from "framer-motion";
-import { EASE_OUT, DUR } from "@/lib/motion";
-import {
-  ArrowRight,
-  CheckCircle2,
-  AlertCircle,
-  Loader2,
-  Play,
-  X,
-} from "lucide-react";
 import { joinWaitlist } from "@/app/actions/waitlist";
 import { HERO } from "@/content/landing";
+import { DUR, EASE_OUT } from "@/lib/motion";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+  useTransform,
+} from "framer-motion";
+import { AlertCircle, ArrowRight, CheckCircle2, Loader2, Play, X } from "lucide-react";
+import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 
 /* ──────────────────────────────────────────────────────────────
    TRANSACTION DATA — used in the UI cycle mockup
@@ -33,25 +20,25 @@ import { HERO } from "@/content/landing";
 const TRANSACTIONS = [
   {
     id: "t1",
-    merchant: "Blue Bottle Coffee",
+    merchant: "Coffee Shop",
     amount: "-$6.50",
     date: "Today, 9:12 AM",
-    raw: "Coffee shop purchase",
+    raw: "Coffee purchase",
     category: "☕ Coffee",
     color: "#3DDC97",
   },
   {
     id: "t2",
-    merchant: "Uber",
+    merchant: "Taxi Ride",
     amount: "-$18.40",
     date: "Today, 8:45 AM",
-    raw: "Ride payment",
+    raw: "Transport expense",
     category: "🚗 Transport",
     color: "#A78BFA",
   },
   {
     id: "t3",
-    merchant: "Whole Foods Market",
+    merchant: "Grocery Store",
     amount: "-$94.20",
     date: "Yesterday",
     raw: "Grocery purchase",
@@ -60,10 +47,10 @@ const TRANSACTIONS = [
   },
   {
     id: "t4",
-    merchant: "Netflix",
+    merchant: "Streaming Service",
     amount: "-$15.99",
     date: "May 27",
-    raw: "Subscription charge",
+    raw: "Monthly subscription",
     category: "🎬 Entertainment",
     color: "#60A5FA",
   },
@@ -75,13 +62,15 @@ const TRANSACTIONS = [
    Cycles every 5 s (skips animation when prefers-reduced-motion)
 ────────────────────────────────────────────────────────────── */
 function UICycle({ scale = 1 }: { scale?: number }) {
-  const [phase, setPhase] = useState<0 | 1 | 2>(0);
+  // Two-phase cycle only: 0 = raw list, 1 = AI-categorized
+  // Phase 2 (settle-up / split) removed — implies money movement
+  const [phase, setPhase] = useState<0 | 1>(0);
   const shouldReduce = useReducedMotion();
 
   useEffect(() => {
     if (shouldReduce) return; // stay on phase 0, no cycling
     const id = setInterval(() => {
-      setPhase((p) => ((p + 1) % 3) as 0 | 1 | 2);
+      setPhase((p) => ((p + 1) % 2) as 0 | 1);
     }, 5000);
     return () => clearInterval(id);
   }, [shouldReduce]);
@@ -120,19 +109,17 @@ function UICycle({ scale = 1 }: { scale?: number }) {
         >
           {phase === 0 && "Recent transactions"}
           {phase === 1 && "AI categorizing…"}
-          {phase === 2 && "Split expenses"}
         </span>
         {/* Phase indicator pills */}
         <div style={{ display: "flex", gap: "4px" }}>
-          {([0, 1, 2] as const).map((p) => (
+          {([0, 1] as const).map((p) => (
             <div
               key={p}
               style={{
                 width: "6px",
                 height: "6px",
                 borderRadius: "50%",
-                background:
-                  p === phase ? "var(--accent)" : "var(--border-strong)",
+                background: p === phase ? "var(--accent)" : "var(--border-strong)",
                 transition: "background 300ms",
               }}
             />
@@ -151,9 +138,7 @@ function UICycle({ scale = 1 }: { scale?: number }) {
               gap: "0.75em",
               padding: "0.6em 1.125em",
               borderBottom:
-                i < TRANSACTIONS.length - 1
-                  ? "1px solid rgba(255,255,255,0.04)"
-                  : "none",
+                i < TRANSACTIONS.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
             }}
           >
             {/* Icon / avatar */}
@@ -173,9 +158,7 @@ function UICycle({ scale = 1 }: { scale?: number }) {
             >
               {/* Phase 0: neutral icon; Phase 1+: emoji from category */}
               <span style={{ fontSize: "0.875em" }}>
-                {phase === 0
-                  ? ["☁", "○", "▸", "◆"][i]
-                  : tx.category.split(" ")[0]}
+                {phase === 0 ? ["☁", "○", "▸", "◆"][i] : tx.category.split(" ")[0]}
               </span>
             </div>
 
@@ -279,30 +262,7 @@ function UICycle({ scale = 1 }: { scale?: number }) {
                 )}
               </AnimatePresence>
 
-              {/* Split pill on phase 2, row 1 (Uber) */}
-              <AnimatePresence>
-                {phase === 2 && i === 1 && (
-                  <motion.span
-                    key="split-pill"
-                    initial={{ opacity: 0, x: 12 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 12 }}
-                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                    style={{
-                      fontSize: "0.5625em",
-                      fontWeight: 600,
-                      padding: "2px 7px",
-                      borderRadius: "var(--radius-full)",
-                      background: "rgba(167,139,250,0.12)",
-                      color: "#A78BFA",
-                      border: "1px solid rgba(167,139,250,0.3)",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    ÷ Split w/ roommate
-                  </motion.span>
-                )}
-              </AnimatePresence>
+              {/* Split pill removed — implied money movement */}
             </div>
           </div>
         ))}
@@ -343,45 +303,11 @@ function UICycle({ scale = 1 }: { scale?: number }) {
                 fontWeight: 500,
               }}
             >
-              AI categorized 4 transactions · 98% confidence
+              AI reviewed 4 transactions
             </span>
           </motion.div>
         )}
-
-        {/* Phase 2 bottom bar — settle up */}
-        {phase === 2 && (
-          <motion.div
-            key="split-bar"
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 6 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "0.625em 1.125em",
-              borderTop: "1px solid var(--border)",
-              background: "var(--bg-elev-1)",
-            }}
-          >
-            <span
-              style={{ fontSize: "0.6875em", color: "var(--text-muted)", fontWeight: 500 }}
-            >
-              Jordan owes you
-            </span>
-            <span
-              style={{
-                fontSize: "0.75em",
-                fontWeight: 700,
-                color: "#A78BFA",
-                letterSpacing: "-0.01em",
-              }}
-            >
-              $9.20
-            </span>
-          </motion.div>
-        )}
+        {/* Phase 2 (settle-up) removed — implied money movement */}
       </AnimatePresence>
     </div>
   );
@@ -404,8 +330,8 @@ type AnnotationCard = {
 
 const ANNOTATION_CARDS: AnnotationCard[] = [
   {
-    id: "ann-networth",
-    content: "💰 Net worth: +$4,200 this month",
+    id: "ann-spending",
+    content: "📊 Monthly spending: $624.40",
     delay: 0.6,
     top: "-28px",
     left: "-24px",
@@ -522,7 +448,9 @@ function DemoModal({
     } else {
       document.body.style.overflow = "";
     }
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [open]);
 
   return (
@@ -531,6 +459,10 @@ function DemoModal({
       aria-labelledby="demo-modal-title"
       aria-modal="true"
       onClick={handleBackdropClick}
+      onKeyDown={(e) => {
+        if (e.key === "Escape")
+          handleBackdropClick(e as unknown as React.MouseEvent<HTMLDialogElement>);
+      }}
       style={{
         padding: 0,
         border: "none",
@@ -728,7 +660,6 @@ function WaitlistForm() {
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        role="status"
         aria-live="polite"
         style={{
           display: "flex",
@@ -809,9 +740,7 @@ function WaitlistForm() {
               }}
               onFocus={(e) => {
                 (e.currentTarget as HTMLInputElement).style.borderColor =
-                  status === "error"
-                    ? "var(--danger)"
-                    : "var(--border-accent)";
+                  status === "error" ? "var(--danger)" : "var(--border-accent)";
                 (e.currentTarget as HTMLInputElement).style.boxShadow =
                   "0 0 0 3px var(--accent-subtle)";
               }}
@@ -857,10 +786,14 @@ function WaitlistForm() {
               overflow: "hidden",
             }}
             aria-label={HERO.ctaAriaLabel}
-            whileHover={isPending ? {} : {
-              boxShadow: "var(--shadow-glow)",
-              background: "var(--accent-hover)",
-            }}
+            whileHover={
+              isPending
+                ? {}
+                : {
+                    boxShadow: "var(--shadow-glow)",
+                    background: "var(--accent-hover)",
+                  }
+            }
             whileTap={isPending ? {} : { scale: 0.97 }}
           >
             {/* Shimmer sweep overlay — single one-shot on hover */}
@@ -881,9 +814,20 @@ function WaitlistForm() {
             )}
 
             {/* Button content — sits above shimmer */}
-            <span style={{ position: "relative", display: "inline-flex", alignItems: "center", gap: "8px" }}>
+            <span
+              style={{
+                position: "relative",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
               {isPending ? (
-                <Loader2 size={17} style={{ animation: "spin 1s linear infinite" }} aria-hidden="true" />
+                <Loader2
+                  size={17}
+                  style={{ animation: "spin 1s linear infinite" }}
+                  aria-hidden="true"
+                />
               ) : (
                 <>
                   {HERO.cta}
@@ -946,16 +890,16 @@ function RightColumnTilt() {
 
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
-  const rotateX = useSpring(useTransform(rawY, [-1, 1], [4, -4]),  { stiffness: 120, damping: 18 });
-  const rotateY = useSpring(useTransform(rawX, [-1, 1], [-5,  5]), { stiffness: 120, damping: 18 });
+  const rotateX = useSpring(useTransform(rawY, [-1, 1], [4, -4]), { stiffness: 120, damping: 18 });
+  const rotateY = useSpring(useTransform(rawX, [-1, 1], [-5, 5]), { stiffness: 120, damping: 18 });
 
   function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     if (shouldReduce) return;
     const rect = colRef.current?.getBoundingClientRect();
     if (!rect) return;
     /* Normalise to –1 … +1 relative to the column center */
-    rawX.set((e.clientX - rect.left  - rect.width  / 2) / (rect.width  / 2));
-    rawY.set((e.clientY - rect.top   - rect.height / 2) / (rect.height / 2));
+    rawX.set((e.clientX - rect.left - rect.width / 2) / (rect.width / 2));
+    rawY.set((e.clientY - rect.top - rect.height / 2) / (rect.height / 2));
   }
 
   function onMouseLeave() {
@@ -1019,7 +963,7 @@ export function HeroSection() {
         style={{
           position: "relative",
           overflow: "hidden",
-          paddingTop: "calc(var(--space-hero) + 72px)", /* account for fixed nav */
+          paddingTop: "calc(var(--space-hero) + 72px)" /* account for fixed nav */,
           paddingBottom: "var(--space-hero)",
         }}
       >
@@ -1040,10 +984,7 @@ export function HeroSection() {
           }}
         />
 
-        <div
-          className="container-site"
-          style={{ position: "relative", zIndex: 1 }}
-        >
+        <div className="container-site" style={{ position: "relative", zIndex: 1 }}>
           <div
             style={{
               display: "grid",
@@ -1100,7 +1041,7 @@ export function HeroSection() {
                     key={word}
                     aria-hidden="true"
                     variants={{
-                      hidden:  { opacity: 0, y: 22, filter: "blur(4px)" },
+                      hidden: { opacity: 0, y: 22, filter: "blur(4px)" },
                       visible: {
                         opacity: 1,
                         y: 0,
@@ -1120,7 +1061,7 @@ export function HeroSection() {
                     key={word}
                     aria-hidden="true"
                     variants={{
-                      hidden:  { opacity: 0, y: 22, filter: "blur(4px)" },
+                      hidden: { opacity: 0, y: 22, filter: "blur(4px)" },
                       visible: {
                         opacity: 1,
                         y: 0,
@@ -1264,7 +1205,7 @@ export function HeroSection() {
                     lineHeight: 1.4,
                   }}
                 >
-                  Free plan available · No credit card required · End-to-end encrypted
+                  No bank login required · No credit card needed to get started
                 </span>
               </motion.div>
             </div>

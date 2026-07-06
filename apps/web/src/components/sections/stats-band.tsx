@@ -9,16 +9,16 @@ import { motion } from "framer-motion";
 
 const TRUST_ITEMS = [
   {
-    label: "Free forever plan",
-    sublabel: "No credit card required",
+    label: "No bank login required",
+    sublabel: "Manual, upload, or CSV",
   },
   {
-    label: "End-to-end encrypted",
-    sublabel: "AES-256-GCM · per-user keys",
+    label: "No money movement",
+    sublabel: "Tracking only",
   },
   {
-    label: "Cancel anytime",
-    sublabel: "One click, no questions",
+    label: "Export support planned",
+    sublabel: "Data controls before launch",
   },
 ];
 

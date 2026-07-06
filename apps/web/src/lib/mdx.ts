@@ -36,9 +36,7 @@ const CHANGELOG_DIR = path.join(process.cwd(), "src/content/changelog");
 export function getAllBlogPosts(): BlogPost[] {
   if (!fs.existsSync(BLOG_DIR)) return [];
 
-  const files = fs
-    .readdirSync(BLOG_DIR)
-    .filter((f) => f.endsWith(".mdx"));
+  const files = fs.readdirSync(BLOG_DIR).filter((f) => f.endsWith(".mdx"));
 
   const posts = files.map((file) => {
     const slug = file.replace(/\.mdx$/, "");
@@ -55,9 +53,7 @@ export function getAllBlogPosts(): BlogPost[] {
   });
 
   return posts.sort(
-    (a, b) =>
-      new Date(b.frontmatter.date).getTime() -
-      new Date(a.frontmatter.date).getTime()
+    (a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime(),
   );
 }
 
@@ -110,9 +106,7 @@ export interface ChangelogEntry {
 export function getAllChangelogEntries(): ChangelogEntry[] {
   if (!fs.existsSync(CHANGELOG_DIR)) return [];
 
-  const files = fs
-    .readdirSync(CHANGELOG_DIR)
-    .filter((f) => f.endsWith(".mdx"));
+  const files = fs.readdirSync(CHANGELOG_DIR).filter((f) => f.endsWith(".mdx"));
 
   const entries = files.map((file) => {
     const slug = file.replace(/\.mdx$/, "");
@@ -127,8 +121,6 @@ export function getAllChangelogEntries(): ChangelogEntry[] {
   });
 
   return entries.sort(
-    (a, b) =>
-      new Date(b.frontmatter.date).getTime() -
-      new Date(a.frontmatter.date).getTime()
+    (a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime(),
   );
 }

@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle, ArrowRight, Loader2 } from "lucide-react";
 import { joinWaitlist } from "@/app/actions/waitlist";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowRight, CheckCircle, Loader2 } from "lucide-react";
+import { useState, useTransition } from "react";
 
 interface WaitlistFormProps {
   locale?: string;
@@ -11,9 +11,17 @@ interface WaitlistFormProps {
   className?: string;
 }
 
-export function WaitlistForm({ locale = "en", size = "default", className = "" }: WaitlistFormProps) {
+export function WaitlistForm({
+  locale = "en",
+  size = "default",
+  className = "",
+}: WaitlistFormProps) {
   const [email, setEmail] = useState("");
-  const [result, setResult] = useState<{ success: boolean; message?: string; error?: string } | null>(null);
+  const [result, setResult] = useState<{
+    success: boolean;
+    message?: string;
+    error?: string;
+  } | null>(null);
   const [isPending, startTransition] = useTransition();
 
   const isLarge = size === "large";
@@ -37,7 +45,6 @@ export function WaitlistForm({ locale = "en", size = "default", className = "" }
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         className={`flex items-center gap-3 px-5 py-3.5 rounded-[var(--radius-lg)] bg-[var(--success-subtle)] border border-[var(--success)] border-opacity-30 ${className}`}
-        role="status"
         aria-live="polite"
       >
         <CheckCircle size={18} className="text-[var(--success)] shrink-0" aria-hidden="true" />

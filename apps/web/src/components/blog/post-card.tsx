@@ -1,6 +1,6 @@
-import Link from "next/link";
 import type { BlogPost } from "@/lib/mdx";
-import { Clock, ArrowRight } from "lucide-react";
+import { ArrowRight, Clock } from "lucide-react";
+import Link from "next/link";
 
 const CATEGORY_COLORS: Record<string, string> = {
   Company: "#7CF5C2",
@@ -52,10 +52,7 @@ export function PostCard({ post }: { post: BlogPost }) {
           <p className="text-sm font-medium text-[var(--text-primary)]">
             {post.frontmatter.author}
           </p>
-          <time
-            className="text-xs text-[var(--text-tertiary)]"
-            dateTime={post.frontmatter.date}
-          >
+          <time className="text-xs text-[var(--text-tertiary)]" dateTime={post.frontmatter.date}>
             {new Date(post.frontmatter.date).toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",

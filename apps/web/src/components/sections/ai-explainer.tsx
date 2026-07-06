@@ -1,15 +1,8 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  Camera,
-  Brain,
-  PieChart,
-  Lightbulb,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Brain, Camera, ChevronLeft, ChevronRight, Lightbulb, PieChart } from "lucide-react";
+import { useCallback, useState } from "react";
 
 /* ── Steps ─────────────────────────────────────────────────── */
 
@@ -18,14 +11,14 @@ const STEPS = [
     id: "scan",
     icon: Camera,
     label: "Capture",
-    title: "Snap a receipt or sync your bank",
+    title: "Snap a receipt or import a CSV",
     description:
-      "On-device ML Kit OCR reads your receipt in under 2 seconds. Amount, date, merchant, line items — all extracted automatically. Bank sync pulls transactions in real-time.",
+      "Upload a receipt image or screenshot and OCR extracts the details in seconds. Or import a CSV from your bank for bulk entry. No bank connection required.",
     color: "#7CF5C2",
     visual: {
       type: "receipt" as const,
       items: [
-        { label: "Merchant", value: "Whole Foods Market", confidence: 99 },
+        { label: "Merchant", value: "Grocery Store", confidence: 99 },
         { label: "Amount", value: "$47.23", confidence: 98 },
         { label: "Date", value: "Jun 1, 2026", confidence: 97 },
         { label: "Items", value: "12 line items", confidence: 95 },
@@ -43,9 +36,9 @@ const STEPS = [
     visual: {
       type: "categories" as const,
       items: [
-        { merchant: "Whole Foods", category: "Groceries", confidence: 98 },
-        { merchant: "Shell Gas", category: "Transport", confidence: 96 },
-        { merchant: "Netflix", category: "Subscriptions", confidence: 99 },
+        { merchant: "Grocery Store", category: "Groceries", confidence: 98 },
+        { merchant: "Gas Station", category: "Transport", confidence: 96 },
+        { merchant: "Streaming Service", category: "Subscriptions", confidence: 99 },
         { merchant: "Unknown Café", category: "Review needed", confidence: 54 },
       ],
     },
@@ -79,7 +72,7 @@ const STEPS = [
     label: "Insights",
     title: "Get actionable intelligence",
     description:
-      'EXPOZOR spots patterns you\'d miss: "You spent 23% more on dining this month vs. last" or "Your Spotify + Apple Music overlap saves $11/mo if you drop one."',
+      'EXPOZOR spots patterns you\'d miss: "You spent 23% more on dining this month vs. last" or "You have two overlapping subscription services — cancelling one saves ~$10/mo."',
     color: "#FFB36B",
     visual: {
       type: "insights" as const,
@@ -91,7 +84,7 @@ const STEPS = [
         },
         {
           icon: "💡",
-          text: "Dropping Apple Music saves $11/mo (Spotify overlap)",
+          text: "Two subscription services overlap — cancelling one saves ~$10/mo",
           type: "suggestion",
         },
         {
@@ -125,9 +118,7 @@ function ReceiptVisual({
             <p className="text-[10px] uppercase tracking-widest text-[var(--text-tertiary)]">
               {item.label}
             </p>
-            <p className="text-sm font-medium text-[var(--text-primary)]">
-              {item.value}
-            </p>
+            <p className="text-sm font-medium text-[var(--text-primary)]">{item.value}</p>
           </div>
           <span
             className="text-xs font-mono px-2 py-0.5 rounded-full"
@@ -167,20 +158,10 @@ function CategoriesVisual({
             transition={{ delay: i * 0.1 }}
             className="flex items-center gap-3 p-3 rounded-[var(--radius)] bg-[var(--bg)] border border-[var(--border)]"
           >
-            <div
-              className="w-2 h-2 rounded-full shrink-0"
-              style={{ background: color }}
-            />
-            <span className="text-sm text-[var(--text-primary)] flex-1">
-              {item.merchant}
-            </span>
-            <span className="text-xs text-[var(--text-tertiary)]">
-              {item.category}
-            </span>
-            <span
-              className="text-xs font-mono font-medium"
-              style={{ color }}
-            >
+            <div className="w-2 h-2 rounded-full shrink-0" style={{ background: color }} />
+            <span className="text-sm text-[var(--text-primary)] flex-1">{item.merchant}</span>
+            <span className="text-xs text-[var(--text-tertiary)]">{item.category}</span>
+            <span className="text-xs font-mono font-medium" style={{ color }}>
               {item.confidence}%
             </span>
           </motion.div>
@@ -269,9 +250,7 @@ function InsightsVisual({
           <span className="text-lg shrink-0" aria-hidden="true">
             {item.icon}
           </span>
-          <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-            {item.text}
-          </p>
+          <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{item.text}</p>
         </motion.div>
       ))}
     </div>
@@ -284,21 +263,14 @@ export function AiExplainerSection() {
   const [activeStep, setActiveStep] = useState(0);
   const step = STEPS[activeStep];
 
-  const goTo = useCallback(
-    (index: number) => {
-      if (index >= 0 && index < STEPS.length) setActiveStep(index);
-    },
-    []
-  );
+  const goTo = useCallback((index: number) => {
+    if (index >= 0 && index < STEPS.length) setActiveStep(index);
+  }, []);
 
   if (!step) return null;
 
   return (
-    <section
-      id="ai-pipeline"
-      className="section-py"
-      aria-labelledby="ai-explainer-heading"
-    >
+    <section id="ai-pipeline" className="section-py" aria-labelledby="ai-explainer-heading">
       <div className="container-site">
         {/* Section header */}
         <div className="text-center mb-12 max-w-2xl mx-auto">
@@ -312,8 +284,7 @@ export function AiExplainerSection() {
             From receipt to insight in seconds
           </h2>
           <p className="text-[var(--text-secondary)] text-lg">
-            Four steps, fully automated. See exactly what happens when a
-            transaction enters EXPOZOR.
+            Four steps, fully automated. See exactly what happens when a transaction enters EXPOZOR.
           </p>
         </div>
 
@@ -352,7 +323,7 @@ export function AiExplainerSection() {
             {/* Left: copy */}
             <AnimatePresence mode="wait">
               <motion.div
-                key={step.id + "-copy"}
+                key={`${step.id}-copy`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
@@ -365,11 +336,7 @@ export function AiExplainerSection() {
                     border: `1px solid ${step.color}33`,
                   }}
                 >
-                  <step.icon
-                    size={22}
-                    style={{ color: step.color }}
-                    aria-hidden="true"
-                  />
+                  <step.icon size={22} style={{ color: step.color }} aria-hidden="true" />
                 </div>
                 <p
                   className="text-xs uppercase tracking-widest font-semibold mb-2"
@@ -380,9 +347,7 @@ export function AiExplainerSection() {
                 <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-3 leading-tight">
                   {step.title}
                 </h3>
-                <p className="text-[var(--text-secondary)] leading-relaxed">
-                  {step.description}
-                </p>
+                <p className="text-[var(--text-secondary)] leading-relaxed">{step.description}</p>
 
                 {/* Prev/Next */}
                 <div className="flex gap-2 mt-6">
@@ -411,7 +376,7 @@ export function AiExplainerSection() {
             {/* Right: visual */}
             <AnimatePresence mode="wait">
               <motion.div
-                key={step.id + "-visual"}
+                key={`${step.id}-visual`}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
@@ -421,18 +386,12 @@ export function AiExplainerSection() {
                   borderColor: `${step.color}33`,
                 }}
               >
-                {step.visual.type === "receipt" && (
-                  <ReceiptVisual items={step.visual.items} />
-                )}
+                {step.visual.type === "receipt" && <ReceiptVisual items={step.visual.items} />}
                 {step.visual.type === "categories" && (
                   <CategoriesVisual items={step.visual.items} />
                 )}
-                {step.visual.type === "budgets" && (
-                  <BudgetsVisual items={step.visual.items} />
-                )}
-                {step.visual.type === "insights" && (
-                  <InsightsVisual items={step.visual.items} />
-                )}
+                {step.visual.type === "budgets" && <BudgetsVisual items={step.visual.items} />}
+                {step.visual.type === "insights" && <InsightsVisual items={step.visual.items} />}
               </motion.div>
             </AnimatePresence>
           </div>

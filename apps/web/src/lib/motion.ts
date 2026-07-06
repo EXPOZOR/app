@@ -33,11 +33,11 @@ export const EASE_IN_OUT = [0.4, 0, 0.2, 1] as const;
 /* ── Canonical durations — mirror CSS --dur-* tokens ─────────────────────── */
 
 export const DUR = {
-  fast:   0.08,
-  base:   0.15,
-  slow:   0.25,
-  xslow:  0.42,
-  reveal: 0.55,   // standard whileInView reveal duration
+  fast: 0.08,
+  base: 0.15,
+  slow: 0.25,
+  xslow: 0.42,
+  reveal: 0.55, // standard whileInView reveal duration
 } as const;
 
 /* ── Viewport defaults ────────────────────────────────────────────────────── */
@@ -51,10 +51,7 @@ export const VIEWPORT_TIGHT = { once: true, margin: "-20px" } as const;
 
 /* ── Base transition helper ───────────────────────────────────────────────── */
 
-export function ease(
-  duration = DUR.reveal,
-  delay = 0,
-): Transition {
+export function ease(duration = DUR.reveal, delay = 0): Transition {
   return { duration, delay, ease: EASE_OUT };
 }
 
@@ -66,32 +63,32 @@ export function ease(
 /* ── Fade + slide up ──────────────────────────────────────────────────────── */
 /** Standard reveal: fades in while rising 16 px. Use for most section elements. */
 export const fadeUp: Variants = {
-  hidden:  { opacity: 0, y: 16 },
+  hidden: { opacity: 0, y: 16 },
   visible: { opacity: 1, y: 0, transition: { duration: DUR.reveal, ease: EASE_OUT } },
 };
 
 /** Shallower reveal (8 px) for elements that are already partially on-screen. */
 export const fadeUpSm: Variants = {
-  hidden:  { opacity: 0, y: 8 },
+  hidden: { opacity: 0, y: 8 },
   visible: { opacity: 1, y: 0, transition: { duration: DUR.reveal, ease: EASE_OUT } },
 };
 
 /* ── Fade only (no Y movement) ───────────────────────────────────────────── */
 export const fadeIn: Variants = {
-  hidden:  { opacity: 0 },
+  hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: DUR.slow, ease: EASE_IN_OUT } },
 };
 
 /* ── Scale + fade pop ────────────────────────────────────────────────────── */
 /** Scales from 92 % → 100 % while fading in. Used for badges and pills. */
 export const scalePop: Variants = {
-  hidden:  { opacity: 0, scale: 0.92 },
+  hidden: { opacity: 0, scale: 0.92 },
   visible: { opacity: 1, scale: 1, transition: { duration: DUR.reveal, ease: EASE_OUT } },
 };
 
 /** Spring scale — slight overshoot. Use sparingly for celebratory moments. */
 export const scaleSpring: Variants = {
-  hidden:  { opacity: 0, scale: 0.88 },
+  hidden: { opacity: 0, scale: 0.88 },
   visible: {
     opacity: 1,
     scale: 1,
@@ -101,12 +98,12 @@ export const scaleSpring: Variants = {
 
 /* ── Directional slides ───────────────────────────────────────────────────── */
 export const slideInLeft: Variants = {
-  hidden:  { opacity: 0, x: -12 },
+  hidden: { opacity: 0, x: -12 },
   visible: { opacity: 1, x: 0, transition: { duration: DUR.reveal, ease: EASE_OUT } },
 };
 
 export const slideInRight: Variants = {
-  hidden:  { opacity: 0, x: 12 },
+  hidden: { opacity: 0, x: 12 },
   visible: { opacity: 1, x: 0, transition: { duration: DUR.reveal, ease: EASE_OUT } },
 };
 
@@ -118,12 +115,9 @@ export const slideInRight: Variants = {
  * @param stagger      Seconds between each child (default: 0.055 = --stagger-base)
  * @param delayChildren  Initial delay before the first child fires (default: 0)
  */
-export function staggerContainer(
-  stagger = 0.055,
-  delayChildren = 0,
-): Variants {
+export function staggerContainer(stagger = 0.055, delayChildren = 0): Variants {
   return {
-    hidden:  {},
+    hidden: {},
     visible: {
       transition: {
         staggerChildren: stagger,
@@ -186,7 +180,7 @@ export const accordionVariants: Variants = {
  */
 export function progressFill(pct: number, delay = 0): Variants {
   return {
-    hidden:  { scaleX: 0 },
+    hidden: { scaleX: 0 },
     visible: {
       scaleX: pct / 100,
       transition: { delay, duration: 0.75, ease: EASE_OUT },
@@ -200,7 +194,7 @@ export function progressFill(pct: number, delay = 0): Variants {
  * Cycles: rest → popped → rest via `animate` prop switching.
  */
 export const numberPop: Variants = {
-  rest:   { scale: 1 },
+  rest: { scale: 1 },
   popped: {
     scale: [1, 1.045, 1],
     transition: { duration: 0.35, ease: EASE_OUT },
@@ -210,19 +204,19 @@ export const numberPop: Variants = {
 /* ── Section eyebrow line ────────────────────────────────────────────────── */
 /** Slides down 4 px and fades in. Used for all `.eyebrow` labels. */
 export const eyebrowReveal: Variants = {
-  hidden:  { opacity: 0, y: -4 },
+  hidden: { opacity: 0, y: -4 },
   visible: { opacity: 1, y: 0, transition: { duration: DUR.slow } },
 };
 
 /* ── Checklist item (x slide-in for security / CTA bullets) ─────────────── */
 export const bulletSlideIn: Variants = {
-  hidden:  { opacity: 0, x: -8 },
+  hidden: { opacity: 0, x: -8 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.4, ease: EASE_OUT } },
 };
 
 /* ── Cross-fade swap (AnimatePresence mode="wait" pair) ─────────────────── */
 export const crossFade: Variants = {
-  hidden:  { opacity: 0, y: 6 },
+  hidden: { opacity: 0, y: 6 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.18, ease: EASE_OUT } },
-  exit:    { opacity: 0, y: -6, transition: { duration: 0.14 } },
+  exit: { opacity: 0, y: -6, transition: { duration: 0.14 } },
 };

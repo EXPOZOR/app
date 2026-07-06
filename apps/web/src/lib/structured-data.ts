@@ -54,9 +54,7 @@ export function webPageJsonLd({
  * Returns a stringified JSON-LD ready to inject via
  * `dangerouslySetInnerHTML`. Accepts one or more schemas.
  */
-export function jsonLdString(
-  ...schemas: Record<string, unknown>[]
-): string {
+export function jsonLdString(...schemas: Record<string, unknown>[]): string {
   if (schemas.length === 1) return JSON.stringify(schemas[0]);
   return JSON.stringify(schemas);
 }
