@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Version",
@@ -27,22 +28,30 @@ function formatDate(iso: string | null): string {
 }
 
 export default function VersionPage() {
+  if (
+    process.env.NODE_ENV === "production" &&
+    process.env.EXPOZOR_VERSION_PAGE_ENABLED !== "true"
+  ) {
+    notFound();
+  }
+
   const rows: { label: string; value: React.ReactNode }[] = [
     { label: "Version", value: `v${version}` },
     {
       label: "Commit",
-      value: sha === "dev" ? (
-        <span className="font-mono text-[var(--text-muted)]">dev</span>
-      ) : (
-        <a
-          href={`${GITHUB_REPO}/commit/${sha}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-mono text-[var(--accent)] hover:underline"
-        >
-          {sha}
-        </a>
-      ),
+      value:
+        sha === "dev" ? (
+          <span className="font-mono text-[var(--text-muted)]">dev</span>
+        ) : (
+          <a
+            href={`${GITHUB_REPO}/commit/${sha}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-[var(--accent)] hover:underline"
+          >
+            {sha}
+          </a>
+        ),
     },
     {
       label: "Build date",
@@ -55,15 +64,7 @@ export default function VersionPage() {
     {
       label: "Environment",
       value: (
-        <span
-          className={
-            env === "production"
-              ? "text-emerald-400"
-              : "text-amber-400"
-          }
-        >
-          {env}
-        </span>
+        <span className={env === "production" ? "text-emerald-400" : "text-amber-400"}>{env}</span>
       ),
     },
     {
@@ -107,16 +108,9 @@ export default function VersionPage() {
 
           <dl className="divide-y divide-[var(--border)]">
             {rows.map(({ label, value }) => (
-              <div
-                key={label}
-                className="flex items-start justify-between gap-4 px-5 py-3.5"
-              >
-                <dt className="text-sm text-[var(--text-muted)] shrink-0 w-28">
-                  {label}
-                </dt>
-                <dd className="text-sm text-[var(--text-primary)] text-right">
-                  {value}
-                </dd>
+              <div key={label} className="flex items-start justify-between gap-4 px-5 py-3.5">
+                <dt className="text-sm text-[var(--text-muted)] shrink-0 w-28">{label}</dt>
+                <dd className="text-sm text-[var(--text-primary)] text-right">{value}</dd>
               </div>
             ))}
           </dl>

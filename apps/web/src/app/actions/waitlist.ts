@@ -2,57 +2,99 @@
 
 import { db } from "@/db/client";
 import { waitlist } from "@/db/schema";
-import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { z } from "zod";
 
-/* ── Validation ─────────────────────────────────────────────── */
 const WaitlistSchema = z.object({
-  email: z.string().email("Please enter a valid email address."),
-  source: z.string().default("landing"),
+  email: z.string().trim().toLowerCase().email("Please enter a valid email address."),
+  source: z.string().trim().max(80).default("landing"),
+  locale: z.literal("en").default("en"),
+  productUpdatesConsent: z
+    .enum(["on", "true", "1"])
+    .optional()
+    .refine(Boolean, "Please confirm you'd like to receive product updates."),
+  website: z.string().optional(),
 });
 
-/* ── Return type ────────────────────────────────────────────── */
 export type WaitlistResult = { success: true; message: string } | { success: false; error: string };
 
-/* ── Action ─────────────────────────────────────────────────── */
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
+const RATE_LIMIT_MAX_PER_IP = 20;
+const RATE_LIMIT_MAX_PER_EMAIL = 5;
+
+const rateLimits = new Map<string, { count: number; resetAt: number }>();
+
+function checkRateLimit(key: string, maxAttempts: number): boolean {
+  const now = Date.now();
+  const entry = rateLimits.get(key);
+
+  if (!entry || entry.resetAt <= now) {
+    rateLimits.set(key, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return true;
+  }
+
+  if (entry.count >= maxAttempts) return false;
+
+  entry.count += 1;
+  return true;
+}
+
+function getClientIp(headersList: Headers): string {
+  const forwardedFor = headersList.get("x-forwarded-for")?.split(",")[0]?.trim();
+  return (
+    forwardedFor || headersList.get("x-real-ip") || headersList.get("cf-connecting-ip") || "unknown"
+  );
+}
+
 export async function joinWaitlist(formData: FormData): Promise<WaitlistResult> {
   const parsed = WaitlistSchema.safeParse({
     email: formData.get("email"),
     source: formData.get("source") ?? "landing",
+    locale: formData.get("locale") ?? "en",
+    productUpdatesConsent: formData.get("productUpdatesConsent") || undefined,
+    website: formData.get("website") ?? "",
   });
 
   if (!parsed.success) {
     return {
       success: false,
-      error: parsed.error.errors[0]?.message ?? "Invalid email address.",
+      error: parsed.error.errors[0]?.message ?? "Invalid waitlist submission.",
     };
   }
 
-  const { email, source } = parsed.data;
+  const { email, source, locale, website } = parsed.data;
+
+  if (website) {
+    return {
+      success: false,
+      error: "Something went wrong. Please try again in a moment.",
+    };
+  }
 
   try {
     const headersList = await headers();
     const referrer = headersList.get("referer") ?? null;
+    const clientIp = getClientIp(headersList);
 
-    // Check for duplicate — return success (idempotent UX)
-    const existing = await db
-      .select({ id: waitlist.id })
-      .from(waitlist)
-      .where(eq(waitlist.email, email))
-      .limit(1);
-
-    if (existing.length > 0) {
+    if (
+      !checkRateLimit(`ip:${clientIp}`, RATE_LIMIT_MAX_PER_IP) ||
+      !checkRateLimit(`email:${email}`, RATE_LIMIT_MAX_PER_EMAIL)
+    ) {
       return {
-        success: true,
-        message: "You're already on the list! We'll reach out soon.",
+        success: false,
+        error: "Too many attempts. Please try again later.",
       };
     }
 
-    await db.insert(waitlist).values({ email, source, referrer });
+    const inserted = await db
+      .insert(waitlist)
+      .values({ email, source, referrer, locale })
+      .onConflictDoNothing({ target: waitlist.email })
+      .returning({ id: waitlist.id });
 
-    // Confirmation email via Resend (non-blocking — safe to skip if key absent)
-    void sendConfirmation(email).catch((err) => console.error("[waitlist] email error:", err));
+    if (inserted.length > 0) {
+      void sendConfirmation(email).catch((err) => console.error("[waitlist] email error:", err));
+    }
 
     return {
       success: true,
@@ -67,7 +109,6 @@ export async function joinWaitlist(formData: FormData): Promise<WaitlistResult> 
   }
 }
 
-/* ── Email helper (optional — skipped if RESEND_API_KEY not set) ── */
 async function sendConfirmation(email: string): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return;
@@ -76,23 +117,21 @@ async function sendConfirmation(email: string): Promise<void> {
   const resend = new Resend(apiKey);
 
   await resend.emails.send({
-    // TODO: confirm expozor.com sending domain is verified in Resend dashboard before launch
     from: "EXPOZOR <support@expozor.com>",
     to: email,
-    subject: "You're on the EXPOZOR waitlist 🎉",
+    subject: "You're on the EXPOZOR waitlist",
     html: `
       <div style="font-family:system-ui,sans-serif;max-width:480px;margin:0 auto;color:#F4F4F5;background:#09090B;padding:48px 32px;border-radius:20px;border:1px solid rgba(255,255,255,0.08);">
         <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#5EEAD4,#A78BFA);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:#09090B;margin-bottom:24px;">E</div>
         <h1 style="font-size:22px;font-weight:700;margin:0 0 12px;color:#F4F4F5;letter-spacing:-0.02em;">You're on the list.</h1>
         <p style="color:#A1A1AA;line-height:1.7;margin:0 0 20px;font-size:15px;">
-          Thanks for joining the EXPOZOR waitlist. We're building something you're going to love —
-          calm, intelligent money management that respects your time and privacy.
+          Thanks for joining the EXPOZOR waitlist. We're building calm, intelligent money management that respects your time and privacy.
         </p>
         <p style="color:#A1A1AA;line-height:1.7;margin:0 0 32px;font-size:15px;">
           We'll send your early access link as soon as your spot is ready.
         </p>
         <div style="padding-top:24px;border-top:1px solid rgba(255,255,255,0.08);">
-          <p style="color:#71717A;font-size:13px;margin:0;">— The EXPOZOR team</p>
+          <p style="color:#71717A;font-size:13px;margin:0;">The EXPOZOR team</p>
         </div>
       </div>
     `,

@@ -12,8 +12,15 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "turbo run format",
+    "typecheck": "turbo run type-check",
     "type-check": "turbo run type-check",
     "clean": "turbo run clean"
+  },
+  "pnpm": {
+    "overrides": {
+      "js-yaml": "3.15.0",
+      "postcss": "8.5.10"
+    }
   },
   "devDependencies": {
     "turbo": "^2.9.16",

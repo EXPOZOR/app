@@ -13,3 +13,7 @@ Thumbs.db
 prompt_text.txt
 prompt.pdf
 expozor_refactor_prompt.md
+
+# Internal audit/plan HTML artifacts must never be committed or deployed.
+**/*audit*.html
+**/*plan*.html
