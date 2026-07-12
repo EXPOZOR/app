@@ -11,15 +11,15 @@ const faqs = [
   },
   {
     q: "Do I need to connect my bank?",
-    a: "No. EXPOZOR does not require a bank connection. You add expenses manually, by uploading a receipt or screenshot, or by importing a CSV file.",
+    a: "No. EXPOZOR does not require a bank connection. Manual entry is the first workflow; receipt upload and CSV import are planned.",
   },
   {
     q: "How does the AI categorization work?",
-    a: "Your own rules run first. For transactions with no matching rule, AI categorization suggests a category with a confidence score. Results below a confidence threshold are flagged for your review.",
+    a: "AI-assisted categorization is planned for early access. The intended workflow keeps user review in the loop before relying on suggestions.",
   },
   {
     q: "Can I share expenses with my household?",
-    a: "Shared expense tracking is a planned feature. You can split expenses across household members manually. Automatic money transfer or settlement between users is not supported.",
+    a: "Shared expense tracking is planned as manual notes only. EXPOZOR records notes and does not initiate payments between users.",
   },
   {
     q: "What happens if I want to cancel?",
@@ -27,7 +27,7 @@ const faqs = [
   },
   {
     q: "Is there a mobile app?",
-    a: "iOS and Android apps are in development. The web app is available now. Join the waitlist to get early access when mobile apps launch.",
+    a: "iOS and Android apps are planned. Join the waitlist to get early access updates.",
   },
 ];
 

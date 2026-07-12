@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "EXPOZOR — Know Where Your Money Is Really Going";
+export const alt = "EXPOZOR - Know Where Your Money Is Really Going";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -98,7 +98,7 @@ function OgImageContent() {
           marginBottom: 40,
         }}
       >
-        Manual entry · Receipt upload · CSV import · AI-assisted categorization
+        Manual entry first - upload, import, and AI assistance planned
       </div>
 
       {/* Beta chip */}
@@ -127,7 +127,7 @@ function OgImageContent() {
             display: "flex",
           }}
         />
-        Now in private beta
+        Join the waitlist
       </div>
 
       {/* Bottom wordmark */}

@@ -24,19 +24,19 @@ const STEPS: Step[] = [
     id: "add",
     number: "01",
     title: "Add your expenses",
-    body: "Enter expenses manually, upload a receipt or transaction screenshot, or import a CSV file. No bank login needed.",
+    body: "Enter expenses manually today. Receipt upload and CSV import are planned for early access. No bank login needed.",
   },
   {
     id: "ai-reads",
     number: "02",
     title: "Review and organize",
-    body: "EXPOZOR suggests categories based on merchant name and amount. You review every suggestion and edit before it is saved.",
+    body: "Review and organize entries yourself. AI-assisted category suggestions are planned and will remain user-reviewed.",
   },
   {
     id: "understand",
     number: "03",
     title: "Understand your spending",
-    body: "See spending by category, merchant, and month. Spot recurring charges and possible fees. Export a clean summary.",
+    body: "See spending by category, merchant, and month. Spot recurring charges and possible fees. Self-serve export is planned.",
   },
 ];
 
@@ -192,7 +192,7 @@ function VisualConnect() {
           }}
         />
         <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--accent)" }}>
-          4 accounts connected · Live sync on
+          Manual entry ready - uploads planned
         </span>
       </motion.div>
     </div>
@@ -841,7 +841,7 @@ export function HowItWorksSection() {
             transition={{ delay: 0.08, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             style={{ margin: "0 auto 0.875rem" }}
           >
-            From bank to budget in 60 seconds
+            From entry to insight, without bank links
           </motion.h2>
           <motion.p
             className="section-subtitle"
@@ -851,7 +851,7 @@ export function HowItWorksSection() {
             transition={{ delay: 0.14, duration: 0.5 }}
             style={{ margin: "0 auto" }}
           >
-            No setup wizard. No manual imports. Just connect and go.
+            Start with manual entry, then use planned upload and import workflows as they launch.
           </motion.p>
         </div>
 
@@ -919,7 +919,7 @@ export function HowItWorksSection() {
               transition: "background var(--dur-base) var(--ease-out)",
             }}
           >
-            Join the waitlist — Founders' pricing locked in for life
+            Join early access
           </motion.a>
         </motion.div>
       </div>

@@ -2,7 +2,7 @@
 
 import { EASE_OUT } from "@/lib/motion";
 import { motion } from "framer-motion";
-import { Lock, ShieldCheck, Zap } from "lucide-react";
+import { Database, ShieldCheck, Zap } from "lucide-react";
 
 /* ──────────────────────────────────────────────────────────────
    EARLY ACCESS SECTION
@@ -13,23 +13,23 @@ import { Lock, ShieldCheck, Zap } from "lucide-react";
 const PLEDGES = [
   {
     icon: Zap,
-    title: "Founders' pricing — locked for life",
+    title: "Waitlist-first launch",
     description:
-      "Join now and your rate never goes up. Early supporters get a permanent discount as a thank-you.",
+      "Join early access without a credit card. Billing is not active and paid packages may change before launch.",
     accent: "#7CF5C2",
   },
   {
     icon: ShieldCheck,
     title: "Privacy by architecture",
     description:
-      "Your data is encrypted in transit. No bank credentials are collected. No third-party trackers in the authenticated app. Infrastructure security details will be published before launch.",
+      "The current site uses HTTPS in transit and does not collect bank credentials. Infrastructure details will be published as product features launch.",
     accent: "#60a5fa",
   },
   {
-    icon: Lock,
-    title: "No lock-in. Ever.",
+    icon: Database,
+    title: "Data controls planned",
     description:
-      "Export all your data anytime. Cancel with one click. No dark patterns, no guilt trips.",
+      "Self-serve data download is planned. While EXPOZOR is waitlist-only, you can contact support to request waitlist record deletion.",
     accent: "#a78bfa",
   },
 ];

@@ -7,9 +7,9 @@ const features = [
   {
     id: "scan",
     icon: Camera,
-    title: "Snap & done",
+    title: "Receipt capture planned",
     description:
-      "Point your camera at any receipt. On-device OCR extracts every line item in under two seconds.",
+      "Receipt upload and scanning are on the roadmap. Manual entry remains the first supported workflow.",
     accent: "#7CF5C2",
     size: "large",
     visual: <ReceiptVisual />,
@@ -19,7 +19,7 @@ const features = [
     icon: RefreshCw,
     title: "CSV import",
     description:
-      "Import transactions from any bank's CSV export. Map columns once, then import again in seconds.",
+      "CSV import is planned so you can bring in files you choose to provide, without connecting a bank account.",
     accent: "#60a5fa",
     size: "small",
     visual: null,
@@ -27,9 +27,9 @@ const features = [
   {
     id: "ai",
     icon: Brain,
-    title: "AI that learns you",
+    title: "AI-assisted categorization planned",
     description:
-      "The more you use EXPOZOR, the smarter it gets. Rules you set, patterns it finds, insights that surprise.",
+      "AI category suggestions are planned for early access, with user review before relying on results.",
     accent: "#a78bfa",
     size: "small",
     visual: null,
@@ -39,7 +39,7 @@ const features = [
     icon: Target,
     title: "Budgets that flex",
     description:
-      "Zero-based, envelope, or simple limits. Multi-currency rollups. Forecasts that adapt to your income.",
+      "Simple limits and household categories help organize spending as the product matures.",
     accent: "#FFB36B",
     size: "medium",
     visual: <BudgetVisual />,
@@ -47,9 +47,9 @@ const features = [
   {
     id: "share",
     icon: Users,
-    title: "Shared finances",
+    title: "Shared expense notes",
     description:
-      "Track shared household expenses manually. Assign expenses to members and see how costs are split.",
+      "Track shared household expenses manually. EXPOZOR records notes only and does not initiate payments.",
     accent: "#f87171",
     size: "small",
     visual: null,
@@ -58,8 +58,7 @@ const features = [
     id: "security",
     icon: ShieldCheck,
     title: "Built with security in mind",
-    description:
-      "HTTPS in transit. No bank credentials collected. No money movement. See our Security page for details.",
+    description: "HTTPS in transit. No bank credentials collected. EXPOZOR tracks expenses only.",
     accent: "#4ade80",
     size: "small",
     visual: null,
@@ -81,10 +80,11 @@ export function FeaturesSection() {
             Features
           </p>
           <h2 id="features-heading" className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-            Everything your money needs
+            Built for expense tracking without bank links
           </h2>
           <p className="text-[var(--text-secondary)] text-lg max-w-xl mx-auto">
-            Built for the way you actually spend — not the way a spreadsheet thinks you do.
+            Manual entry today, with upload, import, and AI-assisted workflows planned for early
+            access.
           </p>
         </motion.div>
 

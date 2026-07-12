@@ -1,28 +1,31 @@
 # EXPOZOR
 
-> EXPOZOR is a personal expense tracking and organization tool for individuals and households.
+> EXPOZOR is a waitlist-stage personal expense tracking and organization product for individuals and households.
 
-EXPOZOR helps individuals and households track expenses manually, scan receipts, import CSV files, categorize transactions with AI assistance, and manage budgets across multiple currencies.
+EXPOZOR currently operates a public waitlist site. The current product positioning is manual expense tracking first, with receipt upload, CSV import, mobile apps, exports, and AI-assisted categorization described only as planned or early-access features unless launched later.
 
-**EXPOZOR is not a bank, financial institution, or money transmitter. It does not connect to bank accounts, collect bank credentials, move money, or provide financial advice.**
+**EXPOZOR is not a bank, financial institution, payment processor, money transmitter, lender, investment adviser, or tax adviser. It does not connect to bank accounts, collect bank credentials, initiate payments, custody funds, or provide financial advice.**
 
-## Key features
+## Current status
 
-- Receipt scanning with OCR (upload image or screenshot)
+- Waitlist-only public site
+- Manual expense tracking positioning
+- No active billing
+- No active payment processor
+- No confirmed AI/OCR provider
+- No analytics provider currently active in the codebase
+- Waitlist data is the current concrete data flow
+
+## Planned product areas
+
 - Manual transaction entry
-- CSV import from any bank's own export
-- AI-assisted categorization (rules-first, AI as fallback with confidence scores)
-- Budget tracking with zero-based and envelope templates
-- Shared household expense tracking (manual)
-- Multi-currency support
-- Spending reports and category insights
-
-## Pricing (TODO: confirm before launch — billing not yet live)
-
-- Free: limited expense entries per month, basic categorization, CSV export
-- Plus: unlimited entries, receipt scanning, AI categorization, budget tracking, multi-currency
-- Pro: everything in Plus + AI chat agent, custom rules, anomaly detection, API access
-- Households: everything in Pro + up to 6 members, shared expense tracking
+- Receipt upload and scanning
+- CSV import from files users choose to provide
+- AI-assisted categorization with user review
+- Budget tracking and spending summaries
+- Manual shared household expense notes
+- Mobile apps
+- Data download and reporting tools
 
 ## Important pages
 

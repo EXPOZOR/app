@@ -5,22 +5,21 @@
     "security": "Security",
     "blog": "Blog",
     "docs": "Docs",
-    "signIn": "Sign in",
-    "getStarted": "Get started"
+    "getStarted": "Get early access"
   },
   "hero": {
     "badge": "Now in private beta",
-    "headline": "Your finances,\nfinally intelligent.",
-    "subheadline": "EXPOZOR understands your money the way you do — automatically. Scan receipts, sync banks, split with your household, and let AI handle the rest.",
+    "headline": "Your finances,\nfinally organized.",
+    "subheadline": "EXPOZOR helps you track expenses manually today, with receipt upload, CSV import, and AI-assisted categorization planned for early access. No bank login required.",
     "cta": "Join the waitlist",
-    "ctaSecondary": "See it in action",
+    "ctaSecondary": "See the demo",
     "waitlistPlaceholder": "your@email.com",
     "waitlistSuccess": "You're on the list! Check your inbox.",
     "waitlistError": "Something went wrong. Please try again.",
-    "trustedBy": "Trusted by {count} people in beta"
+    "trustedBy": "Joined by {count} early-access readers"
   },
   "demo": {
-    "title": "Live demo",
+    "title": "Demo preview",
     "reset": "Reset",
     "step1": {
       "label": "Add an expense",
@@ -30,74 +29,74 @@
       "add": "Add expense"
     },
     "step2": {
-      "label": "AI categorizes it",
-      "message": "Categorized as Food & Drink with 97% confidence."
+      "label": "Review the category",
+      "message": "Suggested as Food & Drink with 97% confidence."
     },
     "step3": {
-      "label": "Budget updates instantly",
+      "label": "Budget updates",
       "remaining": "remaining this month"
     }
   },
   "features": {
-    "title": "Everything your money needs",
-    "subtitle": "Built for the way you actually spend — not the way a spreadsheet thinks you do.",
+    "title": "Built for expense tracking without bank connections",
+    "subtitle": "Manual entry today, with upload and import workflows planned for early access.",
     "items": {
       "scan": {
-        "title": "Snap & done",
-        "description": "Point your camera at any receipt. On-device OCR extracts every line item in under two seconds."
+        "title": "Receipt capture planned",
+        "description": "Receipt upload and scanning are on the roadmap. Until they ship, the product copy treats them as planned features."
       },
       "import": {
-        "title": "CSV import",
-        "description": "Import transactions from any bank's CSV export. Map columns once, then import again in seconds."
+        "title": "CSV import planned",
+        "description": "CSV import is planned so you can bring in transaction files you choose to provide, without connecting a bank account."
       },
       "ai": {
-        "title": "AI that learns you",
-        "description": "The more you use EXPOZOR, the smarter it gets. Rules you set, patterns it finds, insights that surprise."
+        "title": "AI-assisted categorization planned",
+        "description": "AI suggestions are planned for early access. Manual review stays part of the workflow."
       },
       "budgets": {
         "title": "Budgets that flex",
-        "description": "Zero-based, envelope, or simple limits. Multi-currency rollups. Forecasts that adapt to your income."
+        "description": "Track spending against simple limits and household categories as the product matures."
       },
       "share": {
-        "title": "Shared finances",
-        "description": "Track shared household expenses manually. Assign expenses to members and see how costs are split."
+        "title": "Shared expense notes",
+        "description": "Track shared household expenses manually. EXPOZOR records notes only and does not initiate payments."
       },
       "security": {
         "title": "Built with security in mind",
-        "description": "HTTPS in transit. No bank credentials collected. No money movement. See our Security page for details."
+        "description": "HTTPS in transit. No bank credentials collected. EXPOZOR tracks expenses only."
       }
     }
   },
   "pricing": {
-    "title": "Simple, honest pricing",
-    "subtitle": "Start free. Upgrade when you're ready.",
+    "title": "Simple pricing, not active yet",
+    "subtitle": "EXPOZOR is waitlist-only today. Paid plans are not available yet.",
     "annual": "Annual",
     "monthly": "Monthly",
-    "annualDiscount": "Save 20%",
+    "annualDiscount": "Planned",
     "plans": {
       "free": {
         "name": "Free",
         "price": "0",
-        "description": "For individuals getting started.",
-        "cta": "Get started"
+        "description": "For individuals joining early access.",
+        "cta": "Join the waitlist"
       },
       "plus": {
         "name": "Plus",
-        "price": "6",
-        "description": "For people serious about their finances.",
-        "cta": "Start free trial"
+        "price": "Planned",
+        "description": "For deeper budgeting workflows once billing launches.",
+        "cta": "Get early access"
       },
       "pro": {
         "name": "Pro",
-        "price": "14",
-        "description": "For power users and freelancers.",
-        "cta": "Start free trial"
+        "price": "Planned",
+        "description": "For advanced organization features planned for later.",
+        "cta": "Get early access"
       },
       "households": {
         "name": "Households",
-        "price": "24",
-        "description": "For families and couples.",
-        "cta": "Start free trial"
+        "price": "Planned",
+        "description": "For families and couples who want manual shared tracking.",
+        "cta": "Get early access"
       }
     }
   },
@@ -106,28 +105,28 @@
     "items": [
       {
         "q": "Is my financial data safe?",
-        "a": "EXPOZOR uses HTTPS for all data in transit. We do not sell your data, and you can request deletion of your account and data at any time. Additional security details are on our Security page."
+        "a": "EXPOZOR uses HTTPS for data in transit. The current public site stores waitlist signup data only. We do not sell your data."
       },
       {
         "q": "Do I need to connect my bank?",
-        "a": "No. EXPOZOR does not require a bank connection. You add expenses manually, by uploading a receipt or screenshot, or by importing a CSV file."
+        "a": "No. EXPOZOR does not require or collect bank credentials. You add expenses manually, and upload/import workflows are planned."
       },
       {
         "q": "How does the AI categorization work?",
-        "a": "Your own rules run first. If a rule matches, no AI is used. For unknowns, Claude Haiku classifies in batch. Results with confidence below 60% are flagged for your review — we never auto-apply uncertain categories."
+        "a": "AI-assisted categorization is planned for early access. It will be presented as a suggestion workflow, with user review before relying on results."
       },
       {
         "q": "Can I share expenses with my household?",
-        "a": "Shared expense tracking is a planned feature. You can split expenses across household members manually. Automatic money transfer or settlement between users is not supported."
+        "a": "Shared expense tracking is planned as manual notes only. EXPOZOR does not initiate payments between users."
       },
       {
         "q": "What happens if I want to cancel?",
-        "a": "Cancel anytime, no friction. You keep your data in Free tier. A full export is always one click away."
+        "a": "Billing is not active yet. While EXPOZOR is waitlist-only, there is no paid subscription to cancel."
       }
     ]
   },
   "footer": {
-    "tagline": "Calm, intelligent money.",
+    "tagline": "Calm, clear expense tracking.",
     "product": "Product",
     "company": "Company",
     "legal": "Legal",
@@ -145,6 +144,6 @@
       "privacy": "Privacy Policy",
       "terms": "Terms of Service"
     },
-    "copyright": "© {year} EXPOZOR. All rights reserved."
+    "copyright": "Copyright {year} EXPOZOR. All rights reserved."
   }
 }

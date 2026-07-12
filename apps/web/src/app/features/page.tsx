@@ -1,13 +1,13 @@
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
-import { FeaturesSection } from "@/components/marketing/features-section";
+import { FeaturesSection } from "@/components/sections/features-section";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Features",
   description:
-    "Receipt scanning, CSV import, AI-assisted categorization, budget tracking, and spending insights. No bank connection required.",
+    "Manual expense tracking today, with receipt capture, CSV import, AI-assisted categorization, and mobile apps planned. No bank connection required.",
   alternates: { canonical: "https://expozor.com/features" },
 };
 
@@ -27,10 +27,11 @@ export default function FeaturesPage() {
             Features
           </p>
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-4">
-            Everything your money needs
+            Expense tracking without bank connections
           </h1>
           <p className="text-xl text-[var(--text-secondary)] leading-relaxed">
-            Built for the way you actually spend. Not the way a spreadsheet thinks you do.
+            Manual entry today, with receipt capture, CSV import, and AI assistance planned for
+            early access.
           </p>
         </div>
         <FeaturesSection />
@@ -48,18 +49,18 @@ export default function FeaturesPage() {
                   Capture
                 </p>
                 <h2 id="capture-heading" className="text-3xl font-bold mb-4">
-                  Snap & done in 2 seconds
+                  Receipt capture is on the roadmap
                 </h2>
                 <p className="text-[var(--text-secondary)] leading-relaxed mb-6">
-                  On-device ML Kit OCR reads your receipt before you've put your phone away. Amount,
-                  date, merchant, line items — all extracted and confirmed with one tap.
+                  Receipt upload and scanning are planned features. EXPOZOR does not currently
+                  advertise a specific OCR provider, speed target, or supported receipt count.
                 </p>
                 <ul className="space-y-3 text-[var(--text-secondary)] text-sm">
                   {[
-                    "On-device OCR (no cloud round-trip for most receipts)",
-                    "Server-side vision fallback when confidence < 70%",
-                    "Editable confirmation before saving",
-                    "Supports 40+ receipt formats",
+                    "Manual entry available first",
+                    "Receipt upload planned for early access",
+                    "OCR provider not selected yet",
+                    "User review before saving extracted details",
                   ].map((f) => (
                     <li key={f} className="flex items-center gap-2">
                       <span
@@ -184,12 +185,11 @@ export default function FeaturesPage() {
                   Intelligence
                 </p>
                 <h2 id="ai-heading" className="text-3xl font-bold mb-4">
-                  AI that defers to your rules
+                  AI-assisted categorization planned
                 </h2>
                 <p className="text-[var(--text-secondary)] leading-relaxed mb-6">
-                  Your rules run first. Only when no rule matches does the AI step in — and it
-                  always shows its work. Confidence below 60% goes to your review queue, never
-                  auto-applied.
+                  AI category suggestions are planned for early access. The intended workflow keeps
+                  user review in the loop and avoids presenting unreviewed suggestions as final.
                 </p>
               </div>
             </div>

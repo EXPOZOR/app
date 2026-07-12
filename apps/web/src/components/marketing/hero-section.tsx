@@ -153,8 +153,8 @@ export function HeroSection() {
           animate="visible"
           className="text-lg md:text-xl text-[var(--text-secondary)] max-w-2xl leading-relaxed"
         >
-          EXPOZOR understands your money the way you do — automatically. Scan receipts, sync banks,
-          split with your household, and let AI handle the rest.
+          EXPOZOR helps you organize expenses manually today, with receipt upload, CSV import, and
+          AI-assisted categorization planned for early access.
         </motion.p>
 
         {/* Waitlist form */}
@@ -168,7 +168,7 @@ export function HeroSection() {
         >
           <WaitlistForm size="large" />
           <p className="text-xs text-[var(--text-tertiary)] mt-3">
-            Free forever on the Free plan. No credit card required.
+            Join the waitlist. No credit card required.
           </p>
         </motion.div>
 
@@ -193,8 +193,7 @@ export function HeroSection() {
             ))}
           </div>
           <p className="text-sm text-[var(--text-tertiary)]">
-            <span className="text-[var(--text-primary)] font-medium">240+</span> people already on
-            the waitlist
+            Early readers are joining the waitlist
           </p>
         </motion.div>
 

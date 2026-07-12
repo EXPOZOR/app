@@ -487,7 +487,7 @@ function SnapDemo() {
 /* ──────────────────────────────────────────────────────────────
    TILE 3 — CSV Import (small, col-span-1)
    Shows CSV import rows with mapping/confirm UI.
-   Replaced bank sync tile — no bank connection implied.
+   CSV tile avoids bank connection claims.
 ────────────────────────────────────────────────────────────── */
 const CSV_ROWS = [
   { label: "Date", value: "2026-06-01", mapped: true },
@@ -806,18 +806,18 @@ export function FeaturesSection() {
             <TileHeader
               Icon={Camera}
               title="Upload receipts & screenshots"
-              description="Drop in a receipt image, transaction screenshot, or PDF. AI/OCR extracts the details — you confirm before saving."
+              description="Receipt upload is planned. When it launches, you will review extracted details before saving."
             />
             <SnapDemo />
           </BentoCard>
 
           {/* ③ Small tile — CSV import (col-1, row-2) */}
-          {/* Replaced bank-sync tile — no bank connection required */}
+          {/* CSV tile avoids bank connection claims. */}
           <BentoCard delay={0.1} className="bento-small">
             <TileHeader
               Icon={Building2}
               title="CSV import"
-              description="Import from any CSV export. Map columns, preview rows, confirm. Full control over what gets imported."
+              description="Import from a CSV file you choose to provide. Map columns, preview rows, confirm."
             />
             <CsvImportDemo />
           </BentoCard>

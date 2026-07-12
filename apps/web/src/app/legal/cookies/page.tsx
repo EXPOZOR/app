@@ -5,7 +5,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Cookie Policy",
-  description: "How EXPOZOR uses cookies. We use only essential session cookies.",
+  description:
+    "How EXPOZOR uses cookies on the waitlist-stage public site. No advertising or analytics cookies are currently active.",
   alternates: { canonical: "https://expozor.com/legal/cookies" },
 };
 
@@ -25,7 +26,6 @@ export default function CookiesPage() {
       <main id="main-content" className="pt-20">
         <div className="container-site max-w-3xl section-py">
           <h1 className="text-4xl font-bold tracking-tight mb-2">Cookie Policy</h1>
-          {/* TODO: update date when reviewed before launch */}
           <p className="text-[var(--text-tertiary)] text-sm mb-10">Last updated: July 2026</p>
 
           <div className="space-y-8 text-[var(--text-secondary)] leading-relaxed">
@@ -37,9 +37,9 @@ export default function CookiesPage() {
                 Overview
               </h2>
               <p>
-                EXPOZOR uses a minimal number of cookies. We do not use advertising cookies,
-                tracking cookies, or third-party analytics cookies inside the authenticated
-                application.
+                EXPOZOR is currently a waitlist-stage public site. We do not currently operate user
+                account sessions, advertising cookies, third-party analytics cookies, or behavioral
+                tracking cookies.
               </p>
             </section>
 
@@ -48,13 +48,12 @@ export default function CookiesPage() {
                 id="cookies-essential"
                 className="text-xl font-semibold text-[var(--text-primary)] mb-3"
               >
-                Essential cookies
+                Essential technology
               </h2>
-              {/* TODO: audit actual cookie names from auth/session libraries before public launch */}
               <p>
-                EXPOZOR uses essential cookies for security, authentication, and basic site
-                functionality. We do not use advertising cookies. Cookie names will be finalized
-                before public launch.
+                The site may use essential browser storage or framework-level mechanisms that are
+                necessary to load pages, submit the waitlist form, prevent abuse, maintain security,
+                or remember basic presentation preferences. These are not used for advertising.
               </p>
             </section>
 
@@ -66,9 +65,9 @@ export default function CookiesPage() {
                 Analytics
               </h2>
               <p>
-                {/* TODO: confirm analytics provider and update before launch */}
-                If analytics are used, they will be first-party or privacy-preserving. This section
-                will be updated with specific details before the Service launches publicly.
+                No analytics provider is currently active in the codebase. If analytics are added
+                later, this policy will be updated to identify the provider, purpose, and available
+                controls.
               </p>
             </section>
 
@@ -80,9 +79,9 @@ export default function CookiesPage() {
                 Your choices
               </h2>
               <p>
-                You can control or delete cookies through your browser settings. Disabling essential
-                cookies will prevent you from signing in to EXPOZOR. As we do not use advertising or
-                tracking cookies, there is no cookie consent banner.
+                You can control or delete cookies and local storage through your browser settings.
+                Blocking essential browser storage may cause some site functionality, such as form
+                submission or page preferences, to work incorrectly.
               </p>
             </section>
 

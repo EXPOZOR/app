@@ -1,14 +1,13 @@
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
-import { FaqSection } from "@/components/marketing/faq-section";
-import { PricingSection } from "@/components/marketing/pricing-section";
+import { FaqSection } from "@/components/sections/faq-section";
+import { PricingSection } from "@/components/sections/pricing-section";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Pricing",
-  description:
-    "Free, Plus ($6/mo), Pro ($14/mo), Households ($24/mo). Start free, upgrade when ready. Annual billing saves 20%.",
+  description: "EXPOZOR is waitlist-only today. Paid plans are planned but billing is not active.",
   alternates: { canonical: "https://expozor.com/pricing" },
 };
 
@@ -26,7 +25,8 @@ export default function PricingPage() {
         <div className="container-site py-16 text-center">
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-4">Pricing</h1>
           <p className="text-xl text-[var(--text-secondary)] max-w-xl mx-auto">
-            Start free. Upgrade when you're ready. Cancel anytime.
+            EXPOZOR is waitlist-only today. Paid plans are planned but no paid subscription is
+            available yet.
           </p>
         </div>
         <PricingSection />

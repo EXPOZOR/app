@@ -17,20 +17,20 @@ export const metadata: Metadata = {
   },
 
   description:
-    "Track expenses, organize receipts, import CSV files, and understand your spending. No bank connection required. Join the early access waitlist.",
+    "Manual expense tracking today, with receipt upload, CSV import, and AI-assisted categorization planned. No bank connection required. Join the early access waitlist.",
 
   keywords: [
     "expense tracker",
     "personal finance app",
-    "receipt scanner",
+    "receipt upload planned",
     "budget app",
     "CSV import",
     "manual expense entry",
     "spending tracker",
-    "AI categorization",
+    "AI-assisted categorization planned",
     "money management",
     "no bank connection",
-    "receipt upload",
+    "receipt upload planned",
     "monthly spending summary",
   ],
 
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     siteName: "EXPOZOR",
     title: "EXPOZOR — Know Where Your Money Is Really Going",
     description:
-      "Track expenses, organize receipts, import CSV, and understand your spending. No bank connection required.",
+      "Manual expense tracking today, with receipt upload and CSV import planned. No bank connection required.",
     images: [
       {
         url: "/opengraph-image",
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "EXPOZOR — Know Where Your Money Is Really Going",
     description:
-      "Track expenses, organize receipts, import CSV, and understand your spending. No bank connection required.",
+      "Manual expense tracking today, with receipt upload and CSV import planned. No bank connection required.",
     images: ["/twitter-image"],
     creator: "@EXPOZOR",
     site: "@EXPOZOR",
@@ -132,9 +132,9 @@ function buildJsonLd() {
     "@id": `${BASE_URL}/#product`,
     name: "EXPOZOR",
     applicationCategory: "FinanceApplication",
-    operatingSystem: "Web, iOS, Android",
+    operatingSystem: "Web; iOS and Android planned",
     description:
-      "Manual expense tracking, receipt upload, CSV import, and AI-assisted categorization. No bank connection required.",
+      "Manual expense tracking, with receipt upload, CSV import, and AI-assisted categorization planned. No bank connection required.",
     url: BASE_URL,
     screenshot: `${BASE_URL}/opengraph-image`,
     // TODO: add confirmed offers once billing provider is confirmed and pricing is live

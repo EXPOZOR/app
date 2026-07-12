@@ -10,10 +10,10 @@ import { motion } from "framer-motion";
 const TRUST_ITEMS = [
   {
     label: "No bank login required",
-    sublabel: "Manual, upload, or CSV",
+    sublabel: "Manual first; upload/import planned",
   },
   {
-    label: "No money movement",
+    label: "Expense tracking only",
     sublabel: "Tracking only",
   },
   {

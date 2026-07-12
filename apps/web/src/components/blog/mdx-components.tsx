@@ -1,4 +1,5 @@
 import type { MDXRemoteProps } from "next-mdx-remote/rsc";
+import Image from "next/image";
 import Link from "next/link";
 
 type MDXComponents = MDXRemoteProps["components"];
@@ -89,10 +90,14 @@ export function useMDXComponents(): NonNullable<MDXComponents> {
       />
     ),
     hr: () => <hr className="border-[var(--border)] my-8" />,
-    img: (props) => (
-      // biome-ignore lint/a11y/useAltText: alt comes from MDX
-      <img
-        className="rounded-[var(--radius-lg)] border border-[var(--border)] my-6 w-full"
+    img: ({ src, alt = "", width, height, ...props }) => (
+      <Image
+        src={typeof src === "string" ? src : ""}
+        alt={alt}
+        width={typeof width === "number" ? width : 1200}
+        height={typeof height === "number" ? height : 630}
+        sizes="(min-width: 768px) 720px, 100vw"
+        className="rounded-[var(--radius-lg)] border border-[var(--border)] my-6 w-full h-auto"
         {...props}
       />
     ),

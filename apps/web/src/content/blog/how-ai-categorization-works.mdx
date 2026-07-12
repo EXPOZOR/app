@@ -1,57 +1,39 @@
 ---
-title: "How AI Categorization Actually Works in EXPOZOR"
+title: "How AI Categorization Is Planned to Work in EXPOZOR"
 date: "2026-05-28"
 author: "The EXPOZOR Team"
 authorRole: "Engineering"
 category: "Engineering"
-excerpt: "A transparent look at how EXPOZOR's AI categorizes your transactions — rules-first, confidence-scored, and always explainable."
+excerpt: "A transparent look at EXPOZOR's planned AI-assisted categorization workflow: rules first, suggestions second, and user review before relying on results."
 featured: false
 ---
 
-## Rules first, AI second
+EXPOZOR is currently waitlist-only, so AI-assisted categorization is a planned feature rather than a production capability. This post explains the product direction we are designing toward.
 
-Most "AI-powered" finance apps apply machine learning to every transaction. That sounds impressive until the AI confidently labels your gym membership as "Entertainment" for the third month in a row.
+## Rules first, suggestions second
 
-EXPOZOR takes a different approach: **your rules always run first.**
+The planned categorization workflow starts with user-defined rules. If you decide that a merchant belongs in a category, that rule should take priority over any AI suggestion.
 
-When a new transaction arrives — whether from a CSV import, a receipt scan, or manual entry — the system processes it in this order:
+The intended order is:
 
-1. **Exact merchant rules** — You said "Planet Fitness = Health & Fitness"? Done. No AI involved.
-2. **Pattern rules** — Any transaction containing "AWS" goes to "Business / Infrastructure"? Applied instantly.
-3. **AI categorization** — Only if no rule matches does the AI step in.
+1. **Exact merchant rules** - examples like "Planet Fitness = Health & Fitness."
+2. **Pattern rules** - examples like "AWS = Business / Infrastructure."
+3. **AI-assisted suggestions** - used only when no rule matches.
 
-This means the AI is a fallback, not a gatekeeper. And it knows its place.
+That keeps AI in the role of assistant, not authority.
 
-## Confidence scoring
+## Review before relying
 
-When the AI does categorize a transaction, it assigns a confidence score between 0 and 100:
+AI suggestions can be useful, but they can also be wrong. EXPOZOR's planned workflow keeps review visible so users can confirm, edit, or reject a suggested category before treating it as reliable.
 
-| Confidence | Behavior |
-|-----------|----------|
-| **80–100%** | Auto-applied. You see a small "AI" badge on the category. |
-| **60–79%** | Auto-applied with a "Review" nudge in your activity feed. |
-| **Below 60%** | Sent to your review queue. Never auto-applied. |
+We are not naming an AI provider yet because no production provider has been contracted. When a provider is selected, the Privacy Policy and Subprocessors page should be updated before the feature goes live.
 
-The threshold is configurable. If you want the AI to be more cautious, you can raise the auto-apply threshold to 90%. If you trust it more, lower it to 50%.
+## What exists today
 
-## Explainability
+Today, the public site stores waitlist signup data: email, signup source, referrer when available, default locale, and signup timestamp. It does not store transaction data, uploaded receipts, screenshots, or CSV files.
 
-Every AI-categorized transaction comes with a short explanation:
-
-> _"Categorized as 'Dining Out' because the merchant 'Nando's' matches 847 similar transactions in our training data, and the amount ($23.50) is within the typical range for restaurants."_
-
-You can tap the explanation to see the full reasoning chain. If the AI got it wrong, you correct it once, and it creates a new rule automatically — so it never makes the same mistake again.
-
-## The training data question
-
-A fair question: where does the AI's training data come from?
-
-- **Aggregate patterns** — anonymized, de-identified transaction patterns from public financial datasets.
-- **Your corrections** — when you fix a categorization, it improves _your_ model. Your data never trains anyone else's model.
-- **No selling, no sharing** — your transaction data is encrypted with per-user envelope keys. We literally cannot read it.
+The web app is configured with HTTPS, HSTS, Content Security Policy, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, and Permissions-Policy headers. We do not sell waitlist data.
 
 ## Why this matters
 
-Categorization accuracy isn't a vanity metric. It's the foundation of everything else: budgets, spending reports, split calculations, and financial insights.
-
-If your categories are wrong, your budget is a fiction. EXPOZOR's rules-first approach means your categories are right from day one — and they only get better.
+Categorization accuracy matters because budgets and spending summaries are only useful when the categories are trustworthy. The product direction is simple: make categorization faster without removing user control.

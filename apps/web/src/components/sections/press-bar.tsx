@@ -11,10 +11,10 @@ import { Ban, FileSpreadsheet, PenLine, ShieldOff, Sparkles, Upload } from "luci
 
 const TRUST_BADGES = [
   { icon: ShieldOff, label: "No bank login" },
-  { icon: Ban, label: "No money movement" },
-  { icon: Upload, label: "Receipt upload" },
-  { icon: FileSpreadsheet, label: "CSV import" },
-  { icon: Sparkles, label: "AI-assisted" },
+  { icon: Ban, label: "Expense tracking only" },
+  { icon: Upload, label: "Receipt upload planned" },
+  { icon: FileSpreadsheet, label: "CSV import planned" },
+  { icon: Sparkles, label: "AI-assisted planned" },
   { icon: PenLine, label: "Manual entry" },
 ];
 

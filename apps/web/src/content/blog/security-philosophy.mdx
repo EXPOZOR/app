@@ -4,42 +4,42 @@ date: "2026-05-20"
 author: "The EXPOZOR Team"
 authorRole: "Engineering"
 category: "Security"
-excerpt: "Financial data is the most sensitive data people generate daily. Here's how EXPOZOR thinks about protecting it."
+excerpt: "Financial data is sensitive. Here is the conservative security posture EXPOZOR can state today while the product is waitlist-only."
 featured: false
 ---
 
-## Why "privacy by default" isn't enough
+## Start with what is real
 
-Most apps promise privacy in their marketing. Fewer deliver it in their architecture. The difference matters because promises can change with new management, a funding round, or an acqui-hire. Architecture is harder to change.
+EXPOZOR is currently a waitlist-stage public site. The concrete data flow today is waitlist signup data: email, source, referrer when provided by the browser, default locale, and signup timestamp.
 
-Our goal is to design EXPOZOR so that the data you store is protected at every layer — not just by policy, but by system design.
+The site does not currently store transaction data, uploaded receipts, screenshots, CSV files, payment details, or bank credentials.
 
-## Encryption in transit
+## HTTPS and browser protections
 
-All communication with EXPOZOR uses HTTPS. HSTS is enabled so your connection is always secured. We do not serve any authenticated content over plain HTTP.
+The web app is configured with HTTPS, HSTS, Content Security Policy, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, and Permissions-Policy headers.
+
+These controls do not replace a full production security program, but they are real controls in the current app configuration.
 
 ## No bank credentials
 
-EXPOZOR does not ask for, collect, or store your bank login credentials, passwords, or PINs. You add data manually, by uploading files, or by importing CSV exports you download directly from your own bank.
+EXPOZOR does not ask for, collect, or store your bank credentials, passwords, or PINs. Manual expense entry is the first workflow; upload and import workflows are planned for early access.
 
-## No money movement
+## Expense tracking only
 
-EXPOZOR cannot and does not initiate any financial transfers, payments, or transactions on your behalf. It is a read-only organizational tool.
+EXPOZOR is not a bank or payment service. It does not access accounts, custody funds, or initiate payments. Shared household expense tracking is planned as manual notes only.
 
 ## Analytics and tracking
 
-We do not include third-party advertising trackers. If we use any analytics tools, they will be disclosed on our [Subprocessors](/legal/subprocessors) and [Cookie Policy](/legal/cookies) pages.
+No analytics provider is currently active in the codebase. If analytics are added later, they should be disclosed on the [Subprocessors](/legal/subprocessors) and [Cookie Policy](/legal/cookies) pages before launch.
 
 ## Your data, your choice
 
-- **Export** your data from Settings → Privacy at any time.
-- **Delete** your account and all associated data by contacting support.
-- Detailed data retention practices are described in our [Privacy Policy](/legal/privacy).
+While the product is waitlist-only, you can contact support to request deletion of your waitlist record. More complete data controls should be documented before account-based product features launch.
 
 ## Responsible disclosure
 
-If you find a security vulnerability, email [security@expozor.com](mailto:security@expozor.com). We take all reports seriously and will respond promptly.
+If you find a security vulnerability, email [security@expozor.com](mailto:security@expozor.com) with a description of the issue and steps to reproduce.
 
-## What we're working toward
+## What we are working toward
 
-We are building toward a published security whitepaper and formal infrastructure audit. Details will be added to our [Security page](/security) as they are confirmed.
+As EXPOZOR moves beyond the waitlist stage, the security page and legal pages should be updated with confirmed production details, subprocessors, and user controls.

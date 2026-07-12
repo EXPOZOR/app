@@ -258,8 +258,8 @@ function MobileSheet({
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
-              <Link
-                href={NAVBAR.signIn.href}
+              <a
+                href={NAVBAR.cta.href}
                 onClick={onClose}
                 style={{
                   display: "block",
@@ -282,8 +282,8 @@ function MobileSheet({
                   (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
                 }}
               >
-                {NAVBAR.signIn.label}
-              </Link>
+                {NAVBAR.cta.label}
+              </a>
             </motion.div>
           </nav>
 
@@ -342,7 +342,7 @@ function MobileSheet({
                 lineHeight: 1.4,
               }}
             >
-              Founders' pricing locked in for life
+              No credit card required for the waitlist
             </p>
           </motion.div>
         </motion.div>
@@ -507,7 +507,7 @@ export function Header() {
           >
             {/* Sign in — ghost/outline */}
             <Link
-              href={NAVBAR.signIn.href}
+              href={NAVBAR.cta.href}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -539,7 +539,7 @@ export function Header() {
                 (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--border-strong)";
               }}
             >
-              {NAVBAR.signIn.label}
+              {NAVBAR.cta.label}
             </Link>
 
             {/* Get early access — solid mint, hover glow */}

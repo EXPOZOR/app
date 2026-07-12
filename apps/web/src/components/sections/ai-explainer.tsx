@@ -11,9 +11,9 @@ const STEPS = [
     id: "scan",
     icon: Camera,
     label: "Capture",
-    title: "Snap a receipt or import a CSV",
+    title: "Manual entry first, upload planned",
     description:
-      "Upload a receipt image or screenshot and OCR extracts the details in seconds. Or import a CSV from your bank for bulk entry. No bank connection required.",
+      "Manual entry is the first workflow. Receipt upload and CSV import are planned for early access, without requiring a bank connection.",
     color: "#7CF5C2",
     visual: {
       type: "receipt" as const,
@@ -29,9 +29,9 @@ const STEPS = [
     id: "categorize",
     icon: Brain,
     label: "Categorize",
-    title: "AI categorizes with confidence scores",
+    title: "AI suggestions are planned",
     description:
-      "Your rules run first. Only when no rule matches does the AI step in — showing its work with a confidence score. Below 60%? It asks you instead of guessing.",
+      "The planned workflow puts your rules first. AI-assisted categories are intended as reviewable suggestions, not automatic decisions.",
     color: "#60a5fa",
     visual: {
       type: "categories" as const,
@@ -47,9 +47,9 @@ const STEPS = [
     id: "budget",
     icon: PieChart,
     label: "Budget",
-    title: "Budgets update in real-time",
+    title: "Budget views are planned",
     description:
-      "Every categorized transaction instantly updates your budgets. See exactly where you stand — by category, by week, by household member. No manual reconciliation.",
+      "Budget views are planned to summarize spending by category and month after you review your entries.",
     color: "#a78bfa",
     visual: {
       type: "budgets" as const,
@@ -70,9 +70,9 @@ const STEPS = [
     id: "insights",
     icon: Lightbulb,
     label: "Insights",
-    title: "Get actionable intelligence",
+    title: "Insights are planned",
     description:
-      'EXPOZOR spots patterns you\'d miss: "You spent 23% more on dining this month vs. last" or "You have two overlapping subscription services — cancelling one saves ~$10/mo."',
+      "EXPOZOR is designed to highlight spending patterns and review opportunities after the underlying entries are confirmed.",
     color: "#FFB36B",
     visual: {
       type: "insights" as const,
@@ -281,10 +281,10 @@ export function AiExplainerSection() {
             id="ai-explainer-heading"
             className="text-3xl md:text-4xl font-bold tracking-tight mb-3"
           >
-            From receipt to insight in seconds
+            From expense entry to insight, carefully
           </h2>
           <p className="text-[var(--text-secondary)] text-lg">
-            Four steps, fully automated. See exactly what happens when a transaction enters EXPOZOR.
+            Four planned steps, with user review before relying on suggestions.
           </p>
         </div>
 

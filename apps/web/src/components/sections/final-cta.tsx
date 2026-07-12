@@ -146,6 +146,7 @@ function useConfetti() {
 export function FinalCtaSection() {
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
+  const [consent, setConsent] = useState(false);
   const [isPending, startTransition] = useTransition();
   const inputRef = useRef<HTMLInputElement>(null);
   const { canvasRef, fire } = useConfetti();
@@ -154,6 +155,7 @@ export function FinalCtaSection() {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     fd.set("source", "final-cta");
+    fd.set("locale", "en");
     startTransition(async () => {
       const result = await joinWaitlist(fd);
       if (result.success) {
@@ -390,7 +392,7 @@ export function FinalCtaSection() {
                     {message}
                   </p>
                   <p style={{ fontSize: "0.8125rem", color: "var(--text-secondary)", margin: 0 }}>
-                    You&rsquo;re on the list 🎉 — Founders&rsquo; pricing locked in for life.
+                    You&rsquo;re on the list. We will send early-access updates when ready.
                   </p>
                 </motion.div>
               ) : (
@@ -420,6 +422,13 @@ export function FinalCtaSection() {
                     }}
                     className="cta-form-row"
                   >
+                    <input
+                      type="text"
+                      name="website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      className="sr-only"
+                    />
                     <div style={{ flex: 1 }}>
                       <label htmlFor="final-email" className="sr-only">
                         Email address
@@ -461,7 +470,7 @@ export function FinalCtaSection() {
 
                     <motion.button
                       type="submit"
-                      disabled={isPending}
+                      disabled={isPending || !consent}
                       whileHover={{ scale: 1.03, boxShadow: "var(--shadow-glow)" }}
                       whileTap={{ scale: 0.97 }}
                       aria-label={FINAL_CTA.ctaAriaLabel}
@@ -479,8 +488,8 @@ export function FinalCtaSection() {
                         fontWeight: 600,
                         letterSpacing: "-0.01em",
                         border: "none",
-                        cursor: isPending ? "not-allowed" : "pointer",
-                        opacity: isPending ? 0.7 : 1,
+                        cursor: isPending || !consent ? "not-allowed" : "pointer",
+                        opacity: isPending || !consent ? 0.7 : 1,
                         display: "flex",
                         alignItems: "center",
                         gap: "6px",
@@ -505,6 +514,31 @@ export function FinalCtaSection() {
                       )}
                     </motion.button>
                   </div>
+
+                  <label
+                    style={{
+                      display: "flex",
+                      alignItems: "flex-start",
+                      gap: "8px",
+                      maxWidth: "480px",
+                      width: "100%",
+                      fontSize: "0.8125rem",
+                      color: "var(--text-secondary)",
+                      lineHeight: 1.5,
+                      textAlign: "left",
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      name="productUpdatesConsent"
+                      checked={consent}
+                      onChange={(e) => setConsent(e.target.checked)}
+                      required
+                      disabled={isPending}
+                      style={{ marginTop: "3px" }}
+                    />
+                    <span>I'd like to receive product updates.</span>
+                  </label>
 
                   {/* Error message */}
                   <AnimatePresence>

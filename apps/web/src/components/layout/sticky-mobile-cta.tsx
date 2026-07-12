@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
    Spec: fixed bottom bar, mobile-only (hidden on lg+).
    - Appears after scrolling past 300px
    - Dismissible with × (hidden for rest of session via sessionStorage)
-   - "Join the waitlist — Founders' pricing locked in for life."
+   - "Join the waitlist. No credit card."
    - aria-label on dismiss button, role="complementary" on bar
 ────────────────────────────────────────────────────────────── */
 const DISMISS_KEY = "EXPOZOR-mobile-cta-dismissed";
@@ -84,7 +84,7 @@ export function StickyMobileCtaBar() {
                   whiteSpace: "nowrap",
                 }}
               >
-                Founders' pricing — locked for life
+                Join the EXPOZOR waitlist
               </p>
               <p
                 style={{
@@ -94,7 +94,7 @@ export function StickyMobileCtaBar() {
                   lineHeight: 1,
                 }}
               >
-                Free plan · No credit card
+                No credit card required
               </p>
             </div>
 
@@ -103,7 +103,7 @@ export function StickyMobileCtaBar() {
             <a
               href="#waitlist"
               onClick={dismiss}
-              aria-label="Join the EXPOZOR waitlist — Founders' pricing locked in for life"
+              aria-label="Join the EXPOZOR waitlist"
               style={{
                 display: "inline-flex",
                 alignItems: "center",

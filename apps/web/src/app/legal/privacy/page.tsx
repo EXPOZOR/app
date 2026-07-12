@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "How EXPOZOR collects, uses, and protects your data. No bank credentials collected. No data sold.",
+    "How EXPOZOR collects and uses waitlist data. No bank credentials collected. No data sold.",
   alternates: { canonical: "https://expozor.com/legal/privacy" },
 };
 
@@ -26,7 +26,6 @@ export default function PrivacyPage() {
       <main id="main-content" className="pt-20">
         <div className="container-site max-w-3xl section-py">
           <h1 className="text-4xl font-bold tracking-tight mb-2">Privacy Policy</h1>
-          {/* TODO: update date when this policy is reviewed and approved before launch */}
           <p className="text-[var(--text-tertiary)] text-sm mb-10">Last updated: July 2026</p>
 
           <div className="space-y-8 text-[var(--text-secondary)] leading-relaxed">
@@ -38,85 +37,88 @@ export default function PrivacyPage() {
                 Overview
               </h2>
               <p>
-                EXPOZOR is an expense tracking tool. We collect only what is necessary to provide
-                the service. We do not sell your data. We do not collect your bank login
-                credentials. We do not move or hold your money.
+                EXPOZOR is currently a waitlist-stage expense tracking product. The public site
+                collects waitlist signup information so we can manage early access and communicate
+                with people who ask to hear from us. We do not sell personal data, collect bank
+                credentials, process payments, or store uploaded receipts or screenshots today.
               </p>
             </section>
 
-            <section aria-labelledby="privacy-what-we-collect">
+            <section aria-labelledby="privacy-current-collection">
               <h2
-                id="privacy-what-we-collect"
+                id="privacy-current-collection"
                 className="text-xl font-semibold text-[var(--text-primary)] mb-3"
               >
-                What we collect
+                What we collect today
               </h2>
               <ul className="list-disc list-inside space-y-2">
                 <li>
-                  <strong>Account information:</strong> email address, display name (optional),
-                  locale, and currency preference.
+                  <strong>Email address:</strong> the address you submit when joining the waitlist.
                 </li>
                 <li>
-                  <strong>Expense data:</strong> transaction amounts, dates, merchant names,
-                  categories, notes, and tags that you enter manually or import.
+                  <strong>Signup source:</strong> a short label, such as landing page, that helps us
+                  understand where the signup came from.
                 </li>
                 <li>
-                  <strong>Uploaded files:</strong> receipt images, screenshots, or CSV files that
-                  you choose to upload. These are used to extract expense details and stored
-                  associated with your account.
+                  <strong>Referrer:</strong> the referring page URL when your browser provides it.
                 </li>
                 <li>
-                  <strong>Usage data:</strong> anonymized product analytics to improve the service.
-                  {/* TODO: confirm analytics provider and update this section before launch */}
+                  <strong>Locale:</strong> the default locale stored with the waitlist record.
+                </li>
+                <li>
+                  <strong>Created time:</strong> the timestamp for when the waitlist record was
+                  created.
                 </li>
               </ul>
             </section>
 
-            <section aria-labelledby="privacy-what-we-dont">
+            <section aria-labelledby="privacy-not-collected">
               <h2
-                id="privacy-what-we-dont"
+                id="privacy-not-collected"
                 className="text-xl font-semibold text-[var(--text-primary)] mb-3"
               >
-                What we do not collect
+                What we do not collect today
               </h2>
               <ul className="list-disc list-inside space-y-2">
-                <li>Bank login credentials of any kind.</li>
-                <li>Payment card PINs or full card numbers.</li>
-                <li>Information about your bank or financial institution accounts.</li>
-                <li>Your government-issued identification documents.</li>
+                <li>Bank login credentials, account numbers, or account balances.</li>
+                <li>Payment card numbers, card security codes, or billing details.</li>
+                <li>Receipt images, screenshots, CSV files, or expense records.</li>
+                <li>Government identification documents.</li>
+                <li>Advertising or third-party analytics identifiers.</li>
               </ul>
             </section>
 
-            <section aria-labelledby="privacy-how-we-use">
+            <section aria-labelledby="privacy-use">
               <h2
-                id="privacy-how-we-use"
+                id="privacy-use"
                 className="text-xl font-semibold text-[var(--text-primary)] mb-3"
               >
-                How we use your data
+                How we use waitlist data
               </h2>
               <ul className="list-disc list-inside space-y-2">
-                <li>To provide and operate the EXPOZOR expense tracking service.</li>
-                <li>To improve AI/OCR categorization accuracy.</li>
-                <li>To send transactional emails (e.g., account confirmations, if any).</li>
-                <li>To respond to support requests.</li>
+                <li>To confirm that you joined the waitlist.</li>
+                <li>To send early-access updates or product launch communications.</li>
+                <li>To avoid duplicate waitlist records for the same email address.</li>
+                <li>To understand signup sources at a basic operational level.</li>
+                <li>To respond if you contact us about your signup.</li>
               </ul>
             </section>
 
-            <section aria-labelledby="privacy-sharing">
+            <section aria-labelledby="privacy-services">
               <h2
-                id="privacy-sharing"
+                id="privacy-services"
                 className="text-xl font-semibold text-[var(--text-primary)] mb-3"
               >
-                Data sharing
+                Services that help us operate
               </h2>
               <p>
-                We do not sell, rent, or share your personal data with third parties for advertising
-                or marketing purposes. We share data only with confirmed subprocessors that help us
-                operate the service (see our{" "}
+                Waitlist records are stored in our PostgreSQL database provider. If email sending is
+                enabled, we use an email service provider to send confirmation or update emails. See
+                our{" "}
                 <a href="/legal/subprocessors" className="text-[var(--accent)] hover:underline">
                   Subprocessors page
-                </a>
-                ).
+                </a>{" "}
+                for the current list.
               </p>
             </section>
 
@@ -127,38 +129,12 @@ export default function PrivacyPage() {
               >
                 Data retention
               </h2>
-              {/* TODO: have data retention periods reviewed by legal/accounting before public launch */}
-              <ul className="list-disc list-inside space-y-2">
-                <li>
-                  <strong>Account data</strong> is retained while your account is active.
-                </li>
-                <li>
-                  <strong>Expense data, uploaded receipts, screenshots, and CSV imports</strong> are
-                  retained while your account is active unless deleted earlier by you or by request.
-                </li>
-                <li>
-                  <strong>Account deletion requests</strong> are processed within 30 days where
-                  reasonably possible.
-                </li>
-                <li>
-                  <strong>Backups</strong> may persist for up to 90 days before deletion or
-                  overwrite.
-                </li>
-                <li>
-                  <strong>Support communications</strong> may be retained for up to 24 months.
-                </li>
-                <li>
-                  <strong>Security logs</strong> may be retained for up to 12 months.
-                </li>
-                <li>
-                  <strong>Billing records</strong> may be retained as required for tax, accounting,
-                  fraud prevention, and legal obligations.
-                </li>
-                <li>
-                  <strong>Waitlist emails</strong> are retained until unsubscribe or deletion
-                  request.
-                </li>
-              </ul>
+              <p>
+                We keep waitlist records until you unsubscribe, ask us to delete your record, or we
+                no longer need the record for early-access communications. We may retain limited
+                records when needed to comply with legal obligations, resolve disputes, or maintain
+                security and abuse-prevention logs.
+              </p>
             </section>
 
             <section aria-labelledby="privacy-controls">
@@ -166,16 +142,15 @@ export default function PrivacyPage() {
                 id="privacy-controls"
                 className="text-xl font-semibold text-[var(--text-primary)] mb-3"
               >
-                Privacy Controls
+                Your choices
               </h2>
-              {/* TODO: replace with self-serve export/deletion wording once implemented */}
               <p>
-                Users can request a copy of their data or request account deletion by contacting{" "}
+                You can ask us to remove your waitlist record or answer privacy questions by
+                contacting{" "}
                 <a
                   href="mailto:privacy@expozor.com"
                   className="text-[var(--accent)] hover:underline"
                 >
-                  {/* TODO: confirm privacy@expozor.com is a live and monitored mailbox before launch */}
                   privacy@expozor.com
                 </a>
                 . We aim to respond within 30 days.
@@ -190,12 +165,10 @@ export default function PrivacyPage() {
                 Security
               </h2>
               <p>
-                We use HTTPS for all data in transit. Additional infrastructure and storage security
-                details will be documented before public launch. See our{" "}
-                <a href="/security" className="text-[var(--accent)] hover:underline">
-                  Security page
-                </a>{" "}
-                for more information.
+                The site is configured to use HTTPS, HSTS, a Content Security Policy,
+                X-Frame-Options, X-Content-Type-Options, Referrer-Policy, and a restrictive
+                Permissions-Policy. We do not claim any external security certification at this
+                stage.
               </p>
             </section>
 
@@ -207,11 +180,12 @@ export default function PrivacyPage() {
                 Cookies
               </h2>
               <p>
-                We use essential session cookies to keep you signed in. See our{" "}
+                EXPOZOR does not currently use account session cookies, advertising cookies, or
+                third-party analytics cookies on the waitlist site. See our{" "}
                 <a href="/legal/cookies" className="text-[var(--accent)] hover:underline">
                   Cookie Policy
                 </a>{" "}
-                for details.
+                for more detail.
               </p>
             </section>
 

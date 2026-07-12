@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Download",
-  description: "EXPOZOR is available as a web app now. iOS and Android apps are in development.",
+  description: "EXPOZOR is waitlist-only today. iOS and Android apps are planned.",
   alternates: { canonical: "https://expozor.com/download" },
 };
 
@@ -26,9 +26,9 @@ export default function DownloadPage() {
             <p className="text-xs uppercase tracking-widest font-semibold text-[var(--accent)] mb-3">
               Download
             </p>
-            <h1 className="text-5xl font-bold tracking-tight mb-4">EXPOZOR, everywhere.</h1>
+            <h1 className="text-5xl font-bold tracking-tight mb-4">EXPOZOR on every screen.</h1>
             <p className="text-xl text-[var(--text-secondary)]">
-              Web, iOS, Android — your expenses follow you.
+              Join the waitlist for web early access and mobile app updates.
             </p>
           </div>
 
@@ -37,16 +37,17 @@ export default function DownloadPage() {
               {
                 icon: Globe,
                 title: "Web app",
-                description: "Full-featured browser experience. No download required.",
-                cta: "Open web app",
+                description:
+                  "Early-access web experience planned first. No app-store download required.",
+                cta: "Join the waitlist",
                 href: "#waitlist",
                 accent: "#7CF5C2",
-                badge: "Available now",
+                badge: "Waitlist",
               },
               {
                 icon: Smartphone,
                 title: "iOS",
-                description: "Native iPhone app with on-device receipt scanning.",
+                description: "Native iPhone app planned, including receipt capture workflows.",
                 cta: "Notify me when available",
                 href: "#waitlist",
                 accent: "#60a5fa",
@@ -55,8 +56,9 @@ export default function DownloadPage() {
               {
                 icon: Smartphone,
                 title: "Android",
-                description: "Native Android app with full camera and ML Kit OCR support.",
-                cta: "Join Play beta",
+                description:
+                  "Native Android app planned, including camera-assisted expense capture.",
+                cta: "Notify me when available",
                 href: "#waitlist",
                 accent: "#a78bfa",
                 badge: "Coming soon",

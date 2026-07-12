@@ -1,15 +1,14 @@
 /**
  * /content/landing.ts
- * Single source of truth for all copy on the landing page.
- * Edit here; components pull from this file.
+ * Single source of truth for landing-page copy.
  */
 
 export const HERO = {
-  badge: "✦ Expense Tracking, Simplified",
+  badge: "Expense Tracking, Simplified",
   headline: "Know where your money is really going.",
-  displayWord: "really", // gradient applied to this word in the headline
+  displayWord: "really",
   subhead:
-    "Track expenses, spot hidden fees, and understand your spending — no bank connection required.",
+    "Track expenses, spot hidden fees, and understand your spending - no bank connection required.",
   cta: "Join early access",
   ctaAriaLabel: "Join EXPOZOR early access",
   secondaryCta: "See how it works",
@@ -28,7 +27,6 @@ export const NAVBAR = {
     { label: "Changelog", href: "/changelog" },
   ],
   cta: { label: "Get early access", href: "#waitlist" },
-  signIn: { label: "Sign in", href: "/sign-in" },
 } as const;
 
 export const PRESS = {
@@ -40,22 +38,21 @@ export const DEMO = {
   badge: "Interactive demo",
   title: "See it in action",
   description:
-    "Add an expense, watch EXPOZOR organize it, and see your spending summary update. No account needed.",
-  // Safer: do not promise "nothing is saved or transmitted" because analytics,
-  // logging, or server actions may run. Be honest instead.
+    "Add a sample expense, watch EXPOZOR organize it, and see a spending summary update. No account needed.",
   disclaimer: "Sample data only. Do not enter real financial information in the demo.",
 } as const;
 
 export const FEATURES = {
   title: "Everything you need to track spending",
-  subtitle: "Built for the way you actually spend — manual entry, receipts, screenshots, or CSV.",
+  subtitle:
+    "Built for the way you actually spend - manual entry today, with receipt upload and CSV import planned for early access.",
   cards: [
     {
       id: "manual",
       title: "Add expenses instantly",
       subtitle: "Manual entry, your way",
       description:
-        "Enter any expense in seconds — date, merchant, amount, category, payment method, notes, and tags. No bank required.",
+        "Enter any expense in seconds: date, merchant, amount, category, payment method, notes, and tags. No bank required.",
       accent: "#3DDC97",
       size: "large" as const,
       icon: "PlusCircle",
@@ -63,43 +60,43 @@ export const FEATURES = {
     },
     {
       id: "upload",
-      title: "Upload receipts & screenshots",
-      subtitle: "Drop in any image or PDF",
+      title: "Receipt upload planned",
+      subtitle: "Roadmap for early access",
       description:
-        "Upload a receipt, transaction screenshot, or PDF. EXPOZOR extracts details with AI/OCR — you review and confirm before anything is saved.",
+        "Receipt and screenshot upload is planned. When available, you will review extracted details before anything is saved.",
       accent: "#A78BFA",
       size: "large" as const,
       icon: "Upload",
-      stat: "Receipt, screenshot, PDF",
+      stat: "Upload planned",
     },
     {
       id: "ai",
-      title: "AI-assisted categorization",
+      title: "AI-assisted categorization planned",
       subtitle: "Assistive, not automatic",
       description:
-        "AI suggests categories and flags recurring charges or possible fees. You review every suggestion before it is applied.",
+        "AI-assisted suggestions are planned. Your rules and manual review stay in control before any suggestion is applied.",
       accent: "#60A5FA",
       size: "small" as const,
       icon: "Sparkles",
-      stat: "User-reviewed always",
+      stat: "Planned assistant",
     },
     {
       id: "csv",
-      title: "CSV import",
+      title: "CSV import planned",
       subtitle: "Bring your own data",
       description:
-        "Import from any CSV export — map columns, preview rows, confirm. Full control over what gets imported.",
+        "CSV import is planned for early access so you can map columns, preview rows, and control what gets imported.",
       accent: "#34D399",
       size: "small" as const,
       icon: "FileSpreadsheet",
-      stat: "Any CSV format",
+      stat: "CSV planned",
     },
     {
       id: "recurring",
       title: "Recurring expense detection",
       subtitle: "Spot what repeats",
       description:
-        "EXPOZOR highlights charges that appear monthly — subscriptions, memberships, and services you may have forgotten.",
+        "EXPOZOR will help highlight charges that appear monthly, including subscriptions, memberships, and services you may have forgotten.",
       accent: "#FB923C",
       size: "small" as const,
       icon: "RefreshCw",
@@ -110,12 +107,11 @@ export const FEATURES = {
       title: "Monthly spending summaries",
       subtitle: "One clear picture",
       description:
-        "See total spent, top categories, top merchants, and possible hidden fees. Export support is planned before public launch.",
+        "See total spent, top categories, top merchants, and possible hidden fees. Self-serve export is planned for a later release.",
       accent: "#F472B6",
       size: "small" as const,
       icon: "BarChart2",
-      // TODO: upgrade stat to "Export anytime" once CSV export is confirmed working
-      stat: "Export support",
+      stat: "Export planned",
     },
   ],
 } as const;
@@ -127,21 +123,21 @@ export const HOW_IT_WORKS = {
       number: "01",
       title: "Add your expenses",
       description:
-        "Enter expenses manually, upload receipts or transaction screenshots, or import a CSV file. No bank login needed.",
+        "Enter expenses manually today. Receipt upload and CSV import are planned for early access. No bank login needed.",
       icon: "PlusCircle",
     },
     {
       number: "02",
       title: "Review and organize",
       description:
-        "EXPOZOR suggests categories and flags recurring charges and possible fees. You review and edit everything before it is saved.",
+        "Review and organize entries yourself. AI-assisted category suggestions are planned and will remain user-reviewed.",
       icon: "CheckSquare",
     },
     {
       number: "03",
       title: "Understand your spending",
       description:
-        "See spending by category, merchant, and month. Spot small charges that add up. Export a clean summary any time.",
+        "See spending by category, merchant, and month. Spot small charges that add up. Self-serve export is planned.",
       icon: "TrendingUp",
     },
   ],
@@ -150,25 +146,20 @@ export const HOW_IT_WORKS = {
 export const SECURITY = {
   title: "No bank connection required.",
   subtitle:
-    "EXPOZOR does not ask for your bank login, does not move money, and does not collect bank credentials. You decide what you enter, upload, import, edit, export, or delete.",
+    "EXPOZOR does not ask for your bank login, does not move money, and does not collect bank credentials. You decide what you enter, edit, or delete.",
   badges: [
     { label: "No bank login required", icon: "ShieldOff" },
-    { label: "No money movement", icon: "Ban" },
+    { label: "Tracks expenses only", icon: "Ban" },
     { label: "Encrypted in transit (HTTPS)", icon: "Lock" },
     { label: "User-reviewed data", icon: "Eye" },
-    // TODO: upgrade to "Data export available" once export is confirmed working
-    { label: "Export support", icon: "Download" },
-    // TODO: confirm support email/process before launch
-    { label: "Deletion requests supported", icon: "Trash2" },
+    { label: "Export planned", icon: "Download" },
+    { label: "Deletion requests by email", icon: "Trash2" },
   ],
 } as const;
 
-/* TESTIMONIALS removed — no fabricated reviews.
-   Will be added when real user feedback is collected. */
-
 export const PRICING = {
   title: "Simple, honest pricing",
-  subtitle: "Join early access. Upgrade when billing goes live.",
+  subtitle: "Join early access. Billing is not active yet.",
   annualDiscount: 20,
   tiers: [
     {
@@ -182,8 +173,8 @@ export const PRICING = {
       highlight: false,
       features: [
         "Manual expense entry",
-        "Receipt upload",
-        "90-day expense history",
+        "Receipt upload planned",
+        "90-day expense history planned",
         "Basic categories",
         "Monthly summary",
       ],
@@ -198,38 +189,37 @@ export const PRICING = {
       ctaVariant: "ghost" as const,
       highlight: false,
       features: [
-        "Unlimited expense history",
-        "Receipt scanning (AI/OCR)",
-        "CSV import",
-        "AI-assisted categorization",
-        "Recurring expense detection",
+        "Unlimited expense history planned",
+        "Receipt scanning planned",
+        "CSV import planned",
+        "AI-assisted categorization planned",
+        "Recurring expense detection planned",
         "Monthly spending summaries",
       ],
     },
     {
       id: "pro",
       name: "Pro",
-      tagline: "For power users & freelancers",
+      tagline: "For power users and freelancers",
       priceMonthly: 14,
       priceAnnual: 11.2,
       cta: "Join early access",
       ctaVariant: "primary" as const,
       highlight: true,
-      badge: "Most popular",
+      badge: "Planned",
       features: [
         "Everything in Plus",
-        "AI spending insights",
-        // TODO: confirm tax export is implemented before launch
-        "Export support",
-        "API access",
-        "Priority support",
+        "AI spending insights planned",
+        "Export planned",
+        "Developer integrations planned",
+        "Priority support planned",
         "Early access to new features",
       ],
     },
     {
       id: "family",
       name: "Family",
-      tagline: "Shared finances, made easy",
+      tagline: "Shared finances, manual-only",
       priceMonthly: 24,
       priceAnnual: 19.2,
       cta: "Join early access",
@@ -237,24 +227,24 @@ export const PRICING = {
       highlight: false,
       features: [
         "Everything in Pro",
-        "Up to 6 members",
-        "Shared + private expense views",
-        "Family spending dashboard",
-        "Per-member privacy controls",
+        "Up to 6 members planned",
+        "Shared expense notes",
+        "Family spending dashboard planned",
+        "Per-member privacy controls planned",
       ],
     },
   ],
   comparisonFeatures: [
-    { label: "Manual expense entry", free: "✓", plus: "✓", pro: "✓", family: "✓" },
-    { label: "Receipt upload", free: "✓", plus: "✓", pro: "✓", family: "✓" },
-    { label: "CSV import", free: "—", plus: "✓", pro: "✓", family: "✓" },
-    { label: "AI categorization", free: "—", plus: "✓", pro: "✓", family: "✓" },
-    { label: "Monthly summaries", free: "✓", plus: "✓", pro: "✓", family: "✓" },
-    { label: "AI spending insights", free: "—", plus: "—", pro: "✓", family: "✓" },
-    { label: "Export support", free: "—", plus: "—", pro: "✓", family: "✓" },
-    { label: "API access", free: "—", plus: "—", pro: "✓", family: "✓" },
-    { label: "Shared expense views", free: "—", plus: "—", pro: "—", family: "✓" },
-    { label: "Family dashboard", free: "—", plus: "—", pro: "—", family: "✓" },
+    { label: "Manual expense entry", free: "Yes", plus: "Yes", pro: "Yes", family: "Yes" },
+    { label: "Receipt upload planned", free: "No", plus: "Yes", pro: "Yes", family: "Yes" },
+    { label: "CSV import planned", free: "No", plus: "Yes", pro: "Yes", family: "Yes" },
+    { label: "AI categorization planned", free: "No", plus: "Yes", pro: "Yes", family: "Yes" },
+    { label: "Monthly summaries", free: "Yes", plus: "Yes", pro: "Yes", family: "Yes" },
+    { label: "AI spending insights planned", free: "No", plus: "No", pro: "Yes", family: "Yes" },
+    { label: "Export planned", free: "No", plus: "No", pro: "Yes", family: "Yes" },
+    { label: "Developer integrations planned", free: "No", plus: "No", pro: "Yes", family: "Yes" },
+    { label: "Shared expense notes", free: "No", plus: "No", pro: "No", family: "Yes" },
+    { label: "Family dashboard planned", free: "No", plus: "No", pro: "No", family: "Yes" },
   ],
 } as const;
 
@@ -265,7 +255,7 @@ export const FAQ = {
       id: "faq-no-bank",
       question: "Do I need to connect my bank?",
       answer:
-        "No. EXPOZOR is designed to work without bank connections. You can add expenses manually, upload receipts or screenshots, or import CSV files.",
+        "No. EXPOZOR is designed to work without bank connections. The current site is waitlist-only; manual entry is the core planned workflow, with receipt upload and CSV import planned for early access.",
     },
     {
       id: "faq-credentials",
@@ -276,7 +266,7 @@ export const FAQ = {
       id: "faq-money",
       question: "Does EXPOZOR move, hold, or transfer money?",
       answer:
-        "No. EXPOZOR is only for tracking and understanding expenses. It does not move, hold, transmit, or manage funds.",
+        "No. EXPOZOR is only for tracking and understanding expenses. It does not move, custody, transmit, or manage funds.",
     },
     {
       id: "faq-advice",
@@ -288,45 +278,40 @@ export const FAQ = {
       id: "faq-ai",
       question: "Can AI or OCR make mistakes?",
       answer:
-        "Yes. AI/OCR features are assistive and may be inaccurate. Users should always review and edit extracted or categorized data before relying on it.",
+        "Yes. AI/OCR features are planned as assistive tools and may be inaccurate. Users should always review and edit extracted or categorized data before relying on it.",
     },
     {
       id: "faq-export",
       question: "Can I export or delete my data?",
-      // TODO: update this answer once export implementation is confirmed and support email is live
-      // If export IS implemented: "Yes. You can export your expense data from your account settings."
-      // If export is NOT yet implemented, use the safer version below:
       answer:
-        "Export support is planned before public launch. To request a copy of your data, contact us at the email listed on the Contact page.",
+        "Self-serve export is planned for a later release. To request a copy or deletion of waitlist data, contact us at the email listed on the Contact page.",
     },
     {
       id: "faq-upload",
       question: "What can I upload?",
       answer:
-        "Receipts, transaction screenshots, and CSV files. You can also enter expenses manually at any time.",
+        "Uploads are not live yet. Receipt images, transaction screenshots, and CSV import are planned for early access; manual entry remains the core workflow.",
     },
     {
       id: "faq-cancel",
       question: "What happens if I cancel?",
-      // TODO: update when billing is live to confirm free-tier retention and export availability
       answer:
-        "Billing is not live yet. Paid-plan cancellation terms will be finalized before launch. If you join early access, you can contact support to request account or data changes.",
+        "Billing is not live yet and no payments are collected from the waitlist. If you join early access, you can contact support to request waitlist data changes or deletion.",
     },
   ],
 } as const;
 
 export const FINAL_CTA = {
   headline: "Stop guessing where your money went.",
-  subhead: "Join early access and start tracking your spending today.",
+  subhead: "Join early access and follow EXPOZOR as it moves toward launch.",
   cta: "Join early access",
   ctaAriaLabel: "Join EXPOZOR early access",
   bullets: [
     "No bank connection required",
-    "Upload receipts or import CSV",
+    "Receipt upload and CSV import planned",
     "Understand your spending clearly",
   ],
-  // TODO: update microcopy when billing goes live
-  microcopy: "No bank login required · No credit card needed for early access",
+  microcopy: "No bank login required - no credit card needed for early access",
 } as const;
 
 export const FOOTER = {
@@ -368,8 +353,6 @@ export const FOOTER = {
     { label: "Twitter / X", href: "https://twitter.com/expozor", icon: "Twitter" },
     { label: "GitHub", href: "https://github.com/expozor", icon: "Github" },
   ],
-  // Do NOT write "EXPOZOR, Inc." or "EXPOZOR LLC" — legal entity not yet formed
-  // TODO: update legal entity name after LLC formation and EIN issuance.
-  legal: "© 2026 EXPOZOR. All rights reserved.",
+  legal: "Copyright 2026 EXPOZOR. All rights reserved.",
   madeWith: "",
 } as const;

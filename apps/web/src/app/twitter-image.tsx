@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "EXPOZOR — Know Where Your Money Is Really Going";
+export const alt = "EXPOZOR - Know Where Your Money Is Really Going";
 // Twitter prefers 2:1; 1200×600 works for summary_large_image
 export const size = { width: 1200, height: 600 };
 export const contentType = "image/png";
@@ -92,7 +92,7 @@ export default function TwitterImage() {
           marginBottom: 0,
         }}
       >
-        Manual entry · Receipt upload · CSV import · AI-assisted
+        Manual entry first - upload, import, and AI assistance planned
       </div>
 
       {/* Wordmark */}

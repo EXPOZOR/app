@@ -1,8 +1,9 @@
 "use client";
 
+import { joinWaitlist } from "@/app/actions/waitlist";
 import { EASE_OUT } from "@/lib/motion";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Bell, CheckCircle2, Loader2 } from "lucide-react";
+import { AlertCircle, Bell, CheckCircle2, Loader2 } from "lucide-react";
 import { useRef, useState, useTransition } from "react";
 
 /* ──────────────────────────────────────────────────────────────
@@ -429,27 +430,37 @@ function PhoneMockup() {
 }
 
 /* ──────────────────────────────────────────────────────────────
-   NOTIFY FORM — lightweight "get notified" email collector
-   No server action needed yet — shows success immediately.
+   NOTIFY FORM — saves mobile-interest signups through the waitlist action.
 ────────────────────────────────────────────────────────────── */
 function NotifyForm() {
-  const [notified, setNotified] = useState(false);
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [message, setMessage] = useState("");
+  const [consent, setConsent] = useState(false);
   const [isPending, startTransition] = useTransition();
   const inputRef = useRef<HTMLInputElement>(null);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    fd.set("source", "mobile-app");
+    fd.set("locale", "en");
+
     startTransition(async () => {
-      // TODO: wire to /api/notify-mobile once endpoint exists
-      await new Promise((r) => setTimeout(r, 600));
-      setNotified(true);
-      if (inputRef.current) inputRef.current.value = "";
+      const result = await joinWaitlist(fd);
+      if (result.success) {
+        setStatus("success");
+        setMessage(result.message);
+        if (inputRef.current) inputRef.current.value = "";
+      } else {
+        setStatus("error");
+        setMessage(result.error);
+      }
     });
   }
 
   return (
     <AnimatePresence mode="wait">
-      {notified ? (
+      {status === "success" ? (
         <motion.div
           key="success"
           initial={{ opacity: 0, y: 6 }}
@@ -487,6 +498,7 @@ function NotifyForm() {
             flexWrap: "wrap",
           }}
         >
+          <input type="text" name="website" tabIndex={-1} autoComplete="off" className="sr-only" />
           <label htmlFor="notify-email" className="sr-only">
             Your email address
           </label>
@@ -498,7 +510,7 @@ function NotifyForm() {
             required
             placeholder="you@example.com"
             autoComplete="email"
-            disabled={isPending}
+            disabled={isPending || !consent}
             aria-describedby="notify-hint"
             style={{
               height: "44px",
@@ -536,8 +548,8 @@ function NotifyForm() {
               color: "var(--text-primary)",
               fontSize: "0.875rem",
               fontWeight: 600,
-              cursor: isPending ? "not-allowed" : "pointer",
-              opacity: isPending ? 0.7 : 1,
+              cursor: isPending || !consent ? "not-allowed" : "pointer",
+              opacity: isPending || !consent ? 0.7 : 1,
               display: "inline-flex",
               alignItems: "center",
               gap: "6px",
@@ -559,6 +571,45 @@ function NotifyForm() {
               </>
             )}
           </motion.button>
+          <label
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: "8px",
+              flexBasis: "100%",
+              fontSize: "0.75rem",
+              color: "var(--text-secondary)",
+              lineHeight: 1.5,
+            }}
+          >
+            <input
+              type="checkbox"
+              name="productUpdatesConsent"
+              checked={consent}
+              onChange={(e) => setConsent(e.target.checked)}
+              required
+              disabled={isPending}
+              style={{ marginTop: "3px" }}
+            />
+            <span>I'd like to receive product updates.</span>
+          </label>
+          {status === "error" && (
+            <p
+              role="alert"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "5px",
+                flexBasis: "100%",
+                fontSize: "0.75rem",
+                color: "var(--warn)",
+                margin: 0,
+              }}
+            >
+              <AlertCircle size={13} aria-hidden="true" />
+              {message}
+            </p>
+          )}
         </motion.form>
       )}
     </AnimatePresence>
@@ -672,8 +723,8 @@ export function MobileAppCtaSection() {
                 maxWidth: "38ch",
               }}
             >
-              Every feature from the web — receipt scanning, AI agent, live sync, envelope budgets —
-              all in a native app. Built with React Native. No mobile web fallback.
+              Mobile apps are planned for early access, with manual expense entry and receipt
+              capture workflows designed for phones.
             </motion.p>
 
             {/* Feature pills */}
@@ -685,11 +736,11 @@ export function MobileAppCtaSection() {
               style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}
             >
               {[
-                "2-second OCR scanning",
-                "Push budget alerts",
-                "Face ID / biometrics",
-                "Offline mode",
-                "Widget support",
+                "Receipt capture planned",
+                "Budget alerts planned",
+                "Biometrics planned",
+                "Offline mode planned",
+                "Widgets planned",
               ].map((feat) => (
                 <span
                   key={feat}

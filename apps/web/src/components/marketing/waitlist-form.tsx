@@ -22,6 +22,7 @@ export function WaitlistForm({
     message?: string;
     error?: string;
   } | null>(null);
+  const [consent, setConsent] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   const isLarge = size === "large";
@@ -31,6 +32,8 @@ export function WaitlistForm({
     const fd = new FormData();
     fd.set("email", email);
     fd.set("locale", locale);
+    fd.set("productUpdatesConsent", consent ? "true" : "");
+    fd.set("website", "");
 
     startTransition(async () => {
       const res = await joinWaitlist(fd);
@@ -58,73 +61,89 @@ export function WaitlistForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className={`flex flex-col sm:flex-row gap-2 ${className}`}
+      className={`flex flex-col gap-3 ${className}`}
       aria-label="Join the waitlist"
       noValidate
     >
-      <div className="relative flex-1">
-        <input
-          id="waitlist-email"
-          type="email"
-          name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="your@email.com"
-          required
-          autoComplete="email"
-          disabled={isPending}
-          aria-describedby={result?.error ? "waitlist-error" : undefined}
+      <input type="text" name="website" tabIndex={-1} autoComplete="off" className="sr-only" />
+      <div className="flex flex-col sm:flex-row gap-2">
+        <div className="relative flex-1">
+          <input
+            id="waitlist-email"
+            type="email"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="your@email.com"
+            required
+            autoComplete="email"
+            disabled={isPending}
+            aria-describedby={result?.error ? "waitlist-error" : undefined}
+            className={`
+              w-full rounded-[var(--radius)] bg-[var(--bg-elevated)]
+              border border-[var(--border)] text-[var(--text-primary)]
+              placeholder-[var(--text-tertiary)]
+              focus:outline-none focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent-subtle)]
+              transition-all duration-150
+              disabled:opacity-60
+              ${isLarge ? "px-5 py-4 text-base" : "px-4 py-3 text-sm"}
+              ${result?.error ? "border-[var(--danger)]" : ""}
+            `}
+          />
+          <AnimatePresence>
+            {result?.error && (
+              <motion.p
+                id="waitlist-error"
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="absolute -bottom-6 left-0 text-xs text-[var(--danger)]"
+                role="alert"
+              >
+                {result.error}
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </div>
+
+        <button
+          type="submit"
+          disabled={isPending || !email || !consent}
           className={`
-            w-full rounded-[var(--radius)] bg-[var(--bg-elevated)]
-            border border-[var(--border)] text-[var(--text-primary)]
-            placeholder-[var(--text-tertiary)]
-            focus:outline-none focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent-subtle)]
-            transition-all duration-150
-            disabled:opacity-60
-            ${isLarge ? "px-5 py-4 text-base" : "px-4 py-3 text-sm"}
-            ${result?.error ? "border-[var(--danger)]" : ""}
+            shrink-0 inline-flex items-center justify-center gap-2
+            bg-[var(--accent)] text-[var(--text-inverse)] font-semibold
+            rounded-[var(--radius)] transition-all duration-150
+            hover:bg-[var(--accent-dim)] active:scale-[0.98]
+            disabled:opacity-60 disabled:cursor-not-allowed
+            focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2
+            focus-visible:ring-offset-[var(--bg)]
+            ${isLarge ? "px-6 py-4 text-base" : "px-5 py-3 text-sm"}
           `}
-        />
-        <AnimatePresence>
-          {result?.error && (
-            <motion.p
-              id="waitlist-error"
-              initial={{ opacity: 0, y: -4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              className="absolute -bottom-6 left-0 text-xs text-[var(--danger)]"
-              role="alert"
-            >
-              {result.error}
-            </motion.p>
+          aria-label={isPending ? "Joining waitlist..." : "Join the waitlist"}
+        >
+          {isPending ? (
+            <Loader2 size={16} className="animate-spin" aria-hidden="true" />
+          ) : (
+            <>
+              Join waitlist
+              <ArrowRight size={16} aria-hidden="true" />
+            </>
           )}
-        </AnimatePresence>
+        </button>
       </div>
 
-      <button
-        type="submit"
-        disabled={isPending || !email}
-        className={`
-          shrink-0 inline-flex items-center justify-center gap-2
-          bg-[var(--accent)] text-[var(--text-inverse)] font-semibold
-          rounded-[var(--radius)] transition-all duration-150
-          hover:bg-[var(--accent-dim)] active:scale-[0.98]
-          disabled:opacity-60 disabled:cursor-not-allowed
-          focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2
-          focus-visible:ring-offset-[var(--bg)]
-          ${isLarge ? "px-6 py-4 text-base" : "px-5 py-3 text-sm"}
-        `}
-        aria-label={isPending ? "Joining waitlist..." : "Join the waitlist"}
-      >
-        {isPending ? (
-          <Loader2 size={16} className="animate-spin" aria-hidden="true" />
-        ) : (
-          <>
-            Join waitlist
-            <ArrowRight size={16} aria-hidden="true" />
-          </>
-        )}
-      </button>
+      <label className="flex items-start gap-2 text-xs text-[var(--text-secondary)]">
+        <input
+          type="checkbox"
+          name="productUpdatesConsent"
+          checked={consent}
+          onChange={(e) => setConsent(e.target.checked)}
+          required
+          disabled={isPending}
+          className="mt-0.5"
+        />
+        <span>I'd like to receive product updates.</span>
+      </label>
     </form>
   );
 }

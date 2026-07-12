@@ -63,7 +63,7 @@ const TRANSACTIONS = [
 ────────────────────────────────────────────────────────────── */
 function UICycle({ scale = 1 }: { scale?: number }) {
   // Two-phase cycle only: 0 = raw list, 1 = AI-categorized
-  // Phase 2 (settle-up / split) removed — implies money movement
+  // Payment-style phase intentionally omitted.
   const [phase, setPhase] = useState<0 | 1>(0);
   const shouldReduce = useReducedMotion();
 
@@ -262,7 +262,7 @@ function UICycle({ scale = 1 }: { scale?: number }) {
                 )}
               </AnimatePresence>
 
-              {/* Split pill removed — implied money movement */}
+              {/* Shared-action pill intentionally omitted. */}
             </div>
           </div>
         ))}
@@ -307,7 +307,7 @@ function UICycle({ scale = 1 }: { scale?: number }) {
             </span>
           </motion.div>
         )}
-        {/* Phase 2 (settle-up) removed — implied money movement */}
+        {/* Payment-style preview intentionally omitted. */}
       </AnimatePresence>
     </div>
   );
@@ -618,6 +618,7 @@ function HeroBadge() {
 function WaitlistForm() {
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
+  const [consent, setConsent] = useState(false);
   const [isPending, startTransition] = useTransition();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -641,6 +642,7 @@ function WaitlistForm() {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     fd.set("source", "hero");
+    fd.set("locale", "en");
     startTransition(async () => {
       const res = await joinWaitlist(fd);
       if (res.success) {
@@ -712,6 +714,7 @@ function WaitlistForm() {
             flexWrap: "wrap",
           }}
         >
+          <input type="text" name="website" tabIndex={-1} autoComplete="off" className="sr-only" />
           {/* Email input */}
           <div style={{ flex: "1 1 220px", position: "relative" }}>
             <label htmlFor="hero-email" className="sr-only">
@@ -758,7 +761,7 @@ function WaitlistForm() {
               using a gradient div whose opacity springs in/out. */}
           <motion.button
             type="submit"
-            disabled={isPending}
+            disabled={isPending || !consent}
             onMouseMove={onMouseMove}
             onMouseLeave={onMouseLeave}
             style={{
@@ -862,6 +865,28 @@ function WaitlistForm() {
             </motion.p>
           )}
         </AnimatePresence>
+
+        <label
+          style={{
+            display: "flex",
+            alignItems: "flex-start",
+            gap: "8px",
+            fontSize: "0.8125rem",
+            color: "var(--text-secondary)",
+            lineHeight: 1.5,
+          }}
+        >
+          <input
+            type="checkbox"
+            name="productUpdatesConsent"
+            checked={consent}
+            onChange={(e) => setConsent(e.target.checked)}
+            required
+            disabled={isPending}
+            style={{ marginTop: "3px" }}
+          />
+          <span>I'd like to receive product updates.</span>
+        </label>
 
         {/* Microcopy */}
         <p

@@ -2,140 +2,18 @@
 
 import { PRICING } from "@/content/landing";
 import { EASE_OUT } from "@/lib/motion";
-import { AnimatePresence, motion } from "framer-motion";
-import { Check, Lock, Minus, Sparkles } from "lucide-react";
-import { useState } from "react";
+import { motion } from "framer-motion";
+import { Check, Sparkles } from "lucide-react";
 
-/* ──────────────────────────────────────────────────────────────
-   HELPERS
-────────────────────────────────────────────────────────────── */
-function formatPrice(price: number): string {
-  if (price === 0) return "Free";
-  const r = Math.round(price * 100) / 100;
-  return `$${r % 1 === 0 ? r.toFixed(0) : r.toFixed(2)}`;
-}
-
-/* ──────────────────────────────────────────────────────────────
-   BILLING TOGGLE
-   Uses role="radiogroup" / role="radio" / aria-checked per spec.
-────────────────────────────────────────────────────────────── */
-function BillingToggle({
-  annual,
-  onChange,
-}: {
-  annual: boolean;
-  onChange: (v: boolean) => void;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.96 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ delay: 0.2, duration: 0.4 }}
-      role="radiogroup"
-      aria-label="Billing frequency"
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: "3px",
-        padding: "4px",
-        borderRadius: "var(--radius-full)",
-        background: "var(--bg-elev-2)",
-        border: "1px solid var(--border)",
-        position: "relative",
-      }}
-    >
-      {(
-        [
-          { label: "Monthly", value: false },
-          { label: "Annual", value: true },
-        ] as const
-      ).map((opt) => {
-        const active = annual === opt.value;
-        return (
-          <button
-            key={opt.label}
-            aria-checked={active}
-            type="button"
-            onClick={() => onChange(opt.value)}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "6px",
-              padding: "0.4375rem 1.125rem",
-              borderRadius: "var(--radius-full)",
-              fontSize: "0.875rem",
-              fontWeight: 600,
-              border: "none",
-              cursor: "pointer",
-              /* Background handled by layoutId pill below — keep transparent here */
-              background: "transparent",
-              color: active ? "var(--text-primary)" : "var(--text-muted)",
-              transition: "color var(--dur-base) var(--ease-out)",
-              letterSpacing: "-0.01em",
-              position: "relative",
-              zIndex: 1,
-            }}
-          >
-            {/* ── Enhancement 8: sliding pill via layoutId ── */}
-            {active && (
-              <motion.span
-                layoutId="billing-pill"
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  borderRadius: "var(--radius-full)",
-                  background: "var(--bg-elev-1)",
-                  boxShadow: "var(--shadow-card)",
-                  zIndex: -1,
-                }}
-                transition={{ duration: 0.28, ease: EASE_OUT }}
-              />
-            )}
-            {opt.label}
-            {opt.value && (
-              <span
-                style={{
-                  fontSize: "0.6rem",
-                  fontWeight: 700,
-                  padding: "1px 5px",
-                  borderRadius: "var(--radius-full)",
-                  background: "var(--accent-subtle)",
-                  color: "var(--accent)",
-                  border: "1px solid var(--border-accent)",
-                  letterSpacing: "0.03em",
-                  textTransform: "uppercase",
-                }}
-              >
-                SAVE {PRICING.annualDiscount}%
-              </span>
-            )}
-          </button>
-        );
-      })}
-    </motion.div>
-  );
-}
-
-/* ──────────────────────────────────────────────────────────────
-   PRICING CARD
-   Pro card gets full mint treatment:
-   - Mint border gradient
-   - Mint "Most popular" badge (pill)
-   - Mint CTA button (primary)
-   - Mint section glow
-────────────────────────────────────────────────────────────── */
 function PricingCard({
   tier,
-  annual,
   index,
 }: {
   tier: (typeof PRICING.tiers)[number];
-  annual: boolean;
   index: number;
 }) {
-  const price = annual ? tier.priceAnnual : tier.priceMonthly;
-  const isPro = tier.highlight;
+  const isHighlighted = tier.highlight;
+  const price = tier.id === "free" ? "$0" : "Planned";
 
   return (
     <motion.article
@@ -143,27 +21,7 @@ function PricingCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ delay: index * 0.07, duration: 0.55, ease: EASE_OUT }}
-      /* ── Enhancement 8: ambient glow pulse on Pro card ──
-         Looping boxShadow breathes between dim and vivid mint.
-         Non-Pro cards: no animate loop — plain static boxShadow. */
-      animate={
-        isPro
-          ? {
-              boxShadow: [
-                "0 0 0 1px rgba(61,220,151,0.08), 0 8px 40px rgba(0,0,0,0.5)",
-                "0 0 0 1px rgba(61,220,151,0.22), 0 8px 40px rgba(0,0,0,0.5), 0 0 28px rgba(61,220,151,0.12)",
-                "0 0 0 1px rgba(61,220,151,0.08), 0 8px 40px rgba(0,0,0,0.5)",
-              ],
-              transition: {
-                delay: 0.6,
-                duration: 3.5,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: "easeInOut",
-              },
-            }
-          : {}
-      }
-      aria-label={`${tier.name} plan`}
+      aria-label={`${tier.name} planned package`}
       style={{
         position: "relative",
         display: "flex",
@@ -172,14 +30,13 @@ function PricingCard({
         borderRadius: "var(--radius-lg)",
         overflow: "hidden",
         background: "var(--bg-elev-1)",
-        border: isPro
-          ? "1.5px solid rgba(61,220,151,0.45)" /* mint border on Pro */
-          : "1px solid var(--border)",
-        boxShadow: isPro ? "0 0 0 1px rgba(61,220,151,0.08), 0 8px 40px rgba(0,0,0,0.5)" : "none",
+        border: isHighlighted ? "1.5px solid rgba(61,220,151,0.45)" : "1px solid var(--border)",
+        boxShadow: isHighlighted
+          ? "0 0 0 1px rgba(61,220,151,0.08), 0 8px 40px rgba(0,0,0,0.5)"
+          : "none",
       }}
     >
-      {/* Pro: mint radial glow behind card */}
-      {isPro && (
+      {isHighlighted && (
         <div
           aria-hidden="true"
           style={{
@@ -192,7 +49,6 @@ function PricingCard({
         />
       )}
 
-      {/* "Most popular" badge — mint (#3DDC97) per brief */}
       {"badge" in tier && tier.badge && (
         <div
           style={{
@@ -218,7 +74,6 @@ function PricingCard({
         </div>
       )}
 
-      {/* Tier name + tagline */}
       <div
         style={{
           marginBottom: "1.25rem",
@@ -230,7 +85,7 @@ function PricingCard({
             fontSize: "1rem",
             fontWeight: 600,
             letterSpacing: "-0.01em",
-            color: isPro ? "var(--accent)" : "var(--text-primary)",
+            color: isHighlighted ? "var(--accent)" : "var(--text-primary)",
             margin: "0 0 3px",
           }}
         >
@@ -243,60 +98,35 @@ function PricingCard({
         </p>
       </div>
 
-      {/* Price — AnimatePresence crossfade on toggle */}
       <div style={{ marginBottom: "1.5rem" }}>
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={`${tier.id}-${annual}`}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-            style={{ display: "flex", alignItems: "baseline", gap: "5px" }}
-          >
-            <span
-              style={{
-                fontSize: "clamp(1.875rem, 4vw, 2.25rem)",
-                fontWeight: 700,
-                letterSpacing: "-0.04em",
-                lineHeight: 1,
-                color: "var(--text-primary)",
-                fontVariantNumeric: "tabular-nums",
-              }}
-            >
-              {formatPrice(price)}
-            </span>
-            {tier.priceMonthly > 0 && (
-              <span style={{ fontSize: "0.8125rem", color: "var(--text-muted)" }}>
-                /mo{annual ? " · billed annually" : ""}
-              </span>
-            )}
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Annual savings */}
-        {annual && tier.priceMonthly > 0 && (
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            style={{
-              fontSize: "0.75rem",
-              fontWeight: 600,
-              color: "var(--positive)",
-              margin: "5px 0 0",
-            }}
-          >
-            Save ${((tier.priceMonthly - tier.priceAnnual) * 12).toFixed(2)} per year
-          </motion.p>
-        )}
+        <span
+          style={{
+            fontSize: "clamp(1.875rem, 4vw, 2.25rem)",
+            fontWeight: 700,
+            letterSpacing: "-0.04em",
+            lineHeight: 1,
+            color: "var(--text-primary)",
+          }}
+        >
+          {price}
+        </span>
+        <p
+          style={{
+            fontSize: "0.75rem",
+            fontWeight: 500,
+            color: "var(--text-muted)",
+            margin: "6px 0 0",
+          }}
+        >
+          Billing is not active today.
+        </p>
       </div>
 
-      {/* CTA */}
       <motion.a
         href="#waitlist"
-        whileHover={{ scale: 1.02, ...(isPro ? { boxShadow: "var(--shadow-glow)" } : {}) }}
+        whileHover={{ scale: 1.02, ...(isHighlighted ? { boxShadow: "var(--shadow-glow)" } : {}) }}
         whileTap={{ scale: 0.98 }}
-        aria-label={`${tier.cta} — ${tier.name} plan`}
+        aria-label={`${tier.cta} - ${tier.name} planned package`}
         style={{
           display: "flex",
           alignItems: "center",
@@ -312,19 +142,16 @@ function PricingCard({
           cursor: "pointer",
           border: "1px solid",
           transition: "all var(--dur-base) var(--ease-out)",
-          // Pro → mint primary; others → ghost
-          background: isPro ? "var(--accent)" : "transparent",
-          borderColor: isPro ? "var(--accent)" : "var(--border)",
-          color: isPro ? "var(--text-inverse)" : "var(--text-secondary)",
+          background: isHighlighted ? "var(--accent)" : "transparent",
+          borderColor: isHighlighted ? "var(--accent)" : "var(--border)",
+          color: isHighlighted ? "var(--text-inverse)" : "var(--text-secondary)",
         }}
       >
         {tier.cta}
-        {isPro && <Lock size={12} aria-hidden="true" />}
       </motion.a>
 
-      {/* Feature list */}
       <ul
-        aria-label={`${tier.name} plan features`}
+        aria-label={`${tier.name} planned features`}
         style={{
           listStyle: "none",
           padding: 0,
@@ -350,7 +177,7 @@ function PricingCard({
             <Check
               size={14}
               style={{
-                color: isPro ? "var(--accent)" : "var(--text-muted)",
+                color: isHighlighted ? "var(--accent)" : "var(--text-muted)",
                 flexShrink: 0,
                 marginTop: "2px",
               }}
@@ -364,13 +191,7 @@ function PricingCard({
   );
 }
 
-/* ──────────────────────────────────────────────────────────────
-   COMPARISON TABLE
-   Full a11y: <caption>, scope="col"/"row", aria-label on ✓/—
-────────────────────────────────────────────────────────────── */
-const TABLE_TIER_IDS = ["free", "plus", "pro", "family"] as const;
-
-function ComparisonTable({ annual }: { annual: boolean }) {
+function ComparisonTable() {
   const tiers = PRICING.tiers;
 
   return (
@@ -388,7 +209,7 @@ function ComparisonTable({ annual }: { annual: boolean }) {
     >
       <table
         style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.875rem" }}
-        aria-label="Full feature comparison across all pricing tiers"
+        aria-label="Planned feature comparison across pricing packages"
       >
         <caption
           style={{
@@ -404,10 +225,8 @@ function ComparisonTable({ annual }: { annual: boolean }) {
             borderBottom: "1px solid var(--border)",
           }}
         >
-          Feature comparison
+          Planned feature comparison
         </caption>
-
-        {/* Column header row */}
         <thead>
           <tr style={{ background: "var(--bg-elev-2)", borderBottom: "1px solid var(--border)" }}>
             <th
@@ -419,8 +238,8 @@ function ComparisonTable({ annual }: { annual: boolean }) {
                 fontSize: "0.75rem",
                 fontWeight: 600,
                 color: "var(--text-muted)",
-                letterSpacing: "0.06em",
                 textTransform: "uppercase",
+                letterSpacing: "0.06em",
               }}
             >
               Feature
@@ -430,93 +249,47 @@ function ComparisonTable({ annual }: { annual: boolean }) {
                 key={tier.id}
                 scope="col"
                 style={{
-                  padding: "0.875rem 0.75rem",
+                  padding: "0.875rem 1rem",
                   textAlign: "center",
-                  fontSize: "0.8125rem",
+                  fontSize: "0.75rem",
                   fontWeight: 700,
-                  letterSpacing: "-0.01em",
                   color: tier.highlight ? "var(--accent)" : "var(--text-primary)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.06em",
                 }}
               >
                 {tier.name}
-                <div
-                  style={{
-                    fontSize: "0.6875rem",
-                    fontWeight: 400,
-                    color: "var(--text-muted)",
-                    marginTop: "2px",
-                  }}
-                >
-                  {formatPrice(annual ? tier.priceAnnual : tier.priceMonthly)}
-                  {tier.priceMonthly > 0 && "/mo"}
-                </div>
               </th>
             ))}
           </tr>
         </thead>
-
         <tbody>
-          {PRICING.comparisonFeatures.map((row, i) => (
-            <tr
-              key={row.label}
-              style={{
-                background: i % 2 === 0 ? "var(--bg-elev-1)" : "var(--bg-elev-2)",
-                borderBottom:
-                  i < PRICING.comparisonFeatures.length - 1
-                    ? "1px solid rgba(255,255,255,0.04)"
-                    : "none",
-              }}
-            >
+          {PRICING.comparisonFeatures.map((row) => (
+            <tr key={row.label} style={{ borderBottom: "1px solid var(--border)" }}>
               <th
                 scope="row"
                 style={{
+                  padding: "0.875rem 1.25rem",
                   textAlign: "left",
-                  padding: "0.75rem 1.25rem",
-                  fontSize: "0.8125rem",
-                  fontWeight: 400,
+                  fontWeight: 500,
                   color: "var(--text-secondary)",
                 }}
               >
                 {row.label}
               </th>
-
-              {TABLE_TIER_IDS.map((tierId) => {
-                const val = row[tierId as keyof typeof row] as string;
-                const isCheck = val === "✓";
-                const isDash = val === "—";
-                const isPro = tierId === "pro";
-
-                return (
-                  <td key={tierId} style={{ padding: "0.75rem 0.75rem", textAlign: "center" }}>
-                    {isCheck ? (
-                      <Check
-                        size={15}
-                        style={{
-                          color: isPro ? "var(--accent)" : "var(--text-secondary)",
-                          display: "inline-block",
-                        }}
-                        aria-label="Included"
-                      />
-                    ) : isDash ? (
-                      <Minus
-                        size={15}
-                        style={{ color: "var(--text-muted)", display: "inline-block" }}
-                        aria-label="Not included"
-                      />
-                    ) : (
-                      <span
-                        style={{
-                          fontSize: "0.75rem",
-                          fontWeight: 500,
-                          color: isPro ? "var(--accent)" : "var(--text-secondary)",
-                        }}
-                      >
-                        {val}
-                      </span>
-                    )}
-                  </td>
-                );
-              })}
+              {[row.free, row.plus, row.pro, row.family].map((value, i) => (
+                <td
+                  key={`${row.label}-${tiers[i]?.id ?? i}`}
+                  style={{
+                    padding: "0.875rem 1rem",
+                    textAlign: "center",
+                    color: value === "Yes" ? "var(--accent)" : "var(--text-muted)",
+                    fontWeight: value === "Yes" ? 700 : 500,
+                  }}
+                >
+                  {value}
+                </td>
+              ))}
             </tr>
           ))}
         </tbody>
@@ -525,12 +298,7 @@ function ComparisonTable({ annual }: { annual: boolean }) {
   );
 }
 
-/* ──────────────────────────────────────────────────────────────
-   PRICING SECTION — main export
-────────────────────────────────────────────────────────────── */
 export function PricingSection() {
-  const [annual, setAnnual] = useState(true); // Default: annual (saves 20%)
-
   return (
     <section
       id="pricing"
@@ -538,7 +306,6 @@ export function PricingSection() {
       className="section-py cv-auto"
       style={{ position: "relative", overflow: "hidden" }}
     >
-      {/* Background mint radial glow */}
       <div
         aria-hidden="true"
         style={{
@@ -551,7 +318,6 @@ export function PricingSection() {
       />
 
       <div className="container-site" style={{ position: "relative" }}>
-        {/* ── Section header ───────────────────────────────── */}
         <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
           <motion.p
             className="eyebrow"
@@ -573,7 +339,7 @@ export function PricingSection() {
             transition={{ delay: 0.08, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             style={{ margin: "0 auto 0.875rem" }}
           >
-            {PRICING.title}
+            Billing is not active yet
           </motion.h2>
 
           <motion.p
@@ -582,47 +348,20 @@ export function PricingSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.14, duration: 0.5 }}
-            style={{ margin: "0 auto 0.5rem" }}
+            style={{ margin: "0 auto" }}
           >
-            {PRICING.subtitle}
+            {PRICING.subtitle} Paid packages below are planned and may change before launch.
           </motion.p>
-
-          {/* Founders' pricing lock-in note */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.4 }}
-            style={{
-              fontSize: "0.8125rem",
-              color: "var(--accent)",
-              fontWeight: 600,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "5px",
-              margin: "0 auto 1.75rem",
-            }}
-          >
-            <Lock size={12} aria-hidden="true" />
-            Founders' pricing locked in for life — prices will increase at launch
-          </motion.p>
-
-          {/* Billing toggle */}
-          <BillingToggle annual={annual} onChange={setAnnual} />
         </div>
 
-        {/* ── Pricing cards ────────────────────────────────── */}
         <div className="pricing-grid">
           {PRICING.tiers.map((tier, i) => (
-            <PricingCard key={tier.id} tier={tier} annual={annual} index={i} />
+            <PricingCard key={tier.id} tier={tier} index={i} />
           ))}
         </div>
 
-        {/* ── Comparison table ─────────────────────────────── */}
-        <ComparisonTable annual={annual} />
+        <ComparisonTable />
 
-        {/* ── Fine print ───────────────────────────────────── */}
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -635,12 +374,10 @@ export function PricingSection() {
             color: "var(--text-muted)",
           }}
         >
-          All prices in USD. Cancel anytime — no dark patterns. Free plan available with no time
-          limit.
+          No paid subscription is available today. Join the waitlist for early-access updates.
         </motion.p>
       </div>
 
-      {/* Scoped grid responsive */}
       <style>{`
         .pricing-grid {
           display: grid;
@@ -648,13 +385,13 @@ export function PricingSection() {
           gap: 12px;
         }
 
-        @media (min-width: 640px) {
+        @media (min-width: 768px) {
           .pricing-grid {
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(2, 1fr);
           }
         }
 
-        @media (min-width: 1024px) {
+        @media (min-width: 1180px) {
           .pricing-grid {
             grid-template-columns: repeat(4, 1fr);
           }

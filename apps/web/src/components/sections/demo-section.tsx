@@ -186,7 +186,7 @@ const SPLIT_ITEMS = [
     desc: "Dinner — Restaurant",
     total: "$120.00",
     you: "$60.00",
-    other: "Jordan owes you $60",
+    other: "Manual note: Jordan share $60",
     color: "#3DDC97",
   },
   {
@@ -194,7 +194,7 @@ const SPLIT_ITEMS = [
     desc: "Airbnb — Porto trip",
     total: "$480.00",
     you: "$240.00",
-    other: "Alex owes you $240",
+    other: "Manual note: Alex share $240",
     color: "#A78BFA",
   },
   {
@@ -202,7 +202,7 @@ const SPLIT_ITEMS = [
     desc: "Taxi — Airport",
     total: "$36.80",
     you: "$18.40",
-    other: "Jordan owes you $18.40",
+    other: "Manual note: Jordan share $18.40",
     color: "#60A5FA",
   },
   {
@@ -210,7 +210,7 @@ const SPLIT_ITEMS = [
     desc: "Groceries — April",
     total: "$188.40",
     you: "$94.20",
-    other: "You owe Sam $94.20",
+    other: "Manual note: Sam share $94.20",
     color: "#FB923C",
   },
 ] as const;
@@ -459,7 +459,7 @@ function SplitPanel() {
             letterSpacing: "-0.01em",
           }}
         >
-          Group expenses
+          Shared expense notes
         </span>
         <span
           style={{
@@ -522,7 +522,7 @@ function SplitPanel() {
               style={{
                 fontSize: "0.5625rem",
                 fontWeight: 600,
-                color: s.other.startsWith("You owe") ? "var(--warn)" : "var(--positive)",
+                color: "var(--text-secondary)",
               }}
             >
               {s.other}
@@ -531,7 +531,7 @@ function SplitPanel() {
         </motion.div>
       ))}
 
-      {/* Settle up row */}
+      {/* Manual tracking row */}
       <div
         style={{
           display: "flex",
@@ -546,7 +546,7 @@ function SplitPanel() {
       >
         <div>
           <p style={{ fontSize: "0.625rem", color: "var(--text-muted)", margin: 0 }}>
-            Net — you are owed
+            Manual-only tracking
           </p>
           <p
             style={{
@@ -557,7 +557,7 @@ function SplitPanel() {
               letterSpacing: "-0.02em",
             }}
           >
-            $318.40
+            No payments handled
           </p>
         </div>
         <div
@@ -572,7 +572,7 @@ function SplitPanel() {
             cursor: "pointer",
           }}
         >
-          Settle up →
+          Review notes
         </div>
       </div>
     </div>
@@ -753,7 +753,7 @@ type Tab = { id: string; label: string; panel: React.ReactNode };
 const TABS: Tab[] = [
   { id: "categorize", label: "Categorize", panel: <CategorizePanel /> },
   { id: "budget", label: "Budget", panel: <BudgetPanel /> },
-  { id: "split", label: "Split", panel: <SplitPanel /> },
+  { id: "split", label: "Shared notes", panel: <SplitPanel /> },
   { id: "insights", label: "Insights", panel: <InsightsPanel /> },
 ];
 
@@ -788,11 +788,11 @@ const HOTSPOTS: Hotspot[] = [
     right: "12px",
     tabId: "budget",
   },
-  // Smart settle-up hotspot removed — implies money movement
+  // Payment-action hotspot intentionally omitted.
   {
     n: 3,
     label: "Spending trends",
-    tip: "Your AI agent surfaces anomalies and savings opportunities before you even ask.",
+    tip: "Planned insights highlight spending changes and review opportunities.",
     top: "12px",
     right: "12px",
     tabId: "insights",
@@ -909,10 +909,10 @@ function HotspotPin({ hs }: { hs: Hotspot }) {
    FEATURE PILLS ROW
 ────────────────────────────────────────────────────────────── */
 const PILLS = [
-  { label: "Real-time sync", Icon: RefreshCw },
-  { label: "AI categorization", Icon: Sparkles },
+  { label: "Manual entries", Icon: RefreshCw },
+  { label: "AI suggestions planned", Icon: Sparkles },
   { label: "Custom budgets", Icon: PieChart },
-  { label: "Goal tracking", Icon: TrendingUp },
+  { label: "Spending summaries", Icon: TrendingUp },
 ] as const;
 
 /* ──────────────────────────────────────────────────────────────
@@ -992,7 +992,7 @@ export function DemoSection() {
             transition={{ delay: 0.08, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             style={{ margin: "0 auto 0.875rem" }}
           >
-            Your complete financial picture
+            Your expense picture, organized
           </motion.h2>
 
           <motion.p
@@ -1003,7 +1003,7 @@ export function DemoSection() {
             transition={{ delay: 0.14, duration: 0.5 }}
             style={{ margin: "0 auto" }}
           >
-            Every account, transaction, and goal — in one intelligent dashboard.
+            Manual entries, planned uploads, and CSV imports in one spending view.
           </motion.p>
         </div>
 

@@ -49,12 +49,11 @@ export default function DisclaimerPage() {
                 id="disclaimer-no-money"
                 className="text-xl font-semibold text-[var(--text-primary)] mb-3"
               >
-                No money movement
+                Expense tracking only
               </h2>
               <p>
-                EXPOZOR does not move, hold, transmit, or manage money or funds on behalf of any
-                user or third party. EXPOZOR cannot and does not initiate any financial transfers,
-                payments, or transactions.
+                EXPOZOR is not a payment service. It does not access accounts, custody funds, or
+                initiate payments on behalf of any user or third party.
               </p>
             </section>
 
@@ -68,8 +67,8 @@ export default function DisclaimerPage() {
               <p>
                 EXPOZOR does not collect, request, store, or transmit your bank login credentials,
                 banking passwords, PINs, or any other authentication credentials for any financial
-                institution. You add expense data manually, by uploading files, or by importing CSV
-                exports from your own bank or financial institution.
+                institution. Manual entry is the first workflow; upload and import workflows are
+                planned for early access.
               </p>
             </section>
 
@@ -98,12 +97,10 @@ export default function DisclaimerPage() {
                 AI and OCR accuracy
               </h2>
               <p>
-                EXPOZOR uses AI-assisted categorization and optical character recognition (OCR)
-                features to help you organize expenses. These features are provided as a convenience
-                and <strong>may be inaccurate, incomplete, or incorrect</strong>. You are solely
-                responsible for reviewing, correcting, and verifying all data extracted,
-                categorized, or suggested by these features before relying on it for any purpose.
-                EXPOZOR makes no warranty as to the accuracy or reliability of AI or OCR outputs.
+                AI-assisted categorization and OCR are planned features. If they launch, outputs may
+                be inaccurate, incomplete, or incorrect. You will be responsible for reviewing,
+                correcting, and verifying extracted, categorized, or suggested data before relying
+                on it for any purpose.
               </p>
             </section>
 
@@ -115,7 +112,7 @@ export default function DisclaimerPage() {
                 Informational and organizational purposes only
               </h2>
               <p>
-                EXPOZOR is provided solely for personal expense tracking, receipt organization, and
+                EXPOZOR is provided solely for personal expense tracking, expense organization, and
                 spending analysis. Any spending summaries, category breakdowns, or trend insights
                 produced by EXPOZOR reflect the data you have entered and are for your personal
                 reference only. They are not audited financial records and should not be used as

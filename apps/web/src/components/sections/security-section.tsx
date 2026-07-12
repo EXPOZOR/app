@@ -15,14 +15,14 @@ const PLEDGES = [
     Icon: ShieldOff,
     title: "No bank login required",
     description:
-      "EXPOZOR does not ask for or collect your bank login credentials. You add expenses manually, by upload, or by CSV import.",
+      "EXPOZOR does not ask for or collect your bank credentials. Manual entry is first; upload and import workflows are planned.",
   },
   {
     id: "no-money",
     Icon: Ban,
-    title: "No money movement",
+    title: "Expense tracking only",
     description:
-      "EXPOZOR cannot initiate transfers, move funds, or access your accounts. It is an expense tracking tool only.",
+      "EXPOZOR is not a payment service. It does not access accounts, custody funds, or initiate payments.",
   },
   {
     id: "https",
@@ -42,17 +42,15 @@ const PLEDGES = [
     id: "export",
     Icon: Download,
     title: "Export support planned",
-    // TODO: update to confirmed export capability before public launch
     description:
-      "Data export support is planned before public launch. Contact support to request your data at any time.",
+      "Data download support is planned before launch. Waitlist deletion requests can be sent to support.",
   },
   {
     id: "deletion",
     Icon: Trash2,
     title: "Deletion requests supported",
     description:
-      // TODO: confirm deletion implementation and turnaround time before public launch
-      "You can request deletion of your account and associated data. Contact support for data removal requests.",
+      "You can request deletion of your waitlist record. Contact support for data removal requests.",
   },
 ] as const;
 
@@ -241,7 +239,7 @@ export function SecuritySection() {
               >
                 {[
                   "No bank login required. EXPOZOR does not collect bank credentials.",
-                  "No money movement. EXPOZOR tracks expenses only.",
+                  "Expense tracking only. EXPOZOR does not initiate payments.",
                   "We use HTTPS for all data in transit.",
                   "Your data is not sold, shared, or used for advertising.",
                 ].map((item, i) => (
