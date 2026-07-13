@@ -1059,29 +1059,6 @@ export function HeroSection() {
                   </a>
                 </div>
               </motion.div>
-
-              {/* Micro trust signals — honest, no fake numbers */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.55, duration: 0.5 }}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  flexWrap: "wrap",
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: "0.8125rem",
-                    color: "var(--text-muted)",
-                    lineHeight: 1.4,
-                  }}
-                >
-                  No bank login required · No credit card needed to get started
-                </span>
-              </motion.div>
             </div>
 
             {/* ── Enhancement 3: Parallax tilt on the right column ── */}

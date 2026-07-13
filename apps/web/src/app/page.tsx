@@ -10,16 +10,15 @@ import { FinalCtaSection } from "@/components/sections/final-cta";
 import { HeroSection } from "@/components/sections/hero";
 import { HowItWorksSection } from "@/components/sections/how-it-works";
 import { MobileAppCtaSection } from "@/components/sections/mobile-app-cta";
-import { PressBar } from "@/components/sections/press-bar";
 import { PricingSection } from "@/components/sections/pricing-section";
 import { SecuritySection } from "@/components/sections/security-section";
-import { StatsBand } from "@/components/sections/stats-band";
 import { TestimonialsSection } from "@/components/sections/testimonials-section";
+import { TrustStrip } from "@/components/sections/trust-strip";
 
 /**
  * EXPOZOR homepage — all sections, v3.
  * Section order matches the brief:
- *   Hero → Stats Band → Press Bar → Live Demo → Features →
+ *   Hero → Trust Strip → Live Demo → Features →
  *   AI Explainer → How It Works → Security → Testimonials →
  *   Pricing → FAQ → Final CTA → Mobile App CTA → Footer
  * + Sticky Mobile CTA Bar (fixed bottom, mobile-only)
@@ -34,17 +33,13 @@ export default function HomePage() {
         {/* 1. Hero */}
         <HeroSection />
 
-        {/* 2. Stats Band — new, between Hero and Live Demo */}
-        <StatsBand />
+        {/* 2. Compact product commitments */}
+        <TrustStrip />
 
-        {/* 3. Press bar */}
-        <PressBar />
-
-        {/* 4. Demo */}
-        <div className="divider" />
+        {/* 3. Interactive demo */}
         <DemoSection />
 
-        {/* 5. Features bento */}
+        {/* 4. Features bento */}
         <div className="divider" />
         <FeaturesSection />
 

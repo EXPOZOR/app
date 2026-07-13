@@ -29,11 +29,6 @@ export const NAVBAR = {
   cta: { label: "Get early access", href: "/#waitlist" },
 } as const;
 
-export const PRESS = {
-  heading: "Built with",
-  items: [] as { name: string; url: string }[],
-} as const;
-
 export const DEMO = {
   badge: "Interactive demo",
   title: "See it in action",
