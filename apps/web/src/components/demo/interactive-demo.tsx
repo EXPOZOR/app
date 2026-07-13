@@ -205,15 +205,15 @@ export function InteractiveDemo() {
       aria-label="Interactive demo"
     >
       {/* Title bar */}
-      <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--border)] bg-[var(--bg-elevated)]">
+      <div className="flex items-center justify-between px-5 py-3 border-b border-border bg-bg-elevated">
         <div className="flex items-center gap-3">
           {/* Traffic lights */}
           <div className="flex gap-1.5" aria-hidden="true">
-            <span className="w-3 h-3 rounded-full bg-[#ff5f57]" />
-            <span className="w-3 h-3 rounded-full bg-[#febc2e]" />
-            <span className="w-3 h-3 rounded-full bg-[#28c840]" />
+            <span className="w-3 h-3 rounded-full bg-chrome-close" />
+            <span className="w-3 h-3 rounded-full bg-chrome-minimize" />
+            <span className="w-3 h-3 rounded-full bg-chrome-maximize" />
           </div>
-          <span className="text-xs text-[var(--text-tertiary)] font-medium">EXPOZOR</span>
+          <span className="text-xs text-text-tertiary font-medium">EXPOZOR</span>
         </div>
         <div className="flex items-center gap-2">
           <Badge tone="positive" badgeSize="xs" status>
@@ -232,11 +232,11 @@ export function InteractiveDemo() {
 
       <div className="flex flex-col md:flex-row" style={{ minHeight: 420 }}>
         {/* Left: Input panel */}
-        <div className="md:w-64 border-b md:border-b-0 md:border-r border-[var(--border)] p-5 flex flex-col gap-4 bg-[var(--bg-surface)]">
+        <div className="md:w-64 border-b md:border-b-0 md:border-r border-border p-5 flex flex-col gap-4 bg-bg-surface">
           <div>
             <label
               htmlFor="demo-name"
-              className="block text-xs font-medium text-[var(--text-tertiary)] mb-1.5"
+              className="block text-xs font-medium text-text-tertiary mb-1.5"
             >
               Description
             </label>
@@ -259,7 +259,7 @@ export function InteractiveDemo() {
                     key={s}
                     type="button"
                     onClick={() => setName(s)}
-                    className="min-h-11 px-3 py-1 text-xs rounded-full bg-[var(--bg-overlay)] text-[var(--text-tertiary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-muted)] transition-colors truncate max-w-full"
+                    className="min-h-11 px-3 py-1 text-xs rounded-full bg-bg-overlay text-text-tertiary hover:text-text-primary hover:bg-bg-muted transition-colors truncate max-w-full"
                   >
                     {s}
                   </button>
@@ -271,12 +271,12 @@ export function InteractiveDemo() {
           <div>
             <label
               htmlFor="demo-amount"
-              className="block text-xs font-medium text-[var(--text-tertiary)] mb-1.5"
+              className="block text-xs font-medium text-text-tertiary mb-1.5"
             >
               Amount (USD)
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] text-sm pointer-events-none">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-tertiary text-sm pointer-events-none">
                 $
               </span>
               <Input
@@ -309,15 +309,13 @@ export function InteractiveDemo() {
           </Button>
 
           {/* Budget mini-gauge */}
-          <div className="pt-4 border-t border-[var(--border)]">
+          <div className="pt-4 border-t border-border">
             <div className="flex justify-between items-baseline mb-2">
-              <span className="text-xs text-[var(--text-tertiary)]">Monthly budget</span>
-              <span className="text-xs font-medium text-[var(--text-primary)]">
-                ${INITIAL_BUDGET}
-              </span>
+              <span className="text-xs text-text-tertiary">Monthly budget</span>
+              <span className="text-xs font-medium text-text-primary">${INITIAL_BUDGET}</span>
             </div>
             <div
-              className="h-1.5 rounded-full bg-[var(--bg-overlay)] overflow-hidden"
+              className="h-1.5 rounded-full bg-bg-overlay overflow-hidden"
               role="progressbar"
               tabIndex={0}
               aria-label={`${Math.round(budgetPct)}% of budget spent`}
@@ -340,15 +338,14 @@ export function InteractiveDemo() {
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               />
             </div>
-            <p className="text-[10px] text-[var(--text-tertiary)] mt-1.5">
-              <span className="text-[var(--accent-2)] font-medium">${remaining.toFixed(2)}</span>{" "}
-              remaining
+            <p className="mt-1.5 text-xs text-text-tertiary">
+              <span className="text-accent-2 font-medium">${remaining.toFixed(2)}</span> remaining
             </p>
           </div>
         </div>
 
         {/* Right: Transaction feed + AI overlay */}
-        <div className="flex-1 p-5 relative overflow-hidden bg-[var(--bg)]">
+        <div className="flex-1 p-5 relative overflow-hidden bg-bg">
           {/* AI categorization overlay */}
           <AnimatePresence>
             {(step === "categorizing" || step === "categorized") && currentTx && (
@@ -357,13 +354,13 @@ export function InteractiveDemo() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute inset-x-5 top-5 z-10 rounded-[var(--radius-lg)] glass border border-[var(--border-accent)] p-4"
+                className="absolute inset-x-5 top-5 z-10 rounded-lg glass border border-border-accent p-4"
                 aria-live="polite"
                 aria-label="AI categorization in progress"
               >
                 <div className="flex items-start gap-3">
                   <div
-                    className="w-9 h-9 rounded-[var(--radius)] flex items-center justify-center text-lg shrink-0 bg-[var(--accent-subtle)]"
+                    className="w-9 h-9 rounded flex items-center justify-center text-lg shrink-0 bg-accent-subtle"
                     aria-hidden="true"
                   >
                     {step === "categorizing" ? (
@@ -383,24 +380,24 @@ export function InteractiveDemo() {
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-[var(--text-primary)] truncate">
+                    <p className="text-sm font-medium text-text-primary truncate">
                       {currentTx.name}
                     </p>
-                    <p className="text-xs text-[var(--text-secondary)] mt-0.5">
+                    <p className="text-xs text-text-secondary mt-0.5">
                       {step === "categorizing" ? (
                         <span className="flex items-center gap-1.5">
-                          <Sparkles size={11} className="text-[var(--accent)]" aria-hidden="true" />
+                          <Sparkles size={11} className="text-accent" aria-hidden="true" />
                           Analyzing with AI...
                         </span>
                       ) : (
                         <span className="flex items-center gap-1.5">
-                          <Check size={11} className="text-[var(--success)]" aria-hidden="true" />
+                          <Check size={11} className="text-success" aria-hidden="true" />
                           {currentTx.category} · {currentTx.confidence}% confidence
                         </span>
                       )}
                     </p>
                   </div>
-                  <span className="text-sm font-semibold text-[var(--accent-2)] shrink-0">
+                  <span className="text-sm font-semibold text-accent-2 shrink-0">
                     ${currentTx.amount.toFixed(2)}
                   </span>
                 </div>
@@ -409,12 +406,11 @@ export function InteractiveDemo() {
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
-                    className="mt-3 pt-3 border-t border-[var(--border)]"
+                    className="mt-3 pt-3 border-t border-border"
                   >
-                    <p className="text-xs text-[var(--text-tertiary)]">
-                      Categorized as{" "}
-                      <strong className="text-[var(--accent)]">{currentTx.category}</strong> using
-                      your rules + AI. You can edit anytime.
+                    <p className="text-xs text-text-tertiary">
+                      Categorized as <strong className="text-accent">{currentTx.category}</strong>{" "}
+                      using your rules + AI. You can edit anytime.
                     </p>
                   </motion.div>
                 )}
@@ -430,21 +426,15 @@ export function InteractiveDemo() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute inset-x-5 top-5 z-10 rounded-[var(--radius-lg)] p-4 border border-[var(--border-accent)] bg-[var(--accent-subtle)]"
+                className="absolute inset-x-5 top-5 z-10 rounded-lg p-4 border border-border-accent bg-accent-subtle"
                 aria-live="polite"
               >
                 <div className="flex items-center gap-3">
-                  <TrendingDown
-                    size={18}
-                    className="text-[var(--accent-2)] shrink-0"
-                    aria-hidden="true"
-                  />
+                  <TrendingDown size={18} className="text-accent-2 shrink-0" aria-hidden="true" />
                   <div>
-                    <p className="text-sm font-medium text-[var(--text-primary)]">Budget updated</p>
-                    <p className="text-xs text-[var(--text-secondary)] mt-0.5">
-                      <span className="text-[var(--accent-2)] font-semibold">
-                        ${remaining.toFixed(2)}
-                      </span>{" "}
+                    <p className="text-sm font-medium text-text-primary">Budget updated</p>
+                    <p className="text-xs text-text-secondary mt-0.5">
+                      <span className="text-accent-2 font-semibold">${remaining.toFixed(2)}</span>{" "}
                       remaining in Food & Drink this month
                     </p>
                   </div>
@@ -456,11 +446,13 @@ export function InteractiveDemo() {
           {/* Transaction list */}
           <div
             className={`space-y-2 transition-all duration-300 ${
-              step !== "entry" && step !== "budgetUpdate" ? "opacity-30 blur-[2px]" : "opacity-100"
+              step !== "entry" && step !== "budgetUpdate"
+                ? "demo-defocus opacity-30"
+                : "opacity-100"
             }`}
             aria-label="Recent transactions"
           >
-            <p className="text-xs font-semibold text-[var(--text-tertiary)] uppercase tracking-wider mb-3">
+            <p className="text-xs font-semibold text-text-tertiary uppercase tracking-wider mb-3">
               Recent
             </p>
             <AnimatePresence mode="popLayout">
@@ -470,21 +462,19 @@ export function InteractiveDemo() {
                   initial={{ opacity: 0, x: 16, scale: 0.97 }}
                   animate={{ opacity: 1, x: 0, scale: 1 }}
                   transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                  className="flex items-center gap-3 p-3 rounded-[var(--radius)] bg-[var(--bg-elevated)] border border-[var(--border)] hover:border-[var(--border-strong)] transition-colors"
+                  className="flex items-center gap-3 p-3 rounded bg-bg-elevated border border-border hover:border-border-strong transition-colors"
                 >
                   <span
-                    className="w-8 h-8 rounded-[var(--radius-sm)] flex items-center justify-center text-base bg-[var(--bg-overlay)] shrink-0"
+                    className="w-8 h-8 rounded-sm flex items-center justify-center text-base bg-bg-overlay shrink-0"
                     aria-hidden="true"
                   >
                     {tx.categoryIcon}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-[var(--text-primary)] truncate">
-                      {tx.name}
-                    </p>
-                    <p className="text-xs text-[var(--text-tertiary)] mt-0.5">{tx.category}</p>
+                    <p className="text-sm font-medium text-text-primary truncate">{tx.name}</p>
+                    <p className="text-xs text-text-tertiary mt-0.5">{tx.category}</p>
                   </div>
-                  <span className="text-sm font-semibold text-[var(--text-primary)] shrink-0">
+                  <span className="text-sm font-semibold text-text-primary shrink-0">
                     −${tx.amount.toFixed(2)}
                   </span>
                 </motion.div>

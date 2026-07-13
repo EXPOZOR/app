@@ -26,14 +26,11 @@ export default function RefundPage() {
       <main id="main-content" className="pt-20">
         <div className="container-site measure-prose section-py">
           <h1 className="text-4xl font-bold tracking-tight mb-2">Refund Policy</h1>
-          <p className="text-[var(--text-tertiary)] text-sm mb-10">Last updated: July 2026</p>
+          <p className="text-text-tertiary text-sm mb-10">Last updated: July 2026</p>
 
-          <div className="space-y-8 text-[var(--text-secondary)] leading-relaxed">
+          <div className="space-y-8 text-text-secondary leading-relaxed">
             <section aria-labelledby="refund-status">
-              <h2
-                id="refund-status"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="refund-status" className="text-xl font-semibold text-text-primary mb-3">
                 Current status
               </h2>
               <p>
@@ -44,10 +41,7 @@ export default function RefundPage() {
             </section>
 
             <section aria-labelledby="refund-future">
-              <h2
-                id="refund-future"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="refund-future" className="text-xl font-semibold text-text-primary mb-3">
                 Future paid plans
               </h2>
               <p>
@@ -59,22 +53,16 @@ export default function RefundPage() {
             </section>
 
             <section aria-labelledby="refund-contact">
-              <h2
-                id="refund-contact"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="refund-contact" className="text-xl font-semibold text-text-primary mb-3">
                 Contact
               </h2>
               <p>
                 Billing or refund questions:{" "}
-                <a href="/contact" className="text-[var(--accent)] hover:underline">
+                <a href="/contact" className="text-accent hover:underline">
                   Contact us
                 </a>{" "}
                 or email{" "}
-                <a
-                  href="mailto:support@expozor.com"
-                  className="text-[var(--accent)] hover:underline"
-                >
+                <a href="mailto:support@expozor.com" className="text-accent hover:underline">
                   support@expozor.com
                 </a>
                 .

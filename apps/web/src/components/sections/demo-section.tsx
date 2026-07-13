@@ -868,7 +868,7 @@ function HotspotPin({ hs }: { hs: Hotspot }) {
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
-            boxShadow: "0 0 12px var(--accent-glow), 0 0 0 4px var(--accent-soft)",
+            boxShadow: "0 0 12px var(--accent-glow), 0 0 0 4px var(--accent-subtle)",
           }}
         >
           {hs.n}

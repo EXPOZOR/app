@@ -26,14 +26,11 @@ export default function CookiesPage() {
       <main id="main-content" className="pt-20">
         <div className="container-site measure-prose section-py">
           <h1 className="text-4xl font-bold tracking-tight mb-2">Cookie Policy</h1>
-          <p className="text-[var(--text-tertiary)] text-sm mb-10">Last updated: July 2026</p>
+          <p className="text-text-tertiary text-sm mb-10">Last updated: July 2026</p>
 
-          <div className="space-y-8 text-[var(--text-secondary)] leading-relaxed">
+          <div className="space-y-8 text-text-secondary leading-relaxed">
             <section aria-labelledby="cookies-overview">
-              <h2
-                id="cookies-overview"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="cookies-overview" className="text-xl font-semibold text-text-primary mb-3">
                 Overview
               </h2>
               <p>
@@ -44,10 +41,7 @@ export default function CookiesPage() {
             </section>
 
             <section aria-labelledby="cookies-essential">
-              <h2
-                id="cookies-essential"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="cookies-essential" className="text-xl font-semibold text-text-primary mb-3">
                 Essential technology
               </h2>
               <p>
@@ -58,10 +52,7 @@ export default function CookiesPage() {
             </section>
 
             <section aria-labelledby="cookies-analytics">
-              <h2
-                id="cookies-analytics"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="cookies-analytics" className="text-xl font-semibold text-text-primary mb-3">
                 Analytics
               </h2>
               <p>
@@ -72,10 +63,7 @@ export default function CookiesPage() {
             </section>
 
             <section aria-labelledby="cookies-control">
-              <h2
-                id="cookies-control"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="cookies-control" className="text-xl font-semibold text-text-primary mb-3">
                 Your choices
               </h2>
               <p>
@@ -86,18 +74,12 @@ export default function CookiesPage() {
             </section>
 
             <section aria-labelledby="cookies-contact">
-              <h2
-                id="cookies-contact"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="cookies-contact" className="text-xl font-semibold text-text-primary mb-3">
                 Contact
               </h2>
               <p>
                 Questions about cookies:{" "}
-                <a
-                  href="mailto:privacy@expozor.com"
-                  className="text-[var(--accent)] hover:underline"
-                >
+                <a href="mailto:privacy@expozor.com" className="text-accent hover:underline">
                   privacy@expozor.com
                 </a>
               </p>

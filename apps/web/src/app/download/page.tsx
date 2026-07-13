@@ -69,11 +69,11 @@ export default function DownloadPage() {
               return (
                 <div
                   key={platform.title}
-                  className="glass rounded-[var(--radius-xl)] p-6 border border-[var(--border)] flex flex-col gap-4"
+                  className="glass rounded-lg p-6 border border-border flex flex-col gap-4"
                 >
                   <div className="flex items-start justify-between">
                     <div
-                      className="w-10 h-10 rounded-[var(--radius)] flex items-center justify-center"
+                      className="w-10 h-10 rounded flex items-center justify-center"
                       style={{
                         background: `${platform.accent}1A`,
                         border: `1px solid ${platform.accent}33`,
@@ -83,7 +83,7 @@ export default function DownloadPage() {
                       <Icon size={18} style={{ color: platform.accent }} />
                     </div>
                     <span
-                      className="text-[10px] font-semibold px-2 py-0.5 rounded-full border"
+                      className="px-2 py-0.5 text-xs font-semibold rounded-full border"
                       style={{
                         background: `${platform.accent}1A`,
                         borderColor: `${platform.accent}33`,
@@ -94,14 +94,12 @@ export default function DownloadPage() {
                     </span>
                   </div>
                   <div>
-                    <h2 className="font-bold text-xl text-[var(--text-primary)] mb-1">
-                      {platform.title}
-                    </h2>
-                    <p className="text-sm text-[var(--text-secondary)]">{platform.description}</p>
+                    <h2 className="font-bold text-xl text-text-primary mb-1">{platform.title}</h2>
+                    <p className="text-sm text-text-secondary">{platform.description}</p>
                   </div>
                   <a
                     href={platform.href}
-                    className="mt-auto block w-full py-2.5 rounded-[var(--radius)] text-sm font-semibold text-center bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border)] hover:border-[var(--border-strong)] transition-all"
+                    className="mt-auto block w-full py-2.5 rounded text-sm font-semibold text-center bg-bg-elevated text-text-primary border border-border hover:border-border-strong transition-all"
                   >
                     {platform.cta}
                   </a>
@@ -113,16 +111,16 @@ export default function DownloadPage() {
           {/* Mobile app availability notice */}
           <div className="flex flex-col items-center gap-3 mt-16 text-center">
             <div
-              className="w-12 h-12 rounded-[var(--radius)] flex items-center justify-center"
+              className="w-12 h-12 rounded flex items-center justify-center"
               style={{
                 background: "var(--accent-subtle)",
-                border: "1px solid var(--accent-border)",
+                border: "1px solid var(--border-accent)",
               }}
               aria-hidden="true"
             >
               <Smartphone size={20} style={{ color: "var(--accent)" }} />
             </div>
-            <p className="text-sm text-[var(--text-secondary)] max-w-xs">
+            <p className="text-sm text-text-secondary max-w-xs">
               Mobile apps are in development. Join the waitlist to be notified when iOS and Android
               are available.
             </p>

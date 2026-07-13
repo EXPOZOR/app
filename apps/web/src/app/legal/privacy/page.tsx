@@ -26,14 +26,11 @@ export default function PrivacyPage() {
       <main id="main-content" className="pt-20">
         <div className="container-site measure-prose section-py">
           <h1 className="text-4xl font-bold tracking-tight mb-2">Privacy Policy</h1>
-          <p className="text-[var(--text-tertiary)] text-sm mb-10">Last updated: July 2026</p>
+          <p className="text-text-tertiary text-sm mb-10">Last updated: July 2026</p>
 
-          <div className="space-y-8 text-[var(--text-secondary)] leading-relaxed">
+          <div className="space-y-8 text-text-secondary leading-relaxed">
             <section aria-labelledby="privacy-overview">
-              <h2
-                id="privacy-overview"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="privacy-overview" className="text-xl font-semibold text-text-primary mb-3">
                 Overview
               </h2>
               <p>
@@ -47,7 +44,7 @@ export default function PrivacyPage() {
             <section aria-labelledby="privacy-current-collection">
               <h2
                 id="privacy-current-collection"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
+                className="text-xl font-semibold text-text-primary mb-3"
               >
                 What we collect today
               </h2>
@@ -75,7 +72,7 @@ export default function PrivacyPage() {
             <section aria-labelledby="privacy-not-collected">
               <h2
                 id="privacy-not-collected"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
+                className="text-xl font-semibold text-text-primary mb-3"
               >
                 What we do not collect today
               </h2>
@@ -89,10 +86,7 @@ export default function PrivacyPage() {
             </section>
 
             <section aria-labelledby="privacy-use">
-              <h2
-                id="privacy-use"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="privacy-use" className="text-xl font-semibold text-text-primary mb-3">
                 How we use waitlist data
               </h2>
               <ul className="list-disc list-inside space-y-2">
@@ -105,17 +99,14 @@ export default function PrivacyPage() {
             </section>
 
             <section aria-labelledby="privacy-services">
-              <h2
-                id="privacy-services"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="privacy-services" className="text-xl font-semibold text-text-primary mb-3">
                 Services that help us operate
               </h2>
               <p>
                 Waitlist records are stored in our PostgreSQL database provider. If email sending is
                 enabled, we use an email service provider to send confirmation or update emails. See
                 our{" "}
-                <a href="/legal/subprocessors" className="text-[var(--accent)] hover:underline">
+                <a href="/legal/subprocessors" className="text-accent hover:underline">
                   Subprocessors page
                 </a>{" "}
                 for the current list.
@@ -123,10 +114,7 @@ export default function PrivacyPage() {
             </section>
 
             <section aria-labelledby="privacy-retention">
-              <h2
-                id="privacy-retention"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="privacy-retention" className="text-xl font-semibold text-text-primary mb-3">
                 Data retention
               </h2>
               <p>
@@ -138,19 +126,13 @@ export default function PrivacyPage() {
             </section>
 
             <section aria-labelledby="privacy-controls">
-              <h2
-                id="privacy-controls"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="privacy-controls" className="text-xl font-semibold text-text-primary mb-3">
                 Your choices
               </h2>
               <p>
                 You can ask us to remove your waitlist record or answer privacy questions by
                 contacting{" "}
-                <a
-                  href="mailto:privacy@expozor.com"
-                  className="text-[var(--accent)] hover:underline"
-                >
+                <a href="mailto:privacy@expozor.com" className="text-accent hover:underline">
                   privacy@expozor.com
                 </a>
                 . We aim to respond within 30 days.
@@ -158,10 +140,7 @@ export default function PrivacyPage() {
             </section>
 
             <section aria-labelledby="privacy-security">
-              <h2
-                id="privacy-security"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="privacy-security" className="text-xl font-semibold text-text-primary mb-3">
                 Security
               </h2>
               <p>
@@ -173,16 +152,13 @@ export default function PrivacyPage() {
             </section>
 
             <section aria-labelledby="privacy-cookies">
-              <h2
-                id="privacy-cookies"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="privacy-cookies" className="text-xl font-semibold text-text-primary mb-3">
                 Cookies
               </h2>
               <p>
                 EXPOZOR does not currently use account session cookies, advertising cookies, or
                 third-party analytics cookies on the waitlist site. See our{" "}
-                <a href="/legal/cookies" className="text-[var(--accent)] hover:underline">
+                <a href="/legal/cookies" className="text-accent hover:underline">
                   Cookie Policy
                 </a>{" "}
                 for more detail.
@@ -190,18 +166,12 @@ export default function PrivacyPage() {
             </section>
 
             <section aria-labelledby="privacy-contact">
-              <h2
-                id="privacy-contact"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="privacy-contact" className="text-xl font-semibold text-text-primary mb-3">
                 Contact
               </h2>
               <p>
                 Privacy questions:{" "}
-                <a
-                  href="mailto:privacy@expozor.com"
-                  className="text-[var(--accent)] hover:underline"
-                >
+                <a href="mailto:privacy@expozor.com" className="text-accent hover:underline">
                   privacy@expozor.com
                 </a>
               </p>

@@ -6,13 +6,12 @@ export type BadgeSize = "xs" | "sm";
 
 const toneClasses: Record<BadgeTone, string> = {
   accent: "border-border-accent bg-accent-subtle text-accent",
-  positive:
-    "border-[color-mix(in_oklch,var(--positive)_35%,transparent)] bg-[var(--positive-subtle)] text-positive",
+  positive: "border-positive-border bg-positive-subtle text-positive",
   neutral: "border-border bg-bg-elevated text-text-secondary",
 };
 
 const sizeClasses: Record<BadgeSize, string> = {
-  xs: "px-2 py-1 text-[10px]",
+  xs: "px-2 py-1 text-xs",
   sm: "px-3 py-1.5 text-xs",
 };
 

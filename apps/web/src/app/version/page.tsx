@@ -41,13 +41,13 @@ export default function VersionPage() {
       label: "Commit",
       value:
         sha === "dev" ? (
-          <span className="font-mono text-[var(--text-muted)]">dev</span>
+          <span className="font-mono text-text-muted">dev</span>
         ) : (
           <a
             href={`${GITHUB_REPO}/commit/${sha}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-mono text-[var(--accent)] hover:underline"
+            className="font-mono text-accent hover:underline"
           >
             {sha}
           </a>
@@ -74,7 +74,7 @@ export default function VersionPage() {
           href={GITHUB_REPO}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[var(--accent)] hover:underline break-all"
+          className="text-accent hover:underline break-all"
         >
           {GITHUB_REPO}
         </a>
@@ -83,40 +83,35 @@ export default function VersionPage() {
   ];
 
   return (
-    <main
-      id="main-content"
-      className="min-h-screen flex items-center justify-center bg-[var(--bg-base)] px-4"
-    >
+    <main id="main-content" className="min-h-screen flex items-center justify-center bg-bg px-4">
       <div className="w-full max-w-md">
         {/* Logo / wordmark */}
         <div className="mb-8 flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[var(--accent)] to-[var(--accent-2,#A78BFA)] flex items-center justify-center font-black text-lg text-black select-none">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-accent to-accent-2 flex items-center justify-center font-black text-lg text-black select-none">
             E
           </div>
-          <span className="font-bold text-[var(--text-primary)] tracking-tight text-lg">
-            EXPOZOR
-          </span>
+          <span className="font-bold text-text-primary tracking-tight text-lg">EXPOZOR</span>
         </div>
 
         {/* Card */}
-        <div className="rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--bg-surface)] overflow-hidden">
-          <div className="px-5 py-4 border-b border-[var(--border)] bg-[var(--bg-elev-1)]">
-            <h1 className="text-sm font-semibold text-[var(--text-primary)] tracking-wide uppercase">
+        <div className="rounded-lg border border-border bg-bg-surface overflow-hidden">
+          <div className="px-5 py-4 border-b border-border bg-bg-elev-1">
+            <h1 className="text-sm font-semibold text-text-primary tracking-wide uppercase">
               Build info
             </h1>
           </div>
 
-          <dl className="divide-y divide-[var(--border)]">
+          <dl className="divide-y divide-border">
             {rows.map(({ label, value }) => (
               <div key={label} className="flex items-start justify-between gap-4 px-5 py-3.5">
-                <dt className="text-sm text-[var(--text-muted)] shrink-0 w-28">{label}</dt>
-                <dd className="text-sm text-[var(--text-primary)] text-right">{value}</dd>
+                <dt className="text-sm text-text-muted shrink-0 w-28">{label}</dt>
+                <dd className="text-sm text-text-primary text-right">{value}</dd>
               </div>
             ))}
           </dl>
         </div>
 
-        <p className="mt-4 text-center text-xs text-[var(--text-tertiary)]">
+        <p className="mt-4 text-center text-xs text-text-tertiary">
           This page is not indexed by search engines.
         </p>
       </div>

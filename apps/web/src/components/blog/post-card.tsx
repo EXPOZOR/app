@@ -24,12 +24,12 @@ export function PostCard({
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group block rounded-[var(--radius-xl)] border border-[var(--border)] bg-[var(--bg-surface)] p-6 hover:border-[var(--border-strong)] transition-all duration-300 hover:shadow-lg hover:shadow-black/10"
+      className="group block rounded-lg border border-border bg-bg-surface p-6 hover:border-border-strong transition-all duration-300 hover:shadow-lg hover:shadow-black/10"
     >
       {/* Category + reading time */}
       <div className="flex items-center gap-3 mb-4">
         <span
-          className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full"
+          className="px-2.5 py-1 text-xs font-bold uppercase tracking-widest rounded-full"
           style={{
             background: `${color}1A`,
             color,
@@ -38,29 +38,27 @@ export function PostCard({
         >
           {post.frontmatter.category}
         </span>
-        <span className="flex items-center gap-1 text-xs text-[var(--text-tertiary)]">
+        <span className="flex items-center gap-1 text-xs text-text-tertiary">
           <Clock size={12} aria-hidden="true" />
           {post.readingTime}
         </span>
       </div>
 
       {/* Title */}
-      <Heading className="text-xl font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--decorative)] transition-colors leading-tight">
+      <Heading className="text-xl font-bold text-text-primary mb-2 group-hover:text-decorative transition-colors leading-tight">
         {post.frontmatter.title}
       </Heading>
 
       {/* Excerpt */}
-      <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4 line-clamp-3">
+      <p className="text-sm text-text-secondary leading-relaxed mb-4 line-clamp-3">
         {post.frontmatter.excerpt}
       </p>
 
       {/* Footer */}
-      <div className="flex items-center justify-between pt-4 border-t border-[var(--border)]">
+      <div className="flex items-center justify-between pt-4 border-t border-border">
         <div>
-          <p className="text-sm font-medium text-[var(--text-primary)]">
-            {post.frontmatter.author}
-          </p>
-          <time className="text-xs text-[var(--text-tertiary)]" dateTime={post.frontmatter.date}>
+          <p className="text-sm font-medium text-text-primary">{post.frontmatter.author}</p>
+          <time className="text-xs text-text-tertiary" dateTime={post.frontmatter.date}>
             {new Date(post.frontmatter.date).toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
@@ -68,7 +66,7 @@ export function PostCard({
             })}
           </time>
         </div>
-        <span className="flex items-center gap-1 text-sm font-medium text-[var(--decorative)] opacity-0 group-hover:opacity-100 transition-opacity">
+        <span className="flex items-center gap-1 text-sm font-medium text-decorative opacity-0 group-hover:opacity-100 transition-opacity">
           Read
           <ArrowRight size={14} aria-hidden="true" />
         </span>

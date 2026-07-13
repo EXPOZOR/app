@@ -37,23 +37,23 @@ export default function FeaturesPage() {
         {/* Capture section */}
         <section
           id="capture"
-          className="section-py border-t border-[var(--border)]"
+          className="section-py border-t border-border"
           aria-labelledby="capture-heading"
         >
           <div className="container-site measure-wide">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
-                <p className="text-xs uppercase tracking-widest font-semibold text-[var(--decorative)] mb-3">
+                <p className="text-xs uppercase tracking-widest font-semibold text-decorative mb-3">
                   Capture
                 </p>
                 <h2 id="capture-heading" className="text-3xl font-bold mb-4">
                   Receipt capture is on the roadmap
                 </h2>
-                <p className="text-[var(--text-secondary)] leading-relaxed mb-6">
+                <p className="text-text-secondary leading-relaxed mb-6">
                   Receipt upload and scanning are planned features. EXPOZOR does not currently
                   advertise a specific OCR provider, speed target, or supported receipt count.
                 </p>
-                <ul className="space-y-3 text-[var(--text-secondary)] text-sm">
+                <ul className="space-y-3 text-text-secondary text-sm">
                   {[
                     "Manual entry available first",
                     "Receipt upload planned for early access",
@@ -62,7 +62,7 @@ export default function FeaturesPage() {
                   ].map((f) => (
                     <li key={f} className="flex items-center gap-2">
                       <span
-                        className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] shrink-0"
+                        className="w-1.5 h-1.5 rounded-full bg-accent shrink-0"
                         aria-hidden="true"
                       />
                       {f}
@@ -71,7 +71,7 @@ export default function FeaturesPage() {
                 </ul>
               </div>
               <div
-                className="rounded-[var(--radius-xl)] border border-[var(--border)] bg-[var(--bg-surface)] p-8 aspect-square flex items-center justify-center"
+                className="rounded-lg border border-border bg-bg-surface p-8 aspect-square flex items-center justify-center"
                 aria-hidden="true"
               >
                 <svg
@@ -140,15 +140,11 @@ export default function FeaturesPage() {
         </section>
 
         {/* AI section */}
-        <section
-          id="ai"
-          className="section-py border-t border-[var(--border)]"
-          aria-labelledby="ai-heading"
-        >
+        <section id="ai" className="section-py border-t border-border" aria-labelledby="ai-heading">
           <div className="container-site measure-wide">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div
-                className="order-2 md:order-1 rounded-[var(--radius-xl)] border border-[var(--border-accent)] bg-[var(--accent-subtle)] p-8 space-y-3"
+                className="order-2 md:order-1 rounded-lg border border-border-accent bg-accent-subtle p-8 space-y-3"
                 aria-hidden="true"
               >
                 {[
@@ -162,13 +158,13 @@ export default function FeaturesPage() {
                 ].map((t) => (
                   <div
                     key={t.label}
-                    className="flex items-center gap-3 p-3 rounded-[var(--radius)] bg-[var(--bg-elevated)] border border-[var(--border)]"
+                    className="flex items-center gap-3 p-3 rounded bg-bg-elevated border border-border"
                   >
                     <div
                       className="w-2 h-2 rounded-full shrink-0"
                       style={{ background: t.color }}
                     />
-                    <span className="text-sm text-[var(--text-primary)] flex-1">{t.label}</span>
+                    <span className="text-sm text-text-primary flex-1">{t.label}</span>
                     <span
                       className="text-xs font-medium px-2 py-0.5 rounded-full"
                       style={{ color: t.color, background: `${t.color}22` }}
@@ -179,13 +175,13 @@ export default function FeaturesPage() {
                 ))}
               </div>
               <div className="order-1 md:order-2">
-                <p className="text-xs uppercase tracking-widest font-semibold text-[var(--decorative)] mb-3">
+                <p className="text-xs uppercase tracking-widest font-semibold text-decorative mb-3">
                   Intelligence
                 </p>
                 <h2 id="ai-heading" className="text-3xl font-bold mb-4">
                   AI-assisted categorization planned
                 </h2>
-                <p className="text-[var(--text-secondary)] leading-relaxed mb-6">
+                <p className="text-text-secondary leading-relaxed mb-6">
                   AI category suggestions are planned for early access. The intended workflow keeps
                   user review in the loop and avoids presenting unreviewed suggestions as final.
                 </p>

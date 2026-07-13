@@ -82,10 +82,10 @@ export default function SecurityPage() {
                 return (
                   <article
                     key={pillar.title}
-                    className="glass rounded-[var(--radius-xl)] p-6 border border-[var(--border)] flex flex-col gap-4"
+                    className="glass rounded-lg p-6 border border-border flex flex-col gap-4"
                   >
                     <div
-                      className="w-10 h-10 rounded-[var(--radius)] flex items-center justify-center"
+                      className="w-10 h-10 rounded flex items-center justify-center"
                       style={{
                         background: `${pillar.accent}1A`,
                         border: `1px solid ${pillar.accent}33`,
@@ -95,10 +95,10 @@ export default function SecurityPage() {
                       <Icon size={18} style={{ color: pillar.accent }} strokeWidth={1.5} />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-[var(--text-primary)] text-lg mb-2">
+                      <h3 className="font-semibold text-text-primary text-lg mb-2">
                         {pillar.title}
                       </h3>
-                      <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+                      <p className="text-sm text-text-secondary leading-relaxed">
                         {pillar.description}
                       </p>
                     </div>
@@ -109,25 +109,19 @@ export default function SecurityPage() {
           </div>
         </section>
 
-        <section
-          className="section-py border-t border-[var(--border)]"
-          aria-labelledby="disclosure-heading"
-        >
+        <section className="section-py border-t border-border" aria-labelledby="disclosure-heading">
           <div className="container-site measure-prose text-center">
             <h2 id="disclosure-heading" className="text-3xl font-bold mb-4">
               Responsible disclosure
             </h2>
-            <p className="text-[var(--text-secondary)] mb-6 leading-relaxed">
+            <p className="text-text-secondary mb-6 leading-relaxed">
               Found a security vulnerability? Please email{" "}
-              <a
-                href="mailto:security@expozor.com"
-                className="text-[var(--accent)] hover:underline"
-              >
+              <a href="mailto:security@expozor.com" className="text-accent hover:underline">
                 security@expozor.com
               </a>{" "}
               with a description of the issue and steps to reproduce.
             </p>
-            <p className="text-sm text-[var(--text-tertiary)]">
+            <p className="text-sm text-text-tertiary">
               We review security reports in good faith and may credit researchers with permission.
             </p>
           </div>

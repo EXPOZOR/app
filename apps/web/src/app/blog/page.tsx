@@ -41,7 +41,7 @@ export default function BlogPage() {
             <div className="mt-6">
               <a
                 href="/blog/rss.xml"
-                className="inline-flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors"
+                className="inline-flex items-center gap-2 text-sm text-text-secondary hover:text-accent transition-colors"
                 aria-label="Subscribe to RSS feed"
               >
                 <Rss size={14} aria-hidden="true" />
@@ -55,13 +55,13 @@ export default function BlogPage() {
         {categories.length > 1 && (
           <div className="container-site mb-10">
             <div className="flex flex-wrap justify-center gap-2">
-              <span className="px-3 py-1.5 text-sm font-medium rounded-full bg-[var(--accent)] text-[var(--text-inverse)]">
+              <span className="px-3 py-1.5 text-sm font-medium rounded-full bg-accent text-text-inverse">
                 All
               </span>
               {categories.map((cat) => (
                 <span
                   key={cat}
-                  className="px-3 py-1.5 text-sm font-medium rounded-full border border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--border-strong)] transition-colors cursor-default"
+                  className="px-3 py-1.5 text-sm font-medium rounded-full border border-border text-text-secondary hover:border-border-strong transition-colors cursor-default"
                 >
                   {cat}
                 </span>
@@ -74,7 +74,7 @@ export default function BlogPage() {
         {featuredPost && (
           <section className="container-site mb-12" aria-label="Featured post">
             <div className="max-w-3xl mx-auto">
-              <p className="text-xs uppercase tracking-widest font-semibold text-[var(--text-tertiary)] mb-3">
+              <p className="text-xs uppercase tracking-widest font-semibold text-text-tertiary mb-3">
                 Featured
               </p>
               <PostCard post={featuredPost} />
@@ -92,7 +92,7 @@ export default function BlogPage() {
 
           {posts.length === 0 && (
             <div className="text-center py-20">
-              <p className="text-[var(--text-tertiary)] text-lg">No posts yet. Check back soon!</p>
+              <p className="text-text-tertiary text-lg">No posts yet. Check back soon!</p>
             </div>
           )}
         </section>

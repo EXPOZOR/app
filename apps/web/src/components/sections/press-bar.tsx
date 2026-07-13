@@ -22,7 +22,7 @@ export function PressBar() {
   return (
     <section
       aria-label="Product trust badges"
-      className="compact-band-py relative border-y border-[var(--border)] overflow-hidden"
+      className="compact-band-py relative border-y border-border overflow-hidden"
     >
       <div className="container-site">
         {/* Label */}
@@ -31,7 +31,7 @@ export function PressBar() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center text-[11px] font-semibold tracking-[0.12em] uppercase text-[var(--text-tertiary)] mb-6"
+          className="type-eyebrow mb-6 text-center text-text-tertiary"
         >
           Built with
         </motion.p>
@@ -47,10 +47,10 @@ export function PressBar() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06, duration: 0.5, ease: EASE_OUT }}
-                className="flex items-center gap-2 text-[var(--text-secondary)] opacity-70"
+                className="flex items-center gap-2 text-text-secondary opacity-70"
               >
                 <Icon size={14} strokeWidth={1.5} aria-hidden="true" />
-                <span className="text-[0.8rem] font-medium tracking-tight">{badge.label}</span>
+                <span className="text-sm font-medium tracking-tight">{badge.label}</span>
               </motion.div>
             );
           })}

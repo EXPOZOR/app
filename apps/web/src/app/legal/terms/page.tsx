@@ -26,14 +26,11 @@ export default function TermsPage() {
       <main id="main-content" className="pt-20">
         <div className="container-site measure-prose section-py">
           <h1 className="text-4xl font-bold tracking-tight mb-2">Terms of Service</h1>
-          <p className="text-[var(--text-tertiary)] text-sm mb-10">Last updated: July 2026</p>
+          <p className="text-text-tertiary text-sm mb-10">Last updated: July 2026</p>
 
-          <div className="space-y-8 text-[var(--text-secondary)] leading-relaxed">
+          <div className="space-y-8 text-text-secondary leading-relaxed">
             <section aria-labelledby="terms-acceptance">
-              <h2
-                id="terms-acceptance"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="terms-acceptance" className="text-xl font-semibold text-text-primary mb-3">
                 1. Acceptance of terms
               </h2>
               <p>
@@ -43,10 +40,7 @@ export default function TermsPage() {
             </section>
 
             <section aria-labelledby="terms-service">
-              <h2
-                id="terms-service"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="terms-service" className="text-xl font-semibold text-text-primary mb-3">
                 2. Current service
               </h2>
               <p>
@@ -61,7 +55,7 @@ export default function TermsPage() {
             <section aria-labelledby="terms-not-financial-service">
               <h2
                 id="terms-not-financial-service"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
+                className="text-xl font-semibold text-text-primary mb-3"
               >
                 3. Not a financial service
               </h2>
@@ -74,10 +68,7 @@ export default function TermsPage() {
             </section>
 
             <section aria-labelledby="terms-waitlist">
-              <h2
-                id="terms-waitlist"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="terms-waitlist" className="text-xl font-semibold text-text-primary mb-3">
                 4. Waitlist communications
               </h2>
               <p>
@@ -91,7 +82,7 @@ export default function TermsPage() {
             <section aria-labelledby="terms-acceptable-use">
               <h2
                 id="terms-acceptable-use"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
+                className="text-xl font-semibold text-text-primary mb-3"
               >
                 5. Acceptable use
               </h2>
@@ -106,7 +97,7 @@ export default function TermsPage() {
             </section>
 
             <section aria-labelledby="terms-data">
-              <h2 id="terms-data" className="text-xl font-semibold text-[var(--text-primary)] mb-3">
+              <h2 id="terms-data" className="text-xl font-semibold text-text-primary mb-3">
                 6. Your data
               </h2>
               <p>
@@ -114,7 +105,7 @@ export default function TermsPage() {
                 waitlist information to operate the site, avoid duplicate records, send requested
                 communications, and respond to support requests. We do not sell your personal data.
                 See our{" "}
-                <a href="/legal/privacy" className="text-[var(--accent)] hover:underline">
+                <a href="/legal/privacy" className="text-accent hover:underline">
                   Privacy Policy
                 </a>{" "}
                 for details.
@@ -122,7 +113,7 @@ export default function TermsPage() {
             </section>
 
             <section aria-labelledby="terms-ai">
-              <h2 id="terms-ai" className="text-xl font-semibold text-[var(--text-primary)] mb-3">
+              <h2 id="terms-ai" className="text-xl font-semibold text-text-primary mb-3">
                 7. Planned AI and OCR features
               </h2>
               <p>
@@ -133,10 +124,7 @@ export default function TermsPage() {
             </section>
 
             <section aria-labelledby="terms-billing">
-              <h2
-                id="terms-billing"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="terms-billing" className="text-xl font-semibold text-text-primary mb-3">
                 8. Billing
               </h2>
               <p>
@@ -148,16 +136,13 @@ export default function TermsPage() {
             </section>
 
             <section aria-labelledby="terms-refunds">
-              <h2
-                id="terms-refunds"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="terms-refunds" className="text-xl font-semibold text-text-primary mb-3">
                 9. Refunds and cancellation
               </h2>
               <p>
                 Because billing is not active, there are no paid subscriptions to cancel and no
                 payments to refund. See our{" "}
-                <a href="/legal/refund" className="text-[var(--accent)] hover:underline">
+                <a href="/legal/refund" className="text-accent hover:underline">
                   Refund Policy
                 </a>{" "}
                 for the current billing status.
@@ -165,7 +150,7 @@ export default function TermsPage() {
             </section>
 
             <section aria-labelledby="terms-ip">
-              <h2 id="terms-ip" className="text-xl font-semibold text-[var(--text-primary)] mb-3">
+              <h2 id="terms-ip" className="text-xl font-semibold text-text-primary mb-3">
                 10. Intellectual property
               </h2>
               <p>
@@ -176,10 +161,7 @@ export default function TermsPage() {
             </section>
 
             <section aria-labelledby="terms-disclaimers">
-              <h2
-                id="terms-disclaimers"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="terms-disclaimers" className="text-xl font-semibold text-text-primary mb-3">
                 11. Disclaimers
               </h2>
               <p>
@@ -191,10 +173,7 @@ export default function TermsPage() {
             </section>
 
             <section aria-labelledby="terms-liability">
-              <h2
-                id="terms-liability"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="terms-liability" className="text-xl font-semibold text-text-primary mb-3">
                 12. Limitation of liability
               </h2>
               <p>
@@ -206,10 +185,7 @@ export default function TermsPage() {
             </section>
 
             <section aria-labelledby="terms-indemnity">
-              <h2
-                id="terms-indemnity"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="terms-indemnity" className="text-xl font-semibold text-text-primary mb-3">
                 13. Indemnification
               </h2>
               <p>
@@ -220,10 +196,7 @@ export default function TermsPage() {
             </section>
 
             <section aria-labelledby="terms-changes">
-              <h2
-                id="terms-changes"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="terms-changes" className="text-xl font-semibold text-text-primary mb-3">
                 14. Changes to terms
               </h2>
               <p>
@@ -234,10 +207,7 @@ export default function TermsPage() {
             </section>
 
             <section aria-labelledby="terms-governing-law">
-              <h2
-                id="terms-governing-law"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="terms-governing-law" className="text-xl font-semibold text-text-primary mb-3">
                 15. Governing law
               </h2>
               <p>
@@ -247,10 +217,7 @@ export default function TermsPage() {
             </section>
 
             <section aria-labelledby="terms-disputes">
-              <h2
-                id="terms-disputes"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="terms-disputes" className="text-xl font-semibold text-text-primary mb-3">
                 16. Dispute resolution
               </h2>
               <p>
@@ -260,15 +227,12 @@ export default function TermsPage() {
             </section>
 
             <section aria-labelledby="terms-contact">
-              <h2
-                id="terms-contact"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="terms-contact" className="text-xl font-semibold text-text-primary mb-3">
                 17. Contact
               </h2>
               <p>
                 Legal questions:{" "}
-                <a href="mailto:legal@expozor.com" className="text-[var(--accent)] hover:underline">
+                <a href="mailto:legal@expozor.com" className="text-accent hover:underline">
                   legal@expozor.com
                 </a>
               </p>

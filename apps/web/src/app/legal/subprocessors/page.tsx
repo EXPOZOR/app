@@ -83,40 +83,40 @@ export default function SubprocessorsPage() {
       <main id="main-content" className="pt-20">
         <div className="container-site measure-wide section-py">
           <h1 className="text-4xl font-bold tracking-tight mb-2">Subprocessors</h1>
-          <p className="text-[var(--text-tertiary)] text-sm mb-4">Last updated: July 2026</p>
-          <p className="text-[var(--text-secondary)] mb-10 leading-relaxed max-w-2xl">
+          <p className="text-text-tertiary text-sm mb-4">Last updated: July 2026</p>
+          <p className="text-text-secondary mb-10 leading-relaxed max-w-2xl">
             EXPOZOR is currently waitlist-only. This list reflects services confirmed for the public
             site plus explicit notes for provider categories that are not active.
           </p>
 
-          <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--border)]">
+          <div className="overflow-x-auto rounded-lg border border-border">
             <table className="w-full text-sm text-left">
               <thead>
-                <tr className="border-b border-[var(--border)] bg-[var(--bg-elev-1)]">
+                <tr className="border-b border-border bg-bg-elev-1">
                   <th
                     scope="col"
-                    className="px-4 py-3 font-semibold text-[var(--text-primary)] whitespace-nowrap"
+                    className="px-4 py-3 font-semibold text-text-primary whitespace-nowrap"
                   >
                     Category
                   </th>
                   <th
                     scope="col"
-                    className="px-4 py-3 font-semibold text-[var(--text-primary)] whitespace-nowrap"
+                    className="px-4 py-3 font-semibold text-text-primary whitespace-nowrap"
                   >
                     Provider
                   </th>
-                  <th scope="col" className="px-4 py-3 font-semibold text-[var(--text-primary)]">
+                  <th scope="col" className="px-4 py-3 font-semibold text-text-primary">
                     Purpose
                   </th>
                   <th
                     scope="col"
-                    className="px-4 py-3 font-semibold text-[var(--text-primary)] whitespace-nowrap"
+                    className="px-4 py-3 font-semibold text-text-primary whitespace-nowrap"
                   >
                     Location
                   </th>
                   <th
                     scope="col"
-                    className="px-4 py-3 font-semibold text-[var(--text-primary)] whitespace-nowrap"
+                    className="px-4 py-3 font-semibold text-text-primary whitespace-nowrap"
                   >
                     Privacy / DPA
                   </th>
@@ -126,21 +126,21 @@ export default function SubprocessorsPage() {
                 {subprocessors.map((sp) => (
                   <tr
                     key={`${sp.category}-${sp.name}`}
-                    className="border-b border-[var(--border)] last:border-0 bg-[var(--bg-surface)] odd:bg-[var(--bg-elev-1)]"
+                    className="border-b border-border last:border-0 bg-bg-surface odd:bg-bg-elev-1"
                   >
-                    <td className="px-4 py-3 text-[var(--text-muted)] whitespace-nowrap align-top">
+                    <td className="px-4 py-3 text-text-muted whitespace-nowrap align-top">
                       {sp.category}
                     </td>
-                    <td className="px-4 py-3 font-medium text-[var(--text-primary)] whitespace-nowrap align-top">
+                    <td className="px-4 py-3 font-medium text-text-primary whitespace-nowrap align-top">
                       {sp.name}
                     </td>
-                    <td className="px-4 py-3 text-[var(--text-secondary)] align-top">
+                    <td className="px-4 py-3 text-text-secondary align-top">
                       {sp.purpose}
                       {sp.note && (
-                        <p className="mt-1 text-xs text-[var(--text-tertiary)] italic">{sp.note}</p>
+                        <p className="mt-1 text-xs text-text-tertiary italic">{sp.note}</p>
                       )}
                     </td>
-                    <td className="px-4 py-3 text-[var(--text-muted)] whitespace-nowrap align-top">
+                    <td className="px-4 py-3 text-text-muted whitespace-nowrap align-top">
                       {sp.location}
                     </td>
                     <td className="px-4 py-3 align-top">
@@ -149,12 +149,12 @@ export default function SubprocessorsPage() {
                           href={sp.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[var(--accent)] hover:underline whitespace-nowrap"
+                          className="text-accent hover:underline whitespace-nowrap"
                         >
                           {sp.linkLabel}
                         </a>
                       ) : (
-                        <span className="text-[var(--text-tertiary)]">Not applicable</span>
+                        <span className="text-text-tertiary">Not applicable</span>
                       )}
                     </td>
                   </tr>
@@ -163,10 +163,10 @@ export default function SubprocessorsPage() {
             </table>
           </div>
 
-          <div className="mt-8 text-[var(--text-secondary)] space-y-4 text-sm leading-relaxed">
+          <div className="mt-8 text-text-secondary space-y-4 text-sm leading-relaxed">
             <p>
               To ask about this list, contact{" "}
-              <a href="mailto:privacy@expozor.com" className="text-[var(--accent)] hover:underline">
+              <a href="mailto:privacy@expozor.com" className="text-accent hover:underline">
                 privacy@expozor.com
               </a>
               .

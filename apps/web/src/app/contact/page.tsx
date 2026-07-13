@@ -60,21 +60,18 @@ export default function ContactPage() {
                 <a
                   key={contact.email}
                   href={`mailto:${contact.email}`}
-                  className="flex items-center gap-4 p-5 rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--bg-surface)] hover:border-[var(--border-strong)] transition-all group"
+                  className="flex items-center gap-4 p-5 rounded-lg border border-border bg-bg-surface hover:border-border-strong transition-all group"
                 >
                   <div
-                    className="w-10 h-10 rounded-[var(--radius)] bg-[var(--accent-subtle)] border border-[var(--border-accent)] flex items-center justify-center shrink-0 group-hover:bg-[var(--accent)] transition-colors"
+                    className="w-10 h-10 rounded bg-accent-subtle border border-border-accent flex items-center justify-center shrink-0 group-hover:bg-accent transition-colors"
                     aria-hidden="true"
                   >
-                    <Icon
-                      size={18}
-                      className="text-[var(--accent)] group-hover:text-[var(--text-inverse)]"
-                    />
+                    <Icon size={18} className="text-accent group-hover:text-text-inverse" />
                   </div>
                   <div>
-                    <p className="font-medium text-[var(--text-primary)]">{contact.label}</p>
-                    <p className="text-xs text-[var(--text-tertiary)]">{contact.desc}</p>
-                    <p className="text-sm text-[var(--accent)] mt-0.5">{contact.email}</p>
+                    <p className="font-medium text-text-primary">{contact.label}</p>
+                    <p className="text-xs text-text-tertiary">{contact.desc}</p>
+                    <p className="text-sm text-accent mt-0.5">{contact.email}</p>
                   </div>
                 </a>
               );

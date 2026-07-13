@@ -35,7 +35,7 @@ export default function CareersPage() {
 
           <Card className="p-8 text-center">
             <h2 className="text-2xl font-bold mb-3">No open roles right now.</h2>
-            <p className="text-[var(--text-secondary)] mb-6">
+            <p className="text-text-secondary mb-6">
               We hire slowly and carefully. If you love what we're building, reach out anyway —
               great people don't always appear when the role does.
             </p>

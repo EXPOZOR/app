@@ -226,7 +226,7 @@ function SearchBar({
         placeholder="Search questions…"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="bg-bg-elev-2 pl-10 pr-12 text-[0.9375rem]"
+        className="bg-bg-elev-2 pl-10 pr-12 text-base"
       />
 
       {/* Clear × button */}

@@ -19,7 +19,7 @@ export function PostHeader({ post }: { post: BlogPost }) {
       {/* Back link */}
       <Link
         href="/blog"
-        className="inline-flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors mb-8"
+        className="inline-flex items-center gap-2 text-sm text-text-secondary hover:text-text-primary transition-colors mb-8"
       >
         <ArrowLeft size={16} aria-hidden="true" />
         All posts
@@ -28,7 +28,7 @@ export function PostHeader({ post }: { post: BlogPost }) {
       {/* Category */}
       <div className="flex items-center gap-3 mb-4">
         <span
-          className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full"
+          className="px-2.5 py-1 text-xs font-bold uppercase tracking-widest rounded-full"
           style={{
             background: `${color}1A`,
             color,
@@ -46,13 +46,11 @@ export function PostHeader({ post }: { post: BlogPost }) {
       <p className="type-lede mb-6 max-w-2xl">{post.frontmatter.excerpt}</p>
 
       {/* Meta row */}
-      <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--text-tertiary)] pb-8 border-b border-[var(--border)]">
+      <div className="flex flex-wrap items-center gap-4 text-sm text-text-tertiary pb-8 border-b border-border">
         <div>
-          <span className="font-medium text-[var(--text-primary)]">{post.frontmatter.author}</span>
+          <span className="font-medium text-text-primary">{post.frontmatter.author}</span>
           {post.frontmatter.authorRole && (
-            <span className="ml-1 text-[var(--text-tertiary)]">
-              · {post.frontmatter.authorRole}
-            </span>
+            <span className="ml-1 text-text-tertiary">· {post.frontmatter.authorRole}</span>
           )}
         </div>
         <span className="flex items-center gap-1">

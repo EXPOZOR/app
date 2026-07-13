@@ -29,10 +29,10 @@ export default function AboutPage() {
             scale="editorial"
             className="mb-6"
           />
-          <div className="prose-custom space-y-6 text-[var(--text-secondary)] text-lg leading-relaxed">
+          <div className="prose-custom space-y-6 text-text-secondary text-lg leading-relaxed">
             <p>
-              Hi, I'm <strong className="text-[var(--text-primary)]">Mohamed Karrach</strong> — the
-              founder and sole developer behind EXPOZOR.
+              Hi, I'm <strong className="text-text-primary">Mohamed Karrach</strong> — the founder
+              and sole developer behind EXPOZOR.
             </p>
             <p>
               Managing personal finances shouldn't feel like filing taxes. Yet every app I tried was
@@ -49,11 +49,11 @@ export default function AboutPage() {
               respects people. Every line of code, every design decision, and every word on this
               site is mine — and I stand behind all of it.
             </p>
-            <div className="pt-6 border-t border-[var(--border)]">
-              <blockquote className="text-[var(--text-primary)] text-xl font-medium italic pl-5 border-l-2 border-[var(--decorative)]">
+            <div className="pt-6 border-t border-border">
+              <blockquote className="text-text-primary text-xl font-medium italic pl-5 border-l-2 border-decorative">
                 "Calm, intelligent money. That's all I'm trying to make."
               </blockquote>
-              <p className="mt-3 text-sm text-[var(--text-muted)]">— Mohamed Karrach, Founder</p>
+              <p className="mt-3 text-sm text-text-muted">— Mohamed Karrach, Founder</p>
             </div>
           </div>
         </div>

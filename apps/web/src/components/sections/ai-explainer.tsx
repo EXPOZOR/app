@@ -112,13 +112,11 @@ function ReceiptVisual({
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: i * 0.1 }}
-          className="flex items-center justify-between p-3 rounded-[var(--radius)] bg-[var(--bg)] border border-[var(--border)]"
+          className="flex items-center justify-between p-3 rounded bg-bg border border-border"
         >
           <div>
-            <p className="text-[10px] uppercase tracking-widest text-[var(--text-tertiary)]">
-              {item.label}
-            </p>
-            <p className="text-sm font-medium text-[var(--text-primary)]">{item.value}</p>
+            <p className="text-xs uppercase tracking-widest text-text-tertiary">{item.label}</p>
+            <p className="text-sm font-medium text-text-primary">{item.value}</p>
           </div>
           <span
             className="text-xs font-mono px-2 py-0.5 rounded-full"
@@ -156,11 +154,11 @@ function CategoriesVisual({
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: i * 0.1 }}
-            className="flex items-center gap-3 p-3 rounded-[var(--radius)] bg-[var(--bg)] border border-[var(--border)]"
+            className="flex items-center gap-3 p-3 rounded bg-bg border border-border"
           >
             <div className="w-2 h-2 rounded-full shrink-0" style={{ background: color }} />
-            <span className="text-sm text-[var(--text-primary)] flex-1">{item.merchant}</span>
-            <span className="text-xs text-[var(--text-tertiary)]">{item.category}</span>
+            <span className="text-sm text-text-primary flex-1">{item.merchant}</span>
+            <span className="text-xs text-text-tertiary">{item.category}</span>
             <span className="text-xs font-mono font-medium" style={{ color }}>
               {item.confidence}%
             </span>
@@ -191,17 +189,15 @@ function BudgetsVisual({
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: i * 0.1 }}
-            className="p-3 rounded-[var(--radius)] bg-[var(--bg)] border border-[var(--border)]"
+            className="p-3 rounded bg-bg border border-border"
           >
             <div className="flex items-center justify-between mb-1.5">
-              <span className="text-sm font-medium text-[var(--text-primary)]">
-                {item.category}
-              </span>
-              <span className="text-xs text-[var(--text-tertiary)]">
+              <span className="text-sm font-medium text-text-primary">{item.category}</span>
+              <span className="text-xs text-text-tertiary">
                 ${item.spent} / ${item.budget}
               </span>
             </div>
-            <div className="h-2 rounded-full bg-[var(--bg-elevated)] overflow-hidden">
+            <div className="h-2 rounded-full bg-bg-elevated overflow-hidden">
               <motion.div
                 className="h-full rounded-full"
                 style={{ background: item.color }}
@@ -241,7 +237,7 @@ function InsightsVisual({
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: i * 0.15 }}
-          className="flex items-start gap-3 p-3 rounded-[var(--radius)] border"
+          className="flex items-start gap-3 p-3 rounded border"
           style={{
             borderColor: borderColors[item.type] || "#ffffff1A",
             background: bgColors[item.type] || "transparent",
@@ -250,7 +246,7 @@ function InsightsVisual({
           <span className="text-lg shrink-0" aria-hidden="true">
             {item.icon}
           </span>
-          <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{item.text}</p>
+          <p className="text-sm text-text-secondary leading-relaxed">{item.text}</p>
         </motion.div>
       ))}
     </div>
@@ -274,7 +270,7 @@ export function AiExplainerSection() {
       <div className="container-site">
         {/* Section header */}
         <div className="text-center mb-12 max-w-2xl mx-auto">
-          <p className="text-xs uppercase tracking-widest font-semibold text-[var(--accent)] mb-3">
+          <p className="text-xs uppercase tracking-widest font-semibold text-accent mb-3">
             How it works
           </p>
           <h2
@@ -283,7 +279,7 @@ export function AiExplainerSection() {
           >
             From expense entry to insight, carefully
           </h2>
-          <p className="text-[var(--text-secondary)] text-lg">
+          <p className="text-text-secondary text-lg">
             Four planned steps, with user review before relying on suggestions.
           </p>
         </div>
@@ -300,8 +296,8 @@ export function AiExplainerSection() {
                 onClick={() => goTo(i)}
                 className={`flex min-h-11 items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                   isActive
-                    ? "text-[var(--text-inverse)] shadow-lg"
-                    : "border border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
+                    ? "text-text-inverse shadow-lg"
+                    : "border border-border text-text-secondary hover:border-border-strong"
                 }`}
                 style={
                   isActive
@@ -330,7 +326,7 @@ export function AiExplainerSection() {
                 transition={{ duration: 0.3 }}
               >
                 <div
-                  className="w-12 h-12 rounded-[var(--radius-lg)] flex items-center justify-center mb-5"
+                  className="w-12 h-12 rounded-lg flex items-center justify-center mb-5"
                   style={{
                     background: `${step.color}1A`,
                     border: `1px solid ${step.color}33`,
@@ -344,10 +340,10 @@ export function AiExplainerSection() {
                 >
                   Step {activeStep + 1} of {STEPS.length}
                 </p>
-                <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-3 leading-tight">
+                <h3 className="text-2xl font-bold text-text-primary mb-3 leading-tight">
                   {step.title}
                 </h3>
-                <p className="text-[var(--text-secondary)] leading-relaxed">{step.description}</p>
+                <p className="text-text-secondary leading-relaxed">{step.description}</p>
 
                 {/* Prev/Next */}
                 <div className="flex gap-2 mt-6">
@@ -355,7 +351,7 @@ export function AiExplainerSection() {
                     type="button"
                     onClick={() => goTo(activeStep - 1)}
                     disabled={activeStep === 0}
-                    className="w-11 h-11 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--text-secondary)] hover:border-[var(--border-strong)] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="w-11 h-11 rounded-full border border-border flex items-center justify-center text-text-secondary hover:border-border-strong transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                     aria-label="Previous step"
                   >
                     <ChevronLeft size={16} />
@@ -364,7 +360,7 @@ export function AiExplainerSection() {
                     type="button"
                     onClick={() => goTo(activeStep + 1)}
                     disabled={activeStep === STEPS.length - 1}
-                    className="w-11 h-11 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--text-secondary)] hover:border-[var(--border-strong)] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="w-11 h-11 rounded-full border border-border flex items-center justify-center text-text-secondary hover:border-border-strong transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                     aria-label="Next step"
                   >
                     <ChevronRight size={16} />
@@ -381,7 +377,7 @@ export function AiExplainerSection() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.3 }}
-                className="rounded-[var(--radius-xl)] border border-[var(--border)] bg-[var(--bg-surface)] p-5"
+                className="rounded-lg border border-border bg-bg-surface p-5"
                 style={{
                   borderColor: `${step.color}33`,
                 }}
@@ -399,7 +395,7 @@ export function AiExplainerSection() {
 
         {/* Progress bar */}
         <div className="max-w-4xl mx-auto mt-8">
-          <div className="h-1 rounded-full bg-[var(--bg-elevated)] overflow-hidden">
+          <div className="h-1 rounded-full bg-bg-elevated overflow-hidden">
             <motion.div
               className="h-full rounded-full"
               style={{ background: step.color }}

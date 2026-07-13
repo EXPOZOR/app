@@ -35,15 +35,15 @@ export default function ChangelogPage() {
               return (
                 <article
                   key={entry.frontmatter.version}
-                  className="relative pl-8 border-l border-[var(--border)]"
+                  className="relative pl-8 border-l border-border"
                 >
                   <div
-                    className="absolute -left-1.5 top-1 w-3 h-3 rounded-full border-2 border-[var(--decorative)] bg-[var(--bg)]"
+                    className="absolute -left-1.5 top-1 w-3 h-3 rounded-full border-2 border-decorative bg-bg"
                     aria-hidden="true"
                   />
                   <div className="flex items-center gap-3 mb-3">
                     <span
-                      className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                      className="px-2 py-0.5 text-xs font-bold rounded-full"
                       style={{
                         background: `${tagColor}1A`,
                         color: tagColor,
@@ -52,30 +52,27 @@ export default function ChangelogPage() {
                     >
                       {entry.frontmatter.tag}
                     </span>
-                    <time className="text-sm text-[var(--text-tertiary)]">
+                    <time className="text-sm text-text-tertiary">
                       {new Date(entry.frontmatter.date).toLocaleDateString("en-US", {
                         year: "numeric",
                         month: "long",
                       })}
                     </time>
-                    <span className="text-sm font-mono text-[var(--text-tertiary)]">
+                    <span className="text-sm font-mono text-text-tertiary">
                       v{entry.frontmatter.version}
                     </span>
                   </div>
-                  <div className="changelog-content text-sm text-[var(--text-secondary)]">
+                  <div className="changelog-content text-sm text-text-secondary">
                     <MDXRemote
                       source={entry.content}
                       components={{
                         ul: (props) => <ul className="space-y-2 list-none" {...props} />,
                         li: (props) => (
                           <li
-                            className="flex items-start gap-2 text-sm text-[var(--text-secondary)]"
+                            className="flex items-start gap-2 text-sm text-text-secondary"
                             {...props}
                           >
-                            <span
-                              className="text-[var(--accent)] mt-0.5 shrink-0"
-                              aria-hidden="true"
-                            >
+                            <span className="text-accent mt-0.5 shrink-0" aria-hidden="true">
                               +
                             </span>
                             <span>{props.children}</span>
@@ -89,10 +86,10 @@ export default function ChangelogPage() {
             })}
           </div>
 
-          <div className="mt-12 pt-8 border-t border-[var(--border)]">
-            <p className="text-sm text-[var(--text-tertiary)]">
+          <div className="mt-12 pt-8 border-t border-border">
+            <p className="text-sm text-text-tertiary">
               Subscribe to the{" "}
-              <a href="/changelog/rss.xml" className="text-[var(--accent)] hover:underline">
+              <a href="/changelog/rss.xml" className="text-accent hover:underline">
                 RSS feed
               </a>{" "}
               to get updates in your reader.

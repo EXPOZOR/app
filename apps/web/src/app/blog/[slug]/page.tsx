@@ -110,7 +110,7 @@ export default async function BlogPostPage({
         {/* Related posts */}
         {relatedPosts.length > 0 && (
           <section className="container-site measure-prose pb-20" aria-label="Related posts">
-            <div className="pt-10 border-t border-[var(--border)]">
+            <div className="pt-10 border-t border-border">
               <h2 className="type-article-subheading mb-6">Keep reading</h2>
               <div className="grid md:grid-cols-2 gap-5">
                 {relatedPosts.map((p) => (

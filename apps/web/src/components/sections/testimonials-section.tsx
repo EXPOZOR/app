@@ -112,7 +112,7 @@ export function TestimonialsSection() {
                 transition={{ delay: i * 0.08, duration: 0.5, ease: EASE_OUT }}
                 style={{
                   padding: "1.5rem",
-                  borderRadius: "var(--radius-xl)",
+                  borderRadius: "var(--radius-lg)",
                   background: "var(--bg-surface)",
                   border: "1px solid var(--border)",
                   display: "flex",

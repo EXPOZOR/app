@@ -26,13 +26,13 @@ export default function DisclaimerPage() {
       <main id="main-content" className="pt-20">
         <div className="container-site measure-prose section-py">
           <h1 className="text-4xl font-bold tracking-tight mb-2">Disclaimer</h1>
-          <p className="text-[var(--text-tertiary)] text-sm mb-10">Last updated: July 2026</p>
+          <p className="text-text-tertiary text-sm mb-10">Last updated: July 2026</p>
 
-          <div className="space-y-8 text-[var(--text-secondary)] leading-relaxed">
+          <div className="space-y-8 text-text-secondary leading-relaxed">
             <section aria-labelledby="disclaimer-not-a-bank">
               <h2
                 id="disclaimer-not-a-bank"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
+                className="text-xl font-semibold text-text-primary mb-3"
               >
                 Not a bank or financial institution
               </h2>
@@ -45,10 +45,7 @@ export default function DisclaimerPage() {
             </section>
 
             <section aria-labelledby="disclaimer-no-money">
-              <h2
-                id="disclaimer-no-money"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="disclaimer-no-money" className="text-xl font-semibold text-text-primary mb-3">
                 Expense tracking only
               </h2>
               <p>
@@ -60,7 +57,7 @@ export default function DisclaimerPage() {
             <section aria-labelledby="disclaimer-no-credentials">
               <h2
                 id="disclaimer-no-credentials"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
+                className="text-xl font-semibold text-text-primary mb-3"
               >
                 No bank credentials collected
               </h2>
@@ -75,7 +72,7 @@ export default function DisclaimerPage() {
             <section aria-labelledby="disclaimer-no-advice">
               <h2
                 id="disclaimer-no-advice"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
+                className="text-xl font-semibold text-text-primary mb-3"
               >
                 No financial, tax, or professional advice
               </h2>
@@ -92,7 +89,7 @@ export default function DisclaimerPage() {
             <section aria-labelledby="disclaimer-ai-accuracy">
               <h2
                 id="disclaimer-ai-accuracy"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
+                className="text-xl font-semibold text-text-primary mb-3"
               >
                 AI and OCR accuracy
               </h2>
@@ -105,10 +102,7 @@ export default function DisclaimerPage() {
             </section>
 
             <section aria-labelledby="disclaimer-purpose">
-              <h2
-                id="disclaimer-purpose"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="disclaimer-purpose" className="text-xl font-semibold text-text-primary mb-3">
                 Informational and organizational purposes only
               </h2>
               <p>
@@ -123,7 +117,7 @@ export default function DisclaimerPage() {
             <section aria-labelledby="disclaimer-no-warranty">
               <h2
                 id="disclaimer-no-warranty"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
+                className="text-xl font-semibold text-text-primary mb-3"
               >
                 No warranty
               </h2>
@@ -139,7 +133,7 @@ export default function DisclaimerPage() {
             <section aria-labelledby="disclaimer-limitation">
               <h2
                 id="disclaimer-limitation"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
+                className="text-xl font-semibold text-text-primary mb-3"
               >
                 Limitation of liability
               </h2>
@@ -153,10 +147,7 @@ export default function DisclaimerPage() {
             </section>
 
             <section aria-labelledby="disclaimer-changes">
-              <h2
-                id="disclaimer-changes"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="disclaimer-changes" className="text-xl font-semibold text-text-primary mb-3">
                 Changes to this disclaimer
               </h2>
               <p>
@@ -167,15 +158,12 @@ export default function DisclaimerPage() {
             </section>
 
             <section aria-labelledby="disclaimer-contact">
-              <h2
-                id="disclaimer-contact"
-                className="text-xl font-semibold text-[var(--text-primary)] mb-3"
-              >
+              <h2 id="disclaimer-contact" className="text-xl font-semibold text-text-primary mb-3">
                 Contact
               </h2>
               <p>
                 Questions about this Disclaimer:{" "}
-                <a href="mailto:legal@expozor.com" className="text-[var(--accent)] hover:underline">
+                <a href="mailto:legal@expozor.com" className="text-accent hover:underline">
                   legal@expozor.com
                 </a>
               </p>

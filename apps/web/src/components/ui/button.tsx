@@ -32,7 +32,7 @@ export function buttonClassName({
   className?: string | undefined;
 } = {}) {
   return cn(
-    "inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded font-semibold no-underline transition-[background-color,border-color,color,opacity,transform,box-shadow] duration-150 ease-out active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:active:scale-100",
+    "control-transition tap-shrink inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded font-semibold no-underline duration-150 ease-out disabled:cursor-not-allowed disabled:opacity-40",
     variantClasses[variant],
     sizeClasses[size],
     fullWidth && "w-full",

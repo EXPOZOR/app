@@ -40,11 +40,8 @@
     /* ── Primary accent: mint (CTA and focus emphasis only) ───────── */
     --accent: var(--brand-mint);
     --accent-hover: #2ec988;
-    --accent-dim: #2ec988; /* legacy alias */
     --accent-subtle: color-mix(in oklch, var(--brand-mint) 18%, transparent);
     --accent-glow: color-mix(in oklch, var(--brand-mint) 25%, transparent);
-    --accent-border: color-mix(in oklch, var(--brand-mint) 35%, transparent);
-    --accent-soft: color-mix(in oklch, var(--brand-mint) 18%, transparent);
 
     /* ── Secondary accent: lilac (gradient / decorative only) */
     --accent-2: var(--brand-lilac);
@@ -56,6 +53,7 @@
     /* ── Semantic colours ──────────────────────────────────── */
     --positive: #34d399;
     --positive-subtle: rgba(52, 211, 153, 0.1);
+    --positive-border: color-mix(in oklch, var(--positive) 35%, transparent);
     --success: #4ade80;
     --success-subtle: rgba(74, 222, 128, 0.1);
     --warn: #fbbf24;
@@ -64,6 +62,11 @@
     --danger-subtle: rgba(248, 113, 113, 0.1);
     --info: #60a5fa;
     --info-subtle: rgba(96, 165, 250, 0.1);
+
+    /* ── Product mockup chrome ──────────────────────────────── */
+    --chrome-close: #ff5f57;
+    --chrome-minimize: #febc2e;
+    --chrome-maximize: #28c840;
 
     /* ── Text ──────────────────────────────────────────────── */
     --text: #f5f5f7; /* brief canonical name         */
@@ -84,7 +87,6 @@
     --radius-md: 14px; /* brief value */
     --radius: 12px; /* legacy alias */
     --radius-lg: 20px; /* brief value */
-    --radius-xl: 20px; /* legacy alias */
     --radius-2xl: 28px;
     --radius-full: 9999px;
 
@@ -96,7 +98,6 @@
     --shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
     --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.65);
     --shadow-xl: 0 16px 60px rgba(0, 0, 0, 0.7);
-    --shadow-accent: 0 0 40px rgba(61, 220, 151, 0.12);
 
     /* ── Motion ────────────────────────────────────────────── */
     --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -159,10 +160,8 @@
   --color-brand-lilac: var(--brand-lilac);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
-  --color-accent-dim: var(--accent-dim);
   --color-accent-subtle: var(--accent-subtle);
   --color-accent-glow: var(--accent-glow);
-  --color-accent-soft: var(--accent-soft);
   --color-accent-2: var(--accent-2);
   --color-accent-2-dim: var(--accent-2-dim);
   --color-decorative: var(--decorative);
@@ -170,10 +169,17 @@
 
   /* Semantic */
   --color-positive: var(--positive);
+  --color-positive-subtle: var(--positive-subtle);
+  --color-positive-border: var(--positive-border);
   --color-success: var(--success);
   --color-warn: var(--warn);
   --color-danger: var(--danger);
   --color-info: var(--info);
+
+  /* Product mockup chrome */
+  --color-chrome-close: var(--chrome-close);
+  --color-chrome-minimize: var(--chrome-minimize);
+  --color-chrome-maximize: var(--chrome-maximize);
 
   /* Text */
   --color-text: var(--text);
@@ -194,7 +200,6 @@
   --radius-md: var(--radius-md);
   --radius-DEFAULT: var(--radius);
   --radius-lg: var(--radius-lg);
-  --radius-xl: var(--radius-xl);
   --radius-2xl: var(--radius-2xl);
   --radius-full: var(--radius-full);
 
@@ -383,10 +388,6 @@ body::after {
   padding-block: var(--space-compact-band);
 }
 
-.hero-py {
-  padding-block: var(--space-hero);
-}
-
 .measure-form {
   width: 100%;
   max-width: var(--measure-form);
@@ -400,11 +401,6 @@ body::after {
 .measure-prose {
   width: 100%;
   max-width: var(--measure-prose);
-}
-
-.measure-section-copy {
-  width: 100%;
-  max-width: var(--measure-section-copy);
 }
 
 .measure-section {
@@ -436,6 +432,22 @@ body::after {
   -webkit-backdrop-filter: blur(16px) saturate(160%);
 }
 
+.control-transition {
+  transition-property: background-color, border-color, color, opacity, transform, box-shadow;
+}
+
+.tap-shrink:active {
+  transform: scale(0.98);
+}
+
+.tap-shrink:disabled:active {
+  transform: none;
+}
+
+.demo-defocus {
+  filter: blur(2px);
+}
+
 /* ── Gradient text: mint → lilac ────────────────────────────── */
 /* NOTE: used sparingly — not mint-as-decoration in general */
 .text-gradient {
@@ -443,11 +455,6 @@ body::after {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-
-/* ── Ambient glow ───────────────────────────────────────────── */
-.glow-accent {
-  box-shadow: var(--shadow-accent);
 }
 
 /* ── Section heading pattern (eyebrow + H2 + subtitle) ─────── */
@@ -572,104 +579,6 @@ body::after {
   }
 }
 
-/* ── Buttons ────────────────────────────────────────────────── */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  font-size: 0.9375rem; /* 15px */
-  font-weight: 600;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: background var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out),
-    transform var(--dur-fast) var(--ease-out);
-  text-decoration: none;
-  white-space: nowrap;
-  border: none;
-  padding: 0.625rem 1.25rem;
-  line-height: 1;
-  letter-spacing: -0.01em;
-  min-height: 44px; /* WCAG 2.5.5 touch target */
-  min-width: 44px;
-}
-
-/* Primary: solid mint — CTA only */
-.btn-primary {
-  background: var(--accent);
-  color: var(--text-inverse);
-  border: 1px solid transparent;
-}
-.btn-primary:hover {
-  background: var(--accent-hover);
-  box-shadow: var(--shadow-glow);
-}
-.btn-primary:active {
-  transform: scale(0.98);
-}
-
-/* Large variant */
-.btn-primary-lg {
-  padding: 0.875rem 2rem;
-  font-size: 1rem;
-  border-radius: var(--radius-lg);
-}
-
-/* Ghost / outline */
-.btn-ghost {
-  background: transparent;
-  color: var(--text-secondary);
-  border: 1px solid var(--border-strong);
-}
-.btn-ghost:hover {
-  color: var(--text-primary);
-  border-color: var(--border-strong);
-  background: var(--bg-elev-2);
-}
-.btn-ghost:active {
-  transform: scale(0.98);
-}
-
-/* ── Badge ──────────────────────────────────────────────────── */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
-  border-radius: var(--radius-full);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  border: 1px solid var(--border-accent);
-  background: var(--accent-subtle);
-  color: var(--accent);
-}
-
-.badge::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  background: var(--accent);
-  border-radius: 50%;
-  animation: pulse-dot 2.4s ease-in-out infinite;
-}
-
-/* ── .reveal — IntersectionObserver-driven scroll reveal ────── */
-/*
-  JS sets .is-visible when element enters viewport.
-  Pair with: data-reveal-delay="100" for stagger (read in JS).
-*/
-.reveal {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
-}
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 /*
  * Keep section geometry stable for fragment navigation.
  * content-visibility:auto made long-page anchors resolve against placeholder
@@ -756,124 +665,6 @@ body::after {
   }
 }
 
-/* Fade + slide up (base animation for reveal) */
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* Dashed step connector dot travel */
-@keyframes dot-travel {
-  0% {
-    top: 0%;
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    top: 100%;
-    opacity: 0;
-  }
-}
-
-/* Horizontal marquee scroll */
-@keyframes marquee-scroll {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-/* Count-up flash */
-@keyframes count-pop {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.04);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-/* ── MOTION ENHANCEMENT KEYFRAMES (Phase 1) ─────────────────── */
-
-/* Stagger-fade-up: drives staggerChildren lists */
-@keyframes stagger-up {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Horizontal shimmer sweep: skeleton loaders, CTA shimmer */
-@keyframes sweep-x {
-  from {
-    background-position: -200% center;
-  }
-  to {
-    background-position: 200% center;
-  }
-}
-
-/* Orbit ring spin: decorative accent rings */
-@keyframes orbit-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Ink underline grow: nav link hover underline */
-@keyframes underline-in {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
-}
-
-/* Tick-in: number count-up flash */
-@keyframes count-tick {
-  0% {
-    opacity: 0;
-    transform: translateY(6px) scale(0.96);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
 /* ============================================================
    REDUCED MOTION — disable non-essential animations
    ============================================================ */
@@ -890,12 +681,5 @@ body::after {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
-
-  /* Still allow reveal to show (just without animation) */
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
   }
 }

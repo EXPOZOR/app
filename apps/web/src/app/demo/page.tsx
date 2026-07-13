@@ -31,15 +31,15 @@ export default function DemoPage() {
           <div className="flex items-center justify-between mb-8">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+              className="inline-flex items-center gap-2 text-sm text-text-secondary hover:text-text-primary transition-colors"
               aria-label="Back to homepage"
             >
               <ArrowLeft size={16} aria-hidden="true" />
               Back
             </Link>
             <div>
-              <h1 className="text-2xl font-bold text-[var(--text-primary)]">Interactive sandbox</h1>
-              <p className="text-sm text-[var(--text-secondary)] mt-1">
+              <h1 className="text-2xl font-bold text-text-primary">Interactive sandbox</h1>
+              <p className="text-sm text-text-secondary mt-1">
                 Sample data only. Do not enter real financial information.
               </p>
             </div>
