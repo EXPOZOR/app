@@ -319,7 +319,7 @@ export function PricingSection() {
             color: "var(--text-muted)",
           }}
         >
-          No paid subscription is available today. Join the waitlist for early-access updates.
+          No paid subscription is available today. Join early access for launch updates.
         </motion.p>
       </div>
 

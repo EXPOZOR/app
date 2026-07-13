@@ -317,7 +317,7 @@ export function Footer() {
               (e.currentTarget as HTMLAnchorElement).style.opacity = "1";
             }}
           >
-            Join the waitlist →
+            Join early access →
           </a>
         </motion.div>
       </div>

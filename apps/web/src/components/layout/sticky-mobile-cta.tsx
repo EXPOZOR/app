@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from "react";
    - Appears after scrolling past 300px
    - Hides once the final waitlist section is reached
    - Dismissible with × (hidden for rest of session via sessionStorage)
-   - "Join the waitlist. No credit card."
+   - "Join early access. No credit card."
    - aria-label on dismiss button, role="complementary" on bar
 ────────────────────────────────────────────────────────────── */
 const DISMISS_KEY = "EXPOZOR-mobile-cta-dismissed";
@@ -140,7 +140,7 @@ export function StickyMobileCtaBar() {
                   whiteSpace: "nowrap",
                 }}
               >
-                Join the EXPOZOR waitlist
+                Join EXPOZOR early access
               </p>
               <p
                 style={{
@@ -154,12 +154,11 @@ export function StickyMobileCtaBar() {
               </p>
             </div>
 
-            {/* CTA button — in-page scroll anchor to #waitlist */}
-            {/* biome-ignore lint/a11y/useValidAnchor: href="#waitlist" is valid in-page navigation; onClick only dismisses the CTA banner as a progressive enhancement */}
+            {/* CTA button — canonical early-access destination */}
             <a
-              href="#waitlist"
+              href="/#waitlist"
               onClick={dismiss}
-              aria-label="Join the EXPOZOR waitlist"
+              aria-label="Join EXPOZOR early access"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -181,7 +180,7 @@ export function StickyMobileCtaBar() {
                 whiteSpace: "nowrap",
               }}
             >
-              Join waitlist
+              Join early access
               <ArrowRight size={13} aria-hidden="true" />
             </a>
 

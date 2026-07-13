@@ -1,6 +1,6 @@
 "use client";
 
-import { joinWaitlist } from "@/app/actions/waitlist";
+import { buttonClassName } from "@/components/ui/button";
 import { HERO } from "@/content/landing";
 import { DUR, EASE_OUT } from "@/lib/motion";
 import {
@@ -11,8 +11,8 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import { AlertCircle, ArrowRight, CheckCircle2, Loader2, Play } from "lucide-react";
-import { useEffect, useRef, useState, useTransition } from "react";
+import { ArrowRight, Play } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 /* ──────────────────────────────────────────────────────────────
    TRANSACTION DATA — used in the UI cycle mockup
@@ -449,315 +449,6 @@ function HeroBadge() {
 }
 
 /* ──────────────────────────────────────────────────────────────
-   WAITLIST FORM (hero)
-────────────────────────────────────────────────────────────── */
-function WaitlistForm() {
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
-  const [message, setMessage] = useState("");
-  const [consent, setConsent] = useState(false);
-  const [isPending, startTransition] = useTransition();
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (status === "error" && !isPending) {
-      inputRef.current?.focus({ preventScroll: true });
-    }
-  }, [isPending, status]);
-
-  // Magnetic CTA button
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const springX = useSpring(mx, { stiffness: 280, damping: 18 });
-  const springY = useSpring(my, { stiffness: 280, damping: 18 });
-
-  function onMouseMove(e: React.MouseEvent<HTMLButtonElement>) {
-    const r = e.currentTarget.getBoundingClientRect();
-    mx.set((e.clientX - r.left - r.width / 2) * 0.22);
-    my.set((e.clientY - r.top - r.height / 2) * 0.22);
-  }
-  function onMouseLeave() {
-    mx.set(0);
-    my.set(0);
-  }
-
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const fd = new FormData(e.currentTarget);
-    fd.set("source", "hero");
-    fd.set("locale", "en");
-    startTransition(async () => {
-      const res = await joinWaitlist(fd);
-      if (res.success) {
-        setStatus("success");
-        setMessage(res.message);
-        if (inputRef.current) inputRef.current.value = "";
-      } else {
-        setStatus("error");
-        setMessage(res.error);
-      }
-    });
-  }
-
-  if (status === "success") {
-    return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.96 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        aria-live="polite"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "12px",
-          padding: "1rem 1.25rem",
-          borderRadius: "var(--radius-lg)",
-          border: "1px solid var(--border-accent)",
-          background: "var(--accent-subtle)",
-        }}
-      >
-        <CheckCircle2
-          size={20}
-          style={{ color: "var(--accent)", flexShrink: 0 }}
-          aria-hidden="true"
-        />
-        <p
-          style={{
-            fontSize: "0.9375rem",
-            color: "var(--text-primary)",
-            fontWeight: 500,
-            margin: 0,
-          }}
-        >
-          {message}
-        </p>
-      </motion.div>
-    );
-  }
-
-  return (
-    <form
-      onSubmit={onSubmit}
-      noValidate
-      aria-label="Waitlist signup form"
-      style={{ width: "100%" }}
-    >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-        }}
-      >
-        {/* Input row */}
-        <div
-          style={{
-            display: "flex",
-            gap: "10px",
-            flexWrap: "wrap",
-          }}
-        >
-          <input
-            type="text"
-            name="website"
-            tabIndex={-1}
-            autoComplete="off"
-            aria-hidden="true"
-            className="sr-only"
-          />
-          {/* Email input */}
-          <div style={{ flex: "1 1 220px", position: "relative" }}>
-            <label htmlFor="hero-email" className="sr-only">
-              Email address
-            </label>
-            <input
-              ref={inputRef}
-              id="hero-email"
-              name="email"
-              type="email"
-              required
-              placeholder={HERO.inputPlaceholder}
-              autoComplete="email"
-              disabled={isPending}
-              aria-invalid={status === "error"}
-              aria-describedby={status === "error" ? "hero-email-error" : undefined}
-              style={{
-                width: "100%",
-                height: "52px",
-                padding: "0 1rem",
-                borderRadius: "var(--radius-md)",
-                fontSize: "0.9375rem",
-                background: "var(--bg-elev-2)",
-                border: `1px solid ${status === "error" ? "var(--danger)" : "var(--border-strong)"}`,
-                color: "var(--text-primary)",
-                transition: "border-color var(--dur-base), box-shadow var(--dur-base)",
-              }}
-              onFocus={(e) => {
-                (e.currentTarget as HTMLInputElement).style.borderColor =
-                  status === "error" ? "var(--danger)" : "var(--border-accent)";
-                (e.currentTarget as HTMLInputElement).style.boxShadow =
-                  "0 0 0 3px var(--accent-subtle)";
-              }}
-              onBlur={(e) => {
-                (e.currentTarget as HTMLInputElement).style.borderColor =
-                  status === "error" ? "var(--danger)" : "var(--border-strong)";
-                (e.currentTarget as HTMLInputElement).style.boxShadow = "none";
-              }}
-            />
-          </div>
-
-          {/* ── Enhancement 2: Shimmer-sweep CTA ── */}
-          {/* Magnetic spring (x/y) already wired above. We add a
-              shimmer-sweep overlay that animates on hover entry
-              using a gradient div whose opacity springs in/out. */}
-          <motion.button
-            type="submit"
-            disabled={isPending}
-            onMouseMove={onMouseMove}
-            onMouseLeave={onMouseLeave}
-            style={{
-              x: springX,
-              y: springY,
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "8px",
-              padding: "0 1.75rem",
-              height: "52px",
-              borderRadius: "var(--radius-md)",
-              background: "var(--accent)",
-              color: "var(--text-inverse)",
-              fontSize: "0.9375rem",
-              fontWeight: 600,
-              border: "none",
-              cursor: isPending ? "not-allowed" : "pointer",
-              letterSpacing: "-0.01em",
-              whiteSpace: "nowrap",
-              flexShrink: 0,
-              opacity: isPending ? 0.65 : 1,
-              transition: "background var(--dur-base) var(--ease-out)",
-              position: "relative",
-              overflow: "hidden",
-            }}
-            aria-label={isPending ? "Joining the EXPOZOR waitlist" : HERO.ctaAriaLabel}
-            aria-busy={isPending}
-            whileHover={
-              isPending
-                ? {}
-                : {
-                    boxShadow: "var(--shadow-glow)",
-                    background: "var(--accent-hover)",
-                  }
-            }
-            whileTap={isPending ? {} : { scale: 0.97 }}
-          >
-            {/* Shimmer sweep overlay — single one-shot on hover */}
-            {!isPending && (
-              <motion.span
-                aria-hidden="true"
-                initial={{ x: "-110%", opacity: 0.55 }}
-                whileHover={{ x: "110%", opacity: 0 }}
-                transition={{ duration: 0.55, ease: EASE_OUT }}
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  background:
-                    "linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.28) 50%, transparent 70%)",
-                  pointerEvents: "none",
-                }}
-              />
-            )}
-
-            {/* Button content — sits above shimmer */}
-            <span
-              style={{
-                position: "relative",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-              }}
-            >
-              {isPending ? (
-                <Loader2
-                  size={17}
-                  style={{ animation: "spin 1s linear infinite" }}
-                  aria-hidden="true"
-                />
-              ) : (
-                <>
-                  {HERO.cta}
-                  <ArrowRight size={16} aria-hidden="true" />
-                </>
-              )}
-            </span>
-          </motion.button>
-        </div>
-
-        {/* Error feedback */}
-        <AnimatePresence>
-          {status === "error" && (
-            <motion.p
-              key="error"
-              initial={{ opacity: 0, y: -4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.2 }}
-              role="alert"
-              id="hero-email-error"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "6px",
-                fontSize: "0.875rem",
-                color: "var(--danger)",
-                margin: 0,
-              }}
-            >
-              <AlertCircle size={14} aria-hidden="true" />
-              {message}
-            </motion.p>
-          )}
-        </AnimatePresence>
-
-        <label
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-            minHeight: "44px",
-            fontSize: "0.8125rem",
-            color: "var(--text-secondary)",
-            lineHeight: 1.5,
-            cursor: isPending ? "not-allowed" : "pointer",
-          }}
-        >
-          <input
-            type="checkbox"
-            name="productUpdatesConsent"
-            checked={consent}
-            onChange={(e) => setConsent(e.target.checked)}
-            disabled={isPending}
-            style={{ width: "18px", height: "18px", margin: 0 }}
-          />
-          <span>I'd like to receive product updates.</span>
-        </label>
-
-        {/* Microcopy */}
-        <p
-          style={{
-            fontSize: "0.8125rem",
-            color: "var(--text-muted)",
-            margin: 0,
-            lineHeight: 1.5,
-          }}
-        >
-          {HERO.microcopy}
-        </p>
-      </div>
-    </form>
-  );
-}
-
-/* ──────────────────────────────────────────────────────────────
    ENHANCEMENT 3 — RIGHT COLUMN PARALLAX TILT
    Extracted so it can own its own useReducedMotion + motion values
    without re-rendering the parent HeroSection on every mousemove.
@@ -980,7 +671,7 @@ export function HeroSection() {
                 {HERO.subhead}
               </motion.p>
 
-              {/* Form + secondary CTA */}
+              {/* Primary waitlist CTA + secondary demo CTA */}
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -997,7 +688,15 @@ export function HeroSection() {
                   maxWidth: "520px",
                 }}
               >
-                <WaitlistForm />
+                <a
+                  href="/#waitlist"
+                  aria-label={HERO.ctaAriaLabel}
+                  className={buttonClassName({ variant: "primary", size: "lg" })}
+                  style={{ width: "fit-content" }}
+                >
+                  {HERO.cta}
+                  <ArrowRight size={16} aria-hidden="true" />
+                </a>
 
                 {/* Secondary CTA — links to the live interactive demo */}
                 <div>
@@ -1058,6 +757,17 @@ export function HeroSection() {
                     {HERO.secondaryCta}
                   </a>
                 </div>
+
+                <p
+                  style={{
+                    fontSize: "0.8125rem",
+                    color: "var(--text-muted)",
+                    margin: 0,
+                    lineHeight: 1.5,
+                  }}
+                >
+                  {HERO.microcopy}
+                </p>
               </motion.div>
             </div>
 
@@ -1077,10 +787,6 @@ export function HeroSection() {
             grid-template-columns: 1fr 1fr !important;
             gap: 4rem !important;
           }
-        }
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to   { transform: rotate(360deg); }
         }
       `}</style>
     </>

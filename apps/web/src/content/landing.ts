@@ -26,7 +26,7 @@ export const NAVBAR = {
     { label: "Security", href: "/security" },
     { label: "Changelog", href: "/changelog" },
   ],
-  cta: { label: "Get early access", href: "/#waitlist" },
+  cta: { label: "Join early access", href: "/#waitlist" },
 } as const;
 
 export const DEMO = {

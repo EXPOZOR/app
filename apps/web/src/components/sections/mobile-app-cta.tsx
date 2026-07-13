@@ -1,10 +1,9 @@
 "use client";
 
-import { joinWaitlist } from "@/app/actions/waitlist";
+import { buttonClassName } from "@/components/ui/button";
 import { EASE_OUT } from "@/lib/motion";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { AlertCircle, Bell, CheckCircle2, Loader2 } from "lucide-react";
-import { useEffect, useRef, useState, useTransition } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 
 /* ──────────────────────────────────────────────────────────────
    APP STORE / PLAY STORE INLINE SVG BADGES
@@ -436,213 +435,6 @@ function PhoneMockup() {
 }
 
 /* ──────────────────────────────────────────────────────────────
-   NOTIFY FORM — saves mobile-interest signups through the waitlist action.
-────────────────────────────────────────────────────────────── */
-function NotifyForm() {
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
-  const [message, setMessage] = useState("");
-  const [consent, setConsent] = useState(false);
-  const [isPending, startTransition] = useTransition();
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (status === "error" && !isPending) {
-      inputRef.current?.focus({ preventScroll: true });
-    }
-  }, [isPending, status]);
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const fd = new FormData(e.currentTarget);
-    fd.set("source", "mobile-app");
-    fd.set("locale", "en");
-
-    startTransition(async () => {
-      const result = await joinWaitlist(fd);
-      if (result.success) {
-        setStatus("success");
-        setMessage(result.message);
-        if (inputRef.current) inputRef.current.value = "";
-      } else {
-        setStatus("error");
-        setMessage(result.error);
-      }
-    });
-  }
-
-  return (
-    <AnimatePresence mode="wait">
-      {status === "success" ? (
-        <motion.div
-          key="success"
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-          aria-live="polite"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
-            padding: "10px 18px",
-            borderRadius: "var(--radius-full)",
-            background: "var(--accent-subtle)",
-            border: "1px solid var(--border-accent)",
-            fontSize: "0.875rem",
-            fontWeight: 600,
-            color: "var(--accent)",
-          }}
-        >
-          <CheckCircle2 size={15} aria-hidden="true" />
-          You're on the list — we'll ping you when it launches!
-        </motion.div>
-      ) : (
-        <motion.form
-          key="form"
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onSubmit={handleSubmit}
-          noValidate
-          aria-label="Get notified when the mobile app launches"
-          style={{
-            display: "flex",
-            gap: "8px",
-            flexWrap: "wrap",
-          }}
-        >
-          <input
-            type="text"
-            name="website"
-            tabIndex={-1}
-            autoComplete="off"
-            aria-hidden="true"
-            className="sr-only"
-          />
-          <label htmlFor="notify-email" className="sr-only">
-            Your email address
-          </label>
-          <input
-            ref={inputRef}
-            id="notify-email"
-            name="email"
-            type="email"
-            required
-            placeholder="you@example.com"
-            autoComplete="email"
-            disabled={isPending}
-            aria-invalid={status === "error"}
-            aria-describedby={status === "error" ? "notify-hint notify-error" : "notify-hint"}
-            style={{
-              height: "44px",
-              padding: "0 1rem",
-              borderRadius: "var(--radius-md)",
-              background: "var(--bg-elev-2)",
-              border: "1px solid var(--border)",
-              color: "var(--text-primary)",
-              fontSize: "0.9rem",
-              minWidth: "0",
-              flex: "1 1 200px",
-              transition: "border-color var(--dur-base) var(--ease-out)",
-              boxSizing: "border-box",
-            }}
-            onFocus={(e) => {
-              (e.target as HTMLInputElement).style.borderColor = "var(--border-strong)";
-            }}
-            onBlur={(e) => {
-              (e.target as HTMLInputElement).style.borderColor = "var(--border)";
-            }}
-          />
-          <motion.button
-            type="submit"
-            disabled={isPending}
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            aria-label={
-              isPending
-                ? "Joining the EXPOZOR mobile app waitlist"
-                : "Notify me when the EXPOZOR mobile app launches"
-            }
-            aria-busy={isPending}
-            style={{
-              height: "44px",
-              padding: "0 1.25rem",
-              borderRadius: "var(--radius-md)",
-              background: "var(--bg-elev-2)",
-              border: "1px solid var(--border-strong)",
-              color: "var(--text-primary)",
-              fontSize: "0.875rem",
-              fontWeight: 600,
-              cursor: isPending ? "not-allowed" : "pointer",
-              opacity: isPending ? 0.7 : 1,
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "6px",
-              flexShrink: 0,
-              letterSpacing: "-0.01em",
-              transition: "border-color var(--dur-base) var(--ease-out)",
-            }}
-          >
-            {isPending ? (
-              <Loader2
-                size={14}
-                style={{ animation: "spin 1s linear infinite" }}
-                aria-hidden="true"
-              />
-            ) : (
-              <>
-                <Bell size={14} aria-hidden="true" />
-                Notify me
-              </>
-            )}
-          </motion.button>
-          <label
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              flexBasis: "100%",
-              minHeight: "44px",
-              fontSize: "0.75rem",
-              color: "var(--text-secondary)",
-              lineHeight: 1.5,
-              cursor: isPending ? "not-allowed" : "pointer",
-            }}
-          >
-            <input
-              type="checkbox"
-              name="productUpdatesConsent"
-              checked={consent}
-              onChange={(e) => setConsent(e.target.checked)}
-              disabled={isPending}
-              style={{ width: "18px", height: "18px", margin: 0 }}
-            />
-            <span>I'd like to receive product updates.</span>
-          </label>
-          {status === "error" && (
-            <p
-              role="alert"
-              id="notify-error"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "5px",
-                flexBasis: "100%",
-                fontSize: "0.75rem",
-                color: "var(--warn)",
-                margin: 0,
-              }}
-            >
-              <AlertCircle size={13} aria-hidden="true" />
-              {message}
-            </p>
-          )}
-        </motion.form>
-      )}
-    </AnimatePresence>
-  );
-}
-
-/* ──────────────────────────────────────────────────────────────
    MOBILE APP CTA SECTION — main export
 ────────────────────────────────────────────────────────────── */
 export function MobileAppCtaSection() {
@@ -842,7 +634,7 @@ export function MobileAppCtaSection() {
               </div>
             </motion.div>
 
-            {/* Notify me form */}
+            {/* Canonical early-access CTA */}
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -858,15 +650,20 @@ export function MobileAppCtaSection() {
                   margin: 0,
                 }}
               >
-                Get launch-day access →
+                Get mobile launch updates
               </p>
-              <p
-                id="notify-hint"
-                style={{ fontSize: "0.75rem", color: "var(--text-muted)", margin: 0 }}
+              <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", margin: 0 }}>
+                One signup for early access and mobile availability updates.
+              </p>
+              <a
+                href="/#waitlist"
+                aria-label="Join EXPOZOR early access for mobile launch updates"
+                className={buttonClassName({ variant: "primary", size: "lg" })}
+                style={{ width: "fit-content" }}
               >
-                We'll email you the day the app goes live. No spam.
-              </p>
-              <NotifyForm />
+                Join early access
+                <ArrowRight size={16} aria-hidden="true" />
+              </a>
             </motion.div>
           </div>
 
@@ -916,10 +713,6 @@ export function MobileAppCtaSection() {
           }
         }
 
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to   { transform: rotate(360deg); }
-        }
       `}</style>
     </section>
   );

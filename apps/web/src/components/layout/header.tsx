@@ -425,7 +425,7 @@ function MobileSheet({
                   (e.currentTarget as HTMLAnchorElement).style.boxShadow = "none";
                 }}
               >
-                Get early access
+                {NAVBAR.cta.label}
                 <ArrowRight size={16} aria-hidden="true" />
               </a>
               <p
@@ -619,44 +619,7 @@ export function Header() {
               flexShrink: 0,
             }}
           >
-            {/* Sign in — ghost/outline */}
-            <Link
-              href={NAVBAR.cta.href}
-              className="hidden xl:inline-flex"
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "0.4375rem 0.875rem",
-                borderRadius: "var(--radius-md)",
-                fontSize: "0.875rem",
-                fontWeight: 600,
-                color: "var(--text-secondary)",
-                border: "1px solid var(--border-strong)",
-                background: "transparent",
-                textDecoration: "none",
-                transition: [
-                  "color var(--dur-base) var(--ease-out)",
-                  "border-color var(--dur-base) var(--ease-out)",
-                  "background var(--dur-base) var(--ease-out)",
-                ].join(", "),
-                minHeight: "44px",
-                whiteSpace: "nowrap",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.color = "var(--text-primary)";
-                (e.currentTarget as HTMLAnchorElement).style.background = "var(--bg-elev-2)";
-                (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--border-strong)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.color = "var(--text-secondary)";
-                (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
-                (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--border-strong)";
-              }}
-            >
-              {NAVBAR.cta.label}
-            </Link>
-
-            {/* Get early access — solid mint, hover glow */}
+            {/* Single primary early-access action */}
             <motion.a
               href={NAVBAR.cta.href}
               whileHover={{
