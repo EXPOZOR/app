@@ -212,7 +212,7 @@ export function InteractiveDemo() {
           <button
             type="button"
             onClick={handleReset}
-            className="p-1.5 rounded-[var(--radius-sm)] text-[var(--text-tertiary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-overlay)] transition-colors"
+            className="w-11 h-11 inline-flex items-center justify-center rounded-[var(--radius-sm)] text-[var(--text-tertiary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-overlay)] transition-colors"
             aria-label="Reset demo"
             title="Reset demo"
           >
@@ -239,7 +239,7 @@ export function InteractiveDemo() {
               placeholder="e.g. Coffee Shop, $4.50"
               disabled={step !== "entry"}
               maxLength={60}
-              className="w-full px-3 py-2.5 text-sm rounded-[var(--radius)] bg-[var(--bg-elevated)] border border-[var(--border)] text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:outline-none focus:border-[var(--accent)] transition-colors disabled:opacity-50"
+              className="w-full min-h-11 px-3 py-2.5 text-sm rounded-[var(--radius)] bg-[var(--bg-elevated)] border border-[var(--border)] text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:border-[var(--accent)] transition-colors disabled:opacity-50"
               onKeyDown={(e) => e.key === "Enter" && handleAdd()}
             />
             {/* Suggestions */}
@@ -250,7 +250,7 @@ export function InteractiveDemo() {
                     key={s}
                     type="button"
                     onClick={() => setName(s)}
-                    className="px-2 py-0.5 text-[10px] rounded-full bg-[var(--bg-overlay)] text-[var(--text-tertiary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-muted)] transition-colors truncate max-w-full"
+                    className="min-h-11 px-3 py-1 text-xs rounded-full bg-[var(--bg-overlay)] text-[var(--text-tertiary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-muted)] transition-colors truncate max-w-full"
                   >
                     {s}
                   </button>
@@ -280,7 +280,7 @@ export function InteractiveDemo() {
                 onChange={(e) => setAmount(e.target.value)}
                 placeholder="4.50"
                 disabled={step !== "entry"}
-                className="w-full pl-7 pr-3 py-2.5 text-sm rounded-[var(--radius)] bg-[var(--bg-elevated)] border border-[var(--border)] text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:outline-none focus:border-[var(--accent)] transition-colors disabled:opacity-50"
+                className="w-full min-h-11 pl-7 pr-3 py-2.5 text-sm rounded-[var(--radius)] bg-[var(--bg-elevated)] border border-[var(--border)] text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:border-[var(--accent)] transition-colors disabled:opacity-50"
                 onKeyDown={(e) => e.key === "Enter" && handleAdd()}
               />
             </div>
@@ -290,7 +290,7 @@ export function InteractiveDemo() {
             type="button"
             onClick={handleAdd}
             disabled={!name || !amount || step !== "entry"}
-            className="mt-auto flex items-center justify-center gap-2 w-full py-2.5 rounded-[var(--radius)] bg-[var(--accent)] text-[var(--text-inverse)] text-sm font-semibold hover:bg-[var(--accent-dim)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.98]"
+            className="mt-auto flex min-h-11 items-center justify-center gap-2 w-full py-2.5 rounded-[var(--radius)] bg-[var(--accent)] text-[var(--text-inverse)] text-sm font-semibold hover:bg-[var(--accent-dim)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.98]"
             aria-label="Add expense"
           >
             <Plus size={16} aria-hidden="true" />

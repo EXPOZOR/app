@@ -20,13 +20,13 @@ export const HERO = {
 export const NAVBAR = {
   logo: "EXPOZOR",
   links: [
-    { label: "Features", href: "#features" },
-    { label: "How it works", href: "#how-it-works" },
-    { label: "Pricing", href: "#pricing" },
+    { label: "Features", href: "/#features" },
+    { label: "How it works", href: "/#how-it-works" },
+    { label: "Pricing", href: "/#pricing" },
     { label: "Security", href: "/security" },
     { label: "Changelog", href: "/changelog" },
   ],
-  cta: { label: "Get early access", href: "#waitlist" },
+  cta: { label: "Get early access", href: "/#waitlist" },
 } as const;
 
 export const PRESS = {

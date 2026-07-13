@@ -526,8 +526,8 @@ function DemoModal({
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            width: "36px",
-            height: "36px",
+            width: "44px",
+            height: "44px",
             borderRadius: "var(--radius-sm)",
             background: "transparent",
             border: "none",
@@ -738,7 +738,6 @@ function WaitlistForm() {
                 background: "var(--bg-elev-2)",
                 border: `1px solid ${status === "error" ? "var(--danger)" : "var(--border-strong)"}`,
                 color: "var(--text-primary)",
-                outline: "none",
                 transition: "border-color var(--dur-base), box-shadow var(--dur-base)",
               }}
               onFocus={(e) => {

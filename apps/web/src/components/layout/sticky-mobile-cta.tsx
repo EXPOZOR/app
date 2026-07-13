@@ -60,7 +60,7 @@ export function StickyMobileCtaBar() {
               left: 0,
               right: 0,
               zIndex: 80,
-              padding: "0.875rem 1rem",
+              padding: "0.875rem 1rem calc(0.875rem + env(safe-area-inset-bottom))",
               background: "var(--bg-elev-1)",
               borderTop: "1px solid var(--border)",
               display: "flex",
@@ -107,8 +107,11 @@ export function StickyMobileCtaBar() {
               style={{
                 display: "inline-flex",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: "5px",
                 padding: "0.5625rem 1rem",
+                minHeight: "44px",
+                boxSizing: "border-box",
                 borderRadius: "var(--radius-md)",
                 background: "var(--accent)",
                 color: "var(--text-inverse)",
@@ -132,8 +135,9 @@ export function StickyMobileCtaBar() {
               onClick={dismiss}
               aria-label="Dismiss waitlist prompt"
               style={{
-                width: "30px",
-                height: "30px",
+                width: "44px",
+                height: "44px",
+                boxSizing: "border-box",
                 borderRadius: "50%",
                 border: "1px solid var(--border)",
                 background: "var(--bg-elev-2)",
@@ -152,13 +156,20 @@ export function StickyMobileCtaBar() {
         )}
       </AnimatePresence>
 
+      {show && <div aria-hidden="true" className="mobile-cta-reservation" />}
+
       {/* Only visible on mobile — hidden at lg+ breakpoint */}
       <style>{`
         .mobile-cta-bar {
           display: flex;
         }
+        .mobile-cta-reservation {
+          display: block;
+          height: calc(73px + env(safe-area-inset-bottom));
+        }
         @media (min-width: 1024px) {
-          .mobile-cta-bar {
+          .mobile-cta-bar,
+          .mobile-cta-reservation {
             display: none !important;
           }
         }

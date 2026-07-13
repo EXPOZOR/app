@@ -520,7 +520,6 @@ function NotifyForm() {
               border: "1px solid var(--border)",
               color: "var(--text-primary)",
               fontSize: "0.9rem",
-              outline: "none",
               minWidth: "0",
               flex: "1 1 200px",
               transition: "border-color var(--dur-base) var(--ease-out)",

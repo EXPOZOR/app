@@ -152,6 +152,7 @@ function MobileSheet({
                 fontWeight: 700,
                 fontSize: "1.0625rem",
                 letterSpacing: "-0.02em",
+                minHeight: "44px",
               }}
               aria-label="EXPOZOR home"
             >
@@ -436,6 +437,7 @@ export function Header() {
                 fontSize: "1.0625rem",
                 letterSpacing: "-0.02em",
                 transition: "opacity var(--dur-base) var(--ease-out)",
+                minHeight: "44px",
               }}
               aria-label="EXPOZOR home"
               onMouseEnter={(e) => {
@@ -470,6 +472,8 @@ export function Header() {
                 key={link.href}
                 href={link.href}
                 style={{
+                  display: "inline-flex",
+                  alignItems: "center",
                   padding: "0.375rem 0.75rem",
                   fontSize: "0.875rem",
                   color: "var(--text-secondary)",
@@ -481,6 +485,7 @@ export function Header() {
                     "background var(--dur-base) var(--ease-out)",
                   ].join(", "),
                   whiteSpace: "nowrap",
+                  minHeight: "44px",
                 }}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLAnchorElement).style.color = "var(--text-primary)";
@@ -525,7 +530,7 @@ export function Header() {
                   "border-color var(--dur-base) var(--ease-out)",
                   "background var(--dur-base) var(--ease-out)",
                 ].join(", "),
-                minHeight: "36px",
+                minHeight: "44px",
                 whiteSpace: "nowrap",
               }}
               onMouseEnter={(e) => {
@@ -564,7 +569,7 @@ export function Header() {
                 border: "1px solid transparent",
                 textDecoration: "none",
                 letterSpacing: "-0.01em",
-                minHeight: "36px",
+                minHeight: "44px",
                 whiteSpace: "nowrap",
                 transition: "background var(--dur-base) var(--ease-out)",
               }}

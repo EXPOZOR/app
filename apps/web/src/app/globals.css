@@ -64,7 +64,7 @@
     --text-primary: #f5f5f7; /* legacy alias                 */
     --text-muted: #9a9aa2; /* brief canonical name         */
     --text-secondary: #a1a1aa; /* legacy alias                 */
-    --text-tertiary: #71717a;
+    --text-tertiary: #8c8c96; /* AA-safe through the overlay surface (4.60:1) */
     --text-inverse: #0a0a0b;
 
     /* ── Border ────────────────────────────────────────────── */
@@ -523,10 +523,17 @@ p {
   transform: translateY(0);
 }
 
-/* ── content-visibility for below-fold long sections ────────── */
+/*
+ * Keep section geometry stable for fragment navigation.
+ * content-visibility:auto made long-page anchors resolve against placeholder
+ * heights, so /#waitlist could land on Pricing or the Live Demo instead.
+ */
 .cv-auto {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 500px;
+  content-visibility: visible;
+}
+
+#waitlist {
+  scroll-margin-top: 4.5rem;
 }
 
 /* ============================================================

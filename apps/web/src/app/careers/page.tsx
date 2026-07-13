@@ -40,7 +40,7 @@ export default function CareersPage() {
               great people don't always appear when the role does.
             </p>
             {/* TODO: add confirmed careers contact email before hiring opens */}
-            <a href="/contact" className="btn-primary">
+            <a href="/contact" className="btn btn-primary">
               Reach out via the contact page
             </a>
           </div>

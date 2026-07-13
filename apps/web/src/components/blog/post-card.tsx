@@ -10,8 +10,15 @@ const CATEGORY_COLORS: Record<string, string> = {
   Design: "#f472b6",
 };
 
-export function PostCard({ post }: { post: BlogPost }) {
+export function PostCard({
+  post,
+  headingLevel = 2,
+}: {
+  post: BlogPost;
+  headingLevel?: 2 | 3;
+}) {
   const color = CATEGORY_COLORS[post.frontmatter.category] || "#7CF5C2";
+  const Heading = headingLevel === 3 ? "h3" : "h2";
 
   return (
     <Link
@@ -37,9 +44,9 @@ export function PostCard({ post }: { post: BlogPost }) {
       </div>
 
       {/* Title */}
-      <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--accent)] transition-colors leading-tight">
+      <Heading className="text-xl font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--accent)] transition-colors leading-tight">
         {post.frontmatter.title}
-      </h3>
+      </Heading>
 
       {/* Excerpt */}
       <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4 line-clamp-3">

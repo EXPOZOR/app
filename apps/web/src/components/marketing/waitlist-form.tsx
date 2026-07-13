@@ -65,9 +65,19 @@ export function WaitlistForm({
       aria-label="Join the waitlist"
       noValidate
     >
-      <input type="text" name="website" tabIndex={-1} autoComplete="off" className="sr-only" />
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        className="sr-only"
+        aria-hidden="true"
+      />
       <div className="flex flex-col sm:flex-row gap-2">
         <div className="relative flex-1">
+          <label htmlFor="waitlist-email" className="sr-only">
+            Email address
+          </label>
           <input
             id="waitlist-email"
             type="email"
@@ -79,6 +89,7 @@ export function WaitlistForm({
             autoComplete="email"
             disabled={isPending}
             aria-describedby={result?.error ? "waitlist-error" : undefined}
+            aria-invalid={Boolean(result?.error)}
             className={`
               w-full rounded-[var(--radius)] bg-[var(--bg-elevated)]
               border border-[var(--border)] text-[var(--text-primary)]

@@ -453,7 +453,6 @@ export function FinalCtaSection() {
                           border: `1px solid ${status === "error" ? "var(--warn)" : "var(--border)"}`,
                           color: "var(--text-primary)",
                           fontSize: "0.9375rem",
-                          outline: "none",
                           transition: "border-color var(--dur-base) var(--ease-out)",
                           boxSizing: "border-box",
                         }}

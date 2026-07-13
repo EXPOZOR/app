@@ -180,15 +180,6 @@ export default function RootLayout({
       className={`${GeistSans.variable} ${GeistMono.variable}`}
     >
       <head>
-        {/*
-          Preload the variable font — Geist Sans is served by the
-          `geist` package as a CSS font face; Next.js handles the
-          actual file preload automatically when it detects the
-          font variable. The explicit preload below is belt-and-suspenders
-          for the woff2 subset that ships with the package.
-        */}
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-
         {/* View Transitions API — enables smooth page-to-page animations */}
         <meta name="view-transition" content="same-origin" />
 

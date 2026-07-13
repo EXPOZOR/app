@@ -45,8 +45,8 @@ function SocialButton({
       rel="noopener noreferrer"
       aria-label={`${label} (opens in new tab)`}
       style={{
-        width: "34px",
-        height: "34px",
+        width: "44px",
+        height: "44px",
         borderRadius: "var(--radius-sm)",
         border: "1px solid var(--border)",
         background: "var(--bg-elev-2)",
@@ -235,7 +235,7 @@ export function Footer() {
           {/* Nav columns */}
           {FOOTER.columns.map((col) => (
             <nav key={col.heading} aria-label={`${col.heading} links`}>
-              <h3
+              <h2
                 style={{
                   fontSize: "0.6875rem",
                   fontWeight: 700,
@@ -246,7 +246,7 @@ export function Footer() {
                 }}
               >
                 {col.heading}
-              </h3>
+              </h2>
               <ul
                 style={{
                   listStyle: "none",
@@ -297,7 +297,7 @@ export function Footer() {
 
           {/* Waitlist nudge — right side */}
           <a
-            href="#waitlist"
+            href="/#waitlist"
             style={{
               fontSize: "0.75rem",
               fontWeight: 600,

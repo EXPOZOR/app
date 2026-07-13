@@ -54,7 +54,7 @@ function AccordionItem({
       transition={{ delay: index * 0.04, duration: 0.45, ease: EASE_OUT }}
       style={{
         borderRadius: "var(--radius-md)",
-        overflow: "hidden",
+        overflow: "visible",
         border: isOpen ? "1px solid var(--border-strong)" : "1px solid var(--border)",
         background: isOpen ? "var(--bg-elev-2)" : "var(--bg-elev-1)",
         transition: "border-color 200ms ease-out, background 200ms ease-out",
@@ -101,7 +101,6 @@ function AccordionItem({
           border: "none",
           cursor: "pointer",
           color: "var(--text-primary)",
-          outline: "none",
         }}
       >
         <span
@@ -225,13 +224,12 @@ function SearchBar({
         onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
         style={{
           width: "100%",
-          padding: "0.6875rem 2.5rem 0.6875rem 2.5rem",
+          padding: "0.6875rem 3rem 0.6875rem 2.5rem",
           borderRadius: "var(--radius-md)",
           background: "var(--bg-elev-2)",
           border: "1px solid var(--border)",
           color: "var(--text-primary)",
           fontSize: "0.9375rem",
-          outline: "none",
           transition: "border-color var(--dur-base) var(--ease-out)",
           boxSizing: "border-box",
         }}
@@ -251,13 +249,14 @@ function SearchBar({
           aria-label="Clear search"
           style={{
             position: "absolute",
-            right: "10px",
+            right: 0,
             top: "50%",
             transform: "translateY(-50%)",
-            width: "24px",
-            height: "24px",
+            width: "44px",
+            height: "44px",
             borderRadius: "50%",
-            background: "var(--bg-muted)",
+            background:
+              "radial-gradient(circle at center, var(--bg-muted) 0 12px, transparent 12px)",
             border: "none",
             cursor: "pointer",
             display: "flex",
@@ -374,7 +373,7 @@ export function FaqSection() {
             >
               Can't find an answer?{" "}
               <a
-                href="mailto:support@expozor.app"
+                href="mailto:support@expozor.com"
                 style={{ color: "var(--accent)", textDecoration: "none", fontWeight: 600 }}
               >
                 Email us
@@ -429,7 +428,7 @@ export function FaqSection() {
                   );
                 })
               ) : (
-                <motion.div
+                <motion.li
                   key="no-results"
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -449,12 +448,12 @@ export function FaqSection() {
                     No questions match &ldquo;{query}&rdquo;
                   </p>
                   <a
-                    href="mailto:support@expozor.app"
+                    href="mailto:support@expozor.com"
                     style={{ fontSize: "0.875rem", color: "var(--accent)", fontWeight: 600 }}
                   >
                     Ask us directly →
                   </a>
-                </motion.div>
+                </motion.li>
               )}
             </AnimatePresence>
           </ul>

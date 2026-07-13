@@ -114,7 +114,7 @@ export default async function BlogPostPage({
               <h2 className="text-xl font-bold text-[var(--text-primary)] mb-6">Keep reading</h2>
               <div className="grid md:grid-cols-2 gap-5">
                 {relatedPosts.map((p) => (
-                  <PostCard key={p.slug} post={p} />
+                  <PostCard key={p.slug} post={p} headingLevel={3} />
                 ))}
               </div>
             </div>

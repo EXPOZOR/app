@@ -123,7 +123,7 @@ function PricingCard({
       </div>
 
       <motion.a
-        href="#waitlist"
+        href="/#waitlist"
         whileHover={{ scale: 1.02, ...(isHighlighted ? { boxShadow: "var(--shadow-glow)" } : {}) }}
         whileTap={{ scale: 0.98 }}
         aria-label={`${tier.cta} - ${tier.name} planned package`}

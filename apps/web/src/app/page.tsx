@@ -1,4 +1,5 @@
 import { Footer } from "@/components/layout/footer";
+import { HashScrollHandler } from "@/components/layout/hash-scroll-handler";
 import { Header } from "@/components/layout/header";
 import { StickyMobileCtaBar } from "@/components/layout/sticky-mobile-cta";
 import { AiExplainerSection } from "@/components/sections/ai-explainer";
@@ -26,6 +27,7 @@ import { TestimonialsSection } from "@/components/sections/testimonials-section"
 export default function HomePage() {
   return (
     <>
+      <HashScrollHandler />
       <Header />
 
       <main id="main-content">

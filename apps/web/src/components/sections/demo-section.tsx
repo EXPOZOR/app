@@ -834,11 +834,11 @@ function HotspotPin({ hs }: { hs: Hotspot }) {
         onBlur={() => setShowTip(false)}
         onKeyDown={onKey}
         style={{
-          width: "22px",
-          height: "22px",
+          width: "44px",
+          height: "44px",
           borderRadius: "50%",
-          border: "2px solid var(--accent)",
-          background: "var(--bg-elev-2)",
+          border: "none",
+          background: "transparent",
           color: "var(--accent)",
           fontSize: "0.625rem",
           fontWeight: 700,
@@ -846,13 +846,27 @@ function HotspotPin({ hs }: { hs: Hotspot }) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          boxShadow: "0 0 12px var(--accent-glow), 0 0 0 4px var(--accent-soft)",
-          transition: "box-shadow var(--dur-base)",
+          transform: `translate(${hs.right !== undefined ? "11px" : hs.left !== undefined ? "-11px" : "0"}, ${hs.bottom !== undefined ? "11px" : hs.top !== undefined ? "-11px" : "0"})`,
           lineHeight: 1,
           padding: 0,
         }}
       >
-        {hs.n}
+        <span
+          aria-hidden="true"
+          style={{
+            width: "22px",
+            height: "22px",
+            borderRadius: "50%",
+            border: "2px solid var(--accent)",
+            background: "var(--bg-elev-2)",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: "0 0 12px var(--accent-glow), 0 0 0 4px var(--accent-soft)",
+          }}
+        >
+          {hs.n}
+        </span>
       </button>
 
       {/* Tooltip */}
@@ -1054,7 +1068,7 @@ export function DemoSection() {
                     color: isActive ? "var(--text-primary)" : "var(--text-muted)",
                     boxShadow: isActive ? "var(--shadow-card)" : "none",
                     position: "relative",
-                    minHeight: "36px",
+                    minHeight: "44px",
                     whiteSpace: "nowrap",
                   }}
                 >

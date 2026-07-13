@@ -40,7 +40,7 @@ export default function DownloadPage() {
                 description:
                   "Early-access web experience planned first. No app-store download required.",
                 cta: "Join the waitlist",
-                href: "#waitlist",
+                href: "/#waitlist",
                 accent: "#7CF5C2",
                 badge: "Waitlist",
               },
@@ -49,7 +49,7 @@ export default function DownloadPage() {
                 title: "iOS",
                 description: "Native iPhone app planned, including receipt capture workflows.",
                 cta: "Notify me when available",
-                href: "#waitlist",
+                href: "/#waitlist",
                 accent: "#60a5fa",
                 badge: "Coming soon",
               },
@@ -59,7 +59,7 @@ export default function DownloadPage() {
                 description:
                   "Native Android app planned, including camera-assisted expense capture.",
                 cta: "Notify me when available",
-                href: "#waitlist",
+                href: "/#waitlist",
                 accent: "#a78bfa",
                 badge: "Coming soon",
               },

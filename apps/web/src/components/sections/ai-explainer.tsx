@@ -298,7 +298,7 @@ export function AiExplainerSection() {
                 key={s.id}
                 type="button"
                 onClick={() => goTo(i)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                className={`flex min-h-11 items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                   isActive
                     ? "text-[var(--text-inverse)] shadow-lg"
                     : "border border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--border-strong)]"
@@ -355,7 +355,7 @@ export function AiExplainerSection() {
                     type="button"
                     onClick={() => goTo(activeStep - 1)}
                     disabled={activeStep === 0}
-                    className="w-9 h-9 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--text-secondary)] hover:border-[var(--border-strong)] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="w-11 h-11 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--text-secondary)] hover:border-[var(--border-strong)] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                     aria-label="Previous step"
                   >
                     <ChevronLeft size={16} />
@@ -364,7 +364,7 @@ export function AiExplainerSection() {
                     type="button"
                     onClick={() => goTo(activeStep + 1)}
                     disabled={activeStep === STEPS.length - 1}
-                    className="w-9 h-9 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--text-secondary)] hover:border-[var(--border-strong)] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="w-11 h-11 rounded-full border border-[var(--border)] flex items-center justify-center text-[var(--text-secondary)] hover:border-[var(--border-strong)] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                     aria-label="Next step"
                   >
                     <ChevronRight size={16} />
