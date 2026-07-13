@@ -1,22 +1,29 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /* ──────────────────────────────────────────────────────────────
    STICKY MOBILE CTA BAR
    Spec: fixed bottom bar, mobile-only (hidden on lg+).
    - Appears after scrolling past 300px
+   - Hides once the final waitlist section is reached
    - Dismissible with × (hidden for rest of session via sessionStorage)
    - "Join the waitlist. No credit card."
    - aria-label on dismiss button, role="complementary" on bar
 ────────────────────────────────────────────────────────────── */
 const DISMISS_KEY = "EXPOZOR-mobile-cta-dismissed";
+const SHOW_AFTER_SCROLL = 300;
+const FINAL_WAITLIST_ID = "waitlist";
 
 export function StickyMobileCtaBar() {
-  const [visible, setVisible] = useState(false);
+  const reduceMotion = useReducedMotion();
+  const [pastScrollThreshold, setPastScrollThreshold] = useState(false);
+  const [finalContentReached, setFinalContentReached] = useState(false);
   const [dismissed, setDismissed] = useState(false);
+  const pastScrollThresholdRef = useRef(false);
+  const finalContentReachedRef = useRef(false);
 
   useEffect(() => {
     // Don't show if already dismissed this session
@@ -25,13 +32,44 @@ export function StickyMobileCtaBar() {
       return;
     }
 
-    const handleScroll = () => {
-      setVisible(window.scrollY > 300);
+    const syncScrollThreshold = () => {
+      const nextPastThreshold = window.scrollY > SHOW_AFTER_SCROLL;
+      if (pastScrollThresholdRef.current === nextPastThreshold) return;
+
+      pastScrollThresholdRef.current = nextPastThreshold;
+      setPastScrollThreshold(nextPastThreshold);
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // check on mount
-    return () => window.removeEventListener("scroll", handleScroll);
+    const syncFinalContentReached = (nextFinalContentReached: boolean) => {
+      if (finalContentReachedRef.current === nextFinalContentReached) return;
+
+      finalContentReachedRef.current = nextFinalContentReached;
+      setFinalContentReached(nextFinalContentReached);
+    };
+
+    window.addEventListener("scroll", syncScrollThreshold, { passive: true });
+    syncScrollThreshold();
+
+    const finalWaitlist = document.getElementById(FINAL_WAITLIST_ID);
+    let finalContentObserver: IntersectionObserver | undefined;
+
+    if (finalWaitlist) {
+      const finalWaitlistRect = finalWaitlist.getBoundingClientRect();
+      syncFinalContentReached(finalWaitlistRect.top < window.innerHeight);
+
+      finalContentObserver = new IntersectionObserver(([entry]) => {
+        if (!entry) return;
+
+        const nextFinalContentReached = entry.isIntersecting || entry.boundingClientRect.top < 0;
+        syncFinalContentReached(nextFinalContentReached);
+      });
+      finalContentObserver.observe(finalWaitlist);
+    }
+
+    return () => {
+      window.removeEventListener("scroll", syncScrollThreshold);
+      finalContentObserver?.disconnect();
+    };
   }, []);
 
   function dismiss() {
@@ -39,7 +77,7 @@ export function StickyMobileCtaBar() {
     sessionStorage.setItem(DISMISS_KEY, "1");
   }
 
-  const show = visible && !dismissed;
+  const show = pastScrollThreshold && !finalContentReached && !dismissed;
 
   return (
     <>
@@ -47,10 +85,12 @@ export function StickyMobileCtaBar() {
         {show && (
           <motion.div
             key="mobile-cta-bar"
-            initial={{ y: "100%", opacity: 0 }}
+            initial={reduceMotion ? false : { y: "100%", opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            exit={{ y: "100%", opacity: 0 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            exit={reduceMotion ? { opacity: 0 } : { y: "100%", opacity: 0 }}
+            transition={
+              reduceMotion ? { duration: 0 } : { duration: 0.35, ease: [0.22, 1, 0.36, 1] }
+            }
             role="complementary"
             aria-label="Waitlist sign-up prompt"
             className="mobile-cta-bar"
@@ -171,11 +211,6 @@ export function StickyMobileCtaBar() {
           .mobile-cta-bar,
           .mobile-cta-reservation {
             display: none !important;
-          }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .mobile-cta-bar {
-            transition: none !important;
           }
         }
       `}</style>

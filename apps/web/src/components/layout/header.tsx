@@ -14,6 +14,10 @@ import { type RefObject, useCallback, useEffect, useRef, useState } from "react"
 ────────────────────────────────────────────────────────────── */
 const SCROLL_GLASS = 60;
 const SCROLL_PILL = 200;
+const INITIAL_SCROLL_STATE = {
+  isGlass: false,
+  showPill: false,
+};
 
 /* ── Private Beta pill ──────────────────────────────────────── */
 function PrivateBetaPill() {
@@ -432,7 +436,6 @@ function MobileSheet({
                 No credit card required for the waitlist
               </p>
             </motion.div>
-
           </motion.div>
         )}
       </AnimatePresence>
@@ -442,20 +445,32 @@ function MobileSheet({
 
 /* ── Header ─────────────────────────────────────────────────── */
 export function Header() {
-  const [scrollY, setScrollY] = useState(0);
+  const [scrollState, setScrollState] = useState(INITIAL_SCROLL_STATE);
+  const scrollStateRef = useRef(INITIAL_SCROLL_STATE);
   const [mobileOpen, setMobileOpen] = useState(false);
   const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
 
-  const handleScroll = useCallback(() => {
-    setScrollY(window.scrollY);
+  const syncScrollThresholds = useCallback(() => {
+    const nextIsGlass = window.scrollY >= SCROLL_GLASS;
+    const nextShowPill = window.scrollY >= SCROLL_PILL;
+    const currentState = scrollStateRef.current;
+
+    if (currentState.isGlass === nextIsGlass && currentState.showPill === nextShowPill) return;
+
+    const nextState = {
+      isGlass: nextIsGlass,
+      showPill: nextShowPill,
+    };
+    scrollStateRef.current = nextState;
+    setScrollState(nextState);
   }, []);
 
   useEffect(() => {
     // Fire once on mount to capture initial position
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
+    syncScrollThresholds();
+    window.addEventListener("scroll", syncScrollThresholds, { passive: true });
+    return () => window.removeEventListener("scroll", syncScrollThresholds);
+  }, [syncScrollThresholds]);
 
   // Close mobile menu on resize to desktop
   useEffect(() => {
@@ -466,8 +481,7 @@ export function Header() {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  const isGlass = scrollY >= SCROLL_GLASS;
-  const showPill = scrollY >= SCROLL_PILL;
+  const { isGlass, showPill } = scrollState;
   // Height: 72px → 56px on scroll
   const navHeight = isGlass ? "56px" : "72px";
 
@@ -734,11 +748,7 @@ export function Header() {
 
       {/* ── Mobile full-screen sheet ─────────────────────────── */}
       {/* Rendered outside the header so it covers the full viewport */}
-      <MobileSheet
-        open={mobileOpen}
-        onClose={closeMenu}
-        returnFocusRef={mobileMenuButtonRef}
-      />
+      <MobileSheet open={mobileOpen} onClose={closeMenu} returnFocusRef={mobileMenuButtonRef} />
     </>
   );
 }
