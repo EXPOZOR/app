@@ -4,7 +4,7 @@ import { NAVBAR } from "@/content/landing";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Menu, X } from "lucide-react";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { type RefObject, useCallback, useEffect, useRef, useState } from "react";
 
 /* ──────────────────────────────────────────────────────────────
    Scroll thresholds (px)
@@ -83,136 +83,271 @@ function LogoMark() {
   );
 }
 
-/* ── Mobile full-screen sheet ───────────────────────────────── */
+type MobileMenuCloseReason = "dismiss" | "navigation";
+
+/* ── Mobile full-screen dialog ─────────────────────────────── */
 function MobileSheet({
   open,
   onClose,
+  returnFocusRef,
 }: {
   open: boolean;
   onClose: () => void;
+  returnFocusRef: RefObject<HTMLButtonElement | null>;
 }) {
-  // Trap focus and close on Escape
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const closeReasonRef = useRef<MobileMenuCloseReason>("dismiss");
+  const bodyScrollRef = useRef({ locked: false, overflow: "" });
+
+  const restoreBodyScroll = useCallback(() => {
+    if (!bodyScrollRef.current.locked) return;
+
+    document.body.style.overflow = bodyScrollRef.current.overflow;
+    bodyScrollRef.current.locked = false;
+  }, []);
+
+  const finishClose = useCallback(() => {
+    const dialog = dialogRef.current;
+    if (dialog?.open) dialog.close();
+
+    restoreBodyScroll();
+
+    if (closeReasonRef.current !== "dismiss") return;
+
+    const returnTarget = returnFocusRef.current;
+    if (!returnTarget?.isConnected || returnTarget.getClientRects().length === 0) return;
+
+    window.requestAnimationFrame(() => returnTarget.focus({ preventScroll: true }));
+  }, [restoreBodyScroll, returnFocusRef]);
+
+  const requestClose = useCallback(
+    (reason: MobileMenuCloseReason) => {
+      closeReasonRef.current = reason;
+      onClose();
+    },
+    [onClose],
+  );
+
+  // showModal supplies the focus trap and makes the rest of the document inert.
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", onKey);
-    // Prevent body scroll while sheet is open
-    document.body.style.overflow = "hidden";
+
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    closeReasonRef.current = "dismiss";
+
+    if (!bodyScrollRef.current.locked) {
+      bodyScrollRef.current = {
+        locked: true,
+        overflow: document.body.style.overflow,
+      };
+      document.body.style.overflow = "hidden";
+    }
+
+    if (!dialog.open) dialog.showModal();
+
+    const focusFrame = window.requestAnimationFrame(() => {
+      closeButtonRef.current?.focus({ preventScroll: true });
+    });
+
+    return () => window.cancelAnimationFrame(focusFrame);
+  }, [open]);
+
+  // Restore global page state if a route change unmounts an open dialog.
+  useEffect(() => {
     return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
+      const dialog = dialogRef.current;
+      if (dialog?.open) dialog.close();
+      restoreBodyScroll();
     };
-  }, [open, onClose]);
+  }, [restoreBodyScroll]);
 
   return (
-    <AnimatePresence>
-      {open && (
-        <motion.div
-          id="mobile-menu"
-          aria-modal="true"
-          aria-label="Navigation menu"
-          initial={{ opacity: 0, y: -12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -12 }}
-          transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-          style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: "var(--z-overlay)",
-            display: "flex",
-            flexDirection: "column",
-            background: "rgba(10,10,11,0.97)",
-            backdropFilter: "blur(24px)",
-            WebkitBackdropFilter: "blur(24px)",
-          }}
-        >
-          {/* Sheet header */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "0 1.5rem",
-              height: "64px",
-              borderBottom: "1px solid var(--border)",
-              flexShrink: 0,
-            }}
-          >
-            <Link
-              href="/"
-              onClick={onClose}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-                textDecoration: "none",
-                color: "var(--text-primary)",
-                fontWeight: 700,
-                fontSize: "1.0625rem",
-                letterSpacing: "-0.02em",
-                minHeight: "44px",
-              }}
-              aria-label="EXPOZOR home"
-            >
-              <LogoMark />
-              {NAVBAR.logo}
-            </Link>
+    <dialog
+      ref={dialogRef}
+      id="mobile-menu"
+      aria-label="Navigation menu"
+      aria-modal="true"
+      onCancel={(event) => {
+        event.preventDefault();
+        requestClose("dismiss");
+      }}
+      onKeyDown={(event) => {
+        if (event.key !== "Escape") return;
 
-            <button
-              type="button"
-              onClick={onClose}
-              aria-label="Close menu"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "44px",
-                height: "44px",
-                borderRadius: "var(--radius-sm)",
-                background: "transparent",
-                border: "none",
-                cursor: "pointer",
-                color: "var(--text-secondary)",
-                transition:
-                  "color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out)",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.color = "var(--text-primary)";
-                (e.currentTarget as HTMLButtonElement).style.background = "var(--bg-elev-2)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.color = "var(--text-secondary)";
-                (e.currentTarget as HTMLButtonElement).style.background = "transparent";
-              }}
-            >
-              <X size={20} aria-hidden="true" />
-            </button>
-          </div>
-
-          {/* Nav links — scrollable middle */}
-          <nav
-            aria-label="Mobile navigation"
+        event.preventDefault();
+        requestClose("dismiss");
+      }}
+      style={{
+        position: "fixed",
+        inset: 0,
+        width: "100vw",
+        maxWidth: "none",
+        height: "100dvh",
+        maxHeight: "none",
+        margin: 0,
+        padding: 0,
+        border: "none",
+        background: "transparent",
+        color: "inherit",
+        overflow: "hidden",
+      }}
+    >
+      <AnimatePresence onExitComplete={finishClose}>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
             style={{
-              flex: 1,
-              overflowY: "auto",
-              padding: "1.5rem",
+              position: "fixed",
+              inset: 0,
+              zIndex: "var(--z-overlay)",
               display: "flex",
               flexDirection: "column",
-              gap: "2px",
+              background: "rgba(10,10,11,0.97)",
+              backdropFilter: "blur(24px)",
+              WebkitBackdropFilter: "blur(24px)",
             }}
           >
-            {NAVBAR.links.map((link, i) => (
+            {/* Sheet header */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "0 1.5rem",
+                height: "64px",
+                borderBottom: "1px solid var(--border)",
+                flexShrink: 0,
+              }}
+            >
+              <Link
+                href="/"
+                onClick={() => requestClose("navigation")}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  textDecoration: "none",
+                  color: "var(--text-primary)",
+                  fontWeight: 700,
+                  fontSize: "1.0625rem",
+                  letterSpacing: "-0.02em",
+                  minHeight: "44px",
+                }}
+                aria-label="EXPOZOR home"
+              >
+                <LogoMark />
+                {NAVBAR.logo}
+              </Link>
+
+              <button
+                ref={closeButtonRef}
+                type="button"
+                onClick={() => requestClose("dismiss")}
+                aria-label="Close menu"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "44px",
+                  height: "44px",
+                  borderRadius: "var(--radius-sm)",
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  color: "var(--text-secondary)",
+                  transition:
+                    "color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out)",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.color = "var(--text-primary)";
+                  (e.currentTarget as HTMLButtonElement).style.background = "var(--bg-elev-2)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.color = "var(--text-secondary)";
+                  (e.currentTarget as HTMLButtonElement).style.background = "transparent";
+                }}
+              >
+                <X size={20} aria-hidden="true" />
+              </button>
+            </div>
+
+            {/* Nav links — scrollable middle */}
+            <nav
+              aria-label="Mobile navigation"
+              style={{
+                flex: 1,
+                overflowY: "auto",
+                padding: "1.5rem",
+                display: "flex",
+                flexDirection: "column",
+                gap: "2px",
+              }}
+            >
+              {NAVBAR.links.map((link, i) => (
+                <motion.div
+                  key={link.href}
+                  initial={{ opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.05 + i * 0.04, duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <Link
+                    href={link.href}
+                    onClick={() => requestClose("navigation")}
+                    style={{
+                      display: "block",
+                      padding: "0.875rem 1rem",
+                      borderRadius: "var(--radius-md)",
+                      fontSize: "1.0625rem",
+                      fontWeight: 600,
+                      color: "var(--text-secondary)",
+                      textDecoration: "none",
+                      transition:
+                        "color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out)",
+                      letterSpacing: "-0.01em",
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLAnchorElement).style.color = "var(--text-primary)";
+                      (e.currentTarget as HTMLAnchorElement).style.background = "var(--bg-elev-2)";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLAnchorElement).style.color = "var(--text-secondary)";
+                      (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
+                    }}
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
+              ))}
+
+              {/* Divider */}
+              <div
+                aria-hidden="true"
+                style={{
+                  height: "1px",
+                  background: "var(--border)",
+                  margin: "1rem 0",
+                }}
+              />
+
+              {/* Sign in */}
               <motion.div
-                key={link.href}
                 initial={{ opacity: 0, x: -12 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.05 + i * 0.04, duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                transition={{
+                  delay: 0.05 + NAVBAR.links.length * 0.04 + 0.04,
+                  duration: 0.22,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
               >
-                <Link
-                  href={link.href}
-                  onClick={onClose}
+                <a
+                  href={NAVBAR.cta.href}
+                  onClick={() => requestClose("navigation")}
                   style={{
                     display: "block",
                     padding: "0.875rem 1rem",
@@ -234,121 +369,74 @@ function MobileSheet({
                     (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
                   }}
                 >
-                  {link.label}
-                </Link>
+                  {NAVBAR.cta.label}
+                </a>
               </motion.div>
-            ))}
+            </nav>
 
-            {/* Divider */}
-            <div
-              aria-hidden="true"
-              style={{
-                height: "1px",
-                background: "var(--border)",
-                margin: "1rem 0",
-              }}
-            />
-
-            {/* Sign in */}
+            {/* Primary CTA — pinned to bottom of sheet */}
             <motion.div
-              initial={{ opacity: 0, x: -12 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{
-                delay: 0.05 + NAVBAR.links.length * 0.04 + 0.04,
-                duration: 0.22,
-                ease: [0.22, 1, 0.36, 1],
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.18, duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                padding: "1.25rem 1.5rem",
+                borderTop: "1px solid var(--border)",
+                flexShrink: 0,
               }}
             >
               <a
                 href={NAVBAR.cta.href}
-                onClick={onClose}
+                onClick={() => requestClose("navigation")}
                 style={{
-                  display: "block",
-                  padding: "0.875rem 1rem",
-                  borderRadius: "var(--radius-md)",
-                  fontSize: "1.0625rem",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px",
+                  width: "100%",
+                  padding: "0.9375rem 1.5rem",
+                  borderRadius: "var(--radius-lg)",
+                  background: "var(--accent)",
+                  color: "var(--text-inverse)",
+                  fontSize: "1rem",
                   fontWeight: 600,
-                  color: "var(--text-secondary)",
                   textDecoration: "none",
-                  transition:
-                    "color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out)",
                   letterSpacing: "-0.01em",
+                  border: "none",
+                  cursor: "pointer",
+                  transition:
+                    "background var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)",
+                  minHeight: "52px",
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.color = "var(--text-primary)";
-                  (e.currentTarget as HTMLAnchorElement).style.background = "var(--bg-elev-2)";
+                  (e.currentTarget as HTMLAnchorElement).style.background = "var(--accent-hover)";
+                  (e.currentTarget as HTMLAnchorElement).style.boxShadow = "var(--shadow-glow)";
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.color = "var(--text-secondary)";
-                  (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
+                  (e.currentTarget as HTMLAnchorElement).style.background = "var(--accent)";
+                  (e.currentTarget as HTMLAnchorElement).style.boxShadow = "none";
                 }}
               >
-                {NAVBAR.cta.label}
+                Get early access
+                <ArrowRight size={16} aria-hidden="true" />
               </a>
+              <p
+                style={{
+                  textAlign: "center",
+                  fontSize: "0.75rem",
+                  color: "var(--text-muted)",
+                  marginTop: "0.625rem",
+                  lineHeight: 1.4,
+                }}
+              >
+                No credit card required for the waitlist
+              </p>
             </motion.div>
-          </nav>
 
-          {/* Primary CTA — pinned to bottom of sheet */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.18, duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            style={{
-              padding: "1.25rem 1.5rem",
-              borderTop: "1px solid var(--border)",
-              flexShrink: 0,
-            }}
-          >
-            <a
-              href={NAVBAR.cta.href}
-              onClick={onClose}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "8px",
-                width: "100%",
-                padding: "0.9375rem 1.5rem",
-                borderRadius: "var(--radius-lg)",
-                background: "var(--accent)",
-                color: "var(--text-inverse)",
-                fontSize: "1rem",
-                fontWeight: 600,
-                textDecoration: "none",
-                letterSpacing: "-0.01em",
-                border: "none",
-                cursor: "pointer",
-                transition:
-                  "background var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)",
-                minHeight: "52px",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.background = "var(--accent-hover)";
-                (e.currentTarget as HTMLAnchorElement).style.boxShadow = "var(--shadow-glow)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.background = "var(--accent)";
-                (e.currentTarget as HTMLAnchorElement).style.boxShadow = "none";
-              }}
-            >
-              Get early access
-              <ArrowRight size={16} aria-hidden="true" />
-            </a>
-            <p
-              style={{
-                textAlign: "center",
-                fontSize: "0.75rem",
-                color: "var(--text-muted)",
-                marginTop: "0.625rem",
-                lineHeight: 1.4,
-              }}
-            >
-              No credit card required for the waitlist
-            </p>
           </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        )}
+      </AnimatePresence>
+    </dialog>
   );
 }
 
@@ -356,6 +444,7 @@ function MobileSheet({
 export function Header() {
   const [scrollY, setScrollY] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
 
   const handleScroll = useCallback(() => {
     setScrollY(window.scrollY);
@@ -459,7 +548,6 @@ export function Header() {
           <nav
             aria-label="Primary navigation"
             style={{
-              display: "flex",
               alignItems: "center",
               gap: "2px",
               flex: 1,
@@ -586,15 +674,15 @@ export function Header() {
 
           {/* ── Mobile hamburger ────────────────────────────── */}
           <button
+            ref={mobileMenuButtonRef}
             type="button"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
             aria-haspopup="dialog"
-            onClick={() => setMobileOpen((o) => !o)}
-            className="md:hidden"
+            onClick={() => setMobileOpen(true)}
+            className="flex md:hidden"
             style={{
-              display: "flex",
               alignItems: "center",
               justifyContent: "center",
               width: "44px",
@@ -646,7 +734,11 @@ export function Header() {
 
       {/* ── Mobile full-screen sheet ─────────────────────────── */}
       {/* Rendered outside the header so it covers the full viewport */}
-      <MobileSheet open={mobileOpen} onClose={closeMenu} />
+      <MobileSheet
+        open={mobileOpen}
+        onClose={closeMenu}
+        returnFocusRef={mobileMenuButtonRef}
+      />
     </>
   );
 }
