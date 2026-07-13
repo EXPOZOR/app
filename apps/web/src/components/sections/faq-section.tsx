@@ -1,10 +1,13 @@
 "use client";
 
+import { IconButton } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { SectionHeader } from "@/components/ui/section-header";
 import { FAQ } from "@/content/landing";
 import { EASE_OUT } from "@/lib/motion";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Search, X } from "lucide-react";
-import { type ChangeEvent, type KeyboardEvent, useCallback, useRef, useState } from "react";
+import { type KeyboardEvent, useCallback, useRef, useState } from "react";
 
 /* ──────────────────────────────────────────────────────────────
    ACCORDION ITEM
@@ -214,59 +217,27 @@ function SearchBar({
       />
 
       {/* Input */}
-      <input
+      <Input
         type="search"
+        controlSize="sm"
         aria-label="Search frequently asked questions"
         aria-autocomplete="list"
         aria-controls="faq-list"
         placeholder="Search questions…"
         value={value}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
-        style={{
-          width: "100%",
-          padding: "0.6875rem 3rem 0.6875rem 2.5rem",
-          borderRadius: "var(--radius-md)",
-          background: "var(--bg-elev-2)",
-          border: "1px solid var(--border)",
-          color: "var(--text-primary)",
-          fontSize: "0.9375rem",
-          transition: "border-color var(--dur-base) var(--ease-out)",
-          boxSizing: "border-box",
-        }}
-        onFocus={(e) => {
-          (e.target as HTMLInputElement).style.borderColor = "var(--border-strong)";
-        }}
-        onBlur={(e) => {
-          (e.target as HTMLInputElement).style.borderColor = "var(--border)";
-        }}
+        onChange={(e) => onChange(e.target.value)}
+        className="bg-bg-elev-2 pl-10 pr-12 text-[0.9375rem]"
       />
 
       {/* Clear × button */}
       {value && (
-        <button
-          type="button"
+        <IconButton
           onClick={onClear}
           aria-label="Clear search"
-          style={{
-            position: "absolute",
-            right: 0,
-            top: "50%",
-            transform: "translateY(-50%)",
-            width: "44px",
-            height: "44px",
-            borderRadius: "50%",
-            background:
-              "radial-gradient(circle at center, var(--bg-muted) 0 12px, transparent 12px)",
-            border: "none",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "var(--text-muted)",
-          }}
+          className="absolute right-0 top-1/2 -translate-y-1/2 text-text-muted"
         >
           <X size={12} aria-hidden="true" />
-        </button>
+        </IconButton>
       )}
     </motion.div>
   );
@@ -338,48 +309,23 @@ export function FaqSection() {
 
       <div className="container-site" style={{ position: "relative" }}>
         <div className="measure-section mx-auto">
-          {/* ── Section header ─────────────────────────── */}
-          <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-            <motion.p
-              className="eyebrow"
-              initial={{ opacity: 0, y: -4 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.45 }}
-              style={{ marginBottom: "0.875rem" }}
-            >
-              FAQ
-            </motion.p>
-
-            <motion.h2
-              id="faq-heading"
-              className="section-heading"
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.08, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              style={{ margin: "0 auto 0.875rem" }}
-            >
-              {FAQ.title}
-            </motion.h2>
-
-            <motion.p
-              className="section-subtitle"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.14, duration: 0.5 }}
-              style={{ margin: "0 auto" }}
-            >
-              Can't find an answer?{" "}
-              <a
-                href="mailto:support@expozor.com"
-                style={{ color: "var(--accent)", textDecoration: "none", fontWeight: 600 }}
-              >
-                Email us
-              </a>
-            </motion.p>
-          </div>
+          <SectionHeader
+            headingId="faq-heading"
+            eyebrow="FAQ"
+            title={FAQ.title}
+            description={
+              <>
+                Can't find an answer?{" "}
+                <a
+                  href="mailto:support@expozor.com"
+                  className="font-semibold text-decorative no-underline"
+                >
+                  Email us
+                </a>
+              </>
+            }
+            className="mb-10"
+          />
 
           {/* ── Search bar ─────────────────────────────── */}
           <SearchBar

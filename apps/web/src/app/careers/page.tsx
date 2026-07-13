@@ -1,5 +1,7 @@
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { buttonClassName } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { PageHero } from "@/components/ui/page-hero";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 import type { Metadata } from "next";
@@ -31,17 +33,17 @@ export default function CareersPage() {
             className="mb-12"
           />
 
-          <div className="rounded-[var(--radius-xl)] border border-[var(--border)] bg-[var(--bg-surface)] p-8 text-center">
+          <Card className="p-8 text-center">
             <h2 className="text-2xl font-bold mb-3">No open roles right now.</h2>
             <p className="text-[var(--text-secondary)] mb-6">
               We hire slowly and carefully. If you love what we're building, reach out anyway —
               great people don't always appear when the role does.
             </p>
             {/* TODO: add confirmed careers contact email before hiring opens */}
-            <a href="/contact" className="btn btn-primary">
+            <a href="/contact" className={buttonClassName()}>
               Reach out via the contact page
             </a>
-          </div>
+          </Card>
         </div>
       </main>
       <Footer />

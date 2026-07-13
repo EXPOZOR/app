@@ -1,5 +1,9 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
+import { Button, IconButton } from "@/components/ui/button";
+import { cardClassName } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, Plus, RefreshCw, Sparkles, TrendingDown } from "lucide-react";
 import { useCallback, useState } from "react";
@@ -193,7 +197,10 @@ export function InteractiveDemo() {
 
   return (
     <section
-      className="relative w-full max-w-2xl mx-auto rounded-[var(--radius-xl)] overflow-hidden border border-[var(--border)] glass"
+      className={cardClassName({
+        surface: "glass",
+        className: "relative mx-auto w-full max-w-2xl overflow-hidden",
+      })}
       style={{ boxShadow: "0 24px 80px rgba(0,0,0,0.6)" }}
       aria-label="Interactive demo"
     >
@@ -209,16 +216,17 @@ export function InteractiveDemo() {
           <span className="text-xs text-[var(--text-tertiary)] font-medium">EXPOZOR</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="badge-live text-[10px]">Live demo</span>
-          <button
-            type="button"
+          <Badge tone="positive" badgeSize="xs" status>
+            Live demo
+          </Badge>
+          <IconButton
             onClick={handleReset}
-            className="w-11 h-11 inline-flex items-center justify-center rounded-[var(--radius-sm)] text-[var(--text-tertiary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-overlay)] transition-colors"
+            className="rounded-sm text-text-tertiary hover:bg-bg-overlay hover:text-text-primary"
             aria-label="Reset demo"
             title="Reset demo"
           >
             <RefreshCw size={12} />
-          </button>
+          </IconButton>
         </div>
       </div>
 
@@ -232,15 +240,15 @@ export function InteractiveDemo() {
             >
               Description
             </label>
-            <input
+            <Input
               id="demo-name"
               type="text"
+              controlSize="sm"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. Coffee Shop, $4.50"
               disabled={step !== "entry"}
               maxLength={60}
-              className="w-full min-h-11 px-3 py-2.5 text-sm rounded-[var(--radius)] bg-[var(--bg-elevated)] border border-[var(--border)] text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:border-[var(--accent)] transition-colors disabled:opacity-50"
               onKeyDown={(e) => e.key === "Enter" && handleAdd()}
             />
             {/* Suggestions */}
@@ -271,9 +279,10 @@ export function InteractiveDemo() {
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] text-sm pointer-events-none">
                 $
               </span>
-              <input
+              <Input
                 id="demo-amount"
                 type="number"
+                controlSize="sm"
                 inputMode="decimal"
                 min="0.01"
                 step="0.01"
@@ -281,22 +290,23 @@ export function InteractiveDemo() {
                 onChange={(e) => setAmount(e.target.value)}
                 placeholder="4.50"
                 disabled={step !== "entry"}
-                className="w-full min-h-11 pl-7 pr-3 py-2.5 text-sm rounded-[var(--radius)] bg-[var(--bg-elevated)] border border-[var(--border)] text-[var(--text-primary)] placeholder-[var(--text-tertiary)] focus:border-[var(--accent)] transition-colors disabled:opacity-50"
+                className="pl-7"
                 onKeyDown={(e) => e.key === "Enter" && handleAdd()}
               />
             </div>
           </div>
 
-          <button
-            type="button"
+          <Button
             onClick={handleAdd}
             disabled={!name || !amount || step !== "entry"}
-            className="mt-auto flex min-h-11 items-center justify-center gap-2 w-full py-2.5 rounded-[var(--radius)] bg-[var(--accent)] text-[var(--text-inverse)] text-sm font-semibold hover:bg-[var(--accent-dim)] transition-colors disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.98]"
+            buttonSize="sm"
+            fullWidth
+            className="mt-auto"
             aria-label="Add expense"
           >
             <Plus size={16} aria-hidden="true" />
             Add expense
-          </button>
+          </Button>
 
           {/* Budget mini-gauge */}
           <div className="pt-4 border-t border-[var(--border)]">

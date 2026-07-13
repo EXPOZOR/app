@@ -1,5 +1,9 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
+import { buttonClassName } from "@/components/ui/button";
+import { cardClassName } from "@/components/ui/card";
+import { SectionHeader } from "@/components/ui/section-header";
 import { PRICING } from "@/content/landing";
 import { EASE_OUT } from "@/lib/motion";
 import { motion } from "framer-motion";
@@ -17,6 +21,10 @@ function PricingCard({
 
   return (
     <motion.article
+      className={cardClassName({
+        surface: "elevated",
+        className: "relative flex flex-col overflow-hidden p-7",
+      })}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
@@ -24,12 +32,6 @@ function PricingCard({
       aria-label={`${tier.name} planned package`}
       style={{
         position: "relative",
-        display: "flex",
-        flexDirection: "column",
-        padding: "1.75rem",
-        borderRadius: "var(--radius-lg)",
-        overflow: "hidden",
-        background: "var(--bg-elev-1)",
         border: isHighlighted
           ? "1.5px solid color-mix(in oklch, var(--accent) 45%, transparent)"
           : "1px solid var(--border)",
@@ -52,28 +54,10 @@ function PricingCard({
       )}
 
       {"badge" in tier && tier.badge && (
-        <div
-          style={{
-            position: "absolute",
-            top: "1rem",
-            right: "1rem",
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "4px",
-            padding: "3px 8px",
-            borderRadius: "var(--radius-full)",
-            fontSize: "0.5625rem",
-            fontWeight: 700,
-            letterSpacing: "0.06em",
-            textTransform: "uppercase",
-            background: "var(--accent-subtle)",
-            border: "1px solid var(--border-accent)",
-            color: "var(--accent)",
-          }}
-        >
+        <Badge tone="accent" badgeSize="xs" className="absolute right-4 top-4">
           <Sparkles size={8} aria-hidden="true" />
           {tier.badge}
-        </div>
+        </Badge>
       )}
 
       <div
@@ -126,28 +110,15 @@ function PricingCard({
 
       <motion.a
         href="/#waitlist"
+        className={buttonClassName({
+          variant: isHighlighted ? "primary" : "secondary",
+          size: "sm",
+          fullWidth: true,
+          className: "mb-6",
+        })}
         whileHover={{ scale: 1.02, ...(isHighlighted ? { boxShadow: "var(--shadow-glow)" } : {}) }}
         whileTap={{ scale: 0.98 }}
         aria-label={`${tier.cta} - ${tier.name} planned package`}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "6px",
-          padding: "0.625rem 1rem",
-          borderRadius: "var(--radius-md)",
-          fontSize: "0.875rem",
-          fontWeight: 600,
-          textDecoration: "none",
-          marginBottom: "1.5rem",
-          letterSpacing: "-0.01em",
-          cursor: "pointer",
-          border: "1px solid",
-          transition: "all var(--dur-base) var(--ease-out)",
-          background: isHighlighted ? "var(--accent)" : "transparent",
-          borderColor: isHighlighted ? "var(--accent)" : "var(--border)",
-          color: isHighlighted ? "var(--text-inverse)" : "var(--text-secondary)",
-        }}
       >
         {tier.cta}
       </motion.a>
@@ -320,41 +291,13 @@ export function PricingSection() {
       />
 
       <div className="container-site" style={{ position: "relative" }}>
-        <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-          <motion.p
-            className="eyebrow"
-            initial={{ opacity: 0, y: -4 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.45 }}
-            style={{ marginBottom: "0.875rem" }}
-          >
-            PRICING
-          </motion.p>
-
-          <motion.h2
-            id="pricing-heading"
-            className="section-heading"
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.08, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            style={{ margin: "0 auto 0.875rem" }}
-          >
-            Billing is not active yet
-          </motion.h2>
-
-          <motion.p
-            className="section-subtitle"
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.14, duration: 0.5 }}
-            style={{ margin: "0 auto" }}
-          >
-            {PRICING.subtitle} Paid packages below are planned and may change before launch.
-          </motion.p>
-        </div>
+        <SectionHeader
+          headingId="pricing-heading"
+          eyebrow="PRICING"
+          title="Billing is not active yet"
+          description={`${PRICING.subtitle} Paid packages below are planned and may change before launch.`}
+          className="mb-10"
+        />
 
         <div className="pricing-grid">
           {PRICING.tiers.map((tier, i) => (
