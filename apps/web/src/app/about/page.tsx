@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "We're building the expense manager we always wanted — calm, intelligent, and respectful of your time. Meet the team behind EXPOZOR.",
+    "EXPOZOR is built by Mohamed Karrach — calm, intelligent expense tracking that respects your time and privacy.",
   alternates: { canonical: "https://expozor.com/about" },
 };
 
@@ -26,13 +26,17 @@ export default function AboutPage() {
             About
           </p>
           <h1 className="text-5xl font-bold tracking-tight mb-6">
-            We're building what we always wanted.
+            One person, one mission.
           </h1>
           <div className="prose-custom space-y-6 text-[var(--text-secondary)] text-lg leading-relaxed">
             <p>
-              Managing personal finances shouldn't feel like filing taxes. Yet every app we tried
-              was either too simple to be useful or so complex it became a second job. We decided to
-              build something different.
+              Hi, I'm <strong className="text-[var(--text-primary)]">Mohamed Karrach</strong> — the
+              founder and sole developer behind EXPOZOR.
+            </p>
+            <p>
+              Managing personal finances shouldn't feel like filing taxes. Yet every app I tried
+              was either too simple to be useful or so complex it became a second job. So I decided
+              to build something different.
             </p>
             <p>
               EXPOZOR is designed around one principle: money is personal. The app should adapt to
@@ -40,13 +44,17 @@ export default function AboutPage() {
               household budget across five currencies, EXPOZOR should feel frictionless.
             </p>
             <p>
-              We're a small, distributed team. We care deeply about privacy, accessibility, and the
-              craft of building software that respects people.
+              I care deeply about privacy, accessibility, and the craft of building software that
+              respects people. Every line of code, every design decision, and every word on this
+              site is mine — and I stand behind all of it.
             </p>
             <div className="pt-6 border-t border-[var(--border)]">
               <blockquote className="text-[var(--text-primary)] text-xl font-medium italic pl-5 border-l-2 border-[var(--accent)]">
-                "Calm, intelligent money. That's all we're trying to make."
+                "Calm, intelligent money. That's all I'm trying to make."
               </blockquote>
+              <p className="mt-3 text-sm text-[var(--text-muted)]">
+                — Mohamed Karrach, Founder
+              </p>
             </div>
           </div>
         </div>

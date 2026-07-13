@@ -469,7 +469,7 @@ export function FinalCtaSection() {
 
                     <motion.button
                       type="submit"
-                      disabled={isPending || !consent}
+                      disabled={isPending}
                       whileHover={{ scale: 1.03, boxShadow: "var(--shadow-glow)" }}
                       whileTap={{ scale: 0.97 }}
                       aria-label={FINAL_CTA.ctaAriaLabel}
@@ -487,8 +487,8 @@ export function FinalCtaSection() {
                         fontWeight: 600,
                         letterSpacing: "-0.01em",
                         border: "none",
-                        cursor: isPending || !consent ? "not-allowed" : "pointer",
-                        opacity: isPending || !consent ? 0.7 : 1,
+                        cursor: isPending ? "not-allowed" : "pointer",
+                        opacity: isPending ? 0.7 : 1,
                         display: "flex",
                         alignItems: "center",
                         gap: "6px",
@@ -532,7 +532,6 @@ export function FinalCtaSection() {
                       name="productUpdatesConsent"
                       checked={consent}
                       onChange={(e) => setConsent(e.target.checked)}
-                      required
                       disabled={isPending}
                       style={{ marginTop: "3px" }}
                     />

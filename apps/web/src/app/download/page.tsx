@@ -1,7 +1,7 @@
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
-import { Globe, QrCode, Smartphone } from "lucide-react";
+import { Globe, Smartphone } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -109,15 +109,21 @@ export default function DownloadPage() {
             })}
           </div>
 
-          {/* QR SVG placeholder */}
-          <div className="flex flex-col items-center gap-4 mt-16" aria-label="QR code placeholder">
-            <QrCode
-              size={80}
-              className="text-[var(--text-tertiary)] opacity-40"
+          {/* Mobile app availability notice */}
+          <div className="flex flex-col items-center gap-3 mt-16 text-center">
+            <div
+              className="w-12 h-12 rounded-[var(--radius)] flex items-center justify-center"
+              style={{
+                background: "var(--accent-subtle)",
+                border: "1px solid var(--accent-border)",
+              }}
               aria-hidden="true"
-            />
-            <p className="text-sm text-[var(--text-tertiary)]">
-              QR codes will appear here when the mobile apps launch.
+            >
+              <Smartphone size={20} style={{ color: "var(--accent)" }} />
+            </div>
+            <p className="text-sm text-[var(--text-secondary)] max-w-xs">
+              Mobile apps are in development. Join the waitlist to be notified
+              when iOS and Android are available.
             </p>
           </div>
         </div>

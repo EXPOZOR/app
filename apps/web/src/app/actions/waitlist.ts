@@ -11,8 +11,7 @@ const WaitlistSchema = z.object({
   locale: z.literal("en").default("en"),
   productUpdatesConsent: z
     .enum(["on", "true", "1"])
-    .optional()
-    .refine(Boolean, "Please confirm you'd like to receive product updates."),
+    .optional(),
   website: z.string().optional(),
 });
 

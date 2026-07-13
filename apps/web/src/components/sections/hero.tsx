@@ -760,7 +760,7 @@ function WaitlistForm() {
               using a gradient div whose opacity springs in/out. */}
           <motion.button
             type="submit"
-            disabled={isPending || !consent}
+            disabled={isPending}
             onMouseMove={onMouseMove}
             onMouseLeave={onMouseLeave}
             style={{
@@ -880,7 +880,6 @@ function WaitlistForm() {
             name="productUpdatesConsent"
             checked={consent}
             onChange={(e) => setConsent(e.target.checked)}
-            required
             disabled={isPending}
             style={{ marginTop: "3px" }}
           />
@@ -1036,7 +1035,7 @@ export function HeroSection() {
                   the h1 as one natural phrase. */}
               <motion.h1
                 id="hero-headline"
-                aria-label="Your finances, finally intelligent."
+                aria-label={HERO.headline}
                 initial="hidden"
                 animate="visible"
                 variants={{
@@ -1060,7 +1059,8 @@ export function HeroSection() {
                 }}
               >
                 {/* Plain words — each fades up independently */}
-                {["Your", "finances,"].map((word) => (
+                {/* Plain words — each fades up independently */}
+                {["Know", "where", "your", "money", "is"].map((word) => (
                   <motion.span
                     key={word}
                     aria-hidden="true"
@@ -1080,7 +1080,7 @@ export function HeroSection() {
                 ))}
 
                 {/* Gradient phrase — each word still staggers but carries the gradient */}
-                {["finally", "intelligent."].map((word, i) => (
+                {["really", "going."].map((word, i) => (
                   <motion.span
                     key={word}
                     aria-hidden="true"
@@ -1150,9 +1150,8 @@ export function HeroSection() {
 
                 {/* Secondary CTA — ghost, opens stubbed demo modal */}
                 <div>
-                  <button
-                    type="button"
-                    onClick={() => setDemoOpen(true)}
+                  <a
+                    href="#demo"
                     aria-label={HERO.secondaryCtaAriaLabel}
                     style={{
                       display: "inline-flex",
@@ -1175,12 +1174,12 @@ export function HeroSection() {
                       ].join(", "),
                     }}
                     onMouseEnter={(e) => {
-                      const el = e.currentTarget as HTMLButtonElement;
+                      const el = e.currentTarget as HTMLAnchorElement;
                       el.style.color = "var(--text-primary)";
                       el.style.background = "var(--bg-elev-2)";
                     }}
                     onMouseLeave={(e) => {
-                      const el = e.currentTarget as HTMLButtonElement;
+                      const el = e.currentTarget as HTMLAnchorElement;
                       el.style.color = "var(--text-secondary)";
                       el.style.background = "transparent";
                     }}
@@ -1206,7 +1205,7 @@ export function HeroSection() {
                       />
                     </div>
                     {HERO.secondaryCta}
-                  </button>
+                  </a>
                 </div>
               </motion.div>
 
