@@ -7,7 +7,7 @@ import { FAQ } from "@/content/landing";
 import { EASE_OUT } from "@/lib/motion";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Search, X } from "lucide-react";
-import { type KeyboardEvent, useCallback, useRef, useState } from "react";
+import { type KeyboardEvent, type RefObject, useCallback, useRef, useState } from "react";
 
 /* ──────────────────────────────────────────────────────────────
    ACCORDION ITEM
@@ -84,66 +84,68 @@ function AccordionItem({
       )}
 
       {/* Question button */}
-      <button
-        ref={btnRef}
-        type="button"
-        id={`${item.id}-btn`}
-        aria-expanded={isOpen}
-        aria-controls={`${item.id}-panel`}
-        onClick={onToggle}
-        onKeyDown={handleKeyDown}
-        style={{
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: "1rem",
-          padding: "1.125rem 1.375rem",
-          textAlign: "left",
-          background: "transparent",
-          border: "none",
-          cursor: "pointer",
-          color: "var(--text-primary)",
-        }}
-      >
-        <span
+      <h3 style={{ margin: 0 }}>
+        <button
+          ref={btnRef}
+          type="button"
+          id={`${item.id}-btn`}
+          aria-expanded={isOpen}
+          aria-controls={`${item.id}-panel`}
+          onClick={onToggle}
+          onKeyDown={handleKeyDown}
           style={{
-            fontSize: "0.9375rem",
-            fontWeight: 600,
-            lineHeight: 1.4,
-            letterSpacing: "-0.01em",
-            color: "var(--text-primary)",
-            flex: 1,
-            paddingRight: "0.5rem",
-          }}
-        >
-          {item.question}
-        </span>
-
-        {/* ── Enhancement 10: spring-driven chevron rotation ── */}
-        {/* Replaced CSS transform string with Framer Motion animate so
-            the rotation uses a spring (feels physical, not linear). */}
-        <motion.span
-          aria-hidden="true"
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 28 }}
-          style={{
-            flexShrink: 0,
-            width: "28px",
-            height: "28px",
-            borderRadius: "50%",
-            border: "1px solid var(--border)",
-            background: "var(--bg-elev-2)",
+            width: "100%",
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
-            color: isOpen ? "var(--accent)" : "var(--text-muted)",
-            transition: "color 200ms ease-out",
+            justifyContent: "space-between",
+            gap: "1rem",
+            padding: "1.125rem 1.375rem",
+            textAlign: "left",
+            background: "transparent",
+            border: "none",
+            cursor: "pointer",
+            color: "var(--text-primary)",
           }}
         >
-          <ChevronDown size={14} aria-hidden="true" />
-        </motion.span>
-      </button>
+          <span
+            style={{
+              fontSize: "0.9375rem",
+              fontWeight: 600,
+              lineHeight: 1.4,
+              letterSpacing: "-0.01em",
+              color: "var(--text-primary)",
+              flex: 1,
+              paddingRight: "0.5rem",
+            }}
+          >
+            {item.question}
+          </span>
+
+          {/* ── Enhancement 10: spring-driven chevron rotation ── */}
+          {/* Replaced CSS transform string with Framer Motion animate so
+            the rotation uses a spring (feels physical, not linear). */}
+          <motion.span
+            aria-hidden="true"
+            animate={{ rotate: isOpen ? 180 : 0 }}
+            transition={{ type: "spring", stiffness: 300, damping: 28 }}
+            style={{
+              flexShrink: 0,
+              width: "28px",
+              height: "28px",
+              borderRadius: "50%",
+              border: "1px solid var(--border)",
+              background: "var(--bg-elev-2)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: isOpen ? "var(--accent)" : "var(--text-muted)",
+              transition: "color 200ms ease-out",
+            }}
+          >
+            <ChevronDown size={14} aria-hidden="true" />
+          </motion.span>
+        </button>
+      </h3>
 
       {/* Answer panel */}
       <AnimatePresence initial={false}>
@@ -186,10 +188,12 @@ function SearchBar({
   value,
   onChange,
   onClear,
+  inputRef,
 }: {
   value: string;
   onChange: (v: string) => void;
   onClear: () => void;
+  inputRef: RefObject<HTMLInputElement | null>;
 }) {
   return (
     <motion.div
@@ -218,10 +222,10 @@ function SearchBar({
 
       {/* Input */}
       <Input
+        ref={inputRef}
         type="search"
         controlSize="sm"
         aria-label="Search frequently asked questions"
-        aria-autocomplete="list"
         aria-controls="faq-list"
         placeholder="Search questions…"
         value={value}
@@ -249,6 +253,7 @@ function SearchBar({
 export function FaqSection() {
   const [openId, setOpenId] = useState<string | null>(null);
   const [query, setQuery] = useState("");
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   // One ref per item button for keyboard arrow-nav
   const btnRefs = useRef<Array<React.RefObject<HTMLButtonElement | null>>>(
@@ -329,6 +334,7 @@ export function FaqSection() {
 
           {/* ── Search bar ─────────────────────────────── */}
           <SearchBar
+            inputRef={searchInputRef}
             value={query}
             onChange={(v) => {
               setQuery(v);
@@ -337,6 +343,7 @@ export function FaqSection() {
             onClear={() => {
               setQuery("");
               setOpenId(null);
+              window.requestAnimationFrame(() => searchInputRef.current?.focus());
             }}
           />
 
@@ -344,8 +351,6 @@ export function FaqSection() {
           <ul
             id="faq-list"
             aria-label="Frequently asked questions"
-            aria-live="polite"
-            aria-atomic="false"
             style={{
               display: "flex",
               flexDirection: "column",
@@ -395,7 +400,14 @@ export function FaqSection() {
                   </p>
                   <a
                     href="mailto:support@expozor.com"
-                    style={{ fontSize: "0.875rem", color: "var(--accent)", fontWeight: 600 }}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      minHeight: "44px",
+                      fontSize: "0.875rem",
+                      color: "var(--accent)",
+                      fontWeight: 600,
+                    }}
                   >
                     Ask us directly →
                   </a>

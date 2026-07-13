@@ -4,7 +4,7 @@ import { joinWaitlist } from "@/app/actions/waitlist";
 import { EASE_OUT } from "@/lib/motion";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { AlertCircle, Bell, CheckCircle2, Loader2 } from "lucide-react";
-import { useRef, useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 
 /* ──────────────────────────────────────────────────────────────
    APP STORE / PLAY STORE INLINE SVG BADGES
@@ -445,6 +445,12 @@ function NotifyForm() {
   const [isPending, startTransition] = useTransition();
   const inputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    if (status === "error" && !isPending) {
+      inputRef.current?.focus({ preventScroll: true });
+    }
+  }, [isPending, status]);
+
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
@@ -504,7 +510,14 @@ function NotifyForm() {
             flexWrap: "wrap",
           }}
         >
-          <input type="text" name="website" tabIndex={-1} autoComplete="off" className="sr-only" />
+          <input
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className="sr-only"
+          />
           <label htmlFor="notify-email" className="sr-only">
             Your email address
           </label>
@@ -516,8 +529,9 @@ function NotifyForm() {
             required
             placeholder="you@example.com"
             autoComplete="email"
-            disabled={isPending || !consent}
-            aria-describedby="notify-hint"
+            disabled={isPending}
+            aria-invalid={status === "error"}
+            aria-describedby={status === "error" ? "notify-hint notify-error" : "notify-hint"}
             style={{
               height: "44px",
               padding: "0 1rem",
@@ -543,7 +557,12 @@ function NotifyForm() {
             disabled={isPending}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
-            aria-label="Notify me when the EXPOZOR mobile app launches"
+            aria-label={
+              isPending
+                ? "Joining the EXPOZOR mobile app waitlist"
+                : "Notify me when the EXPOZOR mobile app launches"
+            }
+            aria-busy={isPending}
             style={{
               height: "44px",
               padding: "0 1.25rem",
@@ -553,8 +572,8 @@ function NotifyForm() {
               color: "var(--text-primary)",
               fontSize: "0.875rem",
               fontWeight: 600,
-              cursor: isPending || !consent ? "not-allowed" : "pointer",
-              opacity: isPending || !consent ? 0.7 : 1,
+              cursor: isPending ? "not-allowed" : "pointer",
+              opacity: isPending ? 0.7 : 1,
               display: "inline-flex",
               alignItems: "center",
               gap: "6px",
@@ -579,12 +598,14 @@ function NotifyForm() {
           <label
             style={{
               display: "flex",
-              alignItems: "flex-start",
+              alignItems: "center",
               gap: "8px",
               flexBasis: "100%",
+              minHeight: "44px",
               fontSize: "0.75rem",
               color: "var(--text-secondary)",
               lineHeight: 1.5,
+              cursor: isPending ? "not-allowed" : "pointer",
             }}
           >
             <input
@@ -592,15 +613,15 @@ function NotifyForm() {
               name="productUpdatesConsent"
               checked={consent}
               onChange={(e) => setConsent(e.target.checked)}
-              required
               disabled={isPending}
-              style={{ marginTop: "3px" }}
+              style={{ width: "18px", height: "18px", margin: 0 }}
             />
             <span>I'd like to receive product updates.</span>
           </label>
           {status === "error" && (
             <p
               role="alert"
+              id="notify-error"
               style={{
                 display: "flex",
                 alignItems: "center",

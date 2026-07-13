@@ -32,14 +32,6 @@ export function StickyMobileCtaBar() {
       return;
     }
 
-    const syncScrollThreshold = () => {
-      const nextPastThreshold = window.scrollY > SHOW_AFTER_SCROLL;
-      if (pastScrollThresholdRef.current === nextPastThreshold) return;
-
-      pastScrollThresholdRef.current = nextPastThreshold;
-      setPastScrollThreshold(nextPastThreshold);
-    };
-
     const syncFinalContentReached = (nextFinalContentReached: boolean) => {
       if (finalContentReachedRef.current === nextFinalContentReached) return;
 
@@ -47,16 +39,35 @@ export function StickyMobileCtaBar() {
       setFinalContentReached(nextFinalContentReached);
     };
 
-    window.addEventListener("scroll", syncScrollThreshold, { passive: true });
-    syncScrollThreshold();
-
     const finalWaitlist = document.getElementById(FINAL_WAITLIST_ID);
+    let finalWaitlistDocumentTop: number | undefined;
     let finalContentObserver: IntersectionObserver | undefined;
+    let layoutObserver: ResizeObserver | undefined;
+
+    const syncScrollPosition = () => {
+      const nextPastThreshold = window.scrollY > SHOW_AFTER_SCROLL;
+      if (pastScrollThresholdRef.current !== nextPastThreshold) {
+        pastScrollThresholdRef.current = nextPastThreshold;
+        setPastScrollThreshold(nextPastThreshold);
+      }
+
+      if (finalWaitlistDocumentTop !== undefined) {
+        syncFinalContentReached(window.scrollY + window.innerHeight >= finalWaitlistDocumentTop);
+      }
+    };
+
+    const measureFinalWaitlist = () => {
+      if (!finalWaitlist) return;
+
+      finalWaitlistDocumentTop = window.scrollY + finalWaitlist.getBoundingClientRect().top;
+      syncScrollPosition();
+    };
+
+    window.addEventListener("scroll", syncScrollPosition, { passive: true });
+    window.addEventListener("resize", measureFinalWaitlist);
+    measureFinalWaitlist();
 
     if (finalWaitlist) {
-      const finalWaitlistRect = finalWaitlist.getBoundingClientRect();
-      syncFinalContentReached(finalWaitlistRect.top < window.innerHeight);
-
       finalContentObserver = new IntersectionObserver(([entry]) => {
         if (!entry) return;
 
@@ -64,11 +75,16 @@ export function StickyMobileCtaBar() {
         syncFinalContentReached(nextFinalContentReached);
       });
       finalContentObserver.observe(finalWaitlist);
+
+      layoutObserver = new ResizeObserver(measureFinalWaitlist);
+      layoutObserver.observe(document.body);
     }
 
     return () => {
-      window.removeEventListener("scroll", syncScrollThreshold);
+      window.removeEventListener("scroll", syncScrollPosition);
+      window.removeEventListener("resize", measureFinalWaitlist);
       finalContentObserver?.disconnect();
+      layoutObserver?.disconnect();
     };
   }, []);
 

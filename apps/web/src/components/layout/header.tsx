@@ -1,7 +1,7 @@
 "use client";
 
 import { NAVBAR } from "@/content/landing";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { type RefObject, useCallback, useEffect, useRef, useState } from "react";
@@ -21,12 +21,16 @@ const INITIAL_SCROLL_STATE = {
 
 /* ── Private Beta pill ──────────────────────────────────────── */
 function PrivateBetaPill() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.span
-      initial={{ opacity: 0, x: -8, scale: 0.9 }}
+      initial={shouldReduceMotion ? false : { opacity: 0, x: -8, scale: 0.9 }}
       animate={{ opacity: 1, x: 0, scale: 1 }}
-      exit={{ opacity: 0, x: -8, scale: 0.9 }}
-      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+      exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -8, scale: 0.9 }}
+      transition={
+        shouldReduceMotion ? { duration: 0 } : { duration: 0.25, ease: [0.22, 1, 0.36, 1] }
+      }
       aria-label="Status: Private Beta"
       style={{
         display: "inline-flex",
@@ -445,6 +449,7 @@ function MobileSheet({
 
 /* ── Header ─────────────────────────────────────────────────── */
 export function Header() {
+  const shouldReduceMotion = useReducedMotion();
   const [scrollState, setScrollState] = useState(INITIAL_SCROLL_STATE);
   const scrollStateRef = useRef(INITIAL_SCROLL_STATE);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -475,7 +480,7 @@ export function Header() {
   // Close mobile menu on resize to desktop
   useEffect(() => {
     const onResize = () => {
-      if (window.innerWidth >= 768) setMobileOpen(false);
+      if (window.innerWidth >= 1024) setMobileOpen(false);
     };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
@@ -490,9 +495,11 @@ export function Header() {
   return (
     <>
       <motion.header
-        initial={{ y: -12, opacity: 0 }}
+        initial={shouldReduceMotion ? false : { y: -12, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        transition={
+          shouldReduceMotion ? { duration: 0 } : { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+        }
         role="banner"
         aria-label="Site navigation"
         style={{
@@ -567,7 +574,7 @@ export function Header() {
               flex: 1,
               justifyContent: "center",
             }}
-            className="hidden md:flex"
+            className="hidden lg:flex"
           >
             {NAVBAR.links.map((link) => (
               <Link
@@ -605,7 +612,7 @@ export function Header() {
 
           {/* ── Desktop CTAs ────────────────────────────────── */}
           <div
-            className="hidden md:flex"
+            className="hidden lg:flex"
             style={{
               alignItems: "center",
               gap: "0.75rem",
@@ -615,8 +622,8 @@ export function Header() {
             {/* Sign in — ghost/outline */}
             <Link
               href={NAVBAR.cta.href}
+              className="hidden xl:inline-flex"
               style={{
-                display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
                 padding: "0.4375rem 0.875rem",
@@ -695,7 +702,7 @@ export function Header() {
             aria-controls="mobile-menu"
             aria-haspopup="dialog"
             onClick={() => setMobileOpen(true)}
-            className="flex md:hidden"
+            className="flex lg:hidden"
             style={{
               alignItems: "center",
               justifyContent: "center",

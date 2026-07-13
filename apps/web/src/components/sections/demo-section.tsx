@@ -941,28 +941,36 @@ const PILLS = [
 export function DemoSection() {
   const [activeTab, setActiveTab] = useState(0);
   const tabListRef = useRef<HTMLDivElement>(null);
+  const focusTabOnChangeRef = useRef(false);
 
   // Arrow key navigation across tabs
   const handleTabKeyDown = useCallback((e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "ArrowRight") {
       e.preventDefault();
+      focusTabOnChangeRef.current = true;
       setActiveTab((t) => (t + 1) % TABS.length);
     } else if (e.key === "ArrowLeft") {
       e.preventDefault();
+      focusTabOnChangeRef.current = true;
       setActiveTab((t) => (t - 1 + TABS.length) % TABS.length);
     } else if (e.key === "Home") {
       e.preventDefault();
+      focusTabOnChangeRef.current = true;
       setActiveTab(0);
     } else if (e.key === "End") {
       e.preventDefault();
+      focusTabOnChangeRef.current = true;
       setActiveTab(TABS.length - 1);
     }
   }, []);
 
   // Focus the selected tab when activeTab changes via keyboard
   useEffect(() => {
+    if (!focusTabOnChangeRef.current) return;
+
     const el = tabListRef.current?.querySelectorAll<HTMLButtonElement>("[role=tab]");
-    el?.[activeTab]?.focus();
+    el?.[activeTab]?.focus({ preventScroll: true });
+    focusTabOnChangeRef.current = false;
   }, [activeTab]);
 
   // TABS is a non-empty const array; activeTab is bounded by [0, TABS.length-1] via clamp
@@ -1041,7 +1049,8 @@ export function DemoSection() {
             aria-label="Dashboard sections"
             onKeyDown={handleTabKeyDown}
             style={{
-              display: "inline-flex",
+              display: "flex",
+              width: "min(100%, 25rem)",
               gap: "2px",
               padding: "4px",
               borderRadius: "var(--radius-lg)",
@@ -1056,15 +1065,21 @@ export function DemoSection() {
                   key={tab.id}
                   role="tab"
                   id={`tab-${tab.id}`}
+                  aria-label={tab.label}
                   aria-selected={isActive}
                   aria-controls={`panel-${tab.id}`}
                   tabIndex={isActive ? 0 : -1}
-                  onClick={() => setActiveTab(i)}
+                  onClick={() => {
+                    focusTabOnChangeRef.current = false;
+                    setActiveTab(i);
+                  }}
                   type="button"
+                  className="demo-dashboard-tab"
                   style={{
-                    padding: "0.4375rem 1rem",
+                    flex: "1 1 0",
+                    minWidth: 0,
+                    padding: "0.4375rem 0.25rem",
                     borderRadius: "var(--radius-md)",
-                    fontSize: "0.875rem",
                     fontWeight: 600,
                     letterSpacing: "-0.01em",
                     border: "none",
@@ -1078,7 +1093,14 @@ export function DemoSection() {
                     whiteSpace: "nowrap",
                   }}
                 >
-                  {tab.label}
+                  {tab.id === "split" ? (
+                    <>
+                      <span className="demo-tab-label-full">{tab.label}</span>
+                      <span className="demo-tab-label-compact">Notes</span>
+                    </>
+                  ) : (
+                    tab.label
+                  )}
                   {/* ── Enhancement 4: sliding underline bar via layoutId ── */}
                   {isActive && (
                     <motion.span
@@ -1189,6 +1211,26 @@ export function DemoSection() {
         >
           {DEMO.disclaimer}
         </motion.p>
+
+        <style>{`
+          .demo-dashboard-tab {
+            font-size: 0.875rem;
+          }
+          .demo-tab-label-compact {
+            display: none;
+          }
+          @media (max-width: 359px) {
+            .demo-dashboard-tab {
+              font-size: 0.75rem;
+            }
+            .demo-tab-label-full {
+              display: none;
+            }
+            .demo-tab-label-compact {
+              display: inline;
+            }
+          }
+        `}</style>
       </div>
     </section>
   );

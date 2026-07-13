@@ -458,6 +458,12 @@ function WaitlistForm() {
   const [isPending, startTransition] = useTransition();
   const inputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    if (status === "error" && !isPending) {
+      inputRef.current?.focus({ preventScroll: true });
+    }
+  }, [isPending, status]);
+
   // Magnetic CTA button
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -550,7 +556,14 @@ function WaitlistForm() {
             flexWrap: "wrap",
           }}
         >
-          <input type="text" name="website" tabIndex={-1} autoComplete="off" className="sr-only" />
+          <input
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className="sr-only"
+          />
           {/* Email input */}
           <div style={{ flex: "1 1 220px", position: "relative" }}>
             <label htmlFor="hero-email" className="sr-only">
@@ -565,6 +578,8 @@ function WaitlistForm() {
               placeholder={HERO.inputPlaceholder}
               autoComplete="email"
               disabled={isPending}
+              aria-invalid={status === "error"}
+              aria-describedby={status === "error" ? "hero-email-error" : undefined}
               style={{
                 width: "100%",
                 height: "52px",
@@ -623,7 +638,8 @@ function WaitlistForm() {
               position: "relative",
               overflow: "hidden",
             }}
-            aria-label={HERO.ctaAriaLabel}
+            aria-label={isPending ? "Joining the EXPOZOR waitlist" : HERO.ctaAriaLabel}
+            aria-busy={isPending}
             whileHover={
               isPending
                 ? {}
@@ -686,6 +702,7 @@ function WaitlistForm() {
               exit={{ opacity: 0, y: -4 }}
               transition={{ duration: 0.2 }}
               role="alert"
+              id="hero-email-error"
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -704,11 +721,13 @@ function WaitlistForm() {
         <label
           style={{
             display: "flex",
-            alignItems: "flex-start",
+            alignItems: "center",
             gap: "8px",
+            minHeight: "44px",
             fontSize: "0.8125rem",
             color: "var(--text-secondary)",
             lineHeight: 1.5,
+            cursor: isPending ? "not-allowed" : "pointer",
           }}
         >
           <input
@@ -717,7 +736,7 @@ function WaitlistForm() {
             checked={consent}
             onChange={(e) => setConsent(e.target.checked)}
             disabled={isPending}
-            style={{ marginTop: "3px" }}
+            style={{ width: "18px", height: "18px", margin: 0 }}
           />
           <span>I'd like to receive product updates.</span>
         </label>

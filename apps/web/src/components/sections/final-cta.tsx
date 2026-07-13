@@ -5,7 +5,7 @@ import { FINAL_CTA } from "@/content/landing";
 import { EASE_OUT } from "@/lib/motion";
 import { AnimatePresence, motion } from "framer-motion";
 import { AlertCircle, ArrowRight, Check, CheckCircle2, Loader2 } from "lucide-react";
-import { useCallback, useRef, useState, useTransition } from "react";
+import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 
 /* ──────────────────────────────────────────────────────────────
    CONFETTI ENGINE
@@ -151,6 +151,12 @@ export function FinalCtaSection() {
   const [isPending, startTransition] = useTransition();
   const inputRef = useRef<HTMLInputElement>(null);
   const { canvasRef, fire } = useConfetti();
+
+  useEffect(() => {
+    if (status === "error" && !isPending) {
+      inputRef.current?.focus({ preventScroll: true });
+    }
+  }, [isPending, status]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -427,6 +433,7 @@ export function FinalCtaSection() {
                       name="website"
                       tabIndex={-1}
                       autoComplete="off"
+                      aria-hidden="true"
                       className="sr-only"
                     />
                     <div style={{ flex: 1 }}>
@@ -442,7 +449,11 @@ export function FinalCtaSection() {
                         placeholder="you@example.com"
                         autoComplete="email"
                         disabled={isPending}
-                        aria-describedby="final-cta-microcopy"
+                        aria-describedby={
+                          status === "error"
+                            ? "final-cta-microcopy final-cta-error"
+                            : "final-cta-microcopy"
+                        }
                         aria-invalid={status === "error"}
                         style={{
                           width: "100%",
@@ -472,7 +483,10 @@ export function FinalCtaSection() {
                       disabled={isPending}
                       whileHover={{ scale: 1.03, boxShadow: "var(--shadow-glow)" }}
                       whileTap={{ scale: 0.97 }}
-                      aria-label={FINAL_CTA.ctaAriaLabel}
+                      aria-label={
+                        isPending ? "Joining the EXPOZOR waitlist" : FINAL_CTA.ctaAriaLabel
+                      }
+                      aria-busy={isPending}
                       /* ── Enhancement 14b: shimmer-sweep class ──
                          .final-btn::after rule in the scoped <style>
                          below fires the shimmer-sweep keyframe every 4s. */
@@ -517,13 +531,15 @@ export function FinalCtaSection() {
                   <label
                     style={{
                       display: "flex",
-                      alignItems: "flex-start",
+                      alignItems: "center",
                       gap: "8px",
                       width: "100%",
+                      minHeight: "44px",
                       fontSize: "0.8125rem",
                       color: "var(--text-secondary)",
                       lineHeight: 1.5,
                       textAlign: "left",
+                      cursor: isPending ? "not-allowed" : "pointer",
                     }}
                     className="measure-form"
                   >
@@ -533,7 +549,7 @@ export function FinalCtaSection() {
                       checked={consent}
                       onChange={(e) => setConsent(e.target.checked)}
                       disabled={isPending}
-                      style={{ marginTop: "3px" }}
+                      style={{ width: "18px", height: "18px", margin: 0 }}
                     />
                     <span>I'd like to receive product updates.</span>
                   </label>
@@ -546,6 +562,7 @@ export function FinalCtaSection() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0 }}
                         role="alert"
+                        id="final-cta-error"
                         style={{
                           display: "flex",
                           alignItems: "center",
