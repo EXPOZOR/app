@@ -111,7 +111,7 @@ export default async function BlogPostPage({
         {relatedPosts.length > 0 && (
           <section className="container-site max-w-3xl pb-20" aria-label="Related posts">
             <div className="pt-10 border-t border-[var(--border)]">
-              <h2 className="text-xl font-bold text-[var(--text-primary)] mb-6">Keep reading</h2>
+              <h2 className="type-article-subheading mb-6">Keep reading</h2>
               <div className="grid md:grid-cols-2 gap-5">
                 {relatedPosts.map((p) => (
                   <PostCard key={p.slug} post={p} headingLevel={3} />

@@ -10,16 +10,9 @@ type MDXComponents = MDXRemoteProps["components"];
  */
 export function useMDXComponents(): NonNullable<MDXComponents> {
   return {
-    h2: (props) => (
-      <h2
-        className="text-2xl font-bold text-[var(--text-primary)] mt-10 mb-4 tracking-tight"
-        {...props}
-      />
-    ),
-    h3: (props) => (
-      <h3 className="text-xl font-semibold text-[var(--text-primary)] mt-8 mb-3" {...props} />
-    ),
-    p: (props) => <p className="text-[var(--text-secondary)] leading-relaxed mb-5" {...props} />,
+    h2: (props) => <h2 className="type-article-heading mt-10 mb-4" {...props} />,
+    h3: (props) => <h3 className="type-article-subheading mt-8 mb-3" {...props} />,
+    p: (props) => <p className="type-body mb-5" {...props} />,
     ul: (props) => (
       <ul
         className="list-disc list-inside space-y-2 text-[var(--text-secondary)] mb-5 pl-2"

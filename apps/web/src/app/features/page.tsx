@@ -1,6 +1,7 @@
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { FeaturesSection } from "@/components/sections/features-section";
+import { PageHero } from "@/components/ui/page-hero";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 import type { Metadata } from "next";
 
@@ -23,16 +24,12 @@ export default function FeaturesPage() {
       <Header />
       <main id="main-content" className="pt-20">
         <div className="container-site py-16 text-center max-w-3xl">
-          <p className="text-xs uppercase tracking-widest font-semibold text-[var(--accent)] mb-3">
-            Features
-          </p>
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-4">
-            Expense tracking without bank connections
-          </h1>
-          <p className="text-xl text-[var(--text-secondary)] leading-relaxed">
-            Manual entry today, with receipt capture, CSV import, and AI assistance planned for
-            early access.
-          </p>
+          <PageHero
+            eyebrow="Features"
+            title="Expense tracking without bank connections"
+            description="Manual entry today, with receipt capture, CSV import, and AI assistance planned for early access."
+            align="center"
+          />
         </div>
         <FeaturesSection />
 

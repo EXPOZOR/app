@@ -1,5 +1,6 @@
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { PageHero } from "@/components/ui/page-hero";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 import { Globe, Smartphone } from "lucide-react";
 import type { Metadata } from "next";
@@ -22,15 +23,14 @@ export default function DownloadPage() {
       <Header />
       <main id="main-content" className="pt-20">
         <div className="container-site section-py">
-          <div className="text-center mb-16 max-w-2xl mx-auto">
-            <p className="text-xs uppercase tracking-widest font-semibold text-[var(--accent)] mb-3">
-              Download
-            </p>
-            <h1 className="text-5xl font-bold tracking-tight mb-4">EXPOZOR on every screen.</h1>
-            <p className="text-xl text-[var(--text-secondary)]">
-              Join the waitlist for web early access and mobile app updates.
-            </p>
-          </div>
+          <PageHero
+            eyebrow="Download"
+            title="EXPOZOR on every screen."
+            description="Join the waitlist for web early access and mobile app updates."
+            align="center"
+            scale="editorial"
+            className="mb-16"
+          />
 
           <div className="grid md:grid-cols-3 gap-5 max-w-3xl mx-auto">
             {[
@@ -122,8 +122,8 @@ export default function DownloadPage() {
               <Smartphone size={20} style={{ color: "var(--accent)" }} />
             </div>
             <p className="text-sm text-[var(--text-secondary)] max-w-xs">
-              Mobile apps are in development. Join the waitlist to be notified
-              when iOS and Android are available.
+              Mobile apps are in development. Join the waitlist to be notified when iOS and Android
+              are available.
             </p>
           </div>
         </div>

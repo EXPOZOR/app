@@ -1,5 +1,6 @@
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { PageHero } from "@/components/ui/page-hero";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 import type { Metadata } from "next";
 
@@ -22,16 +23,13 @@ export default function CareersPage() {
       <Header />
       <main id="main-content" className="pt-20">
         <div className="container-site section-py max-w-3xl">
-          <p className="text-xs uppercase tracking-widest font-semibold text-[var(--accent)] mb-3">
-            Careers
-          </p>
-          <h1 className="text-4xl font-bold tracking-tight mb-4">
-            Work on something you'd use every day.
-          </h1>
-          <p className="text-[var(--text-secondary)] text-lg mb-12 leading-relaxed">
-            We're a small, remote-first team building a product we genuinely love. We care about
-            craft, clarity, and shipping things that work.
-          </p>
+          <PageHero
+            eyebrow="Careers"
+            title="Work on something you'd use every day."
+            description="We're a small, remote-first team building a product we genuinely love. We care about craft, clarity, and shipping things that work."
+            scale="compact"
+            className="mb-12"
+          />
 
           <div className="rounded-[var(--radius-xl)] border border-[var(--border)] bg-[var(--bg-surface)] p-8 text-center">
             <h2 className="text-2xl font-bold mb-3">No open roles right now.</h2>

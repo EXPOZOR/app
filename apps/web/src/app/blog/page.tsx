@@ -1,6 +1,7 @@
 import { PostCard } from "@/components/blog/post-card";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { PageHero } from "@/components/ui/page-hero";
 import { getAllBlogPosts, getBlogCategories } from "@/lib/mdx";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 import { Rss } from "lucide-react";
@@ -31,24 +32,23 @@ export default function BlogPage() {
       <main id="main-content" className="pt-20">
         {/* Hero */}
         <div className="container-site py-16 text-center max-w-3xl">
-          <p className="text-xs uppercase tracking-widest font-semibold text-[var(--accent)] mb-3">
-            Blog
-          </p>
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-4">Insights & updates</h1>
-          <p className="text-xl text-[var(--text-secondary)] leading-relaxed">
-            From the team building EXPOZOR — product updates, engineering deep-dives, and thoughts
-            on personal finance.
-          </p>
-          <div className="mt-6">
-            <a
-              href="/blog/rss.xml"
-              className="inline-flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors"
-              aria-label="Subscribe to RSS feed"
-            >
-              <Rss size={14} aria-hidden="true" />
-              RSS Feed
-            </a>
-          </div>
+          <PageHero
+            eyebrow="Blog"
+            title="Insights & updates"
+            description="From the team building EXPOZOR — product updates, engineering deep-dives, and thoughts on personal finance."
+            align="center"
+          >
+            <div className="mt-6">
+              <a
+                href="/blog/rss.xml"
+                className="inline-flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors"
+                aria-label="Subscribe to RSS feed"
+              >
+                <Rss size={14} aria-hidden="true" />
+                RSS Feed
+              </a>
+            </div>
+          </PageHero>
         </div>
 
         {/* Categories */}

@@ -1,5 +1,6 @@
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { PageHero } from "@/components/ui/page-hero";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 import { Mail, MessageSquare } from "lucide-react";
 import type { Metadata } from "next";
@@ -23,13 +24,14 @@ export default function ContactPage() {
       <Header />
       <main id="main-content" className="pt-20">
         <div className="container-site section-py max-w-xl">
-          <p className="text-xs uppercase tracking-widest font-semibold text-[var(--accent)] mb-3">
-            Contact
-          </p>
-          <h1 className="text-4xl font-bold tracking-tight mb-4">Get in touch</h1>
-          <p className="text-[var(--text-secondary)] mb-10 leading-relaxed">
-            We're a small team. We read every message. We try to respond within one business day.
-          </p>
+          <PageHero
+            eyebrow="Contact"
+            title="Get in touch"
+            description="We're a small team. We read every message. We try to respond within one business day."
+            descriptionClassName="type-body"
+            scale="compact"
+            className="mb-10"
+          />
 
           <div className="space-y-4">
             {[

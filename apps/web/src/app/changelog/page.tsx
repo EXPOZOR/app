@@ -1,5 +1,6 @@
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { PageHero } from "@/components/ui/page-hero";
 import { getAllChangelogEntries } from "@/lib/mdx";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 import type { Metadata } from "next";
@@ -25,10 +26,7 @@ export default function ChangelogPage() {
       <Header />
       <main id="main-content" className="pt-20">
         <div className="container-site section-py max-w-2xl">
-          <p className="text-xs uppercase tracking-widest font-semibold text-[var(--accent)] mb-3">
-            Changelog
-          </p>
-          <h1 className="text-4xl font-bold tracking-tight mb-10">What&apos;s new</h1>
+          <PageHero eyebrow="Changelog" title="What's new" scale="compact" className="mb-10" />
 
           <div className="space-y-12">
             {entries.map((entry) => {

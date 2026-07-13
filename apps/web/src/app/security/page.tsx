@@ -1,5 +1,6 @@
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { PageHero } from "@/components/ui/page-hero";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 import { Ban, Eye, Lock, Server, ShieldOff } from "lucide-react";
 import type { Metadata } from "next";
@@ -61,16 +62,12 @@ export default function SecurityPage() {
       <Header />
       <main id="main-content" className="pt-20">
         <div className="container-site py-16 text-center max-w-3xl">
-          <p className="text-xs uppercase tracking-widest font-semibold text-[var(--accent)] mb-3">
-            Security
-          </p>
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-4">
-            Built with your privacy in mind.
-          </h1>
-          <p className="text-xl text-[var(--text-secondary)] leading-relaxed">
-            EXPOZOR is waitlist-only today. It collects signup data, does not connect to banks, and
-            does not collect bank credentials.
-          </p>
+          <PageHero
+            eyebrow="Security"
+            title="Built with your privacy in mind."
+            description="EXPOZOR is waitlist-only today. It collects signup data, does not connect to banks, and does not collect bank credentials."
+            align="center"
+          />
         </div>
 
         <section className="section-py" aria-labelledby="security-pillars-heading">

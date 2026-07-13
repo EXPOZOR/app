@@ -39,14 +39,10 @@ export function PostHeader({ post }: { post: BlogPost }) {
       </div>
 
       {/* Title */}
-      <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-[var(--text-primary)] mb-4 leading-[1.1]">
-        {post.frontmatter.title}
-      </h1>
+      <h1 className="type-article-title mb-4">{post.frontmatter.title}</h1>
 
       {/* Excerpt */}
-      <p className="text-xl text-[var(--text-secondary)] leading-relaxed mb-6 max-w-2xl">
-        {post.frontmatter.excerpt}
-      </p>
+      <p className="type-lede mb-6 max-w-2xl">{post.frontmatter.excerpt}</p>
 
       {/* Meta row */}
       <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--text-tertiary)] pb-8 border-b border-[var(--border)]">
