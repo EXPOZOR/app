@@ -337,7 +337,7 @@ export function FaqSection() {
       />
 
       <div className="container-site" style={{ position: "relative" }}>
-        <div style={{ maxWidth: "720px", margin: "0 auto" }}>
+        <div className="measure-section mx-auto">
           {/* ── Section header ─────────────────────────── */}
           <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
             <motion.p

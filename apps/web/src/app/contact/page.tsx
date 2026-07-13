@@ -23,7 +23,7 @@ export default function ContactPage() {
       />
       <Header />
       <main id="main-content" className="pt-20">
-        <div className="container-site section-py max-w-xl">
+        <div className="container-site measure-narrow section-py">
           <PageHero
             eyebrow="Contact"
             title="Get in touch"

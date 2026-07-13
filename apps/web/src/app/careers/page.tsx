@@ -22,7 +22,7 @@ export default function CareersPage() {
       />
       <Header />
       <main id="main-content" className="pt-20">
-        <div className="container-site section-py max-w-3xl">
+        <div className="container-site measure-prose section-py">
           <PageHero
             eyebrow="Careers"
             title="Work on something you'd use every day."

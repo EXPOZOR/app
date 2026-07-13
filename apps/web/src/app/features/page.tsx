@@ -23,7 +23,7 @@ export default function FeaturesPage() {
       />
       <Header />
       <main id="main-content" className="pt-20">
-        <div className="container-site py-16 text-center max-w-3xl">
+        <div className="container-site measure-section page-hero-py">
           <PageHero
             eyebrow="Features"
             title="Expense tracking without bank connections"
@@ -39,7 +39,7 @@ export default function FeaturesPage() {
           className="section-py border-t border-[var(--border)]"
           aria-labelledby="capture-heading"
         >
-          <div className="container-site max-w-4xl">
+          <div className="container-site measure-wide">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <p className="text-xs uppercase tracking-widest font-semibold text-[var(--accent)] mb-3">
@@ -144,7 +144,7 @@ export default function FeaturesPage() {
           className="section-py border-t border-[var(--border)]"
           aria-labelledby="ai-heading"
         >
-          <div className="container-site max-w-4xl">
+          <div className="container-site measure-wide">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div
                 className="order-2 md:order-1 rounded-[var(--radius-xl)] border border-[var(--border-accent)] bg-[var(--accent-subtle)] p-8 space-y-3"

@@ -22,7 +22,7 @@ export function PressBar() {
   return (
     <section
       aria-label="Product trust badges"
-      className="relative py-10 border-y border-[var(--border)] overflow-hidden"
+      className="compact-band-py relative border-y border-[var(--border)] overflow-hidden"
     >
       <div className="container-site">
         {/* Label */}

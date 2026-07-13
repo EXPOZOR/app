@@ -23,7 +23,7 @@ export default function PricingPage() {
       />
       <Header />
       <main id="main-content" className="pt-20">
-        <div className="container-site py-16 text-center">
+        <div className="container-site page-hero-py">
           <PageHero
             title="Pricing"
             description="EXPOZOR is waitlist-only today. Paid plans are planned but no paid subscription is available yet."

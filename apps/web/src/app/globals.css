@@ -109,8 +109,17 @@
     --motion-ok: 1;
 
     /* ── Spacing scale ─────────────────────────────────────── */
-    --space-section: clamp(6rem, 10vw, 8rem); /* 96px desktop / 64px mobile */
+    --gutter-site: clamp(1rem, 3vw, 2rem);
+    --space-section: clamp(4rem, 8vw, 6rem);
     --space-hero: clamp(8rem, 16vw, 13rem);
+    --space-page-hero: clamp(3rem, 6vw, 4rem);
+    --space-compact-band: clamp(2rem, 4vw, 3rem);
+    --measure-form: 30rem;
+    --measure-narrow: 36rem;
+    --measure-prose: 68ch;
+    --measure-section-copy: 56ch;
+    --measure-section: 45rem;
+    --measure-wide: 56rem;
 
     /* ── Z-index ───────────────────────────────────────────── */
     --z-base: 0;
@@ -346,17 +355,56 @@ body::after {
 /* ── Layout container ───────────────────────────────────────── */
 .container-site {
   width: 100%;
-  max-width: 1200px; /* brief: 1200px max, 24px gutters */
+  max-width: 75rem;
   margin-inline: auto;
-  padding-inline: clamp(1.5rem, 5vw, 1.5rem);
+  padding-inline: var(--gutter-site);
 }
 
 /* ── Section spacing: 96px desktop / 64px mobile ───────────── */
 .section-py {
   padding-block: var(--space-section);
 }
+
+.page-hero-py {
+  padding-block: var(--space-page-hero);
+}
+
+.compact-band-py {
+  padding-block: var(--space-compact-band);
+}
+
 .hero-py {
   padding-block: var(--space-hero);
+}
+
+.measure-form {
+  width: 100%;
+  max-width: var(--measure-form);
+}
+
+.measure-narrow {
+  width: 100%;
+  max-width: var(--measure-narrow);
+}
+
+.measure-prose {
+  width: 100%;
+  max-width: var(--measure-prose);
+}
+
+.measure-section-copy {
+  width: 100%;
+  max-width: var(--measure-section-copy);
+}
+
+.measure-section {
+  width: 100%;
+  max-width: var(--measure-section);
+}
+
+.measure-wide {
+  width: 100%;
+  max-width: var(--measure-wide);
 }
 
 /* ── Divider ────────────────────────────────────────────────── */
@@ -410,6 +458,11 @@ body::after {
 
   .page-hero-description {
     margin-top: 1rem;
+  }
+
+  .page-hero-center .page-hero-description {
+    max-width: var(--measure-section-copy);
+    margin-inline: auto;
   }
 
   .type-eyebrow,
@@ -502,7 +555,7 @@ body::after {
   }
 
   .section-subtitle {
-    max-width: 56ch;
+    max-width: var(--measure-section-copy);
     color: var(--text-muted);
     font-size: clamp(1rem, 1.5vw, 1.125rem);
     line-height: 1.6;

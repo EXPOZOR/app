@@ -24,7 +24,7 @@ export default function DisclaimerPage() {
       />
       <Header />
       <main id="main-content" className="pt-20">
-        <div className="container-site max-w-3xl section-py">
+        <div className="container-site measure-prose section-py">
           <h1 className="text-4xl font-bold tracking-tight mb-2">Disclaimer</h1>
           <p className="text-[var(--text-tertiary)] text-sm mb-10">Last updated: July 2026</p>
 

@@ -418,9 +418,8 @@ export function FinalCtaSection() {
                       flexDirection: "row",
                       gap: "8px",
                       width: "100%",
-                      maxWidth: "480px",
                     }}
-                    className="cta-form-row"
+                    className="cta-form-row measure-form"
                   >
                     <input
                       type="text"
@@ -519,13 +518,13 @@ export function FinalCtaSection() {
                       display: "flex",
                       alignItems: "flex-start",
                       gap: "8px",
-                      maxWidth: "480px",
                       width: "100%",
                       fontSize: "0.8125rem",
                       color: "var(--text-secondary)",
                       lineHeight: 1.5,
                       textAlign: "left",
                     }}
+                    className="measure-form"
                   >
                     <input
                       type="checkbox"

@@ -25,7 +25,7 @@ export default function ChangelogPage() {
       />
       <Header />
       <main id="main-content" className="pt-20">
-        <div className="container-site section-py max-w-2xl">
+        <div className="container-site measure-section section-py">
           <PageHero eyebrow="Changelog" title="What's new" scale="compact" className="mb-10" />
 
           <div className="space-y-12">

@@ -22,7 +22,7 @@ export default function AboutPage() {
       />
       <Header />
       <main id="main-content" className="pt-20">
-        <div className="container-site max-w-3xl section-py">
+        <div className="container-site measure-prose section-py">
           <PageHero
             eyebrow="About"
             title="One person, one mission."

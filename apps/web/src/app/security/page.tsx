@@ -61,7 +61,7 @@ export default function SecurityPage() {
       />
       <Header />
       <main id="main-content" className="pt-20">
-        <div className="container-site py-16 text-center max-w-3xl">
+        <div className="container-site measure-section page-hero-py">
           <PageHero
             eyebrow="Security"
             title="Built with your privacy in mind."
@@ -112,7 +112,7 @@ export default function SecurityPage() {
           className="section-py border-t border-[var(--border)]"
           aria-labelledby="disclosure-heading"
         >
-          <div className="container-site max-w-2xl text-center">
+          <div className="container-site measure-prose text-center">
             <h2 id="disclosure-heading" className="text-3xl font-bold mb-4">
               Responsible disclosure
             </h2>

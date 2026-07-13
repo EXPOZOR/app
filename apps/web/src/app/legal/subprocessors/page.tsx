@@ -81,7 +81,7 @@ export default function SubprocessorsPage() {
       />
       <Header />
       <main id="main-content" className="pt-20">
-        <div className="container-site max-w-4xl section-py">
+        <div className="container-site measure-wide section-py">
           <h1 className="text-4xl font-bold tracking-tight mb-2">Subprocessors</h1>
           <p className="text-[var(--text-tertiary)] text-sm mb-4">Last updated: July 2026</p>
           <p className="text-[var(--text-secondary)] mb-10 leading-relaxed max-w-2xl">

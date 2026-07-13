@@ -1103,7 +1103,8 @@ export function DemoSection() {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ delay: 0.18, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          style={{ position: "relative", maxWidth: "720px", margin: "0 auto" }}
+          className="measure-section mx-auto"
+          style={{ position: "relative" }}
         >
           <BrowserFrame>
             <div

@@ -43,11 +43,11 @@ export function StatsBand() {
   return (
     <section
       aria-label="EXPOZOR trust signals"
+      className="compact-band-py"
       style={{
         background: "var(--bg-elev-1)",
         borderTop: "1px solid var(--border)",
         borderBottom: "1px solid var(--border)",
-        padding: "48px 0",
       }}
     >
       <div className="container-site">

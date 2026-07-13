@@ -98,7 +98,7 @@ export default async function BlogPostPage({
       />
       <Header />
       <main id="main-content" className="pt-20">
-        <article className="container-site max-w-3xl section-py">
+        <article className="container-site measure-prose section-py">
           <PostHeader post={post} />
 
           {/* MDX content */}
@@ -109,7 +109,7 @@ export default async function BlogPostPage({
 
         {/* Related posts */}
         {relatedPosts.length > 0 && (
-          <section className="container-site max-w-3xl pb-20" aria-label="Related posts">
+          <section className="container-site measure-prose pb-20" aria-label="Related posts">
             <div className="pt-10 border-t border-[var(--border)]">
               <h2 className="type-article-subheading mb-6">Keep reading</h2>
               <div className="grid md:grid-cols-2 gap-5">

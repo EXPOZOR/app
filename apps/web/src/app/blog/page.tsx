@@ -31,7 +31,7 @@ export default function BlogPage() {
       <Header />
       <main id="main-content" className="pt-20">
         {/* Hero */}
-        <div className="container-site py-16 text-center max-w-3xl">
+        <div className="container-site measure-section page-hero-py">
           <PageHero
             eyebrow="Blog"
             title="Insights & updates"
