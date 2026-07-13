@@ -1,9 +1,10 @@
+import { BRAND_COLORS } from "@/lib/brand-colors";
 import type { BlogPost } from "@/lib/mdx";
 import { ArrowRight, Clock } from "lucide-react";
 import Link from "next/link";
 
 const CATEGORY_COLORS: Record<string, string> = {
-  Company: "#7CF5C2",
+  Company: BRAND_COLORS.lilac,
   Engineering: "#60a5fa",
   Security: "#a78bfa",
   Product: "#FFB36B",
@@ -17,7 +18,7 @@ export function PostCard({
   post: BlogPost;
   headingLevel?: 2 | 3;
 }) {
-  const color = CATEGORY_COLORS[post.frontmatter.category] || "#7CF5C2";
+  const color = CATEGORY_COLORS[post.frontmatter.category] || BRAND_COLORS.lilac;
   const Heading = headingLevel === 3 ? "h3" : "h2";
 
   return (
@@ -44,7 +45,7 @@ export function PostCard({
       </div>
 
       {/* Title */}
-      <Heading className="text-xl font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--accent)] transition-colors leading-tight">
+      <Heading className="text-xl font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--decorative)] transition-colors leading-tight">
         {post.frontmatter.title}
       </Heading>
 
@@ -67,7 +68,7 @@ export function PostCard({
             })}
           </time>
         </div>
-        <span className="flex items-center gap-1 text-sm font-medium text-[var(--accent)] opacity-0 group-hover:opacity-100 transition-opacity">
+        <span className="flex items-center gap-1 text-sm font-medium text-[var(--decorative)] opacity-0 group-hover:opacity-100 transition-opacity">
           Read
           <ArrowRight size={14} aria-hidden="true" />
         </span>

@@ -28,7 +28,7 @@ type Particle = {
 };
 
 const CONFETTI_COLORS = [
-  "#3DDC97", // mint
+  "var(--positive)",
   "#A78BFA", // purple
   "#FB923C", // orange
   "#60A5FA", // blue
@@ -67,7 +67,8 @@ function useConfetti() {
         vy: Math.sin(angle) * speed - 6,
         rot: Math.random() * 360,
         rotSpeed: (Math.random() - 0.5) * 12,
-        color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)] ?? "#3DDC97",
+        color:
+          CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)] ?? "var(--positive)",
         w: Math.random() * 10 + 4,
         h: Math.random() * 5 + 3,
         opacity: 1,
@@ -197,7 +198,7 @@ export function FinalCtaSection() {
           inset: 0,
           pointerEvents: "none",
           background:
-            "radial-gradient(ellipse at 30% 50%, rgba(61,220,151,0.07) 0%, transparent 50%)," +
+            "radial-gradient(ellipse at 30% 50%, color-mix(in oklch, var(--accent) 7%, transparent) 0%, transparent 50%)," +
             "radial-gradient(ellipse at 70% 50%, rgba(167,139,250,0.06) 0%, transparent 50%)",
         }}
       />
@@ -229,9 +230,9 @@ export function FinalCtaSection() {
              vivid enough to make the card feel alive. */
           animate={{
             boxShadow: [
-              "0 0 0 1px rgba(61,220,151,0.12), 0 0 40px rgba(61,220,151,0.06)",
+              "0 0 0 1px color-mix(in oklch, var(--accent) 12%, transparent), 0 0 40px color-mix(in oklch, var(--accent) 6%, transparent)",
               "0 0 0 1px rgba(167,139,250,0.18), 0 0 40px rgba(167,139,250,0.08)",
-              "0 0 0 1px rgba(61,220,151,0.12), 0 0 40px rgba(61,220,151,0.06)",
+              "0 0 0 1px color-mix(in oklch, var(--accent) 12%, transparent), 0 0 40px color-mix(in oklch, var(--accent) 6%, transparent)",
             ],
             transition: {
               delay: 1,
@@ -260,7 +261,7 @@ export function FinalCtaSection() {
               inset: 0,
               pointerEvents: "none",
               background:
-                "radial-gradient(ellipse at 50% 0%, rgba(61,220,151,0.06) 0%, transparent 60%)",
+                "radial-gradient(ellipse at 50% 0%, color-mix(in oklch, var(--accent) 6%, transparent) 0%, transparent 60%)",
             }}
           />
 

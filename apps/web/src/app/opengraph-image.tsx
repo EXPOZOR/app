@@ -1,3 +1,4 @@
+import { BRAND_COLORS, BRAND_EFFECTS } from "@/lib/brand-colors";
 import { ImageResponse } from "next/og";
 
 export const alt = "EXPOZOR - Know Where Your Money Is Really Going";
@@ -10,7 +11,7 @@ function OgImageContent() {
       style={{
         width: 1200,
         height: 630,
-        background: "#09090B",
+        background: BRAND_COLORS.background,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -28,8 +29,7 @@ function OgImageContent() {
           left: 200,
           width: 800,
           height: 600,
-          background:
-            "radial-gradient(ellipse at center, rgba(94,234,212,0.12) 0%, rgba(167,139,250,0.06) 45%, transparent 70%)",
+          background: `radial-gradient(ellipse at center, ${BRAND_EFFECTS.mintGlow} 0%, ${BRAND_EFFECTS.lilacGlow} 45%, transparent 70%)`,
           borderRadius: "50%",
           display: "flex",
         }}
@@ -41,13 +41,13 @@ function OgImageContent() {
           width: 64,
           height: 64,
           borderRadius: 16,
-          background: "linear-gradient(135deg, #5EEAD4 0%, #A78BFA 100%)",
+          background: BRAND_EFFECTS.gradient,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           fontSize: 32,
           fontWeight: 800,
-          color: "#09090B",
+          color: BRAND_COLORS.background,
           marginBottom: 32,
         }}
       >
@@ -60,7 +60,7 @@ function OgImageContent() {
           display: "flex",
           fontSize: 60,
           fontWeight: 800,
-          color: "#F4F4F5",
+          color: BRAND_COLORS.text,
           letterSpacing: "-0.04em",
           lineHeight: 1.1,
           marginBottom: 6,
@@ -78,7 +78,7 @@ function OgImageContent() {
           letterSpacing: "-0.04em",
           lineHeight: 1.1,
           marginBottom: 24,
-          background: "linear-gradient(135deg, #5EEAD4 0%, #A78BFA 100%)",
+          background: BRAND_EFFECTS.gradient,
           WebkitBackgroundClip: "text",
           color: "transparent",
         }}
@@ -91,7 +91,7 @@ function OgImageContent() {
         style={{
           display: "flex",
           fontSize: 21,
-          color: "#A1A1AA",
+          color: BRAND_COLORS.textMuted,
           textAlign: "center",
           maxWidth: 660,
           lineHeight: 1.5,
@@ -109,9 +109,9 @@ function OgImageContent() {
           gap: 8,
           padding: "10px 24px",
           borderRadius: 9999,
-          border: "1px solid rgba(94,234,212,0.3)",
-          background: "rgba(94,234,212,0.08)",
-          color: "#5EEAD4",
+          border: `1px solid ${BRAND_EFFECTS.mintBorder}`,
+          background: BRAND_EFFECTS.mintSurface,
+          color: BRAND_COLORS.mint,
           fontSize: 13,
           fontWeight: 600,
           letterSpacing: "0.06em",
@@ -123,7 +123,7 @@ function OgImageContent() {
             width: 8,
             height: 8,
             borderRadius: "50%",
-            background: "#5EEAD4",
+            background: BRAND_COLORS.mint,
             display: "flex",
           }}
         />

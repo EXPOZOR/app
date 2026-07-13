@@ -165,7 +165,7 @@ function PhoneMockup() {
             boxShadow:
               "0 0 0 1px rgba(255,255,255,0.06) inset," +
               "0 32px 64px rgba(0,0,0,0.7)," +
-              "0 0 40px rgba(61,220,151,0.12)",
+              "0 0 40px color-mix(in oklch, var(--decorative) 12%, transparent)",
             padding: "14px 10px",
             display: "flex",
             flexDirection: "column",
@@ -228,7 +228,8 @@ function PhoneMockup() {
                   width: "22px",
                   height: "22px",
                   borderRadius: "50%",
-                  background: "linear-gradient(135deg, #3DDC97 0%, #2AB07F 100%)",
+                  background:
+                    "linear-gradient(135deg, var(--brand-mint) 0%, var(--accent-hover) 100%)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -246,8 +247,8 @@ function PhoneMockup() {
               style={{
                 borderRadius: "12px",
                 background:
-                  "linear-gradient(135deg, rgba(61,220,151,0.15) 0%, rgba(167,139,250,0.08) 100%)",
-                border: "1px solid rgba(61,220,151,0.2)",
+                  "linear-gradient(135deg, color-mix(in oklch, var(--decorative) 15%, transparent) 0%, color-mix(in oklch, var(--info) 8%, transparent) 100%)",
+                border: "1px solid color-mix(in oklch, var(--decorative) 20%, transparent)",
                 padding: "10px",
               }}
             >
@@ -279,8 +280,8 @@ function PhoneMockup() {
                     fontSize: "6px",
                     padding: "2px 5px",
                     borderRadius: "4px",
-                    background: "rgba(61,220,151,0.15)",
-                    color: "var(--accent)",
+                    background: "var(--positive-subtle)",
+                    color: "var(--positive)",
                     fontWeight: 700,
                   }}
                 >
@@ -292,7 +293,7 @@ function PhoneMockup() {
             {/* Mini budget bars */}
             <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
               {[
-                { label: "Food", pct: 68, color: "#3DDC97" },
+                { label: "Food", pct: 68, color: "var(--positive)" },
                 { label: "Shopping", pct: 42, color: "#A78BFA" },
                 { label: "Transport", pct: 85, color: "#60A5FA" },
               ].map((b) => (
@@ -347,7 +348,12 @@ function PhoneMockup() {
                 RECENT
               </p>
               {[
-                { emoji: "🛒", label: "Grocery Store", amount: "-$94", color: "#3DDC97" },
+                {
+                  emoji: "🛒",
+                  label: "Grocery Store",
+                  amount: "-$94",
+                  color: "var(--positive)",
+                },
                 { emoji: "⚡", label: "Electricity", amount: "-$62", color: "#FB923C" },
                 { emoji: "🎬", label: "Streaming", amount: "-$18", color: "#A78BFA" },
               ].map((tx) => (
@@ -400,7 +406,7 @@ function PhoneMockup() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: icon === "\ud83d\udcca" ? "rgba(61,220,151,0.15)" : "transparent",
+                    background: icon === "\ud83d\udcca" ? "var(--positive-subtle)" : "transparent",
                     fontSize: "11px",
                   }}
                 >
@@ -635,7 +641,7 @@ export function MobileAppCtaSection() {
           pointerEvents: "none",
           background:
             "radial-gradient(ellipse at 70% 50%, rgba(167,139,250,0.06) 0%, transparent 55%)," +
-            "radial-gradient(ellipse at 20% 80%, rgba(61,220,151,0.04) 0%, transparent 45%)",
+            "radial-gradient(ellipse at 20% 80%, color-mix(in oklch, var(--decorative) 4%, transparent) 0%, transparent 45%)",
         }}
       />
 
@@ -857,7 +863,7 @@ export function MobileAppCtaSection() {
                   inset: "-40px",
                   borderRadius: "50%",
                   background:
-                    "radial-gradient(ellipse at 50% 50%, rgba(61,220,151,0.15) 0%, transparent 65%)",
+                    "radial-gradient(ellipse at 50% 50%, color-mix(in oklch, var(--decorative) 15%, transparent) 0%, transparent 65%)",
                   pointerEvents: "none",
                 }}
               />

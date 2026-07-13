@@ -2,6 +2,7 @@
 
 import { db } from "@/db/client";
 import { waitlist } from "@/db/schema";
+import { BRAND_COLORS, BRAND_EFFECTS } from "@/lib/brand-colors";
 import { headers } from "next/headers";
 import { z } from "zod";
 
@@ -9,9 +10,7 @@ const WaitlistSchema = z.object({
   email: z.string().trim().toLowerCase().email("Please enter a valid email address."),
   source: z.string().trim().max(80).default("landing"),
   locale: z.literal("en").default("en"),
-  productUpdatesConsent: z
-    .enum(["on", "true", "1"])
-    .optional(),
+  productUpdatesConsent: z.enum(["on", "true", "1"]).optional(),
   website: z.string().optional(),
 });
 
@@ -121,7 +120,7 @@ async function sendConfirmation(email: string): Promise<void> {
     subject: "You're on the EXPOZOR waitlist",
     html: `
       <div style="font-family:system-ui,sans-serif;max-width:480px;margin:0 auto;color:#F4F4F5;background:#09090B;padding:48px 32px;border-radius:20px;border:1px solid rgba(255,255,255,0.08);">
-        <div style="width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#5EEAD4,#A78BFA);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:#09090B;margin-bottom:24px;">E</div>
+        <div style="width:48px;height:48px;border-radius:12px;background:${BRAND_EFFECTS.gradient};display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:${BRAND_COLORS.background};margin-bottom:24px;">E</div>
         <h1 style="font-size:22px;font-weight:700;margin:0 0 12px;color:#F4F4F5;letter-spacing:-0.02em;">You're on the list.</h1>
         <p style="color:#A1A1AA;line-height:1.7;margin:0 0 20px;font-size:15px;">
           Thanks for joining the EXPOZOR waitlist. We're building calm, intelligent money management that respects your time and privacy.
@@ -130,7 +129,7 @@ async function sendConfirmation(email: string): Promise<void> {
           We'll send your early access link as soon as your spot is ready.
         </p>
         <div style="padding-top:24px;border-top:1px solid rgba(255,255,255,0.08);">
-          <p style="color:#71717A;font-size:13px;margin:0;">The EXPOZOR team</p>
+          <p style="color:${BRAND_COLORS.textTertiary};font-size:13px;margin:0;">The EXPOZOR team</p>
         </div>
       </div>
     `,

@@ -1,3 +1,4 @@
+import { BRAND_COLORS, BRAND_EFFECTS } from "@/lib/brand-colors";
 import { ImageResponse } from "next/og";
 
 export const size = { width: 180, height: 180 };
@@ -10,14 +11,14 @@ export default function AppleIcon() {
         width: 180,
         height: 180,
         borderRadius: 40,
-        background: "linear-gradient(135deg, #5EEAD4 0%, #A78BFA 100%)",
+        background: BRAND_EFFECTS.gradient,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         fontFamily: "system-ui",
         fontWeight: 800,
         fontSize: 80,
-        color: "#09090B",
+        color: BRAND_COLORS.background,
         letterSpacing: "-0.04em",
       }}
     >

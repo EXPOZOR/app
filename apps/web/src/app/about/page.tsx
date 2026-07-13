@@ -50,7 +50,7 @@ export default function AboutPage() {
               site is mine — and I stand behind all of it.
             </p>
             <div className="pt-6 border-t border-[var(--border)]">
-              <blockquote className="text-[var(--text-primary)] text-xl font-medium italic pl-5 border-l-2 border-[var(--accent)]">
+              <blockquote className="text-[var(--text-primary)] text-xl font-medium italic pl-5 border-l-2 border-[var(--decorative)]">
                 "Calm, intelligent money. That's all I'm trying to make."
               </blockquote>
               <p className="mt-3 text-sm text-[var(--text-muted)]">— Mohamed Karrach, Founder</p>

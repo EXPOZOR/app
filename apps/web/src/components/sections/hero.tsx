@@ -25,7 +25,7 @@ const TRANSACTIONS = [
     date: "Today, 9:12 AM",
     raw: "Coffee purchase",
     category: "☕ Coffee",
-    color: "#3DDC97",
+    color: "var(--positive)",
   },
   {
     id: "t2",
@@ -119,7 +119,7 @@ function UICycle() {
                 width: "6px",
                 height: "6px",
                 borderRadius: "50%",
-                background: p === phase ? "var(--accent)" : "var(--border-strong)",
+                background: p === phase ? "var(--decorative)" : "var(--border-strong)",
                 transition: "background 300ms",
               }}
             />
@@ -250,9 +250,9 @@ function UICycle() {
                       fontWeight: 600,
                       padding: "2px 6px",
                       borderRadius: "var(--radius-full)",
-                      background: "var(--accent-subtle)",
-                      color: "var(--accent)",
-                      border: "1px solid var(--border-accent)",
+                      background: "var(--positive-subtle)",
+                      color: "var(--positive)",
+                      border: "1px solid color-mix(in oklch, var(--positive) 35%, transparent)",
                       whiteSpace: "nowrap",
                       boxShadow: "0 0 8px var(--accent-glow)",
                     }}
@@ -291,7 +291,7 @@ function UICycle() {
                 width: "6px",
                 height: "6px",
                 borderRadius: "50%",
-                background: "var(--accent)",
+                background: "var(--positive)",
                 animation: "pulse-dot 1.6s ease-in-out infinite",
                 flexShrink: 0,
               }}
@@ -390,7 +390,7 @@ function AnnotCard({ card }: { card: AnnotationCard }) {
           backdropFilter: "blur(8px)",
           WebkitBackdropFilter: "blur(8px)",
           border: "1px solid var(--border)",
-          borderLeft: "2px solid var(--accent)",
+          borderLeft: "2px solid var(--decorative)",
           boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
           fontSize: "0.75rem",
           fontWeight: 600,
@@ -425,14 +425,14 @@ function HeroBadge() {
           fontSize: "0.8125rem",
           fontWeight: 600,
           letterSpacing: "0.01em",
-          border: "1px solid var(--border-accent)",
-          color: "var(--accent)",
+          border: "1px solid color-mix(in oklch, var(--decorative) 35%, transparent)",
+          color: "var(--decorative)",
           background: `
             linear-gradient(
               110deg,
-              var(--accent-subtle) 0%,
-              color-mix(in oklch, var(--accent) 30%, transparent) 45%,
-              var(--accent-subtle) 60%
+              var(--decorative-subtle) 0%,
+              color-mix(in oklch, var(--decorative) 30%, transparent) 45%,
+              var(--decorative-subtle) 60%
             )
           `,
           backgroundSize: "200% auto",
@@ -833,7 +833,7 @@ export function HeroSection() {
             width: "600px",
             height: "600px",
             background:
-              "radial-gradient(ellipse at center, rgba(61,220,151,0.09) 0%, rgba(61,220,151,0.03) 45%, transparent 70%)",
+              "radial-gradient(ellipse at center, rgba(167,139,250,0.09) 0%, rgba(167,139,250,0.03) 45%, transparent 70%)",
             pointerEvents: "none",
             zIndex: 0,
             animation: "mesh-pulse-2 20s ease-in-out infinite",
@@ -929,7 +929,7 @@ export function HeroSection() {
                       display: "inline-block",
                       marginRight: i === 0 ? "0.22em" : 0,
                       /* Apply gradient per-word so it doesn't break across words */
-                      background: "linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%)",
+                      background: "linear-gradient(135deg, var(--accent-2) 0%, var(--info) 100%)",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                       backgroundClip: "text",

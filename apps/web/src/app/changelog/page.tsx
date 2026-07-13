@@ -1,6 +1,7 @@
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { PageHero } from "@/components/ui/page-hero";
+import { BRAND_COLORS } from "@/lib/brand-colors";
 import { getAllChangelogEntries } from "@/lib/mdx";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 import type { Metadata } from "next";
@@ -30,14 +31,14 @@ export default function ChangelogPage() {
 
           <div className="space-y-12">
             {entries.map((entry) => {
-              const tagColor = entry.frontmatter.tagColor || "#7CF5C2";
+              const tagColor = entry.frontmatter.tagColor || BRAND_COLORS.lilac;
               return (
                 <article
                   key={entry.frontmatter.version}
                   className="relative pl-8 border-l border-[var(--border)]"
                 >
                   <div
-                    className="absolute -left-1.5 top-1 w-3 h-3 rounded-full border-2 border-[var(--accent)] bg-[var(--bg)]"
+                    className="absolute -left-1.5 top-1 w-3 h-3 rounded-full border-2 border-[var(--decorative)] bg-[var(--bg)]"
                     aria-hidden="true"
                   />
                   <div className="flex items-center gap-3 mb-3">

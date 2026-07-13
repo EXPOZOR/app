@@ -2,6 +2,7 @@ import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { FeaturesSection } from "@/components/sections/features-section";
 import { PageHero } from "@/components/ui/page-hero";
+import { BRAND_COLORS } from "@/lib/brand-colors";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 import type { Metadata } from "next";
 
@@ -42,7 +43,7 @@ export default function FeaturesPage() {
           <div className="container-site measure-wide">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
-                <p className="text-xs uppercase tracking-widest font-semibold text-[var(--accent)] mb-3">
+                <p className="text-xs uppercase tracking-widest font-semibold text-[var(--decorative)] mb-3">
                   Capture
                 </p>
                 <h2 id="capture-heading" className="text-3xl font-bold mb-4">
@@ -88,7 +89,7 @@ export default function FeaturesPage() {
                     height="160"
                     rx="10"
                     fill="#18181b"
-                    stroke="#7CF5C2"
+                    stroke={BRAND_COLORS.lilac}
                     strokeOpacity="0.3"
                   />
                   <rect
@@ -97,7 +98,7 @@ export default function FeaturesPage() {
                     width="90"
                     height="10"
                     rx="5"
-                    fill="#7CF5C2"
+                    fill={BRAND_COLORS.lilac}
                     fillOpacity="0.4"
                   />
                   {[60, 78, 96, 114, 132].map((y) => (
@@ -127,7 +128,7 @@ export default function FeaturesPage() {
                     y1="100"
                     x2="164"
                     y2="100"
-                    stroke="#7CF5C2"
+                    stroke={BRAND_COLORS.lilac}
                     strokeWidth="2"
                     strokeOpacity="0.6"
                     strokeDasharray="6 3"
@@ -151,7 +152,7 @@ export default function FeaturesPage() {
                 aria-hidden="true"
               >
                 {[
-                  { label: "Coffee Shop", cat: "Food & Drink", color: "#7CF5C2" },
+                  { label: "Coffee Shop", cat: "Food & Drink", color: BRAND_COLORS.lilac },
                   { label: "Gas Station", cat: "Transport", color: "#60a5fa" },
                   {
                     label: "Design Subscription",
@@ -178,7 +179,7 @@ export default function FeaturesPage() {
                 ))}
               </div>
               <div className="order-1 md:order-2">
-                <p className="text-xs uppercase tracking-widest font-semibold text-[var(--accent)] mb-3">
+                <p className="text-xs uppercase tracking-widest font-semibold text-[var(--decorative)] mb-3">
                   Intelligence
                 </p>
                 <h2 id="ai-heading" className="text-3xl font-bold mb-4">

@@ -72,7 +72,7 @@ function LogoMark() {
         justifyContent: "center",
         fontSize: "13px",
         fontWeight: 800,
-        background: "linear-gradient(135deg, #3DDC97 0%, #A78BFA 100%)",
+        background: "linear-gradient(135deg, var(--brand-mint) 0%, var(--brand-lilac) 100%)",
         color: "#0A0A0B",
         flexShrink: 0,
         letterSpacing: "-0.02em",

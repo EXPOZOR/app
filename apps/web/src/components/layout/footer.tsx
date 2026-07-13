@@ -131,7 +131,8 @@ export function Footer() {
           transform: "translateX(-50%)",
           width: "600px",
           height: "1px",
-          background: "linear-gradient(90deg, transparent, rgba(61,220,151,0.3), transparent)",
+          background:
+            "linear-gradient(90deg, transparent, color-mix(in oklch, var(--decorative) 30%, transparent), transparent)",
           pointerEvents: "none",
         }}
       />
@@ -149,7 +150,8 @@ export function Footer() {
                   width: "30px",
                   height: "30px",
                   borderRadius: "8px",
-                  background: "linear-gradient(135deg, #3DDC97 0%, #A78BFA 100%)",
+                  background:
+                    "linear-gradient(135deg, var(--brand-mint) 0%, var(--brand-lilac) 100%)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",

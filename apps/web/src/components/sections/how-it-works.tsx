@@ -49,7 +49,7 @@ const STEPS: Step[] = [
 function VisualConnect() {
   const shouldReduce = useReducedMotion();
   const sources = [
-    { label: "Receipt", initial: "RX", color: "#3DDC97" },
+    { label: "Receipt", initial: "RX", color: "var(--decorative)" },
     { label: "CSV File", initial: "CSV", color: "#60A5FA" },
     { label: "Screenshot", initial: "IMG", color: "#A78BFA" },
     { label: "Manual Entry", initial: "ME", color: "#FB923C" },
@@ -134,7 +134,7 @@ function VisualConnect() {
               cy={2}
               r="2.5"
               fill="var(--accent)"
-              style={{ filter: "drop-shadow(0 0 3px #3DDC97)" }}
+              style={{ filter: "drop-shadow(0 0 3px var(--decorative))" }}
               animate={!shouldReduce ? { cy: [2, 46, 46] } : {}}
               transition={{
                 delay: 0.8 + i * 0.22,
@@ -321,7 +321,7 @@ function VisualAIReads() {
             width: "32px",
             height: "32px",
             borderRadius: "8px",
-            background: "rgba(61,220,151,0.15)",
+            background: "var(--positive-subtle)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -378,7 +378,7 @@ function VisualAIReads() {
 
 /** Step 3 — envelope budget bar filling */
 const ENVELOPES_DATA = [
-  { label: "Food & Drink", spent: 340, total: 500, color: "#3DDC97", delay: 0 },
+  { label: "Food & Drink", spent: 340, total: 500, color: "var(--positive)", delay: 0 },
   { label: "Shopping", spent: 180, total: 300, color: "#A78BFA", delay: 0.1 },
   { label: "Transport", spent: 95, total: 150, color: "#60A5FA", delay: 0.18 },
   { label: "Entertainment", spent: 45, total: 60, color: "#FB923C", delay: 0.26 },

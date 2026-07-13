@@ -1,6 +1,7 @@
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { PageHero } from "@/components/ui/page-hero";
+import { BRAND_COLORS } from "@/lib/brand-colors";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 import { Ban, Eye, Lock, Server, ShieldOff } from "lucide-react";
 import type { Metadata } from "next";
@@ -20,7 +21,7 @@ const pillars = [
     title: "No bank credentials collected",
     description:
       "EXPOZOR does not ask for or store your bank credentials. The current public site collects waitlist signup data only.",
-    accent: "#7CF5C2",
+    accent: BRAND_COLORS.lilac,
   },
   {
     icon: Ban,

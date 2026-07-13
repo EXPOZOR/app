@@ -28,7 +28,7 @@ const bentoCardVariants = {
     y: 0,
     boxShadow: [
       "none",
-      "0 0 0 1px var(--border-accent), 0 0 24px color-mix(in oklch, #3DDC97 18%, transparent)",
+      "0 0 0 1px color-mix(in oklch, var(--decorative) 35%, transparent), 0 0 24px color-mix(in oklch, var(--decorative) 18%, transparent)",
       "none",
     ],
     transition: {
@@ -214,7 +214,7 @@ const AI_ROWS = [
     merchant: "Grocery Store",
     amount: "-$94.20",
     cat: "Groceries",
-    color: "#3DDC97",
+    color: "var(--positive)",
     pos: false,
   },
   {
@@ -222,7 +222,7 @@ const AI_ROWS = [
     merchant: "Coffee Shop",
     amount: "-$6.50",
     cat: "Coffee",
-    color: "#3DDC97",
+    color: "var(--positive)",
     pos: false,
   },
   {
@@ -275,9 +275,9 @@ function AICatDemo() {
               fontWeight: 600,
               padding: "2px 6px",
               borderRadius: "var(--radius-full)",
-              background: "var(--accent-subtle)",
-              color: "var(--accent)",
-              border: "1px solid var(--border-accent)",
+              background: "var(--positive-subtle)",
+              color: "var(--positive)",
+              border: "1px solid color-mix(in oklch, var(--positive) 35%, transparent)",
             }}
           >
             AI-assisted
@@ -459,7 +459,7 @@ function SnapDemo() {
             border: "1px solid var(--border-accent)",
           }}
         >
-          <span style={{ fontSize: "0.5rem", fontWeight: 700, color: "var(--accent)" }}>
+          <span style={{ fontSize: "0.5rem", fontWeight: 700, color: "var(--positive)" }}>
             ✓ Categorized
           </span>
         </motion.div>
@@ -472,7 +472,7 @@ function SnapDemo() {
             right: 0,
             height: "2px",
             background:
-              "linear-gradient(90deg, transparent 0%, var(--accent) 50%, transparent 100%)",
+              "linear-gradient(90deg, transparent 0%, var(--decorative) 50%, transparent 100%)",
             opacity: 0.7,
             boxShadow: "0 0 8px var(--accent-glow)",
           }}
@@ -560,8 +560,8 @@ function CsvImportDemo() {
               fontWeight: 600,
               padding: "1px 4px",
               borderRadius: "var(--radius-full)",
-              background: r.mapped ? "var(--accent-subtle)" : "rgba(251,191,36,0.12)",
-              color: r.mapped ? "var(--accent)" : "#FBBF24",
+              background: r.mapped ? "var(--positive-subtle)" : "rgba(251,191,36,0.12)",
+              color: r.mapped ? "var(--positive)" : "#FBBF24",
             }}
           >
             {r.mapped ? "✓" : "?"}
@@ -582,7 +582,7 @@ function CsvImportDemo() {
           border: "1px solid var(--border-accent)",
           fontSize: "0.5rem",
           fontWeight: 700,
-          color: "var(--accent)",
+          color: "var(--decorative)",
         }}
       >
         Import 124 rows →
@@ -596,7 +596,7 @@ function CsvImportDemo() {
    Three animated progress bars.
 ────────────────────────────────────────────────────────────── */
 const ENVELOPES = [
-  { label: "Food & Drink", spent: 340, total: 500, color: "#3DDC97" },
+  { label: "Food & Drink", spent: 340, total: 500, color: "var(--positive)" },
   { label: "Transport", spent: 95, total: 150, color: "#60A5FA" },
   { label: "Entertainment", spent: 45, total: 60, color: "#A78BFA" },
 ] as const;

@@ -1,9 +1,10 @@
+import { BRAND_COLORS } from "@/lib/brand-colors";
 import type { BlogPost } from "@/lib/mdx";
 import { ArrowLeft, Calendar, Clock } from "lucide-react";
 import Link from "next/link";
 
 const CATEGORY_COLORS: Record<string, string> = {
-  Company: "#7CF5C2",
+  Company: BRAND_COLORS.lilac,
   Engineering: "#60a5fa",
   Security: "#a78bfa",
   Product: "#FFB36B",
@@ -11,7 +12,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 };
 
 export function PostHeader({ post }: { post: BlogPost }) {
-  const color = CATEGORY_COLORS[post.frontmatter.category] || "#7CF5C2";
+  const color = CATEGORY_COLORS[post.frontmatter.category] || BRAND_COLORS.lilac;
 
   return (
     <header className="mb-10">

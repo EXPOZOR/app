@@ -1,5 +1,6 @@
 "use client";
 
+import { BRAND_COLORS } from "@/lib/brand-colors";
 import { EASE_OUT } from "@/lib/motion";
 import { motion } from "framer-motion";
 import { Database, ShieldCheck, Zap } from "lucide-react";
@@ -16,7 +17,7 @@ const PLEDGES = [
     title: "Waitlist-first launch",
     description:
       "Join early access without a credit card. Billing is not active and paid packages may change before launch.",
-    accent: "#7CF5C2",
+    accent: BRAND_COLORS.lilac,
   },
   {
     icon: ShieldCheck,

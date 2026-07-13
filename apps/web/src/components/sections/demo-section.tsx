@@ -80,7 +80,8 @@ function BrowserFrame({ children }: { children: React.ReactNode }) {
                 width: "12px",
                 height: "12px",
                 borderRadius: "3px",
-                background: "linear-gradient(135deg, #3DDC97 0%, #A78BFA 100%)",
+                background:
+                  "linear-gradient(135deg, var(--brand-mint) 0%, var(--brand-lilac) 100%)",
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -126,7 +127,7 @@ const TRANSACTIONS = [
     amount: "-$94.20",
     category: "Groceries",
     icon: "🛒",
-    color: "#3DDC97",
+    color: "var(--positive)",
     positive: false,
     date: "Yesterday",
   },
@@ -136,7 +137,7 @@ const TRANSACTIONS = [
     amount: "-$6.50",
     category: "Coffee",
     icon: "☕",
-    color: "#3DDC97",
+    color: "var(--positive)",
     positive: false,
     date: "Yesterday",
   },
@@ -173,7 +174,7 @@ const TRANSACTIONS = [
 ] as const;
 
 const BUDGETS = [
-  { label: "Food & Drink", spent: 340, total: 500, color: "#3DDC97" },
+  { label: "Food & Drink", spent: 340, total: 500, color: "var(--positive)" },
   { label: "Shopping", spent: 180, total: 300, color: "#A78BFA" },
   { label: "Transport", spent: 95, total: 150, color: "#60A5FA" },
   { label: "Entertainment", spent: 45, total: 60, color: "#FB923C" },
@@ -187,7 +188,7 @@ const SPLIT_ITEMS = [
     total: "$120.00",
     you: "$60.00",
     other: "Manual note: Jordan share $60",
-    color: "#3DDC97",
+    color: "var(--positive)",
   },
   {
     id: "s2",
@@ -634,8 +635,8 @@ function InsightsPanel() {
         >
           <defs>
             <linearGradient id="chart-fill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#3DDC97" stopOpacity="0.18" />
-              <stop offset="100%" stopColor="#3DDC97" stopOpacity="0" />
+              <stop offset="0%" stopColor="var(--positive)" stopOpacity="0.18" />
+              <stop offset="100%" stopColor="var(--positive)" stopOpacity="0" />
             </linearGradient>
           </defs>
           {/* Grid lines */}
@@ -656,14 +657,16 @@ function InsightsPanel() {
           <motion.path
             d={pathD}
             fill="none"
-            stroke="#3DDC97"
+            stroke="var(--positive)"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
             initial={{ pathLength: 0 }}
             animate={{ pathLength: 1 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            style={{ filter: "drop-shadow(0 0 4px rgba(61,220,151,0.4))" }}
+            style={{
+              filter: "drop-shadow(0 0 4px color-mix(in oklch, var(--positive) 40%, transparent))",
+            }}
           />
           {/* Dots */}
           {pts.map((p) => (
@@ -672,8 +675,11 @@ function InsightsPanel() {
               cx={p.x}
               cy={p.y}
               r="3"
-              fill="#3DDC97"
-              style={{ filter: "drop-shadow(0 0 4px rgba(61,220,151,0.5))" }}
+              fill="var(--positive)"
+              style={{
+                filter:
+                  "drop-shadow(0 0 4px color-mix(in oklch, var(--positive) 50%, transparent))",
+              }}
             />
           ))}
           {/* Labels */}
@@ -696,7 +702,7 @@ function InsightsPanel() {
       {/* Category breakdown */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px" }}>
         {[
-          { label: "Food & Drink", pct: 38, color: "#3DDC97" },
+          { label: "Food & Drink", pct: 38, color: "var(--positive)" },
           { label: "Shopping", pct: 24, color: "#A78BFA" },
           { label: "Transport", pct: 18, color: "#60A5FA" },
           { label: "Other", pct: 20, color: "#FB923C" },
@@ -979,7 +985,7 @@ export function DemoSection() {
           inset: 0,
           pointerEvents: "none",
           background:
-            "radial-gradient(ellipse at 50% 70%, rgba(61,220,151,0.04) 0%, transparent 60%)",
+            "radial-gradient(ellipse at 50% 70%, rgba(167,139,250,0.04) 0%, transparent 60%)",
         }}
       />
 

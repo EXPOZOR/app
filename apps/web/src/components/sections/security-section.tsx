@@ -103,7 +103,7 @@ function ShieldIllustration() {
             boxShadow: "0 0 24px var(--accent-glow)",
           }}
         >
-          <Lock size={28} style={{ color: "var(--accent)" }} aria-hidden="true" />
+          <Lock size={28} style={{ color: "var(--decorative)" }} aria-hidden="true" />
         </div>
       </div>
     </motion.div>
@@ -162,7 +162,7 @@ export function SecuritySection() {
               height: "320px",
               pointerEvents: "none",
               background:
-                "radial-gradient(ellipse at top right, rgba(61,220,151,0.05) 0%, transparent 60%)",
+                "radial-gradient(ellipse at top right, rgba(167,139,250,0.05) 0%, transparent 60%)",
             }}
           />
 
@@ -274,7 +274,7 @@ export function SecuritySection() {
                         justifyContent: "center",
                         fontSize: "9px",
                         fontWeight: 800,
-                        color: "var(--accent)",
+                        color: "var(--positive)",
                       }}
                     >
                       ✓
@@ -298,7 +298,7 @@ export function SecuritySection() {
                   gap: "6px",
                   fontSize: "0.875rem",
                   fontWeight: 600,
-                  color: "var(--accent)",
+                  color: "var(--decorative)",
                   textDecoration: "none",
                   transition:
                     "color var(--dur-base) var(--ease-out), gap var(--dur-base) var(--ease-out)",

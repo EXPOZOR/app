@@ -30,9 +30,11 @@ function PricingCard({
         borderRadius: "var(--radius-lg)",
         overflow: "hidden",
         background: "var(--bg-elev-1)",
-        border: isHighlighted ? "1.5px solid rgba(61,220,151,0.45)" : "1px solid var(--border)",
+        border: isHighlighted
+          ? "1.5px solid color-mix(in oklch, var(--accent) 45%, transparent)"
+          : "1px solid var(--border)",
         boxShadow: isHighlighted
-          ? "0 0 0 1px rgba(61,220,151,0.08), 0 8px 40px rgba(0,0,0,0.5)"
+          ? "0 0 0 1px color-mix(in oklch, var(--accent) 8%, transparent), 0 8px 40px rgba(0,0,0,0.5)"
           : "none",
       }}
     >
@@ -44,7 +46,7 @@ function PricingCard({
             inset: 0,
             pointerEvents: "none",
             background:
-              "radial-gradient(ellipse at 50% 0%, rgba(61,220,151,0.08) 0%, transparent 60%)",
+              "radial-gradient(ellipse at 50% 0%, color-mix(in oklch, var(--accent) 8%, transparent) 0%, transparent 60%)",
           }}
         />
       )}
@@ -313,7 +315,7 @@ export function PricingSection() {
           inset: 0,
           pointerEvents: "none",
           background:
-            "radial-gradient(ellipse at 50% 80%, rgba(61,220,151,0.035) 0%, transparent 55%)",
+            "radial-gradient(ellipse at 50% 80%, color-mix(in oklch, var(--accent) 3.5%, transparent) 0%, transparent 55%)",
         }}
       />
 

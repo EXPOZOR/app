@@ -53,7 +53,7 @@ export const FEATURES = {
       subtitle: "Manual entry, your way",
       description:
         "Enter any expense in seconds: date, merchant, amount, category, payment method, notes, and tags. No bank required.",
-      accent: "#3DDC97",
+      accent: "var(--decorative)",
       size: "large" as const,
       icon: "PlusCircle",
       stat: "Fast manual entry",

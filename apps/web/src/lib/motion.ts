@@ -139,7 +139,7 @@ export const cardLift = {
 /** Mint glow CTA button hover state. */
 export const ctaGlow = {
   scale: 1.03,
-  boxShadow: "0 0 40px color-mix(in oklch, #3DDC97 25%, transparent)",
+  boxShadow: "0 0 40px color-mix(in oklch, var(--decorative) 25%, transparent)",
   transition: { duration: DUR.base, ease: EASE_OUT },
 } as const;
 

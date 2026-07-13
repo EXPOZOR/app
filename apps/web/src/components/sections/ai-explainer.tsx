@@ -14,7 +14,7 @@ const STEPS = [
     title: "Manual entry first, upload planned",
     description:
       "Manual entry is the first workflow. Receipt upload and CSV import are planned for early access, without requiring a bank connection.",
-    color: "#7CF5C2",
+    color: "var(--decorative)",
     visual: {
       type: "receipt" as const,
       items: [
@@ -54,7 +54,7 @@ const STEPS = [
     visual: {
       type: "budgets" as const,
       items: [
-        { category: "Groceries", spent: 340, budget: 500, color: "#7CF5C2" },
+        { category: "Groceries", spent: 340, budget: 500, color: "var(--positive)" },
         { category: "Dining", spent: 180, budget: 200, color: "#FFB36B" },
         { category: "Transport", spent: 95, budget: 150, color: "#60a5fa" },
         {
@@ -123,9 +123,9 @@ function ReceiptVisual({
           <span
             className="text-xs font-mono px-2 py-0.5 rounded-full"
             style={{
-              background: "#7CF5C21A",
-              color: "#7CF5C2",
-              border: "1px solid #7CF5C233",
+              background: "var(--positive-subtle)",
+              color: "var(--positive)",
+              border: "1px solid color-mix(in oklch, var(--positive) 20%, transparent)",
             }}
           >
             {item.confidence}%
@@ -225,12 +225,12 @@ function InsightsVisual({
   const borderColors: Record<string, string> = {
     warning: "#FFB36B33",
     suggestion: "#60a5fa33",
-    positive: "#7CF5C233",
+    positive: "color-mix(in oklch, var(--positive) 20%, transparent)",
   };
   const bgColors: Record<string, string> = {
     warning: "#FFB36B0D",
     suggestion: "#60a5fa0D",
-    positive: "#7CF5C20D",
+    positive: "color-mix(in oklch, var(--positive) 5%, transparent)",
   };
 
   return (
