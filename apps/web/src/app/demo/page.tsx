@@ -1,5 +1,5 @@
+import { InteractiveDemo } from "@/components/demo/interactive-demo";
 import { Header } from "@/components/layout/header";
-import { InteractiveDemo } from "@/components/marketing/interactive-demo";
 import { breadcrumbJsonLd, jsonLdString } from "@/lib/structured-data";
 import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";

@@ -11,8 +11,8 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import { AlertCircle, ArrowRight, CheckCircle2, Loader2, Play, X } from "lucide-react";
-import { useCallback, useEffect, useRef, useState, useTransition } from "react";
+import { AlertCircle, ArrowRight, CheckCircle2, Loader2, Play } from "lucide-react";
+import { useEffect, useRef, useState, useTransition } from "react";
 
 /* ──────────────────────────────────────────────────────────────
    TRANSACTION DATA — used in the UI cycle mockup
@@ -61,7 +61,7 @@ const TRANSACTIONS = [
    State 0 → raw list  |  State 1 → AI labels in  |  State 2 → split pill
    Cycles every 5 s (skips animation when prefers-reduced-motion)
 ────────────────────────────────────────────────────────────── */
-function UICycle({ scale = 1 }: { scale?: number }) {
+function UICycle() {
   // Two-phase cycle only: 0 = raw list, 1 = AI-categorized
   // Payment-style phase intentionally omitted.
   const [phase, setPhase] = useState<0 | 1>(0);
@@ -85,7 +85,7 @@ function UICycle({ scale = 1 }: { scale?: number }) {
         borderRadius: "var(--radius-lg)",
         overflow: "hidden",
         boxShadow: "var(--shadow-card)",
-        fontSize: `${scale}rem`,
+        fontSize: "1rem",
       }}
     >
       {/* Panel header */}
@@ -401,170 +401,6 @@ function AnnotCard({ card }: { card: AnnotationCard }) {
         {card.content}
       </div>
     </motion.div>
-  );
-}
-
-/* ──────────────────────────────────────────────────────────────
-   DEMO MODAL — enabled-but-stubbed (no video file yet)
-   Shows the UICycle at larger scale + "Full video demo coming soon" badge
-────────────────────────────────────────────────────────────── */
-function DemoModal({
-  open,
-  onClose,
-}: {
-  open: boolean;
-  onClose: () => void;
-}) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
-
-  // Sync open state with native <dialog>
-  useEffect(() => {
-    const el = dialogRef.current;
-    if (!el) return;
-    if (open) {
-      el.showModal();
-    } else {
-      el.close();
-    }
-  }, [open]);
-
-  // Sync native Escape-key close back to React state
-  useEffect(() => {
-    const el = dialogRef.current;
-    if (!el) return;
-    el.addEventListener("close", onClose);
-    return () => el.removeEventListener("close", onClose);
-  }, [onClose]);
-
-  // Close on backdrop click
-  function handleBackdropClick(e: React.MouseEvent<HTMLDialogElement>) {
-    if (e.target === dialogRef.current) onClose();
-  }
-
-  // Prevent body scroll
-  useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
-
-  return (
-    <dialog
-      ref={dialogRef}
-      aria-labelledby="demo-modal-title"
-      aria-modal="true"
-      onClick={handleBackdropClick}
-      onKeyDown={(e) => {
-        if (e.key === "Escape")
-          handleBackdropClick(e as unknown as React.MouseEvent<HTMLDialogElement>);
-      }}
-      style={{
-        padding: 0,
-        border: "none",
-        borderRadius: "var(--radius-lg)",
-        background: "var(--bg-elev-2)",
-        maxWidth: "min(640px, 92vw)",
-        width: "100%",
-        boxShadow: "0 24px 80px rgba(0,0,0,0.7)",
-        outline: "none",
-      }}
-    >
-      {/* Modal header */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "1.125rem 1.5rem",
-          borderBottom: "1px solid var(--border)",
-        }}
-      >
-        <div>
-          <h2
-            id="demo-modal-title"
-            style={{
-              fontSize: "1rem",
-              fontWeight: 600,
-              color: "var(--text-primary)",
-              margin: 0,
-              letterSpacing: "-0.02em",
-            }}
-          >
-            60-second demo
-          </h2>
-          {/* "Coming soon" badge */}
-          <span
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "4px",
-              marginTop: "4px",
-              fontSize: "0.6875rem",
-              fontWeight: 600,
-              padding: "2px 8px",
-              borderRadius: "var(--radius-full)",
-              background: "rgba(251,191,36,0.12)",
-              color: "#FBBF24",
-              border: "1px solid rgba(251,191,36,0.3)",
-              letterSpacing: "0.04em",
-            }}
-          >
-            <span aria-hidden="true">●</span>
-            Full video demo coming soon
-          </span>
-        </div>
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Close demo modal"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "44px",
-            height: "44px",
-            borderRadius: "var(--radius-sm)",
-            background: "transparent",
-            border: "none",
-            cursor: "pointer",
-            color: "var(--text-secondary)",
-            transition: "color var(--dur-base), background var(--dur-base)",
-          }}
-          onMouseEnter={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.color = "var(--text-primary)";
-            (e.currentTarget as HTMLButtonElement).style.background = "var(--bg-elev-1)";
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.color = "var(--text-secondary)";
-            (e.currentTarget as HTMLButtonElement).style.background = "transparent";
-          }}
-        >
-          <X size={18} aria-hidden="true" />
-        </button>
-      </div>
-
-      {/* UI Cycle at larger scale */}
-      <div style={{ padding: "1.5rem" }}>
-        <UICycle scale={0.95} />
-        <p
-          style={{
-            textAlign: "center",
-            fontSize: "0.8125rem",
-            color: "var(--text-muted)",
-            marginTop: "1rem",
-            lineHeight: 1.5,
-          }}
-        >
-          This interactive preview shows the same AI flow you'll get on day one.
-          <br />A full screen-recorded demo will be available soon.
-        </p>
-      </div>
-    </dialog>
   );
 }
 
@@ -975,9 +811,6 @@ function RightColumnTilt() {
    HERO SECTION
 ────────────────────────────────────────────────────────────── */
 export function HeroSection() {
-  const [demoOpen, setDemoOpen] = useState(false);
-  const closeDemo = useCallback(() => setDemoOpen(false), []);
-
   return (
     <>
       <section
@@ -1058,7 +891,6 @@ export function HeroSection() {
                   display: "block",
                 }}
               >
-                {/* Plain words — each fades up independently */}
                 {/* Plain words — each fades up independently */}
                 {["Know", "where", "your", "money", "is"].map((word) => (
                   <motion.span
@@ -1148,7 +980,7 @@ export function HeroSection() {
               >
                 <WaitlistForm />
 
-                {/* Secondary CTA — ghost, opens stubbed demo modal */}
+                {/* Secondary CTA — links to the live interactive demo */}
                 <div>
                   <a
                     href="#demo"
@@ -1242,9 +1074,6 @@ export function HeroSection() {
         </div>
       </section>
 
-      {/* Demo modal (outside section to avoid stacking-context issues) */}
-      <DemoModal open={demoOpen} onClose={closeDemo} />
-
       {/* One-off hero-grid CSS — 2-column on lg */}
       <style>{`
         @media (min-width: 1024px) {
@@ -1256,10 +1085,6 @@ export function HeroSection() {
         @keyframes spin {
           from { transform: rotate(0deg); }
           to   { transform: rotate(360deg); }
-        }
-        dialog::backdrop {
-          background: rgba(0, 0, 0, 0.75);
-          backdrop-filter: blur(6px);
         }
       `}</style>
     </>

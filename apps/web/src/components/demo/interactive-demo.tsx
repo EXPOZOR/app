@@ -41,6 +41,7 @@ const INITIAL_BUDGET = 800;
 const INITIAL_SPENT = 420;
 
 // ── Main component ─────────────────────────────────────────────
+/** Interactive expense-entry sandbox used by the private demo route. */
 export function InteractiveDemo() {
   const [step, setStep] = useState<DemoStep>("entry");
   const [name, setName] = useState("");
