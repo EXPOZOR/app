@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, X } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 /* ──────────────────────────────────────────────────────────────
@@ -155,7 +156,7 @@ export function StickyMobileCtaBar() {
             </div>
 
             {/* CTA button — canonical early-access destination */}
-            <a
+            <Link
               href="/#waitlist"
               onClick={dismiss}
               aria-label="Join EXPOZOR early access"
@@ -182,7 +183,7 @@ export function StickyMobileCtaBar() {
             >
               Join early access
               <ArrowRight size={13} aria-hidden="true" />
-            </a>
+            </Link>
 
             {/* Dismiss × */}
             <button

@@ -1,9 +1,13 @@
-"use client";
-
 import { buttonClassName } from "@/components/ui/button";
+import { MotionDiv, MotionH2, MotionP } from "@/components/ui/motion-primitives";
 import { EASE_OUT } from "@/lib/motion";
-import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+
+const motion = {
+  div: MotionDiv,
+  h2: MotionH2,
+  p: MotionP,
+};
 
 /* ──────────────────────────────────────────────────────────────
    APP STORE / PLAY STORE INLINE SVG BADGES
@@ -130,8 +134,6 @@ function PlayStoreBadge() {
    Dimensions: ~220×440px at 1×. No external images.
 ────────────────────────────────────────────────────────────── */
 function PhoneMockup() {
-  const shouldReduce = useReducedMotion();
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 24, rotateY: -4 }}
@@ -144,15 +146,7 @@ function PhoneMockup() {
       {/* ── Enhancement 12: continuous float loop ──
           Inner wrapper owns the y-float so it composes cleanly
           with the outer entry animation. Disabled for reduced-motion. */}
-      <motion.div
-        animate={shouldReduce ? {} : { y: [0, -10, 0] }}
-        transition={{
-          duration: 3.5,
-          repeat: Number.POSITIVE_INFINITY,
-          ease: "easeInOut",
-          repeatType: "loop",
-        }}
-      >
+      <motion.div style={{ animation: "float-y 3.5s ease-in-out infinite" }}>
         {/* Outer frame */}
         <div
           style={{

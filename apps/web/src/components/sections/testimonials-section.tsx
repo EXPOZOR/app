@@ -1,9 +1,13 @@
-"use client";
-
+import { MotionDiv, MotionH2, MotionP } from "@/components/ui/motion-primitives";
 import { BRAND_COLORS } from "@/lib/brand-colors";
 import { EASE_OUT } from "@/lib/motion";
-import { motion } from "framer-motion";
 import { Database, ShieldCheck, Zap } from "lucide-react";
+
+const motion = {
+  div: MotionDiv,
+  h2: MotionH2,
+  p: MotionP,
+};
 
 /* ──────────────────────────────────────────────────────────────
    EARLY ACCESS SECTION

@@ -453,7 +453,7 @@ function HeroBadge() {
    Extracted so it can own its own useReducedMotion + motion values
    without re-rendering the parent HeroSection on every mousemove.
 ────────────────────────────────────────────────────────────── */
-function RightColumnTilt() {
+export function HeroVisual() {
   const shouldReduce = useReducedMotion();
   const colRef = useRef<HTMLDivElement>(null);
 
@@ -775,7 +775,7 @@ export function HeroSection() {
             {/* Mouse position over the column drives gentle rotateX/Y
                 via useMotionValue + useSpring. Disabled for
                 prefers-reduced-motion via the shouldReduce guard. */}
-            <RightColumnTilt />
+            <HeroVisual />
           </div>
         </div>
       </section>

@@ -1,9 +1,13 @@
-"use client";
-
-import { EASE_OUT } from "@/lib/motion";
-import { type MotionStyle, motion } from "framer-motion";
+import { FeaturesBentoCard } from "@/components/sections/features-bento-card";
+import { MotionDiv, MotionH2, MotionP, MotionSpan } from "@/components/ui/motion-primitives";
 import { Brain, Building2, Camera, PieChart, Radio } from "lucide-react";
-import { useRef } from "react";
+
+const motion = {
+  div: MotionDiv,
+  h2: MotionH2,
+  p: MotionP,
+  span: MotionSpan,
+};
 
 /* ──────────────────────────────────────────────────────────────
    SPOTLIGHT BENTO CARD
@@ -17,29 +21,6 @@ import { useRef } from "react";
    Uses boxShadow keyframes inside animate variants so it only fires
    once (viewport once: true) and is suppressed by the global
    prefers-reduced-motion rule in globals.css. */
-const bentoCardVariants = {
-  hidden: {
-    opacity: 0,
-    y: 18,
-    boxShadow: "none",
-  },
-  visible: (delay: number) => ({
-    opacity: 1,
-    y: 0,
-    boxShadow: [
-      "none",
-      "0 0 0 1px color-mix(in oklch, var(--decorative) 35%, transparent), 0 0 24px color-mix(in oklch, var(--decorative) 18%, transparent)",
-      "none",
-    ],
-    transition: {
-      delay,
-      duration: 0.55,
-      ease: EASE_OUT,
-      boxShadow: { delay: delay + 0.1, duration: 0.9, times: [0, 0.35, 1] },
-    },
-  }),
-};
-
 function BentoCard({
   children,
   delay = 0,
@@ -51,61 +32,10 @@ function BentoCard({
   style?: React.CSSProperties;
   className?: string;
 }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const spotRef = useRef<HTMLDivElement>(null);
-
-  function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-    const rect = cardRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    cardRef.current?.style.setProperty("--x", `${e.clientX - rect.left}px`);
-    cardRef.current?.style.setProperty("--y", `${e.clientY - rect.top}px`);
-  }
-  function onMouseEnter() {
-    if (spotRef.current) spotRef.current.style.opacity = "1";
-    if (cardRef.current) {
-      cardRef.current.style.transform = "translateY(-4px)";
-      cardRef.current.style.borderColor = "var(--border-strong)";
-      cardRef.current.style.boxShadow = "var(--shadow-card)";
-    }
-  }
-  function onMouseLeave() {
-    if (spotRef.current) spotRef.current.style.opacity = "0";
-    if (cardRef.current) {
-      cardRef.current.style.transform = "translateY(0)";
-      cardRef.current.style.borderColor = "var(--border)";
-      cardRef.current.style.boxShadow = "none";
-    }
-  }
-
   return (
-    <motion.div
-      ref={cardRef}
-      custom={delay}
-      variants={bentoCardVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-40px" }}
-      onMouseMove={onMouseMove}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      className={className}
-      style={{
-        position: "relative",
-        overflow: "hidden",
-        background: "var(--bg-elev-1)",
-        border: "1px solid var(--border)",
-        borderRadius: "var(--radius-lg)",
-        padding: "1.5rem",
-        display: "flex",
-        flexDirection: "column",
-        transition:
-          "transform 200ms ease-out, border-color 200ms ease-out, box-shadow 200ms ease-out",
-        ...(style as MotionStyle),
-      }}
-    >
+    <FeaturesBentoCard delay={delay} className={className} style={style}>
       {/* Cursor spotlight — 200px soft white radial gradient */}
       <div
-        ref={spotRef}
         aria-hidden="true"
         style={{
           position: "absolute",
@@ -131,7 +61,7 @@ function BentoCard({
       >
         {children}
       </div>
-    </motion.div>
+    </FeaturesBentoCard>
   );
 }
 

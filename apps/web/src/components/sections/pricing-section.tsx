@@ -1,13 +1,18 @@
-"use client";
-
 import { Badge } from "@/components/ui/badge";
 import { buttonClassName } from "@/components/ui/button";
 import { cardClassName } from "@/components/ui/card";
+import { MotionA, MotionArticle, MotionDiv, MotionP } from "@/components/ui/motion-primitives";
 import { SectionHeader } from "@/components/ui/section-header";
 import { PRICING } from "@/content/landing";
 import { EASE_OUT } from "@/lib/motion";
-import { motion } from "framer-motion";
 import { Check, Sparkles } from "lucide-react";
+
+const motion = {
+  a: MotionA,
+  article: MotionArticle,
+  div: MotionDiv,
+  p: MotionP,
+};
 
 function PricingCard({
   tier,

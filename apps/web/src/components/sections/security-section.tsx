@@ -1,8 +1,22 @@
-"use client";
-
+import {
+  MotionA,
+  MotionDiv,
+  MotionH2,
+  MotionLi,
+  MotionP,
+  MotionUl,
+} from "@/components/ui/motion-primitives";
 import { EASE_OUT } from "@/lib/motion";
-import { motion } from "framer-motion";
 import { Ban, Download, ExternalLink, Eye, Lock, ShieldOff, Trash2 } from "lucide-react";
+
+const motion = {
+  a: MotionA,
+  div: MotionDiv,
+  h2: MotionH2,
+  li: MotionLi,
+  p: MotionP,
+  ul: MotionUl,
+};
 
 /* ──────────────────────────────────────────────────────────────
    PLEDGE CARDS DATA
@@ -287,6 +301,7 @@ export function SecuritySection() {
               {/* CTA link — "See our security page" */}
               <motion.a
                 href="/security"
+                className="security-link"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
@@ -303,12 +318,6 @@ export function SecuritySection() {
                   transition:
                     "color var(--dur-base) var(--ease-out), gap var(--dur-base) var(--ease-out)",
                 }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.gap = "9px";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.gap = "6px";
-                }}
               >
                 See our security page
                 <ExternalLink size={14} aria-hidden="true" />
@@ -322,7 +331,7 @@ export function SecuritySection() {
               style={{ listStyle: "none", margin: 0, padding: 0 }}
             >
               {PLEDGES.map((pledge, i) => (
-                <motion.div
+                <MotionLi
                   key={pledge.id}
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -399,7 +408,7 @@ export function SecuritySection() {
                   >
                     {pledge.description}
                   </p>
-                </motion.div>
+                </MotionLi>
               ))}
             </ul>
           </div>
@@ -413,6 +422,10 @@ export function SecuritySection() {
           grid-template-columns: 1fr;
           gap: 2.5rem;
           padding: 2.5rem;
+        }
+
+        .security-link:hover {
+          gap: 9px !important;
         }
 
         @media (min-width: 1024px) {

@@ -7,7 +7,7 @@ import { DemoSection } from "@/components/sections/demo-section";
 import { FaqSection } from "@/components/sections/faq-section";
 import { FeaturesSection } from "@/components/sections/features-section";
 import { FinalCtaSection } from "@/components/sections/final-cta";
-import { HeroSection } from "@/components/sections/hero";
+import { HeroSection } from "@/components/sections/hero-shell";
 import { HowItWorksSection } from "@/components/sections/how-it-works";
 import { MobileAppCtaSection } from "@/components/sections/mobile-app-cta";
 import { PricingSection } from "@/components/sections/pricing-section";

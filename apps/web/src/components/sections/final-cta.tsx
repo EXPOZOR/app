@@ -1,152 +1,25 @@
-"use client";
-
-import { WaitlistForm } from "@/components/waitlist-form";
+import {
+  MotionDiv,
+  MotionH2,
+  MotionLi,
+  MotionP,
+  MotionUl,
+} from "@/components/ui/motion-primitives";
+import { WaitlistCelebrationForm } from "@/components/waitlist-celebration-form";
 import { FINAL_CTA } from "@/content/landing";
 import { EASE_OUT } from "@/lib/motion";
-import { motion } from "framer-motion";
 import { Check } from "lucide-react";
-import { useCallback, useRef } from "react";
 
-/* ──────────────────────────────────────────────────────────────
-   CONFETTI ENGINE
-   Pure canvas / requestAnimationFrame — zero external deps.
-   Respects prefers-reduced-motion: fires nothing if set.
-   Canvas is aria-hidden and pointer-events: none.
-────────────────────────────────────────────────────────────── */
-type Particle = {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  rot: number;
-  rotSpeed: number;
-  color: string;
-  w: number;
-  h: number;
-  opacity: number;
-  shape: "rect" | "circle" | "ribbon";
+const motion = {
+  div: MotionDiv,
+  h2: MotionH2,
+  li: MotionLi,
+  p: MotionP,
+  ul: MotionUl,
 };
 
-const CONFETTI_COLORS = [
-  "var(--positive)",
-  "#A78BFA", // purple
-  "#FB923C", // orange
-  "#60A5FA", // blue
-  "#F472B6", // pink
-  "#FBBF24", // amber
-  "#34D399", // green
-];
-
-function useConfetti() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const aliveRef = useRef(false);
-
-  const fire = useCallback(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    // Size canvas to viewport
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    canvas.style.display = "block";
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    // Spawn 140 particles in a burst from the top-centre area
-    const CX = canvas.width / 2;
-    const particles: Particle[] = Array.from({ length: 140 }, () => {
-      const angle = Math.random() * Math.PI * 1.4 - Math.PI * 0.7; // fan upward
-      const speed = Math.random() * 14 + 4;
-      return {
-        x: CX + (Math.random() - 0.5) * 200,
-        y: canvas.height * 0.45,
-        vx: Math.cos(angle) * speed,
-        vy: Math.sin(angle) * speed - 6,
-        rot: Math.random() * 360,
-        rotSpeed: (Math.random() - 0.5) * 12,
-        color:
-          CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)] ?? "var(--positive)",
-        w: Math.random() * 10 + 4,
-        h: Math.random() * 5 + 3,
-        opacity: 1,
-        shape: (["rect", "circle", "ribbon"] as const)[Math.floor(Math.random() * 3)] ?? "rect",
-      };
-    });
-
-    aliveRef.current = true;
-
-    // Capture narrowed locals so TS flow-analysis holds inside the rAF closure
-    const _canvas: HTMLCanvasElement = canvas;
-    const _ctx: CanvasRenderingContext2D = ctx;
-
-    function tick() {
-      if (!aliveRef.current) return;
-      _ctx.clearRect(0, 0, _canvas.width, _canvas.height);
-
-      let living = 0;
-
-      for (const p of particles) {
-        if (p.opacity <= 0.01) continue;
-        living++;
-
-        // Physics
-        p.vx *= 0.99;
-        p.vy += 0.32; // gravity
-        p.x += p.vx;
-        p.y += p.vy;
-        p.rot += p.rotSpeed;
-
-        // Fade when below 65% viewport
-        if (p.y > _canvas.height * 0.65) p.opacity -= 0.018;
-
-        _ctx.save();
-        _ctx.globalAlpha = Math.max(0, p.opacity);
-        _ctx.fillStyle = p.color;
-        _ctx.translate(p.x, p.y);
-        _ctx.rotate((p.rot * Math.PI) / 180);
-
-        if (p.shape === "circle") {
-          _ctx.beginPath();
-          _ctx.arc(0, 0, p.w / 2, 0, Math.PI * 2);
-          _ctx.fill();
-        } else if (p.shape === "ribbon") {
-          _ctx.fillRect(-p.w * 1.5, -p.h / 2, p.w * 3, p.h / 2);
-        } else {
-          _ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
-        }
-
-        _ctx.restore();
-      }
-
-      if (living > 0) {
-        requestAnimationFrame(tick);
-      } else {
-        _canvas.style.display = "none";
-        aliveRef.current = false;
-      }
-    }
-
-    requestAnimationFrame(tick);
-
-    // Hard stop after 5 s to free the RAF
-    setTimeout(() => {
-      aliveRef.current = false;
-      _canvas.style.display = "none";
-    }, 5000);
-  }, []);
-
-  return { canvasRef, fire };
-}
-
-/* ──────────────────────────────────────────────────────────────
-   FINAL CTA SECTION
-────────────────────────────────────────────────────────────── */
+/** Server-rendered final CTA with one isolated interactive form boundary. */
 export function FinalCtaSection() {
-  const { canvasRef, fire } = useConfetti();
-
   return (
     <section
       id="waitlist"
@@ -154,19 +27,6 @@ export function FinalCtaSection() {
       className="section-py cv-auto"
       style={{ position: "relative", overflow: "hidden" }}
     >
-      {/* Global confetti canvas — fixed, full-screen, aria-hidden */}
-      <canvas
-        ref={canvasRef}
-        style={{
-          display: "none",
-          position: "fixed",
-          inset: 0,
-          pointerEvents: "none",
-          zIndex: 9999,
-        }}
-      />
-
-      {/* Background: dual radial glow (mint + purple) */}
       <div
         aria-hidden="true"
         style={{
@@ -179,7 +39,6 @@ export function FinalCtaSection() {
         }}
       />
 
-      {/* Subtle grid texture */}
       <div
         aria-hidden="true"
         style={{
@@ -200,10 +59,6 @@ export function FinalCtaSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.65, ease: EASE_OUT }}
-          /* ── Enhancement 14a: looping ambient border pulse ──
-             Cycles mint → purple → mint over 5s.
-             Subtle enough not to distract from the form,
-             vivid enough to make the card feel alive. */
           animate={{
             boxShadow: [
               "0 0 0 1px color-mix(in oklch, var(--accent) 12%, transparent), 0 0 40px color-mix(in oklch, var(--accent) 6%, transparent)",
@@ -229,7 +84,6 @@ export function FinalCtaSection() {
             overflow: "hidden",
           }}
         >
-          {/* Card inner glow */}
           <div
             aria-hidden="true"
             style={{
@@ -242,7 +96,6 @@ export function FinalCtaSection() {
           />
 
           <div style={{ position: "relative" }}>
-            {/* ── Eyebrow ──────────────────────────────── */}
             <motion.p
               className="eyebrow"
               initial={{ opacity: 0, y: -4 }}
@@ -254,13 +107,12 @@ export function FinalCtaSection() {
               GET STARTED
             </motion.p>
 
-            {/* ── H2 ───────────────────────────────────── */}
             <motion.h2
               id="final-cta-heading"
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.07, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ delay: 0.07, duration: 0.55, ease: EASE_OUT }}
               style={{
                 fontSize: "clamp(1.875rem, 5vw, 2.75rem)",
                 fontWeight: 600,
@@ -273,7 +125,6 @@ export function FinalCtaSection() {
               {FINAL_CTA.headline}
             </motion.h2>
 
-            {/* ── Sub ──────────────────────────────────── */}
             <motion.p
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -283,16 +134,13 @@ export function FinalCtaSection() {
                 fontSize: "clamp(1rem, 2vw, 1.125rem)",
                 color: "var(--text-secondary)",
                 lineHeight: 1.6,
-                margin: "0 0 1.75rem",
+                margin: "0 auto 1.75rem",
                 maxWidth: "44ch",
-                marginLeft: "auto",
-                marginRight: "auto",
               }}
             >
               {FINAL_CTA.subhead}
             </motion.p>
 
-            {/* ── 3 bullet quick-wins ──────────────────── */}
             <motion.ul
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -308,13 +156,13 @@ export function FinalCtaSection() {
                 margin: "0 0 2rem",
               }}
             >
-              {FINAL_CTA.bullets.map((b, i) => (
+              {FINAL_CTA.bullets.map((bullet, index) => (
                 <motion.li
-                  key={b}
+                  key={bullet}
                   initial={{ opacity: 0, y: 6 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.2 + i * 0.06, duration: 0.4 }}
+                  transition={{ delay: 0.2 + index * 0.06, duration: 0.4 }}
                   style={{
                     display: "flex",
                     alignItems: "center",
@@ -329,13 +177,12 @@ export function FinalCtaSection() {
                     style={{ color: "var(--accent)", flexShrink: 0 }}
                     aria-hidden="true"
                   />
-                  {b}
+                  {bullet}
                 </motion.li>
               ))}
             </motion.ul>
 
-            {/* ── Canonical waitlist form ────────────────── */}
-            <WaitlistForm onSuccess={fire} />
+            <WaitlistCelebrationForm />
           </div>
         </motion.div>
       </div>
