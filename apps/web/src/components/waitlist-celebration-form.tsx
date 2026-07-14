@@ -1,6 +1,7 @@
 "use client";
 
 import { WaitlistForm } from "@/components/waitlist-form";
+import { useMotionPreference } from "@/lib/use-motion-preference";
 import { useCallback, useRef } from "react";
 
 type Particle = {
@@ -28,11 +29,12 @@ const CONFETTI_COLORS = [
 ];
 
 function useConfetti() {
+  const { allowMotion } = useMotionPreference();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const aliveRef = useRef(false);
 
   const fire = useCallback(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!allowMotion) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -122,7 +124,7 @@ function useConfetti() {
       aliveRef.current = false;
       targetCanvas.style.display = "none";
     }, 5000);
-  }, []);
+  }, [allowMotion]);
 
   return { canvasRef, fire };
 }

@@ -89,7 +89,7 @@ function ShieldIllustration() {
       {/* Outer glow rings */}
       <div style={{ position: "relative", width: "72px", height: "72px" }}>
         {[1, 2].map((r) => (
-          <motion.div
+          <div
             key={r}
             style={{
               position: "absolute",
@@ -98,8 +98,6 @@ function ShieldIllustration() {
               border: "1px solid var(--border-accent)",
               opacity: 0.25 / r,
             }}
-            animate={{ scale: [1, 1.06, 1], opacity: [0.25 / r, 0.12 / r, 0.25 / r] }}
-            transition={{ duration: 3 + r, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
           />
         ))}
 

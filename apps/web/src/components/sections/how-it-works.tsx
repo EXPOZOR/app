@@ -1,7 +1,8 @@
 "use client";
 
-import { EASE_OUT } from "@/lib/motion";
-import { motion, useReducedMotion } from "framer-motion";
+import { EASE_OUT, MOTION_POLICY } from "@/lib/motion";
+import { useMotionPreference } from "@/lib/use-motion-preference";
+import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 /* ──────────────────────────────────────────────────────────────
@@ -47,7 +48,7 @@ const STEPS: Step[] = [
 
 /** Step 1 — bank icons linked to EXPOZOR "E" mark */
 function VisualConnect() {
-  const shouldReduce = useReducedMotion();
+  const { reduceMotion: shouldReduce } = useMotionPreference();
   const sources = [
     { label: "Receipt", initial: "RX", color: "var(--decorative)" },
     { label: "CSV File", initial: "CSV", color: "#60A5FA" },
@@ -139,8 +140,7 @@ function VisualConnect() {
               transition={{
                 delay: 0.8 + i * 0.22,
                 duration: 1.8,
-                repeat: Number.POSITIVE_INFINITY,
-                repeatDelay: 1.2,
+                repeat: MOTION_POLICY.decorativeRepeat,
                 ease: "easeIn",
               }}
             />
@@ -188,7 +188,6 @@ function VisualConnect() {
             height: "6px",
             borderRadius: "50%",
             background: "var(--accent)",
-            animation: "pulse-dot 2s ease-in-out infinite",
           }}
         />
         <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--accent)" }}>
@@ -209,7 +208,7 @@ function VisualAIReads() {
         animate={{ opacity: [0.5, 0.5, 0] }}
         transition={{
           duration: 2.4,
-          repeat: Number.POSITIVE_INFINITY,
+          repeat: MOTION_POLICY.decorativeRepeat,
           times: [0, 0.6, 1],
           ease: "easeInOut",
         }}
@@ -277,7 +276,7 @@ function VisualAIReads() {
         <motion.div
           style={{ display: "flex", gap: "3px" }}
           animate={{ opacity: [1, 0.3, 1] }}
-          transition={{ duration: 1.2, repeat: Number.POSITIVE_INFINITY }}
+          transition={{ duration: 1.2, repeat: MOTION_POLICY.decorativeRepeat }}
         >
           {[0, 1, 2].map((i) => (
             <div
@@ -301,7 +300,7 @@ function VisualAIReads() {
         animate={{ opacity: [0, 0, 1], y: [6, 6, 0] }}
         transition={{
           duration: 2.4,
-          repeat: Number.POSITIVE_INFINITY,
+          repeat: MOTION_POLICY.decorativeRepeat,
           times: [0, 0.6, 1],
           ease: "easeInOut",
         }}
@@ -525,7 +524,7 @@ function VisualAsk() {
               transition={{
                 duration: 0.6,
                 delay: i * 0.15,
-                repeat: Number.POSITIVE_INFINITY,
+                repeat: MOTION_POLICY.decorativeRepeat,
                 ease: "easeInOut",
               }}
             />
@@ -944,13 +943,6 @@ export function HowItWorksSection() {
           .hiw-visual-col { display: block; }
         }
 
-        /* Suppress crossfade animation for reduced-motion users
-           (panel snaps to active state immediately) */
-        @media (prefers-reduced-motion: reduce) {
-          .hiw-visual-col [style*="transition"] {
-            transition: none !important;
-          }
-        }
       `}</style>
     </section>
   );

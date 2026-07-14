@@ -293,12 +293,8 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
             transparent 65%
           );
           background-size: 200% 100%;
-          animation: shimmer-sweep 4s ease-in-out 2s infinite;
+          animation: shimmer 1.2s ease-out 0.6s 1 both;
           pointer-events: none;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .waitlist-form-button::after { animation: none; }
         }
       `}</style>
     </>

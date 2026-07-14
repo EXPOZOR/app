@@ -23,17 +23,8 @@ export default function AboutPage() {
       <Header />
       <main id="main-content" className="pt-20">
         <div className="container-site measure-prose section-py">
-          <PageHero
-            eyebrow="About"
-            title="One person, one mission."
-            scale="editorial"
-            className="mb-6"
-          />
+          <PageHero eyebrow="Founder" title="MOHAMED KARRACH" scale="editorial" className="mb-6" />
           <div className="prose-custom space-y-6 text-text-secondary text-lg leading-relaxed">
-            <p>
-              Hi, I'm <strong className="text-text-primary">Mohamed Karrach</strong> — the founder
-              and sole developer behind EXPOZOR.
-            </p>
             <p>
               Managing personal finances shouldn't feel like filing taxes. Yet every app I tried was
               either too simple to be useful or so complex it became a second job. So I decided to
@@ -53,7 +44,7 @@ export default function AboutPage() {
               <blockquote className="text-text-primary text-xl font-medium italic pl-5 border-l-2 border-decorative">
                 "Calm, intelligent money. That's all I'm trying to make."
               </blockquote>
-              <p className="mt-3 text-sm text-text-muted">— Mohamed Karrach, Founder</p>
+              <p className="mt-3 text-sm text-text-muted">— MOHAMED KARRACH, Founder</p>
             </div>
           </div>
         </div>

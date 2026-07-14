@@ -1,7 +1,19 @@
 import { buttonClassName } from "@/components/ui/button";
 import { MotionDiv, MotionH2, MotionP } from "@/components/ui/motion-primitives";
 import { EASE_OUT } from "@/lib/motion";
-import { ArrowRight } from "lucide-react";
+import {
+  ArrowRight,
+  Camera,
+  ChartNoAxesCombined,
+  Clapperboard,
+  Clock3,
+  CreditCard,
+  type LucideIcon,
+  Settings,
+  ShoppingCart,
+  Smartphone,
+  Zap,
+} from "lucide-react";
 
 const motion = {
   div: MotionDiv,
@@ -9,125 +21,104 @@ const motion = {
   p: MotionP,
 };
 
-/* ──────────────────────────────────────────────────────────────
-   APP STORE / PLAY STORE INLINE SVG BADGES
-   Pure SVG — no external images, no <img> tags.
-────────────────────────────────────────────────────────────── */
-function AppleStoreBadge() {
+type ProductIconTone = "positive" | "accent" | "info" | "warn" | "neutral";
+type ProductIconSize = "xs" | "sm" | "md";
+
+const PRODUCT_ICON_TONES: Record<
+  ProductIconTone,
+  { foreground: string; surface: string; border: string }
+> = {
+  positive: {
+    foreground: "var(--positive)",
+    surface: "var(--positive-subtle)",
+    border: "var(--positive-border)",
+  },
+  accent: {
+    foreground: "var(--decorative)",
+    surface: "var(--decorative-subtle)",
+    border: "var(--border-accent)",
+  },
+  info: {
+    foreground: "var(--info)",
+    surface: "var(--info-subtle)",
+    border: "color-mix(in oklch, var(--info) 30%, transparent)",
+  },
+  warn: {
+    foreground: "var(--warn)",
+    surface: "var(--warn-subtle)",
+    border: "color-mix(in oklch, var(--warn) 30%, transparent)",
+  },
+  neutral: {
+    foreground: "var(--text-secondary)",
+    surface: "var(--bg-overlay)",
+    border: "var(--border)",
+  },
+};
+
+const PRODUCT_ICON_SIZES: Record<
+  ProductIconSize,
+  { container: number; icon: number; radius: number }
+> = {
+  xs: { container: 18, icon: 10, radius: 6 },
+  sm: { container: 28, icon: 14, radius: 8 },
+  md: { container: 36, icon: 18, radius: 10 },
+};
+
+function ProductIcon({
+  icon: Icon,
+  tone = "neutral",
+  size = "sm",
+}: {
+  icon: LucideIcon;
+  tone?: ProductIconTone;
+  size?: ProductIconSize;
+}) {
+  const colors = PRODUCT_ICON_TONES[tone];
+  const dimensions = PRODUCT_ICON_SIZES[size];
+
   return (
-    <svg
-      viewBox="0 0 135 40"
-      style={{ width: "135px", height: "40px" }}
-      aria-label="Download on the App Store"
-      role="img"
+    <span
+      aria-hidden="true"
+      style={{
+        width: `${dimensions.container}px`,
+        height: `${dimensions.container}px`,
+        borderRadius: `${dimensions.radius}px`,
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        color: colors.foreground,
+        background: colors.surface,
+        border: `1px solid ${colors.border}`,
+        flexShrink: 0,
+      }}
     >
-      <rect width="135" height="40" rx="8" fill="#000" />
-      <rect
-        width="134"
-        height="39"
-        x=".5"
-        y=".5"
-        rx="7.5"
-        fill="none"
-        stroke="rgba(255,255,255,0.25)"
-        strokeWidth="1"
-      />
-      {/* Apple logo */}
-      <path
-        d="M20.4 13.8c.8-1 1.4-2.4 1.2-3.8-1.2.1-2.6.8-3.4 1.8-.7.9-1.4 2.3-1.2 3.7 1.4.1 2.7-.7 3.4-1.7z"
-        fill="#fff"
-      />
-      <path
-        d="M21.6 15.7c-1.9-.1-3.5 1.1-4.4 1.1-.9 0-2.3-1-3.8-1-2 .1-3.8 1.1-4.8 2.9-2 3.5-.5 8.8 1.5 11.6.9 1.4 2.1 2.9 3.6 2.9 1.4 0 2-.9 3.7-.9 1.8 0 2.2.9 3.7.9 1.5 0 2.6-1.4 3.5-2.7.7-1 1-1.5 1.5-2.7-4-.1-4.6-5.8-.7-7.5-.9-1.5-2.3-2.6-3.8-2.6z"
-        fill="#fff"
-      />
-      {/* "Download on the" text */}
-      <text
-        x="35"
-        y="17"
-        fontFamily="system-ui, sans-serif"
-        fontSize="9"
-        fill="rgba(255,255,255,0.75)"
-        fontWeight="400"
-      >
-        Download on the
-      </text>
-      {/* "App Store" text */}
-      <text
-        x="35"
-        y="30"
-        fontFamily="system-ui, sans-serif"
-        fontSize="15"
-        fill="#fff"
-        fontWeight="700"
-      >
-        App Store
-      </text>
-    </svg>
+      <Icon size={dimensions.icon} strokeWidth={1.8} />
+    </span>
   );
 }
 
-function PlayStoreBadge() {
-  return (
-    <svg
-      viewBox="0 0 152 45"
-      style={{ width: "152px", height: "45px" }}
-      aria-label="Get it on Google Play"
-      role="img"
-    >
-      <rect width="152" height="45" rx="8" fill="#000" />
-      <rect
-        width="151"
-        height="44"
-        x=".5"
-        y=".5"
-        rx="7.5"
-        fill="none"
-        stroke="rgba(255,255,255,0.25)"
-        strokeWidth="1"
-      />
-      {/* Play triangle (simplified 4-colour) */}
-      <path d="M13 10l16 12.5L13 35z" fill="url(#pg-grad)" />
-      <defs>
-        <linearGradient
-          id="pg-grad"
-          x1="13"
-          y1="10"
-          x2="29"
-          y2="22.5"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop offset="0%" stopColor="#00C4FF" />
-          <stop offset="100%" stopColor="#00E676" />
-        </linearGradient>
-      </defs>
-      <path d="M13 10l9 6.5-9 6z" fill="#00C4FF" opacity=".8" />
-      <path d="M13 28.5l9-6 9 6z" fill="#FF3D00" opacity=".8" />
-      {/* "Get it on" text */}
-      <text
-        x="38"
-        y="20"
-        fontFamily="system-ui, sans-serif"
-        fontSize="10"
-        fill="rgba(255,255,255,0.75)"
-        fontWeight="400"
-      >
-        Get it on
-      </text>
-      {/* "Google Play" text */}
-      <text
-        x="38"
-        y="34"
-        fontFamily="system-ui, sans-serif"
-        fontSize="16"
-        fill="#fff"
-        fontWeight="700"
-      >
-        Google Play
-      </text>
-    </svg>
-  );
-}
+const MOBILE_TRANSACTIONS = [
+  {
+    icon: ShoppingCart,
+    label: "Grocery Store",
+    amount: "-$94",
+    tone: "positive",
+  },
+  { icon: Zap, label: "Electricity", amount: "-$62", tone: "warn" },
+  { icon: Clapperboard, label: "Streaming", amount: "-$18", tone: "accent" },
+] satisfies Array<{
+  icon: LucideIcon;
+  label: string;
+  amount: string;
+  tone: ProductIconTone;
+}>;
+
+const MOBILE_NAV_ITEMS = [
+  { icon: ChartNoAxesCombined, label: "Overview", active: true },
+  { icon: CreditCard, label: "Expenses", active: false },
+  { icon: Camera, label: "Capture", active: false },
+  { icon: Settings, label: "Settings", active: false },
+] satisfies Array<{ icon: LucideIcon; label: string; active: boolean }>;
 
 /* ──────────────────────────────────────────────────────────────
    PHONE MOCKUP — CSS-drawn device frame with mini app UI inside
@@ -143,10 +134,7 @@ function PhoneMockup() {
       aria-hidden="true"
       style={{ perspective: "800px" }}
     >
-      {/* ── Enhancement 12: continuous float loop ──
-          Inner wrapper owns the y-float so it composes cleanly
-          with the outer entry animation. Disabled for reduced-motion. */}
-      <motion.div style={{ animation: "float-y 3.5s ease-in-out infinite" }}>
+      <div>
         {/* Outer frame */}
         <div
           style={{
@@ -340,43 +328,38 @@ function PhoneMockup() {
               >
                 RECENT
               </p>
-              {[
-                {
-                  emoji: "🛒",
-                  label: "Grocery Store",
-                  amount: "-$94",
-                  color: "var(--positive)",
-                },
-                { emoji: "⚡", label: "Electricity", amount: "-$62", color: "#FB923C" },
-                { emoji: "🎬", label: "Streaming", amount: "-$18", color: "#A78BFA" },
-              ].map((tx) => (
-                <div
-                  key={tx.label}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "5px",
-                    padding: "4px 6px",
-                    borderRadius: "7px",
-                    background: "rgba(255,255,255,0.04)",
-                  }}
-                >
-                  <span style={{ fontSize: "9px" }}>{tx.emoji}</span>
-                  <span
+              {MOBILE_TRANSACTIONS.map((tx) => {
+                const colors = PRODUCT_ICON_TONES[tx.tone];
+
+                return (
+                  <div
+                    key={tx.label}
                     style={{
-                      flex: 1,
-                      fontSize: "7px",
-                      color: "rgba(255,255,255,0.7)",
-                      fontWeight: 500,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "5px",
+                      padding: "4px 6px",
+                      borderRadius: "7px",
+                      background: "rgba(255,255,255,0.04)",
                     }}
                   >
-                    {tx.label}
-                  </span>
-                  <span style={{ fontSize: "7px", fontWeight: 700, color: tx.color }}>
-                    {tx.amount}
-                  </span>
-                </div>
-              ))}
+                    <ProductIcon icon={tx.icon} tone={tx.tone} size="xs" />
+                    <span
+                      style={{
+                        flex: 1,
+                        fontSize: "7px",
+                        color: "rgba(255,255,255,0.7)",
+                        fontWeight: 500,
+                      }}
+                    >
+                      {tx.label}
+                    </span>
+                    <span style={{ fontSize: "7px", fontWeight: 700, color: colors.foreground }}>
+                      {tx.amount}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
 
             {/* Bottom nav bar */}
@@ -389,23 +372,28 @@ function PhoneMockup() {
                 borderTop: "1px solid rgba(255,255,255,0.06)",
               }}
             >
-              {["📊", "💳", "📷", "⚙️"].map((icon) => (
-                <div
-                  key={icon}
-                  style={{
-                    width: "28px",
-                    height: "28px",
-                    borderRadius: "8px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: icon === "\ud83d\udcca" ? "var(--positive-subtle)" : "transparent",
-                    fontSize: "11px",
-                  }}
-                >
-                  {icon}
-                </div>
-              ))}
+              {MOBILE_NAV_ITEMS.map((item) => {
+                const Icon = item.icon;
+
+                return (
+                  <div
+                    key={item.label}
+                    title={item.label}
+                    style={{
+                      width: "28px",
+                      height: "28px",
+                      borderRadius: "8px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      background: item.active ? "var(--positive-subtle)" : "transparent",
+                      color: item.active ? "var(--positive)" : "rgba(255,255,255,0.42)",
+                    }}
+                  >
+                    <Icon size={12} strokeWidth={1.8} />
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -422,8 +410,7 @@ function PhoneMockup() {
             }}
           />
         </div>
-      </motion.div>
-      {/* /float wrapper */}
+      </div>
     </motion.div>
   );
 }
@@ -484,16 +471,11 @@ export function MobileAppCtaSection() {
                 width: "fit-content",
               }}
             >
-              {/* Amber pulsing dot */}
-              <div
-                style={{
-                  width: "7px",
-                  height: "7px",
-                  borderRadius: "50%",
-                  background: "#FBBF24",
-                  animation: "pulse-dot 2s ease-in-out infinite",
-                  flexShrink: 0,
-                }}
+              <Clock3
+                size={13}
+                strokeWidth={1.8}
+                style={{ color: "var(--warn)" }}
+                aria-hidden="true"
               />
               <span
                 style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--text-secondary)" }}
@@ -574,57 +556,73 @@ export function MobileAppCtaSection() {
               ))}
             </motion.div>
 
-            {/* Store badges — greyed out (not yet live) */}
+            {/* Neutral roadmap treatment until official store listings are live. */}
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.28, duration: 0.45 }}
+              role="note"
+              aria-label="Mobile apps planned for iOS and Android"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "12px",
+                width: "fit-content",
+                maxWidth: "100%",
+                padding: "12px 14px",
+                borderRadius: "var(--radius-md)",
+                background: "var(--bg-elev-1)",
+                border: "1px solid var(--border)",
+              }}
             >
-              <p
+              <ProductIcon icon={Smartphone} tone="accent" size="md" />
+              <div
                 style={{
-                  fontSize: "0.75rem",
-                  color: "var(--text-muted)",
-                  margin: "0 0 0.625rem",
-                  fontWeight: 500,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "5px",
+                  minWidth: 0,
                 }}
               >
-                Available soon:
-              </p>
-              <div
-                style={{ display: "flex", gap: "10px", flexWrap: "wrap", opacity: 0.45 }}
-                aria-label="App store badges — not yet available"
-              >
-                <button
-                  type="button"
-                  aria-label="Download on the App Store — coming soon"
-                  aria-disabled="true"
-                  tabIndex={-1}
+                <div
+                  style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}
+                >
+                  <span
+                    style={{
+                      fontSize: "0.8125rem",
+                      fontWeight: 650,
+                      color: "var(--text-primary)",
+                    }}
+                  >
+                    iOS and Android planned
+                  </span>
+                  <span
+                    style={{
+                      padding: "2px 7px",
+                      borderRadius: "var(--radius-full)",
+                      fontSize: "0.625rem",
+                      fontWeight: 700,
+                      letterSpacing: "0.05em",
+                      textTransform: "uppercase",
+                      color: "var(--decorative)",
+                      background: "var(--decorative-subtle)",
+                      border: "1px solid var(--border-accent)",
+                    }}
+                  >
+                    Roadmap
+                  </span>
+                </div>
+                <p
                   style={{
-                    pointerEvents: "none",
-                    background: "none",
-                    border: "none",
-                    padding: 0,
-                    cursor: "default",
+                    margin: 0,
+                    fontSize: "0.75rem",
+                    lineHeight: 1.45,
+                    color: "var(--text-muted)",
                   }}
                 >
-                  <AppleStoreBadge />
-                </button>
-                <button
-                  type="button"
-                  aria-label="Get it on Google Play — coming soon"
-                  aria-disabled="true"
-                  tabIndex={-1}
-                  style={{
-                    pointerEvents: "none",
-                    background: "none",
-                    border: "none",
-                    padding: 0,
-                    cursor: "default",
-                  }}
-                >
-                  <PlayStoreBadge />
-                </button>
+                  Official store links will appear when the apps are ready.
+                </p>
               </div>
             </motion.div>
 

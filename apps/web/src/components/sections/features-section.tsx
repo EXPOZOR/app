@@ -394,7 +394,7 @@ function SnapDemo() {
           </span>
         </motion.div>
 
-        {/* Scan line — CSS animation */}
+        {/* Static scan marker: context without perpetual decorative movement. */}
         <motion.div
           style={{
             position: "absolute",
@@ -405,9 +405,8 @@ function SnapDemo() {
               "linear-gradient(90deg, transparent 0%, var(--decorative) 50%, transparent 100%)",
             opacity: 0.7,
             boxShadow: "0 0 8px var(--accent-glow)",
+            top: "55%",
           }}
-          animate={{ top: ["10%", "85%", "10%"] }}
-          transition={{ duration: 2.2, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
         />
       </div>
     </div>
@@ -804,16 +803,6 @@ export function FeaturesSection() {
           .bento-full { grid-column: 1 / 3; }
         }
 
-        /* Marquee scroll keyframe */
-        @keyframes marquee-scroll {
-          from { transform: translateX(0); }
-          to   { transform: translateX(-50%); }
-        }
-
-        /* Suppress marquee + hover lifts for prefers-reduced-motion */
-        @media (prefers-reduced-motion: reduce) {
-          [style*="marquee-scroll"] { animation: none !important; }
-        }
       `}</style>
     </section>
   );

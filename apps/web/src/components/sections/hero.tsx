@@ -2,15 +2,9 @@
 
 import { buttonClassName } from "@/components/ui/button";
 import { HERO } from "@/content/landing";
-import { DUR, EASE_OUT } from "@/lib/motion";
-import {
-  AnimatePresence,
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-  useTransform,
-} from "framer-motion";
+import { DUR, EASE_OUT, MOTION_POLICY } from "@/lib/motion";
+import { useMotionPreference } from "@/lib/use-motion-preference";
+import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
@@ -58,22 +52,21 @@ const TRANSACTIONS = [
 
 /* ──────────────────────────────────────────────────────────────
    FRAMER MOTION UI CYCLE
-   State 0 → raw list  |  State 1 → AI labels in  |  State 2 → split pill
-   Cycles every 5 s (skips animation when prefers-reduced-motion)
+   State 0 → raw list  |  State 1 → AI labels in
+   Plays once (and stays still when reduced motion is preferred)
 ────────────────────────────────────────────────────────────── */
 function UICycle() {
   // Two-phase cycle only: 0 = raw list, 1 = AI-categorized
   // Payment-style phase intentionally omitted.
   const [phase, setPhase] = useState<0 | 1>(0);
-  const shouldReduce = useReducedMotion();
+  const { allowMotion } = useMotionPreference();
 
   useEffect(() => {
-    if (shouldReduce) return; // stay on phase 0, no cycling
-    const id = setInterval(() => {
-      setPhase((p) => ((p + 1) % 2) as 0 | 1);
-    }, 5000);
-    return () => clearInterval(id);
-  }, [shouldReduce]);
+    if (!allowMotion) return;
+
+    const id = window.setTimeout(() => setPhase(1), MOTION_POLICY.demoCycleDelayMs);
+    return () => window.clearTimeout(id);
+  }, [allowMotion]);
 
   return (
     <div
@@ -292,7 +285,6 @@ function UICycle() {
                 height: "6px",
                 borderRadius: "50%",
                 background: "var(--positive)",
-                animation: "pulse-dot 1.6s ease-in-out infinite",
                 flexShrink: 0,
               }}
             />
@@ -324,8 +316,6 @@ type AnnotationCard = {
   bottom?: string;
   left?: string;
   right?: string;
-  floatKeyframe: string;
-  floatDelay: string;
 };
 
 const ANNOTATION_CARDS: AnnotationCard[] = [
@@ -335,8 +325,6 @@ const ANNOTATION_CARDS: AnnotationCard[] = [
     delay: 0.6,
     top: "-28px",
     left: "-24px",
-    floatKeyframe: "float-y",
-    floatDelay: "0s",
   },
   {
     id: "ann-ai",
@@ -344,8 +332,6 @@ const ANNOTATION_CARDS: AnnotationCard[] = [
     delay: 0.75,
     bottom: "40px",
     right: "-28px",
-    floatKeyframe: "float-y-slow",
-    floatDelay: "1.8s",
   },
   {
     id: "ann-savings",
@@ -353,8 +339,6 @@ const ANNOTATION_CARDS: AnnotationCard[] = [
     delay: 0.9,
     bottom: "-20px",
     left: "-20px",
-    floatKeyframe: "float-y",
-    floatDelay: "0.9s",
   },
 ];
 
@@ -375,8 +359,6 @@ function AnnotCard({ card }: { card: AnnotationCard }) {
         bottom: card.bottom,
         left: card.left,
         right: card.right,
-        animation: `${card.floatKeyframe} 6s ease-in-out infinite`,
-        animationDelay: card.floatDelay,
       }}
     >
       <div
@@ -436,8 +418,7 @@ function HeroBadge() {
             )
           `,
           backgroundSize: "200% auto",
-          /* shimmer: animate background-position. Disabled by globals prefers-reduced-motion */
-          animation: "shimmer 4s linear infinite",
+          animation: "shimmer 1.2s ease-out 0.6s 1 both",
           position: "relative",
           cursor: "default",
         }}
@@ -450,11 +431,11 @@ function HeroBadge() {
 
 /* ──────────────────────────────────────────────────────────────
    ENHANCEMENT 3 — RIGHT COLUMN PARALLAX TILT
-   Extracted so it can own its own useReducedMotion + motion values
+   Extracted so it can own its own motion preference + motion values
    without re-rendering the parent HeroSection on every mousemove.
 ────────────────────────────────────────────────────────────── */
 export function HeroVisual() {
-  const shouldReduce = useReducedMotion();
+  const { reduceMotion: shouldReduce } = useMotionPreference();
   const colRef = useRef<HTMLDivElement>(null);
 
   const rawX = useMotionValue(0);
@@ -546,7 +527,6 @@ export function HeroSection() {
               "radial-gradient(ellipse at center, rgba(167,139,250,0.09) 0%, rgba(167,139,250,0.03) 45%, transparent 70%)",
             pointerEvents: "none",
             zIndex: 0,
-            animation: "mesh-pulse-2 20s ease-in-out infinite",
           }}
         />
 

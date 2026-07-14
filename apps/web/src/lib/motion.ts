@@ -40,6 +40,26 @@ export const DUR = {
   reveal: 0.55, // standard whileInView reveal duration
 } as const;
 
+/**
+ * Product-wide motion policy. Ambient decoration never loops indefinitely;
+ * only short-lived state feedback (for example, an active loading spinner)
+ * may repeat until its state resolves.
+ */
+export const MOTION_POLICY = {
+  demoCycleDelayMs: 2400,
+  stateRepeat: Number.POSITIVE_INFINITY,
+  decorativeRepeat: 0,
+} as const;
+
+/** Shared transition presets for the most common interaction rhythms. */
+export const TRANSITION = {
+  instant: { duration: 0 } satisfies Transition,
+  fast: { duration: DUR.fast, ease: EASE_OUT } satisfies Transition,
+  base: { duration: DUR.base, ease: EASE_OUT } satisfies Transition,
+  slow: { duration: DUR.slow, ease: EASE_OUT } satisfies Transition,
+  reveal: { duration: DUR.reveal, ease: EASE_OUT } satisfies Transition,
+} as const;
+
 /* ── Viewport defaults ────────────────────────────────────────────────────── */
 
 /** Standard once-only viewport trigger with a slight negative margin so

@@ -59,19 +59,6 @@ export function FinalCtaSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.65, ease: EASE_OUT }}
-          animate={{
-            boxShadow: [
-              "0 0 0 1px color-mix(in oklch, var(--accent) 12%, transparent), 0 0 40px color-mix(in oklch, var(--accent) 6%, transparent)",
-              "0 0 0 1px rgba(167,139,250,0.18), 0 0 40px rgba(167,139,250,0.08)",
-              "0 0 0 1px color-mix(in oklch, var(--accent) 12%, transparent), 0 0 40px color-mix(in oklch, var(--accent) 6%, transparent)",
-            ],
-            transition: {
-              delay: 1,
-              duration: 5,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "easeInOut",
-            },
-          }}
           style={{
             maxWidth: "680px",
             margin: "0 auto",
@@ -82,6 +69,8 @@ export function FinalCtaSection() {
             padding: "clamp(2rem, 5vw, 3.5rem) clamp(1.5rem, 5vw, 3rem)",
             position: "relative",
             overflow: "hidden",
+            boxShadow:
+              "0 0 0 1px color-mix(in oklch, var(--accent) 12%, transparent), 0 0 40px color-mix(in oklch, var(--accent) 6%, transparent)",
           }}
         >
           <div

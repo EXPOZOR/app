@@ -239,7 +239,7 @@ body {
   min-height: 100dvh;
 }
 
-/* ── Hero ambient glow — CSS-only animated radial mesh ──────── */
+/* ── Hero ambient glow — static radial mesh ─────────────────── */
 /* Primary teal node */
 body::before {
   content: "";
@@ -257,7 +257,6 @@ body::before {
   );
   pointer-events: none;
   z-index: 0;
-  animation: mesh-pulse-1 20s ease-in-out infinite;
 }
 
 /* Secondary lilac node */
@@ -271,8 +270,6 @@ body::after {
   background: radial-gradient(ellipse at center, rgba(167, 139, 250, 0.025) 0%, transparent 65%);
   pointer-events: none;
   z-index: 0;
-  animation: mesh-pulse-2 20s ease-in-out infinite;
-  animation-delay: -7s;
 }
 
 /* ── Skip to content ────────────────────────────────────────── */
@@ -596,31 +593,6 @@ body::after {
    KEYFRAME ANIMATIONS
    ============================================================ */
 
-/* Background mesh pulse */
-@keyframes mesh-pulse-1 {
-  0%,
-  100% {
-    transform: translate(-50%, 0) scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: translate(-50%, 0) scale(1.08);
-    opacity: 0.7;
-  }
-}
-
-@keyframes mesh-pulse-2 {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.12);
-    opacity: 0.65;
-  }
-}
-
 /* Hero badge shimmer sweep */
 @keyframes shimmer {
   from {
@@ -628,40 +600,6 @@ body::after {
   }
   to {
     background-position: 200% center;
-  }
-}
-
-/* Pulsing dot (badge / live indicators) */
-@keyframes pulse-dot {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.45;
-    transform: scale(0.65);
-  }
-}
-
-/* Gentle vertical float (floating UI cards) */
-@keyframes float-y {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes float-y-slow {
-  0%,
-  100% {
-    transform: translateY(0px) rotate(var(--rotate, 0deg));
-  }
-  50% {
-    transform: translateY(-14px) rotate(var(--rotate, 0deg));
   }
 }
 

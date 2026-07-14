@@ -1,7 +1,9 @@
 "use client";
 
 import { NAVBAR } from "@/content/landing";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { TRANSITION } from "@/lib/motion";
+import { useMotionPreference } from "@/lib/use-motion-preference";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { type RefObject, useCallback, useEffect, useRef, useState } from "react";
@@ -21,16 +23,14 @@ const INITIAL_SCROLL_STATE = {
 
 /* ── Private Beta pill ──────────────────────────────────────── */
 function PrivateBetaPill() {
-  const shouldReduceMotion = useReducedMotion();
+  const { reduceMotion: shouldReduceMotion } = useMotionPreference();
 
   return (
     <motion.span
       initial={shouldReduceMotion ? false : { opacity: 0, x: -8, scale: 0.9 }}
       animate={{ opacity: 1, x: 0, scale: 1 }}
       exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -8, scale: 0.9 }}
-      transition={
-        shouldReduceMotion ? { duration: 0 } : { duration: 0.25, ease: [0.22, 1, 0.36, 1] }
-      }
+      transition={shouldReduceMotion ? TRANSITION.instant : TRANSITION.slow}
       aria-label="Status: Private Beta"
       style={{
         display: "inline-flex",
@@ -49,7 +49,7 @@ function PrivateBetaPill() {
         whiteSpace: "nowrap",
       }}
     >
-      {/* Pulsing dot */}
+      {/* Static status dot: the label already communicates the state. */}
       <span
         aria-hidden="true"
         style={{
@@ -58,7 +58,6 @@ function PrivateBetaPill() {
           borderRadius: "50%",
           background: "var(--accent)",
           flexShrink: 0,
-          animation: "pulse-dot 2.4s ease-in-out infinite",
         }}
       />
       Private Beta
@@ -449,7 +448,7 @@ function MobileSheet({
 
 /* ── Header ─────────────────────────────────────────────────── */
 export function Header() {
-  const shouldReduceMotion = useReducedMotion();
+  const { reduceMotion: shouldReduceMotion } = useMotionPreference();
   const [scrollState, setScrollState] = useState(INITIAL_SCROLL_STATE);
   const scrollStateRef = useRef(INITIAL_SCROLL_STATE);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -497,9 +496,7 @@ export function Header() {
       <motion.header
         initial={shouldReduceMotion ? false : { y: -12, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={
-          shouldReduceMotion ? { duration: 0 } : { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
-        }
+        transition={shouldReduceMotion ? TRANSITION.instant : TRANSITION.reveal}
         role="banner"
         aria-label="Site navigation"
         style={{

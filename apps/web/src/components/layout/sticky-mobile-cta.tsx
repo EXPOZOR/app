@@ -1,6 +1,8 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { TRANSITION } from "@/lib/motion";
+import { useMotionPreference } from "@/lib/use-motion-preference";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -19,7 +21,7 @@ const SHOW_AFTER_SCROLL = 300;
 const FINAL_WAITLIST_ID = "waitlist";
 
 export function StickyMobileCtaBar() {
-  const reduceMotion = useReducedMotion();
+  const { reduceMotion } = useMotionPreference();
   const [pastScrollThreshold, setPastScrollThreshold] = useState(false);
   const [finalContentReached, setFinalContentReached] = useState(false);
   const [dismissed, setDismissed] = useState(false);
@@ -105,9 +107,7 @@ export function StickyMobileCtaBar() {
             initial={reduceMotion ? false : { y: "100%", opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={reduceMotion ? { opacity: 0 } : { y: "100%", opacity: 0 }}
-            transition={
-              reduceMotion ? { duration: 0 } : { duration: 0.35, ease: [0.22, 1, 0.36, 1] }
-            }
+            transition={reduceMotion ? TRANSITION.instant : TRANSITION.slow}
             role="complementary"
             aria-label="Waitlist sign-up prompt"
             className="mobile-cta-bar"

@@ -38,7 +38,6 @@ export function HeroSection() {
               "radial-gradient(ellipse at center, rgba(167,139,250,0.09) 0%, rgba(167,139,250,0.03) 45%, transparent 70%)",
             pointerEvents: "none",
             zIndex: 0,
-            animation: "mesh-pulse-2 20s ease-in-out infinite",
           }}
         />
 
@@ -81,7 +80,7 @@ export function HeroSection() {
                     background:
                       "linear-gradient(110deg, var(--decorative-subtle) 0%, color-mix(in oklch, var(--decorative) 30%, transparent) 45%, var(--decorative-subtle) 60%)",
                     backgroundSize: "200% auto",
-                    animation: "shimmer 4s linear infinite",
+                    animation: "shimmer 1.2s ease-out 0.6s 1 both",
                     position: "relative",
                     cursor: "default",
                   }}

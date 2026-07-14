@@ -22,6 +22,7 @@ export const NAVBAR = {
   links: [
     { label: "Features", href: "/#features" },
     { label: "How it works", href: "/#how-it-works" },
+    { label: "Demo", href: "/demo" },
     { label: "Pricing", href: "/#pricing" },
     { label: "Security", href: "/security" },
     { label: "Changelog", href: "/changelog" },
@@ -317,6 +318,7 @@ export const FOOTER = {
       heading: "Product",
       links: [
         { label: "Features", href: "/features" },
+        { label: "Demo", href: "/demo" },
         { label: "Pricing", href: "/pricing" },
         { label: "Security", href: "/security" },
         { label: "Changelog", href: "/changelog" },
