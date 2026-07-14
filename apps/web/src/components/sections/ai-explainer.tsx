@@ -305,6 +305,7 @@ export function AiExplainerSection() {
                     : undefined
                 }
                 aria-current={isActive ? "step" : undefined}
+                aria-label={s.label}
               >
                 <Icon size={16} aria-hidden="true" />
                 <span className="hidden sm:inline">{s.label}</span>

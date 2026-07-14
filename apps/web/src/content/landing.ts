@@ -10,9 +10,9 @@ export const HERO = {
   subhead:
     "Track expenses, spot hidden fees, and understand your spending - no bank connection required.",
   cta: "Join early access",
-  ctaAriaLabel: "Join EXPOZOR early access",
+  ctaAriaLabel: "Join early access with EXPOZOR",
   secondaryCta: "See how it works",
-  secondaryCtaAriaLabel: "See how EXPOZOR works",
+  secondaryCtaAriaLabel: "See how it works in the EXPOZOR demo",
   microcopy: "No bank login required. No credit card needed to get started.",
   inputPlaceholder: "you@example.com",
 } as const;
@@ -302,7 +302,7 @@ export const FINAL_CTA = {
   headline: "Stop guessing where your money went.",
   subhead: "Join early access and follow EXPOZOR as it moves toward launch.",
   cta: "Join early access",
-  ctaAriaLabel: "Join EXPOZOR early access",
+  ctaAriaLabel: "Join early access with EXPOZOR",
   bullets: [
     "No bank connection required",
     "Receipt upload and CSV import planned",

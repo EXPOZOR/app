@@ -1,3 +1,4 @@
+import { getAllBlogPosts } from "@/lib/mdx";
 import type { MetadataRoute } from "next";
 
 const BASE_URL = "https://expozor.com";
@@ -25,10 +26,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "/legal/disclaimer", priority: 0.2, changeFrequency: "yearly" as const },
   ];
 
-  return staticPages.map((page) => ({
+  const pages: MetadataRoute.Sitemap = staticPages.map((page) => ({
     url: `${BASE_URL}${page.url}`,
     lastModified,
     changeFrequency: page.changeFrequency,
     priority: page.priority,
   }));
+
+  const blogPosts: MetadataRoute.Sitemap = getAllBlogPosts().map((post) => ({
+    url: `${BASE_URL}/blog/${post.slug}`,
+    lastModified: new Date(post.frontmatter.date).toISOString(),
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
+  return [...pages, ...blogPosts];
 }

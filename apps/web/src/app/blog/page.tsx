@@ -42,7 +42,7 @@ export default function BlogPage() {
               <a
                 href="/blog/rss.xml"
                 className="inline-flex items-center gap-2 text-sm text-text-secondary hover:text-accent transition-colors"
-                aria-label="Subscribe to RSS feed"
+                aria-label="RSS Feed — subscribe to the EXPOZOR blog"
               >
                 <Rss size={14} aria-hidden="true" />
                 RSS Feed

@@ -246,7 +246,6 @@ function MobileSheet({
                   letterSpacing: "-0.02em",
                   minHeight: "44px",
                 }}
-                aria-label="EXPOZOR home"
               >
                 <LogoMark />
                 {NAVBAR.logo}
@@ -546,7 +545,6 @@ export function Header() {
                 transition: "opacity var(--dur-base) var(--ease-out)",
                 minHeight: "44px",
               }}
-              aria-label="EXPOZOR home"
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLAnchorElement).style.opacity = "0.8";
               }}

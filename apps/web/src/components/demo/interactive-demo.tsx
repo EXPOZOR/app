@@ -458,7 +458,7 @@ export function InteractiveDemo() {
                     id="demo-category"
                     value={selectedCategory}
                     onChange={(event) => setSelectedCategory(event.target.value as CategoryId)}
-                    className="control-transition min-h-11 w-full rounded-sm border border-border bg-bg-elevated px-3 text-sm text-text-primary focus:border-border-accent focus:outline-none"
+                    className="control-transition min-h-11 w-full rounded-sm border border-border bg-bg-elevated px-3 text-sm text-text-primary focus:border-border-accent"
                   >
                     {CATEGORIES.map((category) => (
                       <option key={category.id} value={category.id}>

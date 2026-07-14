@@ -649,7 +649,7 @@ export function MobileAppCtaSection() {
               </p>
               <a
                 href="/#waitlist"
-                aria-label="Join EXPOZOR early access for mobile launch updates"
+                aria-label="Join early access for EXPOZOR mobile launch updates"
                 className={buttonClassName({ variant: "primary", size: "lg" })}
                 style={{ width: "fit-content" }}
               >

@@ -159,7 +159,7 @@ export function StickyMobileCtaBar() {
             <Link
               href="/#waitlist"
               onClick={dismiss}
-              aria-label="Join EXPOZOR early access"
+              aria-label="Join early access with EXPOZOR"
               style={{
                 display: "inline-flex",
                 alignItems: "center",

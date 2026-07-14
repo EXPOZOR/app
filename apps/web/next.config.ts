@@ -1,8 +1,13 @@
 import { execSync } from "node:child_process";
+import path from "node:path";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
+const scriptSourcePolicy =
+  process.env.NODE_ENV === "production"
+    ? "script-src 'self' 'unsafe-inline'"
+    : "script-src 'self' 'unsafe-eval' 'unsafe-inline'";
 
 function getCommitSha(): string {
   try {
@@ -13,6 +18,7 @@ function getCommitSha(): string {
 }
 
 const nextConfig: NextConfig = {
+  outputFileTracingRoot: path.join(__dirname, "../.."),
   env: {
     NEXT_PUBLIC_COMMIT_SHA: getCommitSha(),
     NEXT_PUBLIC_BUILD_DATE: new Date().toISOString(),
@@ -46,7 +52,7 @@ const nextConfig: NextConfig = {
           key: "Content-Security-Policy",
           value: [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
+            scriptSourcePolicy,
             "style-src 'self' 'unsafe-inline'",
             "img-src 'self' blob: data:",
             "font-src 'self'",

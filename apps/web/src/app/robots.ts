@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/_next/", "/sign-up", "/app/", "/demo"],
+        disallow: ["/api/", "/sign-up", "/app/"],
       },
     ],
     sitemap: "https://expozor.com/sitemap.xml",

@@ -304,7 +304,7 @@ export function SecuritySection() {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.55, duration: 0.4 }}
-                aria-label="Read EXPOZOR's full security documentation (opens security page)"
+                aria-label="See our security page (opens the EXPOZOR security page)"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",

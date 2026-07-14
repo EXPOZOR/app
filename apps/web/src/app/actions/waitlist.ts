@@ -3,6 +3,7 @@
 import { db } from "@/db/client";
 import { waitlist } from "@/db/schema";
 import { BRAND_COLORS, BRAND_EFFECTS } from "@/lib/brand-colors";
+import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { z } from "zod";
 
@@ -60,7 +61,7 @@ export async function joinWaitlist(formData: FormData): Promise<WaitlistResult> 
     };
   }
 
-  const { email, source, locale, website } = parsed.data;
+  const { email, source, locale, productUpdatesConsent, website } = parsed.data;
 
   if (website) {
     return {
@@ -84,19 +85,37 @@ export async function joinWaitlist(formData: FormData): Promise<WaitlistResult> 
       };
     }
 
+    const hasProductUpdatesConsent = Boolean(productUpdatesConsent);
+    const consentedAt = hasProductUpdatesConsent ? new Date() : null;
+
     const inserted = await db
       .insert(waitlist)
-      .values({ email, source, referrer, locale })
+      .values({
+        email,
+        source,
+        referrer,
+        locale,
+        product_updates_consent: hasProductUpdatesConsent,
+        product_updates_consent_at: consentedAt,
+      })
       .onConflictDoNothing({ target: waitlist.email })
       .returning({ id: waitlist.id });
 
     if (inserted.length > 0) {
       void sendConfirmation(email).catch((err) => console.error("[waitlist] email error:", err));
+    } else if (hasProductUpdatesConsent) {
+      await db
+        .update(waitlist)
+        .set({
+          product_updates_consent: true,
+          product_updates_consent_at: consentedAt,
+        })
+        .where(eq(waitlist.email, email));
     }
 
     return {
       success: true,
-      message: "You're on the list! Check your inbox for a confirmation.",
+      message: "You're on the list!",
     };
   } catch (err) {
     console.error("[waitlist] db error:", err instanceof Error ? err.message : String(err));
@@ -123,7 +142,7 @@ async function sendConfirmation(email: string): Promise<void> {
         <div style="width:48px;height:48px;border-radius:12px;background:${BRAND_EFFECTS.gradient};display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:${BRAND_COLORS.background};margin-bottom:24px;">E</div>
         <h1 style="font-size:22px;font-weight:700;margin:0 0 12px;color:#F4F4F5;letter-spacing:-0.02em;">You're on the list.</h1>
         <p style="color:#A1A1AA;line-height:1.7;margin:0 0 20px;font-size:15px;">
-          Thanks for joining the EXPOZOR waitlist. We're building calm, intelligent money management that respects your time and privacy.
+          Thanks for joining the EXPOZOR waitlist. We're building calm, intelligent expense tracking that respects your time and privacy.
         </p>
         <p style="color:#A1A1AA;line-height:1.7;margin:0 0 32px;font-size:15px;">
           We'll send your early access link as soon as your spot is ready.

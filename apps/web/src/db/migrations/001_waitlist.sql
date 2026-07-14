@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS waitlist (
   source     TEXT        NOT NULL DEFAULT 'landing',
   referrer   TEXT,
   locale     TEXT        NOT NULL DEFAULT 'en',
+  product_updates_consent    BOOLEAN     NOT NULL DEFAULT FALSE,
+  product_updates_consent_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 

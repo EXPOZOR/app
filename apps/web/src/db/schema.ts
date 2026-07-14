@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { boolean, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
 export const waitlist = pgTable("waitlist", {
   id: uuid("id").defaultRandom().primaryKey(),
@@ -6,6 +6,8 @@ export const waitlist = pgTable("waitlist", {
   source: text("source").default("landing").notNull(),
   referrer: text("referrer"),
   locale: text("locale").default("en").notNull(),
+  product_updates_consent: boolean("product_updates_consent").default(false).notNull(),
+  product_updates_consent_at: timestamp("product_updates_consent_at", { withTimezone: true }),
   created_at: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
 

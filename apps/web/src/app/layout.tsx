@@ -86,10 +86,8 @@ export const metadata: Metadata = {
   manifest: "/manifest.webmanifest",
 
   icons: {
-    icon: [
-      { url: "/icon", type: "image/png", sizes: "32x32" },
-      { url: "/icon?size=192", type: "image/png", sizes: "192x192" },
-    ],
+    icon: [{ url: "/icon", type: "image/png", sizes: "32x32" }],
+    shortcut: [{ url: "/icon", type: "image/png", sizes: "32x32" }],
     apple: [{ url: "/apple-icon", type: "image/png", sizes: "180x180" }],
   },
 };
@@ -114,9 +112,9 @@ function buildJsonLd() {
     url: BASE_URL,
     logo: {
       "@type": "ImageObject",
-      url: `${BASE_URL}/logo.svg`,
-      width: 120,
-      height: 32,
+      url: `${BASE_URL}/apple-icon`,
+      width: 180,
+      height: 180,
     },
     sameAs: ["https://twitter.com/expozor", "https://github.com/expozor"],
     contactPoint: {
