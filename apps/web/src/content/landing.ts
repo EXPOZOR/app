@@ -30,11 +30,12 @@ export const NAVBAR = {
 } as const;
 
 export const DEMO = {
-  badge: "Interactive demo",
+  badge: "Interactive product preview",
   title: "See it in action",
   description:
-    "Add a sample expense, watch EXPOZOR organize it, and see a spending summary update. No account needed.",
-  disclaimer: "Sample data only. Do not enter real financial information in the demo.",
+    "Try manual entry with sample data. Upload, CSV import, and AI-assisted workflows shown in the preview are planned.",
+  disclaimer:
+    "Product preview with sample data only. Planned workflows may change before launch. Do not enter real financial information.",
 } as const;
 
 export const FEATURES = {
@@ -88,14 +89,14 @@ export const FEATURES = {
     },
     {
       id: "recurring",
-      title: "Recurring expense detection",
+      title: "Recurring expense detection planned",
       subtitle: "Spot what repeats",
       description:
-        "EXPOZOR will help highlight charges that appear monthly, including subscriptions, memberships, and services you may have forgotten.",
+        "Recurring detection is planned to highlight charges that appear monthly, including subscriptions, memberships, and services you may have forgotten.",
       accent: "#FB923C",
       size: "small" as const,
       icon: "RefreshCw",
-      stat: "Subscription awareness",
+      stat: "Detection planned",
     },
     {
       id: "reports",

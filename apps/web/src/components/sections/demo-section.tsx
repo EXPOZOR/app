@@ -263,7 +263,7 @@ function CategorizePanel() {
             border: "1px solid var(--border-accent)",
           }}
         >
-          <Sparkles size={8} aria-hidden="true" /> AI-assisted categorization
+          <Sparkles size={8} aria-hidden="true" /> AI suggestions planned
         </span>
       </div>
 
@@ -780,8 +780,8 @@ type Hotspot = {
 const HOTSPOTS: Hotspot[] = [
   {
     n: 1,
-    label: "AI categorization",
-    tip: "Rules run first. AI only steps in for unknowns — always with a confidence score.",
+    label: "AI categorization planned",
+    tip: "The planned workflow runs your rules first, then offers reviewable AI suggestions for unknowns.",
     top: "12px",
     right: "12px",
     tabId: "categorize",
@@ -1008,7 +1008,7 @@ export function DemoSection() {
             transition={{ duration: 0.45 }}
             style={{ marginBottom: "0.875rem" }}
           >
-            LIVE DEMO
+            {DEMO.badge.toUpperCase()}
           </motion.p>
 
           <motion.h2
@@ -1031,7 +1031,7 @@ export function DemoSection() {
             transition={{ delay: 0.14, duration: 0.5 }}
             style={{ margin: "0 auto" }}
           >
-            Manual entries, planned uploads, and CSV imports in one spending view.
+            {DEMO.description}
           </motion.p>
         </div>
 

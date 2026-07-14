@@ -785,7 +785,7 @@ export function FeaturesSection() {
             transition={{ delay: 0.14, duration: 0.5 }}
             style={{ margin: "0 auto" }}
           >
-            Six tools. One product. Zero spreadsheets.
+            Five key workflows, with planned features clearly marked.
           </motion.p>
         </div>
 
@@ -795,8 +795,8 @@ export function FeaturesSection() {
           <BentoCard delay={0} className="bento-hero" style={{ minHeight: "320px" }}>
             <TileHeader
               Icon={Brain}
-              title="AI-assisted categorization"
-              description="Add an expense and EXPOZOR suggests a category based on the merchant name and amount. You review and confirm before anything is saved."
+              title="AI-assisted categorization planned"
+              description="Planned suggestions will use merchant and amount details. You will review and confirm every suggestion before relying on it."
             />
             <AICatDemo />
           </BentoCard>
@@ -805,7 +805,7 @@ export function FeaturesSection() {
           <BentoCard delay={0.06} className="bento-medium-right" style={{ minHeight: "320px" }}>
             <TileHeader
               Icon={Camera}
-              title="Upload receipts & screenshots"
+              title="Receipt and screenshot upload planned"
               description="Receipt upload is planned. When it launches, you will review extracted details before saving."
             />
             <SnapDemo />
@@ -816,8 +816,8 @@ export function FeaturesSection() {
           <BentoCard delay={0.1} className="bento-small">
             <TileHeader
               Icon={Building2}
-              title="CSV import"
-              description="Import from a CSV file you choose to provide. Map columns, preview rows, confirm."
+              title="CSV import planned"
+              description="Planned for early access: choose a CSV file, map its columns, preview the rows, and confirm the import."
             />
             <CsvImportDemo />
           </BentoCard>
@@ -836,8 +836,8 @@ export function FeaturesSection() {
           <BentoCard delay={0.18} className="bento-medium-right">
             <TileHeader
               Icon={Radio}
-              title="Recurring expense detection"
-              description="EXPOZOR highlights charges that appear monthly — subscriptions, memberships, and services you may have forgotten."
+              title="Recurring expense detection planned"
+              description="Planned detection will highlight monthly charges such as subscriptions, memberships, and services you may have forgotten."
             />
             <SubRadarDemo />
           </BentoCard>
