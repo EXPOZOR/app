@@ -3,6 +3,7 @@
 import { EASE_OUT, MOTION_POLICY } from "@/lib/motion";
 import { useMotionPreference } from "@/lib/use-motion-preference";
 import { motion } from "framer-motion";
+import { ShoppingCart } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 /* ──────────────────────────────────────────────────────────────
@@ -13,8 +14,10 @@ import { useEffect, useRef, useState } from "react";
      3. Budget   → envelope bar filling
      4. Ask      → chat bubble Q&A
 ────────────────────────────────────────────────────────────── */
+type StepId = "add" | "ai-reads" | "understand";
+
 type Step = {
-  id: string;
+  id: StepId;
   number: string;
   title: string;
   body: string;
@@ -324,11 +327,11 @@ function VisualAIReads() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: "1rem",
+            color: "var(--positive)",
             flexShrink: 0,
           }}
         >
-          🛒
+          <ShoppingCart size={17} strokeWidth={1.8} />
         </div>
         <div style={{ flex: 1 }}>
           <p
@@ -466,149 +469,10 @@ function VisualBudget() {
   );
 }
 
-/** Step 4 — AI chat Q&A bubble */
-function VisualAsk() {
-  return (
-    <div aria-hidden="true" style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-      {/* User question */}
-      <motion.div
-        initial={{ opacity: 0, x: 16 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        style={{ display: "flex", justifyContent: "flex-end" }}
-      >
-        <div
-          style={{
-            maxWidth: "75%",
-            padding: "10px 14px",
-            borderRadius: "var(--radius-md)",
-            background: "var(--bg-elev-2)",
-            border: "1px solid var(--border)",
-            fontSize: "0.8125rem",
-            color: "var(--text-primary)",
-            lineHeight: 1.5,
-          }}
-        >
-          What did I spend on travel in April?
-        </div>
-      </motion.div>
-
-      {/* Typing indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: [0, 1, 1, 0] }}
-        transition={{ delay: 0.5, duration: 1.4, times: [0, 0.2, 0.8, 1] }}
-        style={{ display: "flex", justifyContent: "flex-start" }}
-      >
-        <div
-          style={{
-            padding: "10px 14px",
-            borderRadius: "var(--radius-md)",
-            background: "var(--accent-subtle)",
-            border: "1px solid var(--border-accent)",
-            display: "flex",
-            gap: "4px",
-            alignItems: "center",
-          }}
-        >
-          {[0, 1, 2].map((i) => (
-            <motion.div
-              key={i}
-              style={{
-                width: "5px",
-                height: "5px",
-                borderRadius: "50%",
-                background: "var(--accent)",
-              }}
-              animate={{ y: [0, -4, 0] }}
-              transition={{
-                duration: 0.6,
-                delay: i * 0.15,
-                repeat: MOTION_POLICY.decorativeRepeat,
-                ease: "easeInOut",
-              }}
-            />
-          ))}
-        </div>
-      </motion.div>
-
-      {/* AI answer */}
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.4, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        style={{ display: "flex", justifyContent: "flex-start" }}
-      >
-        <div
-          style={{
-            maxWidth: "85%",
-            padding: "12px 14px",
-            borderRadius: "var(--radius-md)",
-            background: "var(--accent-subtle)",
-            border: "1px solid var(--border-accent)",
-            lineHeight: 1.6,
-          }}
-        >
-          <p
-            style={{
-              fontSize: "0.8125rem",
-              color: "var(--text-primary)",
-              margin: "0 0 8px",
-              fontWeight: 600,
-            }}
-          >
-            ✈️ $340 on travel in April
-          </p>
-          {/* Mini breakdown */}
-          {[
-            { label: "Flights", amount: "$220" },
-            { label: "Hotels", amount: "$85" },
-            { label: "Transfers", amount: "$35" },
-          ].map((item) => (
-            <div
-              key={item.label}
-              style={{ display: "flex", justifyContent: "space-between", marginBottom: "3px" }}
-            >
-              <span style={{ fontSize: "0.6875rem", color: "var(--text-muted)" }}>
-                {item.label}
-              </span>
-              <span
-                style={{
-                  fontSize: "0.6875rem",
-                  fontWeight: 600,
-                  color: "var(--text-secondary)",
-                  fontVariantNumeric: "tabular-nums",
-                }}
-              >
-                {item.amount}
-              </span>
-            </div>
-          ))}
-          <div
-            style={{
-              marginTop: "8px",
-              paddingTop: "8px",
-              borderTop: "1px solid var(--border)",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <span style={{ fontSize: "0.6875rem", color: "var(--text-muted)" }}>vs March</span>
-            <span style={{ fontSize: "0.6875rem", fontWeight: 700, color: "var(--positive)" }}>
-              ↓ $60 less
-            </span>
-          </div>
-        </div>
-      </motion.div>
-    </div>
-  );
-}
-
-const VISUALS: Record<string, React.ReactNode> = {
-  connect: <VisualConnect />,
+const VISUALS: Record<StepId, React.ReactNode> = {
+  add: <VisualConnect />,
   "ai-reads": <VisualAIReads />,
-  budget: <VisualBudget />,
-  ask: <VisualAsk />,
+  understand: <VisualBudget />,
 };
 
 /* ──────────────────────────────────────────────────────────────

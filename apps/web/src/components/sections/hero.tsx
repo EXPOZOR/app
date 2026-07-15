@@ -5,8 +5,19 @@ import { HERO } from "@/content/landing";
 import { DUR, EASE_OUT, MOTION_POLICY } from "@/lib/motion";
 import { useMotionPreference } from "@/lib/use-motion-preference";
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { ArrowRight, Play } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import {
+  ArrowRight,
+  BarChart3,
+  Car,
+  Coffee,
+  Film,
+  type LucideIcon,
+  Play,
+  ShoppingCart,
+  Sparkles,
+  TrendingUp,
+} from "lucide-react";
+import { createElement, useEffect, useRef, useState } from "react";
 
 /* ──────────────────────────────────────────────────────────────
    TRANSACTION DATA — used in the UI cycle mockup
@@ -18,7 +29,8 @@ const TRANSACTIONS = [
     amount: "-$6.50",
     date: "Today, 9:12 AM",
     raw: "Coffee purchase",
-    category: "☕ Coffee",
+    category: "Coffee",
+    Icon: Coffee,
     color: "var(--positive)",
   },
   {
@@ -27,7 +39,8 @@ const TRANSACTIONS = [
     amount: "-$18.40",
     date: "Today, 8:45 AM",
     raw: "Transport expense",
-    category: "🚗 Transport",
+    category: "Transport",
+    Icon: Car,
     color: "#A78BFA",
   },
   {
@@ -36,7 +49,8 @@ const TRANSACTIONS = [
     amount: "-$94.20",
     date: "Yesterday",
     raw: "Grocery purchase",
-    category: "🛒 Groceries",
+    category: "Groceries",
+    Icon: ShoppingCart,
     color: "#34D399",
   },
   {
@@ -45,7 +59,8 @@ const TRANSACTIONS = [
     amount: "-$15.99",
     date: "May 27",
     raw: "Monthly subscription",
-    category: "🎬 Entertainment",
+    category: "Entertainment",
+    Icon: Film,
     color: "#60A5FA",
   },
 ] as const;
@@ -101,7 +116,7 @@ function UICycle() {
           }}
         >
           {phase === 0 && "Recent transactions"}
-          {phase === 1 && "AI categorizing…"}
+          {phase === 1 && "Planned category suggestions"}
         </span>
         {/* Phase indicator pills */}
         <div style={{ display: "flex", gap: "4px" }}>
@@ -149,10 +164,12 @@ function UICycle() {
                 border: `1px solid ${tx.color}30`,
               }}
             >
-              {/* Phase 0: neutral icon; Phase 1+: emoji from category */}
-              <span style={{ fontSize: "0.875em" }}>
-                {phase === 0 ? ["☁", "○", "▸", "◆"][i] : tx.category.split(" ")[0]}
-              </span>
+              {createElement(tx.Icon, {
+                size: 14,
+                strokeWidth: 1.7,
+                "aria-hidden": true,
+                style: { color: phase === 0 ? "var(--text-muted)" : tx.color },
+              })}
             </div>
 
             {/* Merchant + description */}
@@ -227,7 +244,7 @@ function UICycle() {
                       whiteSpace: "nowrap",
                     }}
                   >
-                    {tx.category.split(" ").slice(1).join(" ")}
+                    {tx.category}
                   </motion.span>
                 )}
                 {/* First row gets special treatment on phase 1 (mint glow) */}
@@ -295,7 +312,7 @@ function UICycle() {
                 fontWeight: 500,
               }}
             >
-              AI reviewed 4 transactions
+              Review required before applying suggestions
             </span>
           </motion.div>
         )}
@@ -310,6 +327,7 @@ function UICycle() {
 ────────────────────────────────────────────────────────────── */
 type AnnotationCard = {
   id: string;
+  Icon: LucideIcon;
   content: string;
   delay: number;
   top?: string;
@@ -321,21 +339,24 @@ type AnnotationCard = {
 const ANNOTATION_CARDS: AnnotationCard[] = [
   {
     id: "ann-spending",
-    content: "📊 Monthly spending: $624.40",
+    Icon: BarChart3,
+    content: "Monthly summary preview: $624.40",
     delay: 0.6,
     top: "-28px",
     left: "-24px",
   },
   {
     id: "ann-ai",
-    content: "🤖 AI categorized 134 transactions",
+    Icon: Sparkles,
+    content: "Suggestions stay reviewable",
     delay: 0.75,
     bottom: "40px",
     right: "-28px",
   },
   {
     id: "ann-savings",
-    content: "📊 Savings rate: 24%",
+    Icon: TrendingUp,
+    content: "Sample savings rate: 24%",
     delay: 0.9,
     bottom: "-20px",
     left: "-20px",
@@ -380,7 +401,13 @@ function AnnotCard({ card }: { card: AnnotationCard }) {
           whiteSpace: "nowrap",
         }}
       >
-        {card.content}
+        {createElement(card.Icon, {
+          size: 14,
+          strokeWidth: 1.7,
+          "aria-hidden": true,
+          style: { color: "var(--decorative)", flexShrink: 0 },
+        })}
+        <span>{card.content}</span>
       </div>
     </motion.div>
   );

@@ -1,6 +1,18 @@
 import { FeaturesBentoCard } from "@/components/sections/features-bento-card";
 import { MotionDiv, MotionH2, MotionP, MotionSpan } from "@/components/ui/motion-primitives";
-import { Brain, Building2, Camera, PieChart, Radio } from "lucide-react";
+import {
+  Brain,
+  Briefcase,
+  Building2,
+  Camera,
+  Car,
+  Coffee,
+  Film,
+  PieChart,
+  Radio,
+  ShoppingCart,
+} from "lucide-react";
+import { createElement } from "react";
 
 const motion = {
   div: MotionDiv,
@@ -73,10 +85,12 @@ function TileHeader({
   Icon,
   title,
   description,
+  status,
 }: {
   Icon: React.ComponentType<{ size?: number; "aria-hidden"?: "true" }>;
   title: string;
   description: string;
+  status: "First release" | "Roadmap";
 }) {
   return (
     <div style={{ marginBottom: "1.25rem" }}>
@@ -99,6 +113,19 @@ function TileHeader({
       >
         <Icon size={18} aria-hidden="true" />
       </div>
+      <p
+        style={{
+          margin: "0 0 0.5rem",
+          color: status === "First release" ? "var(--positive)" : "var(--decorative)",
+          fontSize: "0.6875rem",
+          fontWeight: 600,
+          letterSpacing: "0.07em",
+          lineHeight: 1,
+          textTransform: "uppercase",
+        }}
+      >
+        {status}
+      </p>
       <h3
         style={{
           fontSize: "clamp(1.0625rem, 2vw, 1.1875rem)",
@@ -132,7 +159,7 @@ function TileHeader({
 ────────────────────────────────────────────────────────────── */
 const AI_ROWS = [
   {
-    icon: "💼",
+    Icon: Briefcase,
     merchant: "Freelance Payment",
     amount: "+$4,200.00",
     cat: "Income",
@@ -140,7 +167,7 @@ const AI_ROWS = [
     pos: true,
   },
   {
-    icon: "🛒",
+    Icon: ShoppingCart,
     merchant: "Grocery Store",
     amount: "-$94.20",
     cat: "Groceries",
@@ -148,7 +175,7 @@ const AI_ROWS = [
     pos: false,
   },
   {
-    icon: "☕",
+    Icon: Coffee,
     merchant: "Coffee Shop",
     amount: "-$6.50",
     cat: "Coffee",
@@ -156,7 +183,7 @@ const AI_ROWS = [
     pos: false,
   },
   {
-    icon: "🚗",
+    Icon: Car,
     merchant: "Taxi Ride",
     amount: "-$18.40",
     cat: "Transport",
@@ -164,7 +191,7 @@ const AI_ROWS = [
     pos: false,
   },
   {
-    icon: "🎬",
+    Icon: Film,
     merchant: "Streaming Service",
     amount: "-$15.99",
     cat: "Entertainment",
@@ -244,7 +271,7 @@ function AICatDemo() {
                 flexShrink: 0,
               }}
             >
-              {r.icon}
+              {createElement(r.Icon, { size: 13, "aria-hidden": true, style: { color: r.color } })}
             </div>
             {/* Merchant */}
             <div style={{ flex: 1, minWidth: 0 }}>
@@ -704,7 +731,7 @@ export function FeaturesSection() {
             transition={{ delay: 0.08, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             style={{ margin: "0 auto 0.875rem" }}
           >
-            Everything money needs to be smart
+            Understand your spending, without giving up control
           </motion.h2>
           <motion.p
             className="section-subtitle"
@@ -714,7 +741,8 @@ export function FeaturesSection() {
             transition={{ delay: 0.14, duration: 0.5 }}
             style={{ margin: "0 auto" }}
           >
-            Five key workflows, with planned features clearly marked.
+            Manual entry comes first. Upload, CSV import, AI assistance, and recurring detection
+            stay clearly marked on the roadmap.
           </motion.p>
         </div>
 
@@ -724,8 +752,9 @@ export function FeaturesSection() {
           <BentoCard delay={0} className="bento-hero" style={{ minHeight: "320px" }}>
             <TileHeader
               Icon={Brain}
-              title="AI-assisted categorization planned"
-              description="Planned suggestions will use merchant and amount details. You will review and confirm every suggestion before relying on it."
+              status="Roadmap"
+              title="AI-assisted categorization"
+              description="Suggestions will use merchant and amount details. You will review and confirm each one before relying on it."
             />
             <AICatDemo />
           </BentoCard>
@@ -734,8 +763,9 @@ export function FeaturesSection() {
           <BentoCard delay={0.06} className="bento-medium-right" style={{ minHeight: "320px" }}>
             <TileHeader
               Icon={Camera}
-              title="Receipt and screenshot upload planned"
-              description="Receipt upload is planned. When it launches, you will review extracted details before saving."
+              status="Roadmap"
+              title="Receipt and screenshot upload"
+              description="When upload becomes available, you will review extracted details before saving."
             />
             <SnapDemo />
           </BentoCard>
@@ -745,8 +775,9 @@ export function FeaturesSection() {
           <BentoCard delay={0.1} className="bento-small">
             <TileHeader
               Icon={Building2}
-              title="CSV import planned"
-              description="Planned for early access: choose a CSV file, map its columns, preview the rows, and confirm the import."
+              status="Roadmap"
+              title="CSV import"
+              description="Choose a CSV file, map its columns, preview the rows, and confirm the import."
             />
             <CsvImportDemo />
           </BentoCard>
@@ -755,6 +786,7 @@ export function FeaturesSection() {
           <BentoCard delay={0.14} className="bento-small">
             <TileHeader
               Icon={PieChart}
+              status="First release"
               title="Monthly summaries"
               description="See total spent, top categories, and top merchants. Spot small charges that add up."
             />
@@ -765,8 +797,9 @@ export function FeaturesSection() {
           <BentoCard delay={0.18} className="bento-medium-right">
             <TileHeader
               Icon={Radio}
-              title="Recurring expense detection planned"
-              description="Planned detection will highlight monthly charges such as subscriptions, memberships, and services you may have forgotten."
+              status="Roadmap"
+              title="Recurring expense detection"
+              description="Detection will highlight monthly charges such as subscriptions, memberships, and services you may have forgotten."
             />
             <SubRadarDemo />
           </BentoCard>

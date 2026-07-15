@@ -89,8 +89,63 @@ export default function SubprocessorsPage() {
             site plus explicit notes for provider categories that are not active.
           </p>
 
-          <div className="overflow-x-auto rounded-lg border border-border">
+          <section className="space-y-4 md:hidden" aria-label="Current subprocessors">
+            {subprocessors.map((sp) => (
+              <article
+                key={`${sp.category}-${sp.name}`}
+                className="rounded-lg border border-border bg-bg-surface p-5"
+              >
+                <p className="text-xs font-semibold uppercase tracking-widest text-accent">
+                  {sp.category}
+                </p>
+                <h2 className="mt-1 text-lg font-semibold text-text-primary">{sp.name}</h2>
+                <dl className="mt-5 space-y-4">
+                  <div>
+                    <dt className="text-xs font-semibold uppercase tracking-wide text-text-tertiary">
+                      Purpose
+                    </dt>
+                    <dd className="mt-1 text-sm leading-relaxed text-text-secondary">
+                      {sp.purpose}
+                      {sp.note && (
+                        <p className="mt-2 text-xs italic text-text-tertiary">{sp.note}</p>
+                      )}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs font-semibold uppercase tracking-wide text-text-tertiary">
+                      Location
+                    </dt>
+                    <dd className="mt-1 text-sm text-text-secondary">{sp.location}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs font-semibold uppercase tracking-wide text-text-tertiary">
+                      Privacy / DPA
+                    </dt>
+                    <dd className="mt-1 text-sm">
+                      {sp.link ? (
+                        <a
+                          href={sp.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-accent hover:underline"
+                        >
+                          {sp.linkLabel}
+                        </a>
+                      ) : (
+                        <span className="text-text-tertiary">Not applicable</span>
+                      )}
+                    </dd>
+                  </div>
+                </dl>
+              </article>
+            ))}
+          </section>
+
+          <div className="hidden overflow-x-auto rounded-lg border border-border md:block">
             <table className="w-full text-sm text-left">
+              <caption className="sr-only">
+                Current EXPOZOR subprocessors and inactive provider categories
+              </caption>
               <thead>
                 <tr className="border-b border-border bg-bg-elev-1">
                   <th

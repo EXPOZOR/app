@@ -8,7 +8,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Get in touch with the EXPOZOR team. General inquiries, support, privacy requests, and security disclosure.",
+    "Get in touch with Mohamed Karrach at EXPOZOR for general inquiries, support, privacy requests, and security disclosure.",
   alternates: { canonical: "https://expozor.com/contact" },
 };
 
@@ -27,7 +27,7 @@ export default function ContactPage() {
           <PageHero
             eyebrow="Contact"
             title="Get in touch"
-            description="We're a small team. We read every message. We try to respond within one business day."
+            description="EXPOZOR is founder-led. I read every message and aim to respond within one business day."
             descriptionClassName="type-body"
             scale="compact"
             className="mb-10"

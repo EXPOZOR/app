@@ -3,8 +3,18 @@
 import { DEMO } from "@/content/landing";
 import { EASE_OUT } from "@/lib/motion";
 import { AnimatePresence, motion } from "framer-motion";
-import { PieChart, RefreshCw, Sparkles, TrendingUp } from "lucide-react";
-import { type KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
+import {
+  Briefcase,
+  CarFront,
+  Clapperboard,
+  Coffee,
+  PieChart,
+  RefreshCw,
+  ShoppingCart,
+  Sparkles,
+  TrendingUp,
+} from "lucide-react";
+import { type KeyboardEvent, createElement, useCallback, useEffect, useRef, useState } from "react";
 
 /* ──────────────────────────────────────────────────────────────
    BROWSER FRAME
@@ -116,7 +126,7 @@ const TRANSACTIONS = [
     merchant: "Freelance Payment",
     amount: "+$4,200",
     category: "Income",
-    icon: "💼",
+    icon: Briefcase,
     color: "#34D399",
     positive: true,
     date: "Today",
@@ -126,7 +136,7 @@ const TRANSACTIONS = [
     merchant: "Grocery Store",
     amount: "-$94.20",
     category: "Groceries",
-    icon: "🛒",
+    icon: ShoppingCart,
     color: "var(--positive)",
     positive: false,
     date: "Yesterday",
@@ -136,7 +146,7 @@ const TRANSACTIONS = [
     merchant: "Coffee Shop",
     amount: "-$6.50",
     category: "Coffee",
-    icon: "☕",
+    icon: Coffee,
     color: "var(--positive)",
     positive: false,
     date: "Yesterday",
@@ -146,7 +156,7 @@ const TRANSACTIONS = [
     merchant: "Taxi Ride",
     amount: "-$18.40",
     category: "Transport",
-    icon: "🚗",
+    icon: CarFront,
     color: "#60A5FA",
     positive: false,
     date: "Mon",
@@ -156,7 +166,7 @@ const TRANSACTIONS = [
     merchant: "Streaming Service",
     amount: "-$15.99",
     category: "Entertainment",
-    icon: "🎬",
+    icon: Clapperboard,
     color: "#A78BFA",
     positive: false,
     date: "Mon",
@@ -166,7 +176,7 @@ const TRANSACTIONS = [
     merchant: "Online Shopping",
     amount: "-$64.30",
     category: "Shopping",
-    icon: "🛒",
+    icon: ShoppingCart,
     color: "#FB923C",
     positive: false,
     date: "Sun",
@@ -291,12 +301,12 @@ function CategorizePanel() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: "0.875rem",
               flexShrink: 0,
               border: `1px solid ${tx.color}25`,
+              color: tx.color,
             }}
           >
-            {tx.icon}
+            {createElement(tx.icon, { size: 15, strokeWidth: 1.8, "aria-hidden": true })}
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
             <p

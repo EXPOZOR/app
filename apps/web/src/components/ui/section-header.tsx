@@ -12,6 +12,7 @@ export interface SectionHeaderProps {
   title: ReactNode;
   description?: ReactNode;
   align?: "start" | "center";
+  headingLevel?: 1 | 2;
   animated?: boolean;
   className?: string;
 }
@@ -22,11 +23,13 @@ export function SectionHeader({
   title,
   description,
   align = "center",
+  headingLevel = 2,
   animated = true,
   className,
 }: SectionHeaderProps) {
   const { reduceMotion } = useMotionPreference();
   const shouldAnimate = animated && !reduceMotion;
+  const Heading = headingLevel === 1 ? motion.h1 : motion.h2;
 
   return (
     <header className={cn(align === "center" ? "text-center" : "text-left", className)}>
@@ -42,7 +45,7 @@ export function SectionHeader({
         </motion.p>
       )}
 
-      <motion.h2
+      <Heading
         id={headingId}
         className="section-heading mb-3.5"
         initial={shouldAnimate ? { opacity: 0, y: 14 } : false}
@@ -51,7 +54,7 @@ export function SectionHeader({
         transition={{ ...TRANSITION.reveal, delay: 0.08 }}
       >
         {title}
-      </motion.h2>
+      </Heading>
 
       {description && (
         <motion.p

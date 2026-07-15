@@ -17,7 +17,7 @@ import { useEffect, useRef, useState } from "react";
    - aria-label on dismiss button, role="complementary" on bar
 ────────────────────────────────────────────────────────────── */
 const DISMISS_KEY = "EXPOZOR-mobile-cta-dismissed";
-const SHOW_AFTER_SCROLL = 300;
+const SHOW_AFTER_SCROLL = 900;
 const FINAL_WAITLIST_ID = "waitlist";
 
 export function StickyMobileCtaBar() {
@@ -128,7 +128,7 @@ export function StickyMobileCtaBar() {
             }}
           >
             {/* Copy */}
-            <div style={{ flex: 1, minWidth: 0 }}>
+            <div className="mobile-cta-copy" style={{ flex: 1, minWidth: 0 }}>
               <p
                 style={{
                   fontSize: "0.875rem",
@@ -160,6 +160,7 @@ export function StickyMobileCtaBar() {
               href="/#waitlist"
               onClick={dismiss}
               aria-label="Join early access with EXPOZOR"
+              className="mobile-cta-link"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -222,6 +223,20 @@ export function StickyMobileCtaBar() {
         .mobile-cta-reservation {
           display: block;
           height: calc(73px + env(safe-area-inset-bottom));
+        }
+        @media (max-width: 420px) {
+          .mobile-cta-copy {
+            display: none !important;
+          }
+          .mobile-cta-link {
+            flex: 1;
+          }
+        }
+        @media (orientation: landscape) and (max-height: 520px) {
+          .mobile-cta-bar,
+          .mobile-cta-reservation {
+            display: none !important;
+          }
         }
         @media (min-width: 1024px) {
           .mobile-cta-bar,

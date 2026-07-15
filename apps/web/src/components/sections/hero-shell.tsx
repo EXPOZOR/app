@@ -3,7 +3,7 @@ import { buttonClassName } from "@/components/ui/button";
 import { MotionDiv, MotionH1, MotionP, MotionSpan } from "@/components/ui/motion-primitives";
 import { HERO } from "@/content/landing";
 import { DUR, EASE_OUT } from "@/lib/motion";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight, Play, Sparkles } from "lucide-react";
 
 const motion = {
   div: MotionDiv,
@@ -85,7 +85,8 @@ export function HeroSection() {
                     cursor: "default",
                   }}
                 >
-                  ✦ AI-Powered Finance
+                  <Sparkles size={13} strokeWidth={1.8} aria-hidden="true" />
+                  AI-Powered Finance
                 </span>
               </motion.div>
 

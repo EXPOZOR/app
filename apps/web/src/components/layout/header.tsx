@@ -6,6 +6,7 @@ import { useMotionPreference } from "@/lib/use-motion-preference";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Menu, X } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { type RefObject, useCallback, useEffect, useRef, useState } from "react";
 
 /* ──────────────────────────────────────────────────────────────
@@ -20,6 +21,14 @@ const INITIAL_SCROLL_STATE = {
   isGlass: false,
   showPill: false,
 };
+
+function isActiveNavPath(pathname: string, href: string) {
+  const targetPath = href.split("#")[0];
+
+  if (!targetPath || targetPath === "/") return false;
+
+  return pathname === targetPath || pathname.startsWith(`${targetPath}/`);
+}
 
 /* ── Private Beta pill ──────────────────────────────────────── */
 function PrivateBetaPill() {
@@ -102,6 +111,7 @@ function MobileSheet({
   onClose: () => void;
   returnFocusRef: RefObject<HTMLButtonElement | null>;
 }) {
+  const pathname = usePathname();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const closeReasonRef = useRef<MobileMenuCloseReason>("dismiss");
@@ -305,13 +315,19 @@ function MobileSheet({
                   <Link
                     href={link.href}
                     onClick={() => requestClose("navigation")}
+                    aria-current={isActiveNavPath(pathname, link.href) ? "page" : undefined}
                     style={{
                       display: "block",
                       padding: "0.875rem 1rem",
                       borderRadius: "var(--radius-md)",
                       fontSize: "1.0625rem",
                       fontWeight: 600,
-                      color: "var(--text-secondary)",
+                      color: isActiveNavPath(pathname, link.href)
+                        ? "var(--text-primary)"
+                        : "var(--text-secondary)",
+                      background: isActiveNavPath(pathname, link.href)
+                        ? "var(--bg-elev-2)"
+                        : "transparent",
                       textDecoration: "none",
                       transition:
                         "color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out)",
@@ -322,8 +338,18 @@ function MobileSheet({
                       (e.currentTarget as HTMLAnchorElement).style.background = "var(--bg-elev-2)";
                     }}
                     onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLAnchorElement).style.color = "var(--text-secondary)";
-                      (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
+                      (e.currentTarget as HTMLAnchorElement).style.color = isActiveNavPath(
+                        pathname,
+                        link.href,
+                      )
+                        ? "var(--text-primary)"
+                        : "var(--text-secondary)";
+                      (e.currentTarget as HTMLAnchorElement).style.background = isActiveNavPath(
+                        pathname,
+                        link.href,
+                      )
+                        ? "var(--bg-elev-2)"
+                        : "transparent";
                     }}
                   >
                     {link.label}
@@ -448,6 +474,7 @@ function MobileSheet({
 /* ── Header ─────────────────────────────────────────────────── */
 export function Header() {
   const { reduceMotion: shouldReduceMotion } = useMotionPreference();
+  const pathname = usePathname();
   const [scrollState, setScrollState] = useState(INITIAL_SCROLL_STATE);
   const scrollStateRef = useRef(INITIAL_SCROLL_STATE);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -575,12 +602,18 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
+                aria-current={isActiveNavPath(pathname, link.href) ? "page" : undefined}
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
                   padding: "0.375rem 0.75rem",
                   fontSize: "0.875rem",
-                  color: "var(--text-secondary)",
+                  color: isActiveNavPath(pathname, link.href)
+                    ? "var(--text-primary)"
+                    : "var(--text-secondary)",
+                  background: isActiveNavPath(pathname, link.href)
+                    ? "var(--bg-elev-2)"
+                    : "transparent",
                   borderRadius: "var(--radius-sm)",
                   textDecoration: "none",
                   fontWeight: 400,
@@ -596,8 +629,18 @@ export function Header() {
                   (e.currentTarget as HTMLAnchorElement).style.background = "var(--bg-elev-2)";
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLAnchorElement).style.color = "var(--text-secondary)";
-                  (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
+                  (e.currentTarget as HTMLAnchorElement).style.color = isActiveNavPath(
+                    pathname,
+                    link.href,
+                  )
+                    ? "var(--text-primary)"
+                    : "var(--text-secondary)";
+                  (e.currentTarget as HTMLAnchorElement).style.background = isActiveNavPath(
+                    pathname,
+                    link.href,
+                  )
+                    ? "var(--bg-elev-2)"
+                    : "transparent";
                 }}
               >
                 {link.label}

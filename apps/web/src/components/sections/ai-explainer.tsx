@@ -1,8 +1,18 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Brain, Camera, ChevronLeft, ChevronRight, Lightbulb, PieChart } from "lucide-react";
-import { useCallback, useState } from "react";
+import {
+  Brain,
+  Camera,
+  CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
+  Lightbulb,
+  type LucideIcon,
+  PieChart,
+  TrendingUp,
+} from "lucide-react";
+import { createElement, useCallback, useState } from "react";
 
 /* ── Steps ─────────────────────────────────────────────────── */
 
@@ -78,17 +88,17 @@ const STEPS = [
       type: "insights" as const,
       items: [
         {
-          icon: "📈",
+          icon: TrendingUp,
           text: "Dining spending is 23% higher than last month",
           type: "warning",
         },
         {
-          icon: "💡",
+          icon: Lightbulb,
           text: "Two subscription services overlap — cancelling one saves ~$10/mo",
           type: "suggestion",
         },
         {
-          icon: "✅",
+          icon: CheckCircle2,
           text: "Groceries budget is on track — $160 remaining",
           type: "positive",
         },
@@ -216,7 +226,7 @@ function BudgetsVisual({
 function InsightsVisual({
   items,
 }: {
-  items: { icon: string; text: string; type: string }[];
+  items: { icon: LucideIcon; text: string; type: string }[];
 }) {
   const borderColors: Record<string, string> = {
     warning: "#FFB36B33",
@@ -227,6 +237,11 @@ function InsightsVisual({
     warning: "#FFB36B0D",
     suggestion: "#60a5fa0D",
     positive: "color-mix(in oklch, var(--positive) 5%, transparent)",
+  };
+  const iconColors: Record<string, string> = {
+    warning: "#FFB36B",
+    suggestion: "#60a5fa",
+    positive: "var(--positive)",
   };
 
   return (
@@ -243,8 +258,12 @@ function InsightsVisual({
             background: bgColors[item.type] || "transparent",
           }}
         >
-          <span className="text-lg shrink-0" aria-hidden="true">
-            {item.icon}
+          <span
+            className="flex size-6 shrink-0 items-center justify-center"
+            style={{ color: iconColors[item.type] || "var(--text-secondary)" }}
+            aria-hidden="true"
+          >
+            {createElement(item.icon, { size: 18, strokeWidth: 1.8 })}
           </span>
           <p className="text-sm text-text-secondary leading-relaxed">{item.text}</p>
         </motion.div>

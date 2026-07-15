@@ -7,7 +7,7 @@ import {
   MotionUl,
 } from "@/components/ui/motion-primitives";
 import { EASE_OUT } from "@/lib/motion";
-import { Ban, Download, ExternalLink, Eye, Lock, ShieldOff, Trash2 } from "lucide-react";
+import { Ban, Database, ExternalLink, Eye, Lock, ShieldOff, Trash2 } from "lucide-react";
 
 const motion = {
   a: MotionA,
@@ -53,11 +53,11 @@ const PLEDGES = [
       "No ads. No third-party data brokers. Your financial information is not a product we sell or share.",
   },
   {
-    id: "export",
-    Icon: Download,
-    title: "Export support planned",
+    id: "limited-data",
+    Icon: Database,
+    title: "Limited data collection",
     description:
-      "Data download support is planned before launch. Waitlist deletion requests can be sent to support.",
+      "The public site collects waitlist signup data and basic technical data needed to operate and protect the service.",
   },
   {
     id: "deletion",
@@ -125,7 +125,7 @@ function ShieldIllustration() {
 /* ──────────────────────────────────────────────────────────────
    SECURITY SECTION — main export
    Layout: large elevated panel
-     Left  → eyebrow, H2 "Your money, data is sacred.",
+     Left  → eyebrow, H2 "Your money. Your data. Both deserve care.",
               emotional sub-line, bullet pledges list, CTA link
      Right → 2×3 pledge card grid
 ────────────────────────────────────────────────────────────── */
@@ -212,7 +212,7 @@ export function SecuritySection() {
                   margin: "0 0 1rem",
                 }}
               >
-                Your money, <span className="text-gradient">data is sacred.</span>
+                Your money. Your data. <span className="text-gradient">Both deserve care.</span>
               </motion.h2>
 
               {/* Emotional sub-line */}

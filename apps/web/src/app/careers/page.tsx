@@ -9,7 +9,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Careers",
   description:
-    "Join the EXPOZOR team. We're building the expense manager we always wanted — remote-first, craft-focused.",
+    "Explore future opportunities at founder-led EXPOZOR — remote-first and craft-focused.",
   alternates: { canonical: "https://expozor.com/careers" },
 };
 
@@ -28,7 +28,7 @@ export default function CareersPage() {
           <PageHero
             eyebrow="Careers"
             title="Work on something you'd use every day."
-            description="We're a small, remote-first team building a product we genuinely love. We care about craft, clarity, and shipping things that work."
+            description="EXPOZOR is founder-led and remote-first. I care about craft, clarity, and shipping things that work."
             scale="compact"
             className="mb-12"
           />
@@ -36,8 +36,8 @@ export default function CareersPage() {
           <Card className="p-8 text-center">
             <h2 className="text-2xl font-bold mb-3">No open roles right now.</h2>
             <p className="text-text-secondary mb-6">
-              We hire slowly and carefully. If you love what we're building, reach out anyway —
-              great people don't always appear when the role does.
+              Hiring will be slow and careful. If you care about what I&apos;m building, reach out
+              anyway — the right collaboration does not always appear on a schedule.
             </p>
             {/* TODO: add confirmed careers contact email before hiring opens */}
             <a href="/contact" className={buttonClassName()}>
