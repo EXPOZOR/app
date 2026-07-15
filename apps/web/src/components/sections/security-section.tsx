@@ -29,7 +29,7 @@ const PLEDGES = [
     Icon: ShieldOff,
     title: "No bank login required",
     description:
-      "EXPOZOR does not ask for or collect your bank credentials. Manual entry is first; upload and import workflows are planned.",
+      "EXPOZOR does not ask for or collect your bank credentials. You choose every expense you enter.",
   },
   {
     id: "no-money",
@@ -412,42 +412,6 @@ export function SecuritySection() {
           </div>
         </motion.div>
       </div>
-
-      {/* Scoped responsive styles */}
-      <style>{`
-        .security-inner {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 2.5rem;
-          padding: 2.5rem;
-        }
-
-        .security-link:hover {
-          gap: 9px !important;
-        }
-
-        @media (min-width: 1024px) {
-          .security-inner {
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            padding: 3.5rem 3.5rem;
-            align-items: start;
-          }
-        }
-
-        /* Pledge card grid: 1-col mobile, 2-col sm+, 2-col on desktop right panel */
-        .pledge-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 10px;
-        }
-
-        @media (min-width: 480px) {
-          .pledge-grid {
-            grid-template-columns: 1fr 1fr;
-          }
-        }
-      `}</style>
     </section>
   );
 }

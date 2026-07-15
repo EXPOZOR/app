@@ -1,14 +1,13 @@
-import { Ban, FileSpreadsheet, ShieldOff } from "lucide-react";
+import { ClipboardList, Map as MapIcon, MonitorPlay } from "lucide-react";
 
 const TRUST_ITEMS = [
-  { icon: ShieldOff, label: "No bank login required" },
-  { icon: Ban, label: "Expense tracking only" },
-  { icon: FileSpreadsheet, label: "Export support planned" },
+  { icon: MonitorPlay, label: "Local demo available" },
+  { icon: ClipboardList, label: "Manual entry comes first" },
+  { icon: MapIcon, label: "Upload, CSV, and AI on the roadmap" },
 ] as const;
 
 /**
- * A single, compact bridge from the homepage promise to the product demo.
- * These are product boundaries and roadmap commitments, not fabricated proof.
+ * The single compact product-status summary on the homepage.
  */
 export function TrustStrip() {
   return (
@@ -21,7 +20,7 @@ export function TrustStrip() {
           id="trust-strip-heading"
           className="type-eyebrow m-0 whitespace-nowrap text-center text-text-tertiary"
         >
-          What to expect
+          Current status
         </h2>
 
         <ul className="m-0 flex list-none flex-wrap items-center justify-center gap-x-6 gap-y-3 p-0">

@@ -741,8 +741,7 @@ export function FeaturesSection() {
             transition={{ delay: 0.14, duration: 0.5 }}
             style={{ margin: "0 auto" }}
           >
-            Manual entry comes first. Upload, CSV import, AI assistance, and recurring detection
-            stay clearly marked on the roadmap.
+            Manual entry comes first. The cards below separate the first release from the roadmap.
           </motion.p>
         </div>
 
@@ -807,36 +806,6 @@ export function FeaturesSection() {
           {/* Full-width bank marquee tile removed — displayed real brand names (Plaid, Visa, Mastercard, etc.) */}
         </div>
       </div>
-
-      {/* ── Bento grid responsive layout + marquee keyframe ─ */}
-      <style>{`
-        /* Default (mobile): single column */
-        .bento-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 14px;
-        }
-
-        /* Desktop (≥1024px): 3-column bento */
-        @media (min-width: 1024px) {
-          .bento-grid {
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: auto auto auto;
-          }
-          .bento-hero         { grid-column: 1 / 3; grid-row: 1; }
-          .bento-medium-right { grid-column: 3 / 4; }
-          .bento-small        { grid-column: span 1; grid-row: 2; }
-          .bento-full         { grid-column: 1 / 4; grid-row: 3; }
-        }
-
-        /* Tablet (640–1023px): 2-column */
-        @media (min-width: 640px) and (max-width: 1023px) {
-          .bento-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-          .bento-hero { grid-column: 1 / 3; }
-          .bento-full { grid-column: 1 / 3; }
-        }
-
-      `}</style>
     </section>
   );
 }

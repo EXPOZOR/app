@@ -20,7 +20,7 @@ const PLEDGES = [
     icon: Zap,
     title: "Waitlist-first launch",
     description:
-      "Join early access without a credit card. Billing is not active and paid packages may change before launch.",
+      "Join early access without a credit card. Billing is not active and no paid package is currently offered.",
     accent: BRAND_COLORS.lilac,
   },
   {
@@ -32,9 +32,9 @@ const PLEDGES = [
   },
   {
     icon: Database,
-    title: "Data controls planned",
+    title: "Data requests supported",
     description:
-      "Self-serve data download is planned. While EXPOZOR is waitlist-only, you can contact support to request waitlist record deletion.",
+      "You can contact support today to request deletion of your waitlist record. Self-service controls will follow as account features launch.",
     accent: "#a78bfa",
   },
 ];

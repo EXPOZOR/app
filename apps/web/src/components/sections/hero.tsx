@@ -116,7 +116,7 @@ function UICycle() {
           }}
         >
           {phase === 0 && "Recent transactions"}
-          {phase === 1 && "Planned category suggestions"}
+          {phase === 1 && "Reviewable category suggestions"}
         </span>
         {/* Phase indicator pills */}
         <div style={{ display: "flex", gap: "4px" }}>
@@ -786,16 +786,6 @@ export function HeroSection() {
           </div>
         </div>
       </section>
-
-      {/* One-off hero-grid CSS — 2-column on lg */}
-      <style>{`
-        @media (min-width: 1024px) {
-          .lg\\:hero-grid {
-            grid-template-columns: 1fr 1fr !important;
-            gap: 4rem !important;
-          }
-        }
-      `}</style>
     </>
   );
 }

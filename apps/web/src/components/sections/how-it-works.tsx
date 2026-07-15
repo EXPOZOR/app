@@ -28,19 +28,19 @@ const STEPS: Step[] = [
     id: "add",
     number: "01",
     title: "Add your expenses",
-    body: "Enter expenses manually today. Receipt upload and CSV import are planned for early access. No bank login needed.",
+    body: "Enter expenses manually and review every detail yourself. No bank login needed.",
   },
   {
     id: "ai-reads",
     number: "02",
     title: "Review and organize",
-    body: "Review and organize entries yourself. AI-assisted category suggestions are planned and will remain user-reviewed.",
+    body: "Organize entries with your own categories and rules. Future assistance remains user-reviewed.",
   },
   {
     id: "understand",
     number: "03",
     title: "Understand your spending",
-    body: "See spending by category, merchant, and month. Spot recurring charges and possible fees. Self-serve export is planned.",
+    body: "See spending by category, merchant, and month. Spot recurring charges and possible fees.",
   },
 ];
 
@@ -194,7 +194,7 @@ function VisualConnect() {
           }}
         />
         <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "var(--accent)" }}>
-          Manual entry ready - uploads planned
+          Manual entry comes first
         </span>
       </motion.div>
     </div>
@@ -714,7 +714,7 @@ export function HowItWorksSection() {
             transition={{ delay: 0.14, duration: 0.5 }}
             style={{ margin: "0 auto" }}
           >
-            Start with manual entry, then use planned upload and import workflows as they launch.
+            A three-step view of the intended early-access workflow.
           </motion.p>
         </div>
 
@@ -786,28 +786,6 @@ export function HowItWorksSection() {
           </motion.a>
         </motion.div>
       </div>
-
-      {/* Scoped responsive layout styles */}
-      <style>{`
-        /* Mobile: single column — visual panel hidden */
-        .hiw-layout {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 1rem;
-        }
-        .hiw-visual-col { display: none; }
-
-        /* Desktop (≥1024px): sticky 2-col */
-        @media (min-width: 1024px) {
-          .hiw-layout {
-            grid-template-columns: 1fr 1fr;
-            align-items: start;
-            gap: 3rem;
-          }
-          .hiw-visual-col { display: block; }
-        }
-
-      `}</style>
     </section>
   );
 }

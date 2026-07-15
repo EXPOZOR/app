@@ -273,7 +273,7 @@ function CategorizePanel() {
             border: "1px solid var(--border-accent)",
           }}
         >
-          <Sparkles size={8} aria-hidden="true" /> AI suggestions planned
+          <Sparkles size={8} aria-hidden="true" /> Roadmap preview
         </span>
       </div>
 
@@ -790,8 +790,8 @@ type Hotspot = {
 const HOTSPOTS: Hotspot[] = [
   {
     n: 1,
-    label: "AI categorization planned",
-    tip: "The planned workflow runs your rules first, then offers reviewable AI suggestions for unknowns.",
+    label: "AI categorization roadmap",
+    tip: "The intended workflow runs your rules first, then offers reviewable suggestions for unknowns.",
     top: "12px",
     right: "12px",
     tabId: "categorize",
@@ -808,7 +808,7 @@ const HOTSPOTS: Hotspot[] = [
   {
     n: 3,
     label: "Spending trends",
-    tip: "Planned insights highlight spending changes and review opportunities.",
+    tip: "The insights concept highlights spending changes and review opportunities.",
     top: "12px",
     right: "12px",
     tabId: "insights",
@@ -940,7 +940,7 @@ function HotspotPin({ hs }: { hs: Hotspot }) {
 ────────────────────────────────────────────────────────────── */
 const PILLS = [
   { label: "Manual entries", Icon: RefreshCw },
-  { label: "AI suggestions planned", Icon: Sparkles },
+  { label: "Reviewable suggestions", Icon: Sparkles },
   { label: "Custom budgets", Icon: PieChart },
   { label: "Spending summaries", Icon: TrendingUp },
 ] as const;
@@ -1221,26 +1221,6 @@ export function DemoSection() {
         >
           {DEMO.disclaimer}
         </motion.p>
-
-        <style>{`
-          .demo-dashboard-tab {
-            font-size: 0.875rem;
-          }
-          .demo-tab-label-compact {
-            display: none;
-          }
-          @media (max-width: 359px) {
-            .demo-dashboard-tab {
-              font-size: 0.75rem;
-            }
-            .demo-tab-label-full {
-              display: none;
-            }
-            .demo-tab-label-compact {
-              display: inline;
-            }
-          }
-        `}</style>
       </div>
     </section>
   );

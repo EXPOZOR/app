@@ -264,39 +264,6 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
           </motion.form>
         )}
       </AnimatePresence>
-
-      <style>{`
-        @media (max-width: 480px) {
-          .waitlist-form-row {
-            flex-direction: column !important;
-          }
-          .waitlist-form-button {
-            width: 100%;
-            justify-content: center;
-          }
-        }
-
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to   { transform: rotate(360deg); }
-        }
-
-        .waitlist-form-button::after {
-          content: "";
-          position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          background: linear-gradient(
-            105deg,
-            transparent 35%,
-            rgba(255, 255, 255, 0.28) 50%,
-            transparent 65%
-          );
-          background-size: 200% 100%;
-          animation: shimmer 1.2s ease-out 0.6s 1 both;
-          pointer-events: none;
-        }
-      `}</style>
     </>
   );
 }

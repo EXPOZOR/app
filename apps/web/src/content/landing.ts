@@ -34,124 +34,9 @@ export const DEMO = {
   badge: "Interactive product preview",
   title: "See it in action",
   description:
-    "Try manual entry with sample data. Upload, CSV import, and AI-assisted workflows shown in the preview are planned.",
+    "Explore a local sample of the manual-entry flow and intended dashboard. Nothing is uploaded or saved.",
   disclaimer:
-    "Product preview with sample data only. Planned workflows may change before launch. Do not enter real financial information.",
-} as const;
-
-export const FEATURES = {
-  title: "Everything you need to track spending",
-  subtitle:
-    "Built for the way you actually spend - manual entry today, with receipt upload and CSV import planned for early access.",
-  cards: [
-    {
-      id: "manual",
-      title: "Add expenses instantly",
-      subtitle: "Manual entry, your way",
-      description:
-        "Enter any expense in seconds: date, merchant, amount, category, payment method, notes, and tags. No bank required.",
-      accent: "var(--decorative)",
-      size: "large" as const,
-      icon: "PlusCircle",
-      stat: "Fast manual entry",
-    },
-    {
-      id: "upload",
-      title: "Receipt upload planned",
-      subtitle: "Roadmap for early access",
-      description:
-        "Receipt and screenshot upload is planned. When available, you will review extracted details before anything is saved.",
-      accent: "#A78BFA",
-      size: "large" as const,
-      icon: "Upload",
-      stat: "Upload planned",
-    },
-    {
-      id: "ai",
-      title: "AI-assisted categorization planned",
-      subtitle: "Assistive, not automatic",
-      description:
-        "AI-assisted suggestions are planned. Your rules and manual review stay in control before any suggestion is applied.",
-      accent: "#60A5FA",
-      size: "small" as const,
-      icon: "Sparkles",
-      stat: "Planned assistant",
-    },
-    {
-      id: "csv",
-      title: "CSV import planned",
-      subtitle: "Bring your own data",
-      description:
-        "CSV import is planned for early access so you can map columns, preview rows, and control what gets imported.",
-      accent: "#34D399",
-      size: "small" as const,
-      icon: "FileSpreadsheet",
-      stat: "CSV planned",
-    },
-    {
-      id: "recurring",
-      title: "Recurring expense detection planned",
-      subtitle: "Spot what repeats",
-      description:
-        "Recurring detection is planned to highlight charges that appear monthly, including subscriptions, memberships, and services you may have forgotten.",
-      accent: "#FB923C",
-      size: "small" as const,
-      icon: "RefreshCw",
-      stat: "Detection planned",
-    },
-    {
-      id: "reports",
-      title: "Monthly spending summaries",
-      subtitle: "One clear picture",
-      description:
-        "See total spent, top categories, top merchants, and possible hidden fees. Self-serve export is planned for a later release.",
-      accent: "#F472B6",
-      size: "small" as const,
-      icon: "BarChart2",
-      stat: "Export planned",
-    },
-  ],
-} as const;
-
-export const HOW_IT_WORKS = {
-  title: "Simple to start, useful every day",
-  steps: [
-    {
-      number: "01",
-      title: "Add your expenses",
-      description:
-        "Enter expenses manually today. Receipt upload and CSV import are planned for early access. No bank login needed.",
-      icon: "PlusCircle",
-    },
-    {
-      number: "02",
-      title: "Review and organize",
-      description:
-        "Review and organize entries yourself. AI-assisted category suggestions are planned and will remain user-reviewed.",
-      icon: "CheckSquare",
-    },
-    {
-      number: "03",
-      title: "Understand your spending",
-      description:
-        "See spending by category, merchant, and month. Spot small charges that add up. Self-serve export is planned.",
-      icon: "TrendingUp",
-    },
-  ],
-} as const;
-
-export const SECURITY = {
-  title: "No bank connection required.",
-  subtitle:
-    "EXPOZOR does not ask for your bank login, does not move money, and does not collect bank credentials. You decide what you enter, edit, or delete.",
-  badges: [
-    { label: "No bank login required", icon: "ShieldOff" },
-    { label: "Tracks expenses only", icon: "Ban" },
-    { label: "Encrypted in transit (HTTPS)", icon: "Lock" },
-    { label: "User-reviewed data", icon: "Eye" },
-    { label: "Limited data collection", icon: "Database" },
-    { label: "Deletion requests by email", icon: "Trash2" },
-  ],
+    "Sample data only. The dashboard includes roadmap concepts; do not enter real financial information.",
 } as const;
 
 export const PRICING = {
@@ -201,7 +86,7 @@ export const FAQ = {
       id: "faq-no-bank",
       question: "Do I need to connect my bank?",
       answer:
-        "No. EXPOZOR is designed to work without bank connections. The current site is waitlist-only; manual entry is the core planned workflow, with receipt upload and CSV import planned for early access.",
+        "No. EXPOZOR is designed to work without bank connections. The current site is waitlist-only; manual entry comes first, with receipt upload and CSV import following later.",
     },
     {
       id: "faq-credentials",
@@ -254,7 +139,7 @@ export const FINAL_CTA = {
   ctaAriaLabel: "Join early access with EXPOZOR",
   bullets: [
     "No bank connection required",
-    "Receipt upload and CSV import planned",
+    "Local demo available now",
     "Understand your spending clearly",
   ],
   microcopy: "No bank login required - no credit card needed for early access",

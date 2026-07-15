@@ -214,37 +214,6 @@ export function StickyMobileCtaBar() {
       </AnimatePresence>
 
       {show && <div aria-hidden="true" className="mobile-cta-reservation" />}
-
-      {/* Only visible on mobile — hidden at lg+ breakpoint */}
-      <style>{`
-        .mobile-cta-bar {
-          display: flex;
-        }
-        .mobile-cta-reservation {
-          display: block;
-          height: calc(73px + env(safe-area-inset-bottom));
-        }
-        @media (max-width: 420px) {
-          .mobile-cta-copy {
-            display: none !important;
-          }
-          .mobile-cta-link {
-            flex: 1;
-          }
-        }
-        @media (orientation: landscape) and (max-height: 520px) {
-          .mobile-cta-bar,
-          .mobile-cta-reservation {
-            display: none !important;
-          }
-        }
-        @media (min-width: 1024px) {
-          .mobile-cta-bar,
-          .mobile-cta-reservation {
-            display: none !important;
-          }
-        }
-      `}</style>
     </>
   );
 }

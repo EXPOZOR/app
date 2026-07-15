@@ -321,28 +321,6 @@ export function Footer() {
           </a>
         </motion.div>
       </div>
-
-      {/* Scoped responsive grid */}
-      <style>{`
-        .footer-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 2.5rem 2rem;
-        }
-
-        @media (min-width: 768px) {
-          .footer-grid {
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-          }
-        }
-
-        @media (min-width: 1024px) {
-          .footer-grid {
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 2rem 4rem;
-          }
-        }
-      `}</style>
     </footer>
   );
 }

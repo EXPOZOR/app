@@ -225,49 +225,6 @@ export function HeroSection() {
           </div>
         </div>
       </section>
-
-      <style>{`
-        .hero-demo-link {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 0.5rem 1rem;
-          min-height: 44px;
-          border: 1px solid var(--border-strong);
-          border-radius: var(--radius-md);
-          background: transparent;
-          color: var(--text-secondary);
-          font-size: 0.9375rem;
-          font-weight: 600;
-          letter-spacing: -0.01em;
-          text-decoration: none;
-          transition: color var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out);
-        }
-
-        .hero-demo-link:hover {
-          color: var(--text-primary);
-          background: var(--bg-elev-2);
-        }
-
-        .hero-demo-icon {
-          width: 26px;
-          height: 26px;
-          border: 1px solid var(--border-strong);
-          border-radius: 50%;
-          background: var(--bg-elev-2);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-        }
-
-        @media (min-width: 1024px) {
-          .lg\\:hero-grid {
-            grid-template-columns: 1fr 1fr !important;
-            gap: 4rem !important;
-          }
-        }
-      `}</style>
     </>
   );
 }
