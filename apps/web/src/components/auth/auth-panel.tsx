@@ -104,7 +104,7 @@ export function AuthPanel({ mode }: { mode: AuthMode }) {
                       type="text"
                       autoComplete="name"
                       required
-                      placeholder="Mohamed Karrach"
+                      placeholder="Your name"
                       disabled={isPending}
                     />
                   </div>
