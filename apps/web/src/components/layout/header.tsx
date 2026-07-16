@@ -367,7 +367,7 @@ function MobileSheet({
                 }}
               />
 
-              {/* Sign in */}
+              {/* Workspace access */}
               <motion.div
                 initial={{ opacity: 0, x: -12 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -378,7 +378,7 @@ function MobileSheet({
                 }}
               >
                 <a
-                  href={NAVBAR.cta.href}
+                  href="/login"
                   onClick={() => requestClose("navigation")}
                   style={{
                     display: "block",
@@ -401,7 +401,7 @@ function MobileSheet({
                     (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
                   }}
                 >
-                  {NAVBAR.cta.label}
+                  Sign in
                 </a>
               </motion.div>
             </nav>
@@ -657,6 +657,12 @@ export function Header() {
               flexShrink: 0,
             }}
           >
+            <Link
+              href="/login"
+              className="inline-flex min-h-11 items-center rounded px-3 text-sm font-medium text-text-secondary no-underline transition-colors hover:bg-bg-elev-2 hover:text-text-primary"
+            >
+              Sign in
+            </Link>
             {/* Single primary early-access action */}
             <motion.a
               href={NAVBAR.cta.href}
