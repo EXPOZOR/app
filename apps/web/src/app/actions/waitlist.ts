@@ -102,7 +102,12 @@ export async function joinWaitlist(formData: FormData): Promise<WaitlistResult> 
       .returning({ id: waitlist.id });
 
     if (inserted.length > 0) {
-      void sendConfirmation(email).catch((err) => console.error("[waitlist] email error:", err));
+      try {
+        // Await delivery handoff so serverless runtimes do not terminate the request early.
+        await sendConfirmation(email);
+      } catch (err) {
+        console.error("[waitlist] email error:", err instanceof Error ? err.message : String(err));
+      }
     } else if (hasProductUpdatesConsent) {
       await db
         .update(waitlist)
@@ -127,13 +132,15 @@ export async function joinWaitlist(formData: FormData): Promise<WaitlistResult> 
 }
 
 async function sendConfirmation(email: string): Promise<void> {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) return;
+  const apiKey = process.env.RESEND_API_KEY?.trim();
+  if (!apiKey) {
+    throw new Error("RESEND_API_KEY environment variable is not set");
+  }
 
   const { Resend } = await import("resend");
   const resend = new Resend(apiKey);
 
-  await resend.emails.send({
+  const { error } = await resend.emails.send({
     from: "EXPOZOR <support@expozor.com>",
     to: email,
     subject: "You're on the EXPOZOR waitlist",
@@ -153,4 +160,8 @@ async function sendConfirmation(email: string): Promise<void> {
       </div>
     `,
   });
+
+  if (error) {
+    throw new Error(`Resend rejected the confirmation email: ${error.message}`);
+  }
 }
