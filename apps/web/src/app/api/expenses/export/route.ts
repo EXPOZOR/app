@@ -14,9 +14,11 @@ export async function GET() {
 
   const rows = await getExpensesForExport(user.id);
   const lines = [
-    ["Date", "Merchant", "Description", "Category", "Amount"].join(","),
+    ["Date", "Merchant", "Description", "Category", "Amount", "Currency"].join(","),
     ...rows.map((row) =>
-      [row.date, row.merchant, row.description, row.category, row.amount].map(escapeCsv).join(","),
+      [row.date, row.merchant, row.description, row.category, row.amount, user.currency]
+        .map(escapeCsv)
+        .join(","),
     ),
   ];
 

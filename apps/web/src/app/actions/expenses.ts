@@ -23,6 +23,8 @@ const expenseSchema = z.object({
   categoryId: z.string().uuid().optional().or(z.literal("")),
 });
 
+const categoryColors = ["mint", "blue", "lilac", "amber", "rose", "cyan", "slate"] as const;
+
 function parseExpense(formData: FormData) {
   const parsed = expenseSchema.safeParse({
     merchant: formData.get("merchant"),
@@ -155,12 +157,18 @@ export async function createCategory(formData: FormData): Promise<ExpenseActionR
   if (!user) return { success: false, error: "Sign in to create a category." };
 
   const name = formData.get("name");
+  const color = formData.get("color");
   if (typeof name !== "string" || name.trim().length < 2 || name.trim().length > 40) {
     return { success: false, error: "Category names must be 2–40 characters." };
   }
+  const parsedColor = z.enum(categoryColors).safeParse(color);
 
   try {
-    await db.insert(categories).values({ user_id: user.id, name: name.trim(), color: "mint" });
+    await db.insert(categories).values({
+      user_id: user.id,
+      name: name.trim(),
+      color: parsedColor.success ? parsedColor.data : "mint",
+    });
     revalidatePath("/app");
     return { success: true };
   } catch (error) {
@@ -173,5 +181,31 @@ export async function createCategory(formData: FormData): Promise<ExpenseActionR
       error instanceof Error ? error.message : String(error),
     );
     return { success: false, error: "We could not create that category. Please try again." };
+  }
+}
+
+export async function deleteCategory(formData: FormData): Promise<ExpenseActionResult> {
+  const user = await getCurrentUser();
+  if (!user) return { success: false, error: "Sign in to remove a category." };
+
+  const id = formData.get("id");
+  if (typeof id !== "string" || !z.string().uuid().safeParse(id).success) {
+    return { success: false, error: "That category could not be found." };
+  }
+
+  try {
+    const removed = await db
+      .delete(categories)
+      .where(and(eq(categories.id, id), eq(categories.user_id, user.id)))
+      .returning({ id: categories.id });
+    if (removed.length === 0) return { success: false, error: "That category could not be found." };
+    revalidatePath("/app");
+    return { success: true };
+  } catch (error) {
+    console.error(
+      "[categories] delete error:",
+      error instanceof Error ? error.message : String(error),
+    );
+    return { success: false, error: "We could not remove that category. Please try again." };
   }
 }

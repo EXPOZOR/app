@@ -3,9 +3,9 @@
 import { createExpense, updateExpense } from "@/app/actions/expenses";
 import { buttonClassName } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader2, Plus, Save, X } from "lucide-react";
+import { CalendarDays, CircleDollarSign, Loader2, Plus, Save, Store, X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useId, useState, useTransition } from "react";
 
 type CategoryOption = { id: string; name: string; color: string };
 
@@ -26,12 +26,20 @@ export function ExpenseForm({
   categories,
   initial,
   onCancel,
+  onSuccess,
+  currency = "USD",
+  formId,
 }: {
   categories: CategoryOption[];
   initial?: EditableExpense;
   onCancel?: () => void;
+  onSuccess?: () => void;
+  currency?: string;
+  formId?: string;
 }) {
   const router = useRouter();
+  const generatedId = useId();
+  const idPrefix = formId ?? generatedId;
   const [error, setError] = useState("");
   const [isPending, startTransition] = useTransition();
   const editing = Boolean(initial);
@@ -51,49 +59,40 @@ export function ExpenseForm({
       }
       if (!initial) form.reset();
       onCancel?.();
+      onSuccess?.();
       router.refresh();
     });
   }
 
+  const currencySymbol =
+    new Intl.NumberFormat("en-US", { style: "currency", currency })
+      .formatToParts(0)
+      .find((part) => part.type === "currency")?.value ?? currency;
+  const fieldId = (name: string) => `${idPrefix}-${name}`;
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-      <div className="grid gap-4 sm:grid-cols-2">
+    <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+      <div className="grid gap-5 sm:grid-cols-2">
         <div className="sm:col-span-2">
           <label
-            htmlFor={initial ? `edit-merchant-${initial.id}` : "merchant"}
+            htmlFor={fieldId("merchant")}
             className="mb-2 block text-sm font-medium text-text-primary"
           >
             Merchant
           </label>
-          <Input
-            id={initial ? `edit-merchant-${initial.id}` : "merchant"}
-            name="merchant"
-            defaultValue={initial?.merchant}
-            placeholder="Coffee shop, rent, train…"
-            required
-            disabled={isPending}
-          />
-        </div>
-        <div>
-          <label
-            htmlFor={initial ? `edit-amount-${initial.id}` : "amount"}
-            className="mb-2 block text-sm font-medium text-text-primary"
-          >
-            Amount
-          </label>
           <div className="relative">
-            <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm text-text-tertiary">
-              $
-            </span>
+            <Store
+              size={17}
+              className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-text-tertiary"
+              aria-hidden="true"
+            />
             <Input
-              id={initial ? `edit-amount-${initial.id}` : "amount"}
-              name="amount"
-              type="number"
-              min="0.01"
-              step="0.01"
-              defaultValue={initial ? initial.amount.toFixed(2) : undefined}
-              placeholder="0.00"
-              className="pl-8"
+              id={fieldId("merchant")}
+              name="merchant"
+              defaultValue={initial?.merchant}
+              placeholder="Where did you spend?"
+              className="pl-11"
+              autoFocus
               required
               disabled={isPending}
             />
@@ -101,33 +100,69 @@ export function ExpenseForm({
         </div>
         <div>
           <label
-            htmlFor={initial ? `edit-date-${initial.id}` : "expenseDate"}
+            htmlFor={fieldId("amount")}
+            className="mb-2 block text-sm font-medium text-text-primary"
+          >
+            Amount <span className="font-normal text-text-tertiary">({currencySymbol})</span>
+          </label>
+          <div className="relative">
+            <CircleDollarSign
+              size={17}
+              className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-text-tertiary"
+              aria-hidden="true"
+            />
+            <Input
+              id={fieldId("amount")}
+              name="amount"
+              type="number"
+              inputMode="decimal"
+              min="0.01"
+              step="0.01"
+              defaultValue={initial ? initial.amount.toFixed(2) : undefined}
+              placeholder="0.00"
+              className="pl-11 tabular-nums"
+              required
+              disabled={isPending}
+            />
+          </div>
+        </div>
+        <div>
+          <label
+            htmlFor={fieldId("expenseDate")}
             className="mb-2 block text-sm font-medium text-text-primary"
           >
             Date
           </label>
-          <Input
-            id={initial ? `edit-date-${initial.id}` : "expenseDate"}
-            name="expenseDate"
-            type="date"
-            defaultValue={initial?.expenseDate ?? today()}
-            required
-            disabled={isPending}
-          />
+          <div className="relative">
+            <CalendarDays
+              size={17}
+              className="pointer-events-none absolute left-4 top-1/2 z-10 -translate-y-1/2 text-text-tertiary"
+              aria-hidden="true"
+            />
+            <Input
+              id={fieldId("expenseDate")}
+              name="expenseDate"
+              type="date"
+              defaultValue={initial?.expenseDate ?? today()}
+              className="pl-11"
+              required
+              disabled={isPending}
+            />
+          </div>
         </div>
         <div>
           <label
-            htmlFor={initial ? `edit-category-${initial.id}` : "categoryId"}
+            htmlFor={fieldId("categoryId")}
             className="mb-2 block text-sm font-medium text-text-primary"
           >
             Category
           </label>
           <select
-            id={initial ? `edit-category-${initial.id}` : "categoryId"}
+            id={fieldId("categoryId")}
             name="categoryId"
             defaultValue={initial?.categoryId ?? ""}
             disabled={isPending}
-            className="min-h-12 w-full rounded border border-border bg-bg-elevated px-4 text-sm text-text-primary outline-none transition-colors focus:border-accent"
+            className="min-h-12 w-full rounded-md border border-border bg-bg-elevated px-4 text-sm text-text-primary outline-none transition-colors focus:border-accent"
           >
             <option value="">Uncategorized</option>
             {categories.map((category) => (
@@ -139,13 +174,13 @@ export function ExpenseForm({
         </div>
         <div>
           <label
-            htmlFor={initial ? `edit-description-${initial.id}` : "description"}
+            htmlFor={fieldId("description")}
             className="mb-2 block text-sm font-medium text-text-primary"
           >
             Note <span className="font-normal text-text-tertiary">(optional)</span>
           </label>
           <Input
-            id={initial ? `edit-description-${initial.id}` : "description"}
+            id={fieldId("description")}
             name="description"
             defaultValue={initial?.description ?? ""}
             placeholder="What was it for?"
@@ -153,16 +188,22 @@ export function ExpenseForm({
           />
         </div>
       </div>
+
       {error && (
         <p
           role="alert"
-          className="rounded border border-danger/40 bg-danger-subtle px-3 py-2 text-sm text-text-primary"
+          className="rounded-md border border-danger/40 bg-danger-subtle px-4 py-3 text-sm text-text-primary"
         >
           {error}
         </p>
       )}
-      <div className="flex flex-wrap items-center gap-3">
-        <button type="submit" disabled={isPending} className={buttonClassName({ size: "md" })}>
+
+      <div className="flex flex-wrap items-center gap-3 border-t border-border pt-5">
+        <button
+          type="submit"
+          disabled={isPending}
+          className={buttonClassName({ size: "md", className: "shadow-[var(--shadow-glow)]" })}
+        >
           {isPending ? (
             <Loader2 size={16} className="animate-spin" aria-hidden="true" />
           ) : editing ? (

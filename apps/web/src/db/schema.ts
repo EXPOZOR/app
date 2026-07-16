@@ -29,6 +29,8 @@ export const users = pgTable("users", {
   email: text("email").notNull().unique(),
   name: text("name").notNull(),
   password_hash: text("password_hash").notNull(),
+  currency: text("currency").default("USD").notNull(),
+  monthly_budget: decimal("monthly_budget", { precision: 12, scale: 2 }),
   created_at: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   updated_at: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
 });

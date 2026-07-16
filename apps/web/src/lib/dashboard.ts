@@ -19,8 +19,34 @@ export type DashboardExpense = {
   categoryColor: string | null;
 };
 
+export type TrendPoint = { key: string; label: string; value: number };
+export type CategoryBreakdown = {
+  name: string;
+  color: string;
+  total: number;
+  count: number;
+  percentage: number;
+};
+
 function monthKey(date = new Date()) {
   return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}`;
+}
+
+function monthDate(key: string) {
+  const [year, month] = key.split("-").map(Number);
+  return new Date(Date.UTC(year ?? 1970, (month ?? 1) - 1, 1));
+}
+
+function shiftMonth(key: string, amount: number) {
+  const date = monthDate(key);
+  date.setUTCMonth(date.getUTCMonth() + amount);
+  return monthKey(date);
+}
+
+function shortMonth(key: string) {
+  return new Intl.DateTimeFormat("en-US", { month: "short", timeZone: "UTC" }).format(
+    monthDate(key),
+  );
 }
 
 function toExpense(row: {
@@ -34,6 +60,35 @@ function toExpense(row: {
   categoryColor: string | null;
 }): DashboardExpense {
   return { ...row, amount: Number(row.amount) };
+}
+
+function buildDailyTrend(expensesForMonth: DashboardExpense[], selectedMonth: string) {
+  const date = monthDate(selectedMonth);
+  const days = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth() + 1, 0)).getUTCDate();
+  const totals = new Map<number, number>();
+
+  for (const expense of expensesForMonth) {
+    const day = Number(expense.expenseDate.slice(8, 10));
+    totals.set(day, (totals.get(day) ?? 0) + expense.amount);
+  }
+
+  return Array.from({ length: days }, (_, index) => ({
+    key: `${selectedMonth}-${String(index + 1).padStart(2, "0")}`,
+    label: String(index + 1),
+    value: totals.get(index + 1) ?? 0,
+  }));
+}
+
+function buildMonthlyTrend(allExpenses: DashboardExpense[], selectedMonth: string) {
+  return Array.from({ length: 6 }, (_, index) => shiftMonth(selectedMonth, index - 5)).map(
+    (key) => ({
+      key,
+      label: shortMonth(key),
+      value: allExpenses
+        .filter((expense) => expense.expenseDate.startsWith(key))
+        .reduce((sum, expense) => sum + expense.amount, 0),
+    }),
+  );
 }
 
 export async function getDashboardData(userId: string, filters: DashboardFilters) {
@@ -61,12 +116,19 @@ export async function getDashboardData(userId: string, filters: DashboardFilters
   ]);
 
   const allExpenses = expenseRows.map(toExpense);
-  const month = filters.month && /^\d{4}-\d{2}$/.test(filters.month) ? filters.month : monthKey();
-  const hasExplicitMonth = Boolean(filters.month && /^\d{4}-\d{2}$/.test(filters.month));
-  const monthExpenses = allExpenses.filter((expense) => expense.expenseDate.startsWith(month));
+  const requestedMonth =
+    filters.month && /^\d{4}-\d{2}$/.test(filters.month) ? filters.month : null;
+  const selectedMonth = requestedMonth ?? monthKey();
+  const previousMonth = shiftMonth(selectedMonth, -1);
+  const monthExpenses = allExpenses.filter((expense) =>
+    expense.expenseDate.startsWith(selectedMonth),
+  );
+  const previousMonthExpenses = allExpenses.filter((expense) =>
+    expense.expenseDate.startsWith(previousMonth),
+  );
   const normalizedSearch = filters.search?.trim().toLowerCase();
   const filteredExpenses = allExpenses.filter((expense) => {
-    const matchesMonth = !hasExplicitMonth || expense.expenseDate.startsWith(month);
+    const matchesMonth = !requestedMonth || expense.expenseDate.startsWith(selectedMonth);
     const matchesCategory = !filters.categoryId || expense.categoryId === filters.categoryId;
     const haystack = `${expense.merchant} ${expense.description ?? ""}`.toLowerCase();
     const matchesSearch = !normalizedSearch || haystack.includes(normalizedSearch);
@@ -74,23 +136,98 @@ export async function getDashboardData(userId: string, filters: DashboardFilters
   });
 
   const total = monthExpenses.reduce((sum, expense) => sum + expense.amount, 0);
-  const categoryTotals = new Map<string, number>();
+  const previousTotal = previousMonthExpenses.reduce((sum, expense) => sum + expense.amount, 0);
+  const categoryTotals = new Map<string, { total: number; count: number; color: string }>();
+  const merchantTotals = new Map<string, { total: number; count: number }>();
+  const dayTotals = new Map<string, { total: number; count: number }>();
+
   for (const expense of monthExpenses) {
-    const key = expense.categoryName ?? "Uncategorized";
-    categoryTotals.set(key, (categoryTotals.get(key) ?? 0) + expense.amount);
+    const categoryName = expense.categoryName ?? "Uncategorized";
+    const currentCategory = categoryTotals.get(categoryName) ?? {
+      total: 0,
+      count: 0,
+      color: expense.categoryColor ?? "slate",
+    };
+    categoryTotals.set(categoryName, {
+      ...currentCategory,
+      total: currentCategory.total + expense.amount,
+      count: currentCategory.count + 1,
+    });
+
+    const merchant = merchantTotals.get(expense.merchant) ?? { total: 0, count: 0 };
+    merchantTotals.set(expense.merchant, {
+      total: merchant.total + expense.amount,
+      count: merchant.count + 1,
+    });
+
+    const day = dayTotals.get(expense.expenseDate) ?? { total: 0, count: 0 };
+    dayTotals.set(expense.expenseDate, {
+      total: day.total + expense.amount,
+      count: day.count + 1,
+    });
   }
-  const topCategory = [...categoryTotals.entries()].sort((a, b) => b[1] - a[1])[0];
+
+  const categoryBreakdown: CategoryBreakdown[] = [...categoryTotals.entries()]
+    .map(([name, value]) => ({
+      name,
+      ...value,
+      percentage: total ? (value.total / total) * 100 : 0,
+    }))
+    .sort((a, b) => b.total - a.total);
+  const largestExpense = [...monthExpenses].sort((a, b) => b.amount - a.amount)[0] ?? null;
+  const topMerchant = [...merchantTotals.entries()].sort((a, b) => b[1].total - a[1].total)[0];
+  const busiestDay = [...dayTotals.entries()].sort((a, b) => b[1].total - a[1].total)[0];
+
+  const selectedDate = monthDate(selectedMonth);
+  const daysInMonth = new Date(
+    Date.UTC(selectedDate.getUTCFullYear(), selectedDate.getUTCMonth() + 1, 0),
+  ).getUTCDate();
+  const today = new Date();
+  const elapsedDays =
+    selectedMonth === monthKey(today)
+      ? Math.max(1, today.getUTCDate())
+      : selectedDate < monthDate(monthKey(today))
+        ? daysInMonth
+        : 1;
 
   return {
     categories: categoryRows,
     expenses: filteredExpenses,
-    selectedMonth: month,
+    selectedMonth,
+    selectedMonthLabel: new Intl.DateTimeFormat("en-US", {
+      month: "long",
+      year: "numeric",
+      timeZone: "UTC",
+    }).format(selectedDate),
+    navigation: {
+      previousMonth: shiftMonth(selectedMonth, -1),
+      nextMonth: shiftMonth(selectedMonth, 1),
+    },
+    analytics: {
+      dailyTrend: buildDailyTrend(monthExpenses, selectedMonth),
+      monthlyTrend: buildMonthlyTrend(allExpenses, selectedMonth),
+      categoryBreakdown,
+      previousTotal,
+      monthlyChange: previousTotal ? ((total - previousTotal) / previousTotal) * 100 : null,
+      largestExpense,
+      topMerchant: topMerchant
+        ? { name: topMerchant[0], total: topMerchant[1].total, count: topMerchant[1].count }
+        : null,
+      busiestDay: busiestDay
+        ? { date: busiestDay[0], total: busiestDay[1].total, count: busiestDay[1].count }
+        : null,
+      dailyAverage: total / elapsedDays,
+      projectedTotal: (total / elapsedDays) * daysInMonth,
+      allTimeTotal: allExpenses.reduce((sum, expense) => sum + expense.amount, 0),
+      allTimeCount: allExpenses.length,
+      filteredCount: filteredExpenses.length,
+    },
     summary: {
       total,
       count: monthExpenses.length,
       average: monthExpenses.length ? total / monthExpenses.length : 0,
-      topCategory: topCategory?.[0] ?? "No expenses yet",
-      topCategoryTotal: topCategory?.[1] ?? 0,
+      topCategory: categoryBreakdown[0]?.name ?? "No expenses yet",
+      topCategoryTotal: categoryBreakdown[0]?.total ?? 0,
     },
   };
 }
