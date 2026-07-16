@@ -86,6 +86,56 @@ export const expenses = pgTable(
   ],
 );
 
+export const category_budgets = pgTable(
+  "category_budgets",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    user_id: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    category_id: uuid("category_id")
+      .notNull()
+      .references(() => categories.id, { onDelete: "cascade" }),
+    month: text("month").notNull(),
+    amount: decimal("amount", { precision: 12, scale: 2 }).notNull(),
+    created_at: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updated_at: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [
+    uniqueIndex("category_budgets_user_category_month_unique").on(
+      table.user_id,
+      table.category_id,
+      table.month,
+    ),
+    index("category_budgets_user_month_idx").on(table.user_id, table.month),
+  ],
+);
+
+export const recurring_expenses = pgTable(
+  "recurring_expenses",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    user_id: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    category_id: uuid("category_id").references(() => categories.id, { onDelete: "set null" }),
+    merchant: text("merchant").notNull(),
+    description: text("description"),
+    amount: decimal("amount", { precision: 12, scale: 2 }).notNull(),
+    cadence: text("cadence").notNull().default("monthly"),
+    next_date: date("next_date", { mode: "string" }).notNull(),
+    active: boolean("active").notNull().default(true),
+    created_at: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updated_at: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [
+    index("recurring_expenses_user_idx").on(table.user_id, table.active),
+    index("recurring_expenses_next_date_idx").on(table.next_date),
+  ],
+);
+
 export type User = typeof users.$inferSelect;
 export type Category = typeof categories.$inferSelect;
 export type Expense = typeof expenses.$inferSelect;
+export type CategoryBudget = typeof category_budgets.$inferSelect;
+export type RecurringExpense = typeof recurring_expenses.$inferSelect;

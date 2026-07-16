@@ -1,6 +1,6 @@
 import { db } from "@/db/client";
-import { categories, expenses } from "@/db/schema";
-import { asc, desc, eq } from "drizzle-orm";
+import { categories, category_budgets, expenses, recurring_expenses } from "@/db/schema";
+import { and, asc, desc, eq } from "drizzle-orm";
 
 export type DashboardFilters = {
   search?: string | undefined;
@@ -26,6 +26,28 @@ export type CategoryBreakdown = {
   total: number;
   count: number;
   percentage: number;
+};
+
+export type DashboardBudget = {
+  id: string;
+  categoryId: string;
+  categoryName: string;
+  categoryColor: string;
+  month: string;
+  amount: number;
+};
+
+export type DashboardRecurring = {
+  id: string;
+  merchant: string;
+  description: string | null;
+  amount: number;
+  cadence: "weekly" | "monthly" | "yearly";
+  nextDate: string;
+  active: boolean;
+  categoryId: string | null;
+  categoryName: string | null;
+  categoryColor: string | null;
 };
 
 function monthKey(date = new Date()) {
@@ -92,7 +114,12 @@ function buildMonthlyTrend(allExpenses: DashboardExpense[], selectedMonth: strin
 }
 
 export async function getDashboardData(userId: string, filters: DashboardFilters) {
-  const [categoryRows, expenseRows] = await Promise.all([
+  const requestedMonth =
+    filters.month && /^\d{4}-\d{2}$/.test(filters.month) ? filters.month : null;
+  const selectedMonth = requestedMonth ?? monthKey();
+  const previousMonth = shiftMonth(selectedMonth, -1);
+
+  const [categoryRows, expenseRows, budgetRows, recurringRows] = await Promise.all([
     db
       .select({ id: categories.id, name: categories.name, color: categories.color })
       .from(categories)
@@ -113,13 +140,48 @@ export async function getDashboardData(userId: string, filters: DashboardFilters
       .leftJoin(categories, eq(expenses.category_id, categories.id))
       .where(eq(expenses.user_id, userId))
       .orderBy(desc(expenses.expense_date), desc(expenses.created_at)),
+    db
+      .select({
+        id: category_budgets.id,
+        categoryId: category_budgets.category_id,
+        categoryName: categories.name,
+        categoryColor: categories.color,
+        month: category_budgets.month,
+        amount: category_budgets.amount,
+      })
+      .from(category_budgets)
+      .innerJoin(categories, eq(category_budgets.category_id, categories.id))
+      .where(and(eq(category_budgets.user_id, userId), eq(category_budgets.month, selectedMonth)))
+      .orderBy(asc(categories.name)),
+    db
+      .select({
+        id: recurring_expenses.id,
+        merchant: recurring_expenses.merchant,
+        description: recurring_expenses.description,
+        amount: recurring_expenses.amount,
+        cadence: recurring_expenses.cadence,
+        nextDate: recurring_expenses.next_date,
+        active: recurring_expenses.active,
+        categoryId: recurring_expenses.category_id,
+        categoryName: categories.name,
+        categoryColor: categories.color,
+      })
+      .from(recurring_expenses)
+      .leftJoin(categories, eq(recurring_expenses.category_id, categories.id))
+      .where(eq(recurring_expenses.user_id, userId))
+      .orderBy(asc(recurring_expenses.next_date), asc(recurring_expenses.merchant)),
   ]);
 
   const allExpenses = expenseRows.map(toExpense);
-  const requestedMonth =
-    filters.month && /^\d{4}-\d{2}$/.test(filters.month) ? filters.month : null;
-  const selectedMonth = requestedMonth ?? monthKey();
-  const previousMonth = shiftMonth(selectedMonth, -1);
+  const budgets: DashboardBudget[] = budgetRows.map((row) => ({
+    ...row,
+    amount: Number(row.amount),
+  }));
+  const recurring: DashboardRecurring[] = recurringRows.map((row) => ({
+    ...row,
+    amount: Number(row.amount),
+    cadence: row.cadence as DashboardRecurring["cadence"],
+  }));
   const monthExpenses = allExpenses.filter((expense) =>
     expense.expenseDate.startsWith(selectedMonth),
   );
@@ -192,6 +254,8 @@ export async function getDashboardData(userId: string, filters: DashboardFilters
 
   return {
     categories: categoryRows,
+    budgets,
+    recurring,
     expenses: filteredExpenses,
     selectedMonth,
     selectedMonthLabel: new Intl.DateTimeFormat("en-US", {

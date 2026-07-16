@@ -139,6 +139,54 @@
   }
 }
 
+/* Workspace light theme: same semantic system, softer surfaces for daytime work. */
+:root[data-theme="light"] {
+  --bg: #f7f9fa;
+  --bg-elev-1: #ffffff;
+  --bg-elev-2: #f0f4f4;
+  --bg-surface: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-overlay: #e4ebeb;
+  --bg-muted: #d7e1e1;
+  --brand-mint: #0f9d68;
+  --brand-lilac: #7656d8;
+  --accent: #0b8057;
+  --accent-hover: #086b49;
+  --accent-subtle: rgba(11, 128, 87, 0.12);
+  --accent-glow: rgba(11, 128, 87, 0.2);
+  --accent-2: #7656d8;
+  --accent-2-dim: #6746c2;
+  --accent-2-subtle: rgba(118, 86, 216, 0.12);
+  --decorative: #7656d8;
+  --decorative-subtle: rgba(118, 86, 216, 0.1);
+  --positive: #0b8057;
+  --positive-subtle: rgba(11, 128, 87, 0.1);
+  --positive-border: rgba(11, 128, 87, 0.3);
+  --success: #168453;
+  --success-subtle: rgba(22, 132, 83, 0.1);
+  --warn: #aa6b00;
+  --warn-subtle: rgba(170, 107, 0, 0.1);
+  --danger: #bd3c47;
+  --danger-subtle: rgba(189, 60, 71, 0.1);
+  --info: #2c69bc;
+  --info-subtle: rgba(44, 105, 188, 0.1);
+  --text: #101b1b;
+  --text-primary: #101b1b;
+  --text-muted: #425252;
+  --text-secondary: #425252;
+  --text-tertiary: #5c6b6b;
+  --text-inverse: #ffffff;
+  --border: rgba(16, 27, 27, 0.12);
+  --border-strong: rgba(16, 27, 27, 0.22);
+  --border-accent: rgba(11, 128, 87, 0.35);
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.9), 0 12px 28px rgba(16, 27, 27, 0.07);
+  --shadow-xs: 0 1px 3px rgba(16, 27, 27, 0.08);
+  --shadow-sm: 0 3px 10px rgba(16, 27, 27, 0.1);
+  --shadow: 0 8px 24px rgba(16, 27, 27, 0.12);
+  --shadow-lg: 0 14px 40px rgba(16, 27, 27, 0.14);
+  --shadow-xl: 0 22px 64px rgba(16, 27, 27, 0.18);
+}
+
 /* ============================================================
    TAILWIND v4 @THEME MAP
    Expose tokens as Tailwind utility classes.

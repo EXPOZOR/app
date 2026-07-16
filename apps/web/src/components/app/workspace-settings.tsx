@@ -56,6 +56,12 @@ export function WorkspaceSettings({
     };
   }, [open]);
 
+  useEffect(() => {
+    const openFromCommand = () => setOpen(true);
+    window.addEventListener("expozor:settings", openFromCommand);
+    return () => window.removeEventListener("expozor:settings", openFromCommand);
+  }, []);
+
   function save(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setMessage("");

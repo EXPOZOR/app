@@ -1,7 +1,11 @@
 import { CategoryDonut, MonthlyBars, SpendingTrendChart } from "@/components/app/analytics-charts";
 import { AppNavigation } from "@/components/app/app-navigation";
+import { BudgetPlanner } from "@/components/app/budget-planner";
 import { ExpenseList } from "@/components/app/expense-list";
+import { ImportExpenses } from "@/components/app/import-expenses";
 import { QuickAddExpense } from "@/components/app/quick-add-expense";
+import { RecurringManager } from "@/components/app/recurring-manager";
+import { SpendingHeatmap } from "@/components/app/spending-heatmap";
 import { WorkspaceSettings } from "@/components/app/workspace-settings";
 import { getCurrentUser } from "@/lib/auth";
 import { getDashboardData } from "@/lib/dashboard";
@@ -339,6 +343,79 @@ export default async function AppPage({ searchParams }: { searchParams: SearchPa
                 copy={directionCopy(data.analytics.monthlyChange)}
               />
             </div>
+
+            <div className="mt-5 grid gap-5 xl:grid-cols-12">
+              <article className="rounded-2xl border border-border bg-bg-elev-1 p-5 shadow-[var(--shadow-card)] sm:p-7 xl:col-span-7">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-sm font-semibold text-text-primary">Spending heatmap</p>
+                    <p className="mt-1 text-sm text-text-secondary">
+                      A quick read on when your month gets busiest.
+                    </p>
+                  </div>
+                  <span className="grid size-10 place-items-center rounded-xl border border-border bg-bg-elev-2 text-accent">
+                    <CalendarDays size={17} aria-hidden="true" />
+                  </span>
+                </div>
+                <SpendingHeatmap
+                  points={data.analytics.dailyTrend}
+                  monthLabel={data.selectedMonthLabel}
+                  currency={currency}
+                />
+              </article>
+              <article className="rounded-2xl border border-border bg-[linear-gradient(145deg,var(--bg-elev-1),var(--accent-subtle))] p-5 shadow-[var(--shadow-card)] sm:p-7 xl:col-span-5">
+                <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-accent">
+                  <Sparkles size={15} aria-hidden="true" /> Productive next move
+                </p>
+                <h3 className="mt-3 text-xl font-semibold tracking-[-0.03em] text-text-primary">
+                  Turn awareness into a system.
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-text-secondary">
+                  Set category guardrails, keep recurring commitments visible, and import your older
+                  history so the signal gets smarter over time.
+                </p>
+                <div className="mt-6 grid grid-cols-3 gap-2 text-center">
+                  <div className="rounded-xl border border-border bg-bg/35 p-3">
+                    <p className="text-lg font-semibold text-text-primary">{data.budgets.length}</p>
+                    <p className="mt-1 text-[10px] uppercase tracking-[0.1em] text-text-tertiary">
+                      Budgets
+                    </p>
+                  </div>
+                  <div className="rounded-xl border border-border bg-bg/35 p-3">
+                    <p className="text-lg font-semibold text-text-primary">
+                      {data.recurring.filter((item) => item.active).length}
+                    </p>
+                    <p className="mt-1 text-[10px] uppercase tracking-[0.1em] text-text-tertiary">
+                      Recurring
+                    </p>
+                  </div>
+                  <div className="rounded-xl border border-border bg-bg/35 p-3">
+                    <p className="text-lg font-semibold text-text-primary">
+                      {data.categories.length}
+                    </p>
+                    <p className="mt-1 text-[10px] uppercase tracking-[0.1em] text-text-tertiary">
+                      Categories
+                    </p>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section className="grid gap-5 pt-10 xl:grid-cols-2" aria-label="Planning and automation">
+            <BudgetPlanner
+              budgets={data.budgets}
+              categories={data.categories}
+              breakdown={data.analytics.categoryBreakdown}
+              month={data.selectedMonth}
+              monthLabel={data.selectedMonthLabel}
+              currency={currency}
+            />
+            <RecurringManager
+              recurring={data.recurring}
+              categories={data.categories}
+              currency={currency}
+            />
           </section>
 
           <section
@@ -362,13 +439,16 @@ export default async function AppPage({ searchParams }: { searchParams: SearchPa
                   {data.analytics.filteredCount === 1 ? "result" : "results"} in this view
                 </p>
               </div>
-              <a
-                href={exportHref}
-                download
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-border bg-bg-elev-1 px-4 text-sm font-semibold text-text-primary no-underline transition-colors hover:border-border-strong hover:bg-bg-elev-2"
-              >
-                <Download size={16} aria-hidden="true" /> Export CSV
-              </a>
+              <div className="flex flex-wrap gap-2">
+                <ImportExpenses />
+                <a
+                  href={exportHref}
+                  download
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-border bg-bg-elev-1 px-4 text-sm font-semibold text-text-primary no-underline transition-colors hover:border-border-strong hover:bg-bg-elev-2"
+                >
+                  <Download size={16} aria-hidden="true" /> Export CSV
+                </a>
+              </div>
             </div>
 
             <div className="mt-5 rounded-2xl border border-border bg-bg-elev-1 p-4 shadow-[var(--shadow-xs)] sm:p-5">

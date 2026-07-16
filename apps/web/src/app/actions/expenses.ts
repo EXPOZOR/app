@@ -9,6 +9,10 @@ import { z } from "zod";
 
 export type ExpenseActionResult = { success: true } | { success: false; error: string };
 
+export type ImportActionResult =
+  | { success: true; imported: number; skipped: number }
+  | { success: false; error: string };
+
 const expenseSchema = z.object({
   merchant: z.string().trim().min(1, "Add a merchant.").max(100, "Merchant is too long."),
   description: z.string().trim().max(240, "Description is too long.").optional(),
@@ -208,4 +212,107 @@ export async function deleteCategory(formData: FormData): Promise<ExpenseActionR
     );
     return { success: false, error: "We could not remove that category. Please try again." };
   }
+}
+
+function parseCsvLine(line: string) {
+  const values: string[] = [];
+  let current = "";
+  let quoted = false;
+  for (let index = 0; index < line.length; index += 1) {
+    const character = line[index];
+    const next = line[index + 1];
+    if (character === '"' && quoted && next === '"') {
+      current += '"';
+      index += 1;
+    } else if (character === '"') {
+      quoted = !quoted;
+    } else if (character === "," && !quoted) {
+      values.push(current.trim());
+      current = "";
+    } else {
+      current += character;
+    }
+  }
+  values.push(current.trim());
+  return values;
+}
+
+function validDate(value: string) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const date = new Date(`${value}T00:00:00Z`);
+  return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value;
+}
+
+export async function importExpenses(formData: FormData): Promise<ImportActionResult> {
+  const user = await getCurrentUser();
+  if (!user) return { success: false, error: "Sign in to import expenses." };
+  const file = formData.get("file");
+  if (!(file instanceof File)) return { success: false, error: "Choose a CSV file first." };
+  if (file.size > 2_000_000)
+    return { success: false, error: "CSV files must be smaller than 2 MB." };
+
+  const lines = (await file.text())
+    .replace(/^\uFEFF/, "")
+    .split(/\r?\n/)
+    .filter((line) => line.trim());
+  if (lines.length < 2) return { success: false, error: "That CSV has no expense rows." };
+  const headers = parseCsvLine(lines[0] ?? "").map((header) => header.toLowerCase());
+  const dateIndex = headers.findIndex((header) =>
+    ["date", "expense date", "expensedate"].includes(header),
+  );
+  const merchantIndex = headers.findIndex((header) =>
+    ["merchant", "payee", "name"].includes(header),
+  );
+  const amountIndex = headers.findIndex((header) => ["amount", "value", "price"].includes(header));
+  const descriptionIndex = headers.findIndex((header) =>
+    ["description", "note", "memo"].includes(header),
+  );
+  const categoryIndex = headers.findIndex((header) => header === "category");
+  if (dateIndex < 0 || merchantIndex < 0 || amountIndex < 0) {
+    return { success: false, error: "CSV needs Date, Merchant, and Amount columns." };
+  }
+  if (lines.length > 501) return { success: false, error: "Import up to 500 expenses at a time." };
+
+  const categoryRows = await db
+    .select({ id: categories.id, name: categories.name })
+    .from(categories)
+    .where(eq(categories.user_id, user.id));
+  const categoryMap = new Map(
+    categoryRows.map((category) => [category.name.toLowerCase(), category.id]),
+  );
+  const values: Array<{
+    user_id: string;
+    category_id: string | null;
+    merchant: string;
+    description: string | null;
+    amount: string;
+    expense_date: string;
+  }> = [];
+  let skipped = 0;
+
+  for (const line of lines.slice(1)) {
+    const row = parseCsvLine(line);
+    const date = row[dateIndex] ?? "";
+    const merchant = row[merchantIndex]?.trim() ?? "";
+    const amount = row[amountIndex]?.replace(/[$€£,\s]/g, "") ?? "";
+    if (!merchant || !validDate(date) || !/^\d+(\.\d{1,2})?$/.test(amount) || Number(amount) <= 0) {
+      skipped += 1;
+      continue;
+    }
+    const categoryName = categoryIndex >= 0 ? row[categoryIndex]?.toLowerCase() : "";
+    values.push({
+      user_id: user.id,
+      category_id: categoryName ? (categoryMap.get(categoryName) ?? null) : null,
+      merchant: merchant.slice(0, 100),
+      description: descriptionIndex >= 0 ? row[descriptionIndex]?.slice(0, 240) || null : null,
+      amount,
+      expense_date: date,
+    });
+  }
+
+  if (!values.length)
+    return { success: false, error: "No valid expense rows were found in that file." };
+  await db.insert(expenses).values(values);
+  revalidatePath("/app");
+  return { success: true, imported: values.length, skipped };
 }

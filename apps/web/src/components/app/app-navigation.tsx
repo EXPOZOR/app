@@ -1,5 +1,7 @@
+import { CommandPalette } from "@/components/app/command-palette";
 import { QuickAddExpense } from "@/components/app/quick-add-expense";
 import { SignOutButton } from "@/components/app/sign-out-button";
+import { ThemeToggle } from "@/components/app/theme-toggle";
 import { WorkspaceSettings } from "@/components/app/workspace-settings";
 import { BarChart3, LayoutDashboard, ListFilter, Tags } from "lucide-react";
 import Link from "next/link";
@@ -53,6 +55,9 @@ export function AppNavigation({
             label="New expense"
           />
         </div>
+        <div className="mt-3">
+          <CommandPalette />
+        </div>
 
         <nav aria-label="Workspace navigation" className="mt-7 space-y-1">
           <p className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-text-tertiary">
@@ -91,6 +96,7 @@ export function AppNavigation({
               <SignOutButton compact />
             </div>
           </div>
+          <ThemeToggle />
           <WorkspaceSettings
             currency={user.currency}
             monthlyBudget={user.monthly_budget}
@@ -110,6 +116,8 @@ export function AppNavigation({
           EXPOZOR
         </Link>
         <div className="flex items-center gap-1">
+          <CommandPalette compact />
+          <ThemeToggle compact />
           <WorkspaceSettings
             currency={user.currency}
             monthlyBudget={user.monthly_budget}

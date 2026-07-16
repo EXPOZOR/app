@@ -53,6 +53,12 @@ export function QuickAddExpense({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [variant]);
 
+  useEffect(() => {
+    const openFromCommand = () => setOpen(true);
+    window.addEventListener("expozor:quick-add", openFromCommand);
+    return () => window.removeEventListener("expozor:quick-add", openFromCommand);
+  }, []);
+
   const triggerClass =
     variant === "sidebar"
       ? buttonClassName({
